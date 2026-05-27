@@ -1,0 +1,97 @@
+name: npm
+version: 0.1.0
+dsl_version: 3
+backend: http
+description: >-
+  npm registry metadata for package health, maintainer ownership, and
+  bus-factor analysis. No authentication required.
+base_url: https://registry.npmjs.org
+request_headers:
+  - name: Accept
+    from: literal
+    value: application/json
+test_queries:
+  - SELECT name, latest_version FROM npm.package_info WHERE package_name = 'dompurify'
+tables:
+  - name: package_info
+    description: >-
+      Core npm package metadata including maintainers, version history,
+      and latest version. Use for ownership analysis and bus-factor detection.
+    guide: >
+      Requires package_name filter. Returns one row per package with maintainer
+      list and version timeline. The maintainers field shows who has publish
+      access to npm — different from GitHub contributors, these are the people
+      who can push malicious versions. Cross-reference with GitHub abandonment
+      signals for the full upstream trust picture.
+    filters:
+      - name: package_name
+        required: true
+    request:
+      method: GET
+      path: /{{filter.package_name}}
+    response:
+      row_strategy: direct
+    pagination:
+      mode: none
+    columns:
+      - name: name
+        type: Utf8
+        nullable: true
+        description: Package name
+        expr:
+          kind: path
+          path:
+            - name
+      - name: latest_version
+        type: Utf8
+        nullable: true
+        description: Current latest published version
+        expr:
+          kind: path
+          path:
+            - dist-tags
+            - latest
+      - name: maintainers
+        type: Json
+        nullable: true
+        description: >-
+          Current npm maintainers with publish access. Array of {name, email}.
+          These people can push to npm — the critical supply-chain permission.
+        expr:
+          kind: path
+          path:
+            - maintainers
+      - name: version_times
+        type: Json
+        nullable: true
+        description: >-
+          Map of version to publish timestamp. Detect ownership changes:
+          new maintainer publishing after long dormancy is the xz signal.
+        expr:
+          kind: path
+          path:
+            - time
+      - name: license
+        type: Utf8
+        nullable: true
+        description: Package license
+        expr:
+          kind: path
+          path:
+            - license
+      - name: homepage
+        type: Utf8
+        nullable: true
+        description: Package homepage URL
+        expr:
+          kind: path
+          path:
+            - homepage
+      - name: package_name
+        type: Utf8
+        nullable: true
+        virtual: true
+        description: Requested package name filter
+        expr:
+          kind: from_filter
+          key: package_name

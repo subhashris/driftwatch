@@ -1,0 +1,137 @@
+name: pypi
+version: 0.1.0
+dsl_version: 3
+backend: http
+description: >-
+  PyPI package registry metadata for Python supply-chain risk analysis.
+  Surfaces maintainer info, version history, and yanked releases.
+  No authentication required.
+base_url: https://pypi.org
+request_headers:
+  - name: Accept
+    from: literal
+    value: application/json
+test_queries:
+  - SELECT name, version, license FROM pypi.package_info WHERE package_name = 'requests'
+tables:
+  - name: package_info
+    description: >-
+      PyPI package metadata including maintainer, author, version history,
+      and release timeline. Use for Python ecosystem supply-chain analysis.
+    guide: >
+      Requires package_name filter. Returns one row with the latest package
+      metadata. The releases field maps version to file metadata including
+      upload timestamps and yanked status. A yanked release is a red flag —
+      it means a version was retracted after publication (possible bad actor).
+      maintainer_email shows who maintains the package on PyPI.
+    filters:
+      - name: package_name
+        required: true
+    request:
+      method: GET
+      path: /pypi/{{filter.package_name}}/json
+    response:
+      row_strategy: direct
+    pagination:
+      mode: none
+    columns:
+      - name: name
+        type: Utf8
+        nullable: true
+        description: Package name
+        expr:
+          kind: path
+          path:
+            - info
+            - name
+      - name: version
+        type: Utf8
+        nullable: true
+        description: Latest published version
+        expr:
+          kind: path
+          path:
+            - info
+            - version
+      - name: summary
+        type: Utf8
+        nullable: true
+        description: Short package description
+        expr:
+          kind: path
+          path:
+            - info
+            - summary
+      - name: author_email
+        type: Utf8
+        nullable: true
+        description: Original author email(s)
+        expr:
+          kind: path
+          path:
+            - info
+            - author_email
+      - name: maintainer_email
+        type: Utf8
+        nullable: true
+        description: Current maintainer email(s) — who controls this package on PyPI
+        expr:
+          kind: path
+          path:
+            - info
+            - maintainer_email
+      - name: license
+        type: Utf8
+        nullable: true
+        description: Package license
+        expr:
+          kind: path
+          path:
+            - info
+            - license
+      - name: requires_python
+        type: Utf8
+        nullable: true
+        description: Python version requirement
+        expr:
+          kind: path
+          path:
+            - info
+            - requires_python
+      - name: project_urls
+        type: Json
+        nullable: true
+        description: Project URLs including source, docs, homepage
+        expr:
+          kind: path
+          path:
+            - info
+            - project_urls
+      - name: yanked
+        type: Boolean
+        nullable: true
+        description: Whether the latest version was yanked (retracted)
+        expr:
+          kind: path
+          path:
+            - info
+            - yanked
+      - name: releases
+        type: Json
+        nullable: true
+        description: >-
+          Map of version to release file metadata. Each entry has
+          upload_time_iso_8601 and yanked flag. Use for version timeline
+          and detecting yanked releases after ownership changes.
+        expr:
+          kind: path
+          path:
+            - releases
+      - name: package_name
+        type: Utf8
+        nullable: true
+        virtual: true
+        description: Requested package name filter
+        expr:
+          kind: from_filter
+          key: package_name

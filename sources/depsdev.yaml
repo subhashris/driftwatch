@@ -1,0 +1,126 @@
+name: depsdev
+version: 0.1.0
+dsl_version: 3
+backend: http
+description: >-
+  Google deps.dev — universal package intelligence API covering npm, PyPI,
+  Maven, Go, and Cargo. Version history, deprecation status, and publish
+  timestamps across all major ecosystems. No authentication required.
+base_url: https://api.deps.dev
+request_headers:
+  - name: Accept
+    from: literal
+    value: application/json
+test_queries:
+  - SELECT system, name, version, published_at, is_deprecated FROM depsdev.package_versions WHERE system = 'NPM' AND package_name = 'dompurify'
+tables:
+  - name: package_versions
+    description: >-
+      All published versions of a package across any ecosystem (NPM, PYPI,
+      MAVEN, GO, CARGO). Returns version timeline with publish timestamps
+      and deprecation status. Universal replacement for ecosystem-specific
+      registries — one spec covers all major tech stacks.
+    guide: >
+      Requires system and package_name filters.
+      system values: NPM, PYPI, MAVEN, GO, CARGO (uppercase).
+      For MAVEN use group:artifact e.g. 'org.apache.commons:commons-lang3'.
+      Returns one row per published version. Use published_at for release
+      burst detection and is_deprecated for yanked/retracted version signals.
+    filters:
+      - name: system
+        required: true
+      - name: package_name
+        required: true
+    request:
+      method: GET
+      path: /v3alpha/systems/{{filter.system}}/packages/{{filter.package_name}}
+    response:
+      rows_path:
+        - versions
+      row_strategy: direct
+    pagination:
+      mode: none
+    columns:
+      - name: system
+        type: Utf8
+        nullable: true
+        description: Package ecosystem
+        expr:
+          kind: path
+          path:
+            - versionKey
+            - system
+      - name: name
+        type: Utf8
+        nullable: true
+        description: Package name
+        expr:
+          kind: path
+          path:
+            - versionKey
+            - name
+      - name: version
+        type: Utf8
+        nullable: true
+        description: Version string
+        expr:
+          kind: path
+          path:
+            - versionKey
+            - version
+      - name: purl
+        type: Utf8
+        nullable: true
+        description: Package URL for this version
+        expr:
+          kind: path
+          path:
+            - purl
+      - name: published_at
+        type: Utf8
+        nullable: true
+        description: ISO8601 publish timestamp
+        expr:
+          kind: path
+          path:
+            - publishedAt
+      - name: is_default
+        type: Boolean
+        nullable: true
+        description: Whether this is the default/latest version
+        expr:
+          kind: path
+          path:
+            - isDefault
+      - name: is_deprecated
+        type: Boolean
+        nullable: true
+        description: Whether this version is deprecated or yanked
+        expr:
+          kind: path
+          path:
+            - isDeprecated
+      - name: deprecated_reason
+        type: Utf8
+        nullable: true
+        description: Reason for deprecation if applicable
+        expr:
+          kind: path
+          path:
+            - deprecatedReason
+      - name: system_filter
+        type: Utf8
+        nullable: true
+        virtual: true
+        description: Requested system filter
+        expr:
+          kind: from_filter
+          key: system
+      - name: package_name
+        type: Utf8
+        nullable: true
+        virtual: true
+        description: Requested package name filter
+        expr:
+          kind: from_filter
+          key: package_name

@@ -1,0 +1,102 @@
+name: scorecard
+version: 0.1.0
+dsl_version: 3
+backend: http
+description: >-
+  OpenSSF Scorecard — industry-standard open-source project health scoring
+  by Google and the Linux Foundation. Scores 14 security checks including
+  maintenance, code review, branch protection, and vulnerability disclosure.
+  No authentication required.
+base_url: https://api.securityscorecards.dev
+request_headers:
+  - name: Accept
+    from: literal
+    value: application/json
+test_queries:
+  - SELECT full_repo_name, score, date FROM scorecard.project_score WHERE owner = 'postcss' AND repo = 'postcss'
+tables:
+  - name: project_score
+    description: >-
+      OpenSSF Scorecard aggregate score and per-check breakdown for any
+      GitHub repository. Score is 0-10 (higher is safer). Industry-standard
+      health metric computed weekly by Google infrastructure.
+    guide: >
+      Requires owner and repo filters (GitHub owner and repository name).
+      Returns one row with aggregate score and all 14 check scores as JSON.
+      Key checks: Maintained, Code-Review, Branch-Protection, Token-Permissions,
+      Dangerous-Workflow, Signed-Releases, SAST. Score -1 = not applicable.
+      Use as primary defensible health benchmark alongside GitHub raw signals.
+    filters:
+      - name: owner
+        required: true
+      - name: repo
+        required: true
+    request:
+      method: GET
+      path: /projects/github.com/{{filter.owner}}/{{filter.repo}}
+    response:
+      row_strategy: direct
+    pagination:
+      mode: none
+    columns:
+      - name: full_repo_name
+        type: Utf8
+        nullable: true
+        description: Full repository name (owner/repo)
+        expr:
+          kind: path
+          path:
+            - repo
+            - name
+      - name: score
+        type: Float64
+        nullable: true
+        description: Aggregate OpenSSF Scorecard score 0-10. Below 5 = risk.
+        expr:
+          kind: path
+          path:
+            - score
+      - name: date
+        type: Utf8
+        nullable: true
+        description: Date this scorecard was computed (YYYY-MM-DD)
+        expr:
+          kind: path
+          path:
+            - date
+      - name: checks
+        type: Json
+        nullable: true
+        description: >-
+          All 14 check results as JSON array. Each has name, score, reason.
+          Key checks for supply-chain: Maintained, Code-Review,
+          Branch-Protection, Token-Permissions, Dangerous-Workflow.
+        expr:
+          kind: path
+          path:
+            - checks
+      - name: scorecard_version
+        type: Utf8
+        nullable: true
+        description: Version of the Scorecard tool used
+        expr:
+          kind: path
+          path:
+            - scorecard
+            - version
+      - name: owner
+        type: Utf8
+        nullable: true
+        virtual: true
+        description: Requested owner filter
+        expr:
+          kind: from_filter
+          key: owner
+      - name: repo
+        type: Utf8
+        nullable: true
+        virtual: true
+        description: Requested repo filter
+        expr:
+          kind: from_filter
+          key: repo

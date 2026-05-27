@@ -1,0 +1,345 @@
+[
+  {
+    "name": "yargs-parser",
+    "version": "10.1.0",
+    "ecosystem": "npm",
+    "worst_days_exposed": 2090,
+    "cves": [
+      {
+        "id": "GHSA-p9pc-299p-vxgp",
+        "summary": "yargs-parser Vulnerable to Prototype Pollution",
+        "published": "2020-09-04T18:00:54Z",
+        "days_exposed": 2090,
+        "fixed_in": "13.1.2"
+      }
+    ]
+  },
+  {
+    "name": "trim-newlines",
+    "version": "2.0.0",
+    "ecosystem": "npm",
+    "worst_days_exposed": 1814,
+    "cves": [
+      {
+        "id": "GHSA-7p7h-4mm5-852v",
+        "summary": "Uncontrolled Resource Consumption in trim-newlines",
+        "published": "2021-06-07T22:10:39Z",
+        "days_exposed": 1814,
+        "fixed_in": "3.0.1"
+      }
+    ]
+  },
+  {
+    "name": "postcss",
+    "version": "7.0.36",
+    "ecosystem": "npm",
+    "worst_days_exposed": 970,
+    "cves": [
+      {
+        "id": "GHSA-7fh5-64p2-3v2j",
+        "summary": "PostCSS line return parsing error",
+        "published": "2023-09-30T00:31:10Z",
+        "days_exposed": 970,
+        "fixed_in": "8.4.31"
+      },
+      {
+        "id": "GHSA-qx2v-qp2m-jg93",
+        "summary": "PostCSS has XSS via Unescaped </style> in its CSS Stringify Output",
+        "published": "2026-04-24T15:31:42Z",
+        "days_exposed": 32,
+        "fixed_in": "8.5.10"
+      }
+    ]
+  },
+  {
+    "name": "pdfjs-dist",
+    "version": "3.11.174",
+    "ecosystem": "npm",
+    "worst_days_exposed": 749,
+    "cves": [
+      {
+        "id": "GHSA-wgrm-67xf-hhpq",
+        "summary": "PDF.js vulnerable to arbitrary JavaScript execution upon opening a malicious PDF",
+        "published": "2024-05-07T10:25:08Z",
+        "days_exposed": 749,
+        "fixed_in": "4.2.67"
+      }
+    ]
+  },
+  {
+    "name": "dompurify",
+    "version": "2.5.9",
+    "ecosystem": "npm",
+    "worst_days_exposed": 466,
+    "cves": [
+      {
+        "id": "GHSA-39q2-94rc-95cp",
+        "summary": "DOMPurify's ADD_TAGS function form bypasses FORBID_TAGS due to short-circuit evaluation",
+        "published": "2026-04-16T00:46:35Z",
+        "days_exposed": 41,
+        "fixed_in": "3.4.0"
+      },
+      {
+        "id": "GHSA-cj63-jhhr-wcxv",
+        "summary": "DOMPurify USE_PROFILES prototype pollution allows event handlers",
+        "published": "2026-04-03T03:45:08Z",
+        "days_exposed": 53,
+        "fixed_in": "3.3.2"
+      },
+      {
+        "id": "GHSA-cjmm-f4jc-qw8r",
+        "summary": "DOMPurify ADD_ATTR predicate skips URI validation",
+        "published": "2026-04-03T03:46:07Z",
+        "days_exposed": 53,
+        "fixed_in": "3.3.2"
+      },
+      {
+        "id": "GHSA-crv5-9vww-q3g8",
+        "summary": "DOMPurify has a SAFE_FOR_TEMPLATES bypass in RETURN_DOM mode",
+        "published": "2026-04-22T17:32:54Z",
+        "days_exposed": 34,
+        "fixed_in": "3.4.0"
+      },
+      {
+        "id": "GHSA-h7mw-gpvr-xq4m",
+        "summary": "DOMPurify: FORBID_TAGS bypassed by function-based ADD_TAGS predicate (asymmetry with FORBID_ATTR fix)",
+        "published": "2026-04-22T17:34:17Z",
+        "days_exposed": 34,
+        "fixed_in": "3.4.0"
+      },
+      {
+        "id": "GHSA-h8r8-wccr-v5f2",
+        "summary": "DOMPurify is vulnerable to mutation-XSS via Re-Contextualization ",
+        "published": "2026-03-27T20:41:29Z",
+        "days_exposed": 60,
+        "fixed_in": "3.3.2"
+      },
+      {
+        "id": "GHSA-vhxf-7vqr-mrjg",
+        "summary": "DOMPurify allows Cross-site Scripting (XSS)",
+        "published": "2025-02-14T09:31:22Z",
+        "days_exposed": 466,
+        "fixed_in": "3.2.4"
+      }
+    ]
+  },
+  {
+    "name": "brace-expansion",
+    "version": "1.1.11",
+    "ecosystem": "npm",
+    "worst_days_exposed": 351,
+    "cves": [
+      {
+        "id": "GHSA-f886-m6hf-6m8v",
+        "summary": "brace-expansion: Zero-step sequence causes process hang and memory exhaustion",
+        "published": "2026-03-26T18:29:42Z",
+        "days_exposed": 61,
+        "fixed_in": "5.0.5"
+      },
+      {
+        "id": "GHSA-v6h2-p8h4-qcjw",
+        "summary": "brace-expansion Regular Expression Denial of Service vulnerability",
+        "published": "2025-06-09T21:30:51Z",
+        "days_exposed": 351,
+        "fixed_in": "2.0.2"
+      }
+    ]
+  },
+  {
+    "name": "vite",
+    "version": "6.3.5",
+    "ecosystem": "npm",
+    "worst_days_exposed": 259,
+    "cves": [
+      {
+        "id": "GHSA-4w7w-66w2-5vf9",
+        "summary": "Vite Vulnerable to Path Traversal in Optimized Deps `.map` Handling",
+        "published": "2026-04-06T18:03:46Z",
+        "days_exposed": 50,
+        "fixed_in": "8.0.5"
+      },
+      {
+        "id": "GHSA-93m4-6634-74q7",
+        "summary": "vite allows server.fs.deny bypass via backslash on Windows",
+        "published": "2025-10-20T19:54:28Z",
+        "days_exposed": 218,
+        "fixed_in": "7.1.11"
+      },
+      {
+        "id": "GHSA-g4jq-h2w9-997c",
+        "summary": "Vite middleware may serve files starting with the same name with the public directory",
+        "published": "2025-09-09T20:55:56Z",
+        "days_exposed": 259,
+        "fixed_in": "7.1.5"
+      },
+      {
+        "id": "GHSA-jqfw-vq24-v9c3",
+        "summary": "Vite's `server.fs` settings were not applied to HTML files",
+        "published": "2025-09-09T20:54:42Z",
+        "days_exposed": 259,
+        "fixed_in": "7.1.5"
+      },
+      {
+        "id": "GHSA-p9ff-h696-f583",
+        "summary": "Vite Vulnerable to Arbitrary File Read via Vite Dev Server WebSocket",
+        "published": "2026-04-06T18:03:24Z",
+        "days_exposed": 50,
+        "fixed_in": "8.0.5"
+      }
+    ]
+  },
+  {
+    "name": "qs",
+    "version": "6.13.0",
+    "ecosystem": "npm",
+    "worst_days_exposed": 147,
+    "cves": [
+      {
+        "id": "GHSA-6rw7-vpxm-498p",
+        "summary": "qs's arrayLimit bypass in its bracket notation allows DoS via memory exhaustion",
+        "published": "2025-12-30T21:02:54Z",
+        "days_exposed": 147,
+        "fixed_in": "6.14.1"
+      },
+      {
+        "id": "GHSA-q8mj-m7cp-5q26",
+        "summary": "qs has a remotely triggerable DoS: qs.stringify crashes with TypeError on null/undefined entries in comma-format arrays when encodeValuesOnly is set",
+        "published": "2026-05-22T17:27:19Z",
+        "days_exposed": 4,
+        "fixed_in": "6.15.2"
+      },
+      {
+        "id": "GHSA-w7fw-mjwx-w883",
+        "summary": "qs's arrayLimit bypass in comma parsing allows denial of service",
+        "published": "2026-02-12T17:04:39Z",
+        "days_exposed": 103,
+        "fixed_in": "6.14.2"
+      }
+    ]
+  },
+  {
+    "name": "yaml",
+    "version": "1.10.2",
+    "ecosystem": "npm",
+    "worst_days_exposed": 62,
+    "cves": [
+      {
+        "id": "GHSA-48c2-rrv3-qjmp",
+        "summary": "yaml is vulnerable to Stack Overflow via deeply nested YAML collections",
+        "published": "2026-03-25T20:08:24Z",
+        "days_exposed": 62,
+        "fixed_in": "2.8.3"
+      }
+    ]
+  },
+  {
+    "name": "brace-expansion",
+    "version": "5.0.4",
+    "ecosystem": "npm",
+    "worst_days_exposed": 61,
+    "cves": [
+      {
+        "id": "GHSA-f886-m6hf-6m8v",
+        "summary": "brace-expansion: Zero-step sequence causes process hang and memory exhaustion",
+        "published": "2026-03-26T18:29:42Z",
+        "days_exposed": 61,
+        "fixed_in": "5.0.5"
+      },
+      {
+        "id": "GHSA-jxxr-4gwj-5jf2",
+        "summary": "brace-expansion: Large numeric range defeats documented `max` DoS protection",
+        "published": "2026-05-18T16:22:01Z",
+        "days_exposed": 8,
+        "fixed_in": "5.0.6"
+      }
+    ]
+  },
+  {
+    "name": "@xmldom/xmldom",
+    "version": "0.7.9",
+    "ecosystem": "npm",
+    "worst_days_exposed": 56,
+    "cves": [
+      {
+        "id": "GHSA-2v35-w6hq-6mfw",
+        "summary": "xmldom: Uncontrolled recursion in XML serialization leads to DoS",
+        "published": "2026-04-22T20:23:57Z",
+        "days_exposed": 34,
+        "fixed_in": "0.8.13"
+      },
+      {
+        "id": "GHSA-f6ww-3ggp-fr8h",
+        "summary": "xmldom has XML injection through unvalidated DocumentType serialization",
+        "published": "2026-04-22T20:19:12Z",
+        "days_exposed": 34,
+        "fixed_in": "0.8.13"
+      },
+      {
+        "id": "GHSA-j759-j44w-7fr8",
+        "summary": "xmldom has XML node injection through unvalidated comment serialization",
+        "published": "2026-04-22T20:16:07Z",
+        "days_exposed": 34,
+        "fixed_in": "0.8.13"
+      },
+      {
+        "id": "GHSA-wh4c-j3r5-mjhp",
+        "summary": "xmldom: XML injection via unsafe CDATA serialization allows attacker-controlled markup insertion",
+        "published": "2026-04-01T00:19:06Z",
+        "days_exposed": 56,
+        "fixed_in": "0.8.12"
+      },
+      {
+        "id": "GHSA-x6wf-f3px-wcqx",
+        "summary": "xmldom has XML node injection through unvalidated processing instruction serialization",
+        "published": "2026-04-22T20:17:58Z",
+        "days_exposed": 34,
+        "fixed_in": "0.8.13"
+      }
+    ]
+  },
+  {
+    "name": "uuid",
+    "version": "8.3.2",
+    "ecosystem": "npm",
+    "worst_days_exposed": 34,
+    "cves": [
+      {
+        "id": "GHSA-w5hq-g745-h8pq",
+        "summary": "uuid: Missing buffer bounds check in v3/v5/v6 when buf is provided",
+        "published": "2026-04-22T20:53:24Z",
+        "days_exposed": 34,
+        "fixed_in": "11.1.1"
+      }
+    ]
+  },
+  {
+    "name": "@babel/plugin-transform-modules-systemjs",
+    "version": "7.29.0",
+    "ecosystem": "npm",
+    "worst_days_exposed": 18,
+    "cves": [
+      {
+        "id": "GHSA-fv7c-fp4j-7gwp",
+        "summary": "@babel/plugin-transform-modules-systemjs generates arbitrary code when compiling malicious input",
+        "published": "2026-05-08T20:34:07Z",
+        "days_exposed": 18,
+        "fixed_in": "7.29.4"
+      }
+    ]
+  },
+  {
+    "name": "qs",
+    "version": "6.14.2",
+    "ecosystem": "npm",
+    "worst_days_exposed": 4,
+    "cves": [
+      {
+        "id": "GHSA-q8mj-m7cp-5q26",
+        "summary": "qs has a remotely triggerable DoS: qs.stringify crashes with TypeError on null/undefined entries in comma-format arrays when encodeValuesOnly is set",
+        "published": "2026-05-22T17:27:19Z",
+        "days_exposed": 4,
+        "fixed_in": "6.15.2"
+      }
+    ]
+  }
+]

@@ -1,0 +1,104 @@
+name: maven
+version: 0.1.0
+dsl_version: 3
+backend: http
+description: >-
+  Maven Central repository search for Java/JVM supply-chain risk analysis.
+  Surfaces artifact version history and release recency for staleness detection.
+  No authentication required.
+base_url: https://search.maven.org
+request_headers:
+  - name: Accept
+    from: literal
+    value: application/json
+test_queries:
+  - SELECT id, latest_version, version_count FROM maven.artifact_info WHERE group_id = 'org.apache.commons' AND artifact_id = 'commons-lang3'
+tables:
+  - name: artifact_info
+    description: >-
+      Maven Central artifact metadata including latest version, version count,
+      and last update timestamp. Use for Java ecosystem staleness detection.
+    guide: >
+      Requires group_id and artifact_id filters. Returns artifact health
+      metadata from Maven Central search API. Focus on version staleness
+      and release recency — Maven does not expose maintainer lists like npm.
+    filters:
+      - name: group_id
+        required: true
+      - name: artifact_id
+        required: true
+    request:
+      method: GET
+      path: /solrsearch/select?q=g:{{filter.group_id}}+AND+a:{{filter.artifact_id}}&rows=1&wt=json
+    response:
+      rows_path:
+        - response
+        - docs
+      row_strategy: direct
+    pagination:
+      mode: none
+    columns:
+      - name: id
+        type: Utf8
+        nullable: true
+        description: Full artifact ID (groupId:artifactId)
+        expr:
+          kind: path
+          path:
+            - id
+      - name: group_id
+        type: Utf8
+        nullable: true
+        description: Maven group ID
+        expr:
+          kind: path
+          path:
+            - g
+      - name: artifact_id
+        type: Utf8
+        nullable: true
+        description: Maven artifact ID
+        expr:
+          kind: path
+          path:
+            - a
+      - name: latest_version
+        type: Utf8
+        nullable: true
+        description: Latest published version on Maven Central
+        expr:
+          kind: path
+          path:
+            - latestVersion
+      - name: version_count
+        type: Int64
+        nullable: true
+        description: Total number of published versions
+        expr:
+          kind: path
+          path:
+            - versionCount
+      - name: timestamp
+        type: Int64
+        nullable: true
+        description: Last update timestamp (Unix ms) — staleness signal
+        expr:
+          kind: path
+          path:
+            - timestamp
+      - name: group_id_filter
+        type: Utf8
+        nullable: true
+        virtual: true
+        description: Requested group_id filter
+        expr:
+          kind: from_filter
+          key: group_id
+      - name: artifact_id_filter
+        type: Utf8
+        nullable: true
+        virtual: true
+        description: Requested artifact_id filter
+        expr:
+          kind: from_filter
+          key: artifact_id

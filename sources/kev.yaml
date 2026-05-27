@@ -1,0 +1,115 @@
+name: kev
+version: 0.1.0
+dsl_version: 3
+backend: http
+description: >-
+  CISA Known Exploited Vulnerabilities (KEV) catalog. Cross-reference your
+  dependencies' CVEs against vulnerabilities actively exploited in the wild.
+base_url: https://www.cisa.gov
+request_headers:
+  - name: Accept
+    from: literal
+    value: application/json
+test_queries:
+  - SELECT cve_id, vulnerability_name, due_date FROM kev.vulns LIMIT 3
+tables:
+  - name: vulns
+    description: >-
+      All CVEs on CISA's KEV list — vulnerabilities being actively exploited
+      by real attackers right now. No filter required; returns the full catalog.
+    guide: >
+      Returns all known exploited vulnerabilities from CISA's KEV feed.
+      Use this table to check if a CVE from your dependency scan is being
+      actively weaponized. Filter by cve_id in your query to find a specific
+      CVE. Each entry includes CISA's mandated remediation due_date and a
+      flag for known ransomware campaign use.
+    request:
+      method: GET
+      path: /sites/default/files/feeds/known_exploited_vulnerabilities.json
+    response:
+      rows_path:
+        - vulnerabilities
+      row_strategy: direct
+    pagination:
+      mode: none
+    columns:
+      - name: cve_id
+        type: Utf8
+        nullable: false
+        description: CVE identifier, e.g. CVE-2021-44228
+        expr:
+          kind: path
+          path:
+            - cveID
+      - name: vendor_project
+        type: Utf8
+        nullable: true
+        description: Vendor or project name
+        expr:
+          kind: path
+          path:
+            - vendorProject
+      - name: product
+        type: Utf8
+        nullable: true
+        description: Affected product name
+        expr:
+          kind: path
+          path:
+            - product
+      - name: vulnerability_name
+        type: Utf8
+        nullable: true
+        description: Human-readable vulnerability name
+        expr:
+          kind: path
+          path:
+            - vulnerabilityName
+      - name: date_added
+        type: Utf8
+        nullable: true
+        description: Date CISA added this to the KEV list (YYYY-MM-DD)
+        expr:
+          kind: path
+          path:
+            - dateAdded
+      - name: short_description
+        type: Utf8
+        nullable: true
+        description: Brief description of the vulnerability
+        expr:
+          kind: path
+          path:
+            - shortDescription
+      - name: required_action
+        type: Utf8
+        nullable: true
+        description: CISA-mandated remediation action
+        expr:
+          kind: path
+          path:
+            - requiredAction
+      - name: due_date
+        type: Utf8
+        nullable: true
+        description: CISA-mandated remediation deadline (YYYY-MM-DD)
+        expr:
+          kind: path
+          path:
+            - dueDate
+      - name: ransomware_use
+        type: Utf8
+        nullable: true
+        description: Whether used in known ransomware campaigns
+        expr:
+          kind: path
+          path:
+            - knownRansomwareCampaignUse
+      - name: notes
+        type: Utf8
+        nullable: true
+        description: Additional references and links
+        expr:
+          kind: path
+          path:
+            - notes
