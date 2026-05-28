@@ -2,21 +2,2670 @@
 <html lang="en">
 <head>
 <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>DriftWatch — Captain's Chart Room</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
-  body { background: #0d2137; color: #e2edf5; font-family: system-ui, sans-serif; padding: 2rem; }
-  h1 { color: #f59e0b; }
-  code { background: #132d4a; padding: 0.2rem 0.4rem; border-radius: 4px; }
+  :root {
+    /* Ocean depths */
+    --bg: #061420;
+    --bg2: #081a2e;
+    --bg3: #0a2038;
+    --bg-card: #0c2340;
+    --bg-card2: #0e2848;
+
+    /* Borders */
+    --border: #0f3050;
+    --border2: #144070;
+    --border-bright: #1a5090;
+    --border-glow: rgba(232, 197, 90, 0.3);
+
+    /* Neon accents */
+    --gold: #E8C55A;
+    --gold-glow: rgba(232, 197, 90, 0.2);
+    --gold-dim: rgba(232, 197, 90, 0.08);
+    --neon-red: #FF4444;
+    --neon-red-glow: rgba(255, 68, 68, 0.3);
+    --neon-orange: #FF8C00;
+    --neon-green: #00FF88;
+    --neon-green-glow: rgba(0, 255, 136, 0.3);
+    --neon-cyan: #00FFFF;
+    --neon-cyan-glow: rgba(0, 255, 255, 0.2);
+    --neon-blue: #4488FF;
+
+    /* Legacy aliases — map old names to the new neon palette so existing rules pick up the theme */
+    --red: #FF4444;
+    --red-dim: rgba(255, 68, 68, 0.15);
+    --green: #00FF88;
+    --green-dim: rgba(0, 255, 136, 0.15);
+    --blue: #4488FF;
+    --teal: #00FFFF;
+    --teal-accent: #00FFFF;
+
+    /* Text */
+    --text: #E8F4F8;
+    --text2: #6B9BB8;
+    --text3: #2A5070;
+
+    /* Fonts */
+    --mono: 'Space Mono', monospace;
+    --sans: 'DM Sans', sans-serif;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; height: 100%; }
+  body {
+    background-color: var(--bg);
+    background-image:
+      radial-gradient(ellipse at 15% 85%, rgba(0, 255, 136, 0.03) 0%, transparent 45%),
+      radial-gradient(ellipse at 85% 15%, rgba(0, 255, 255, 0.03) 0%, transparent 45%),
+      radial-gradient(ellipse at 50% 50%, rgba(232, 197, 90, 0.015) 0%, transparent 60%),
+      linear-gradient(180deg, rgba(0, 255, 255, 0.02) 0%, transparent 100%);
+    background-attachment: fixed;
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 14px;
+    line-height: 1.5;
+    overflow-x: hidden;
+  }
+
+  /* Ocean floor — subtle floating light at the bottom of the viewport */
+  .ocean-floor {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+  }
+  .ocean-floor::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: -50%;
+    width: 200%;
+    height: 60px;
+    background: radial-gradient(ellipse at 50% 100%, rgba(0, 255, 255, 0.04) 0%, transparent 70%);
+    animation: oceanFloat 8s ease-in-out infinite;
+  }
+  .ocean-floor::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: -50%;
+    width: 200%;
+    height: 40px;
+    background: radial-gradient(ellipse at 30% 100%, rgba(232, 197, 90, 0.03) 0%, transparent 60%);
+    animation: oceanFloat 12s ease-in-out infinite reverse;
+  }
+  @keyframes oceanFloat {
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(5%); }
+  }
+
+  /* HEADER */
+  header.topbar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    height: 56px;
+    background: var(--bg2);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    padding: 0 18px;
+    gap: 18px;
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--mono);
+    font-weight: 700;
+    font-size: 16px;
+    letter-spacing: 1px;
+    color: var(--text);
+  }
+  .brand .compass {
+    color: var(--gold);
+    font-size: 22px;
+    line-height: 1;
+  }
+  .scan-form {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+  }
+  .scan-form input {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-family: var(--mono);
+    font-size: 13px;
+    padding: 8px 12px;
+    width: 280px;
+    border-radius: 4px;
+    outline: none;
+  }
+  .scan-form input:focus { border-color: var(--gold); }
+  .scan-form button {
+    background: var(--gold);
+    color: #1c1208;
+    border: none;
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 13px;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    letter-spacing: 0.3px;
+  }
+  .scan-form button:hover { background: #fbb340; }
+  .scan-form button:disabled { background: var(--gold-dim); cursor: not-allowed; }
+  .status-pill {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text2);
+  }
+  .pulse-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--green);
+    box-shadow: 0 0 8px var(--green);
+    animation: pulse 1.5s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.85); }
+  }
+
+  /* LAYOUT */
+  .app {
+    display: flex;
+    min-height: calc(100vh - 56px);
+  }
+  aside.sidebar {
+    width: 200px;
+    flex-shrink: 0;
+    background: var(--bg2);
+    border-right: 1px solid var(--border);
+    padding: 18px 0;
+    position: sticky;
+    top: 56px;
+    height: calc(100vh - 56px);
+    overflow-y: auto;
+  }
+  .nav-section {
+    padding: 0 18px;
+    margin-bottom: 16px;
+  }
+  .nav-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    color: var(--text3);
+    margin-bottom: 8px;
+  }
+  .nav-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 7px 8px;
+    margin: 0 -8px;
+    border-radius: 4px;
+    cursor: pointer;
+    color: var(--text2);
+    font-size: 13px;
+    transition: background 0.15s, color 0.15s;
+  }
+  .nav-item:hover { background: var(--bg3); color: var(--text); }
+  .nav-item.active {
+    background: var(--bg3);
+    color: var(--text);
+    border-left: 2px solid var(--gold);
+    padding-left: 6px;
+  }
+  .nav-item .label { display: flex; align-items: center; gap: 8px; }
+  .nav-item .icon { color: var(--text3); font-size: 14px; width: 14px; text-align: center; }
+  .nav-item.active .icon { color: var(--gold); }
+  .nav-badge {
+    font-family: var(--mono);
+    font-size: 10px;
+    background: var(--bg);
+    color: var(--text2);
+    padding: 2px 6px;
+    border-radius: 3px;
+    min-width: 22px;
+    text-align: center;
+  }
+  .nav-badge.red { background: var(--red-dim); color: #fca5a5; }
+  .nav-badge.amber { background: var(--gold-dim); color: #fde68a; animation: pulse 2s ease-in-out infinite; }
+  .nav-badge.green { background: var(--green-dim); color: #86efac; }
+  .nav-badge.blue { background: #1e3a5f; color: #93c5fd; }
+
+  /* MAIN */
+  main.content {
+    flex: 1;
+    padding: 28px 36px;
+    overflow-x: hidden;
+  }
+  .screen { display: none; }
+  .screen.active { display: block; }
+
+  .screen-header { margin-bottom: 24px; }
+  .screen-title {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: var(--gold);
+    margin: 0 0 4px 0;
+  }
+  .screen-sub {
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--text);
+    margin: 0;
+  }
+  .screen-tag {
+    font-size: 13px;
+    color: var(--text2);
+    margin-top: 6px;
+  }
+
+  /* OVERVIEW headline */
+  .headline {
+    background: linear-gradient(135deg, var(--bg2), var(--bg3));
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--gold);
+    padding: 24px 28px;
+    border-radius: 6px;
+    margin-bottom: 24px;
+    font-size: 22px;
+    line-height: 1.4;
+  }
+  .headline .big {
+    font-family: var(--mono);
+    font-size: 44px;
+    font-weight: 700;
+    color: var(--gold);
+    display: inline-block;
+    margin-right: 8px;
+  }
+  .headline em {
+    font-style: normal;
+    color: var(--gold);
+    font-weight: 600;
+  }
+
+  /* Stat cards */
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    margin-bottom: 24px;
+  }
+  .stat-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 16px 18px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .stat-card:hover {
+    border-color: var(--border-bright);
+    box-shadow: 0 0 20px rgba(0,255,255,0.05);
+  }
+  .stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+  }
+  .stat-card.red::before { background: linear-gradient(90deg, var(--neon-red), transparent); box-shadow: 0 0 8px var(--neon-red); }
+  .stat-card.amber::before, .stat-card.gold::before { background: linear-gradient(90deg, var(--gold), transparent); box-shadow: 0 0 8px var(--gold); }
+  .stat-card.cyan::before { background: linear-gradient(90deg, var(--neon-cyan), transparent); box-shadow: 0 0 8px var(--neon-cyan); }
+  .stat-card.green::before { background: linear-gradient(90deg, var(--neon-green), transparent); box-shadow: 0 0 8px var(--neon-green); }
+  .stat-card.pulsing { animation: pulse-bg 2.5s ease-in-out infinite; }
+  @keyframes pulse-bg {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(232, 197, 90, 0); }
+    50% { box-shadow: 0 0 18px 0 rgba(232, 197, 90, 0.25); }
+  }
+  .stat-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    color: var(--text2);
+    margin-bottom: 8px;
+  }
+  .stat-value {
+    font-family: var(--mono);
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 1;
+    margin-bottom: 4px;
+    color: var(--text);
+    text-shadow: 0 0 20px currentColor;
+  }
+  .stat-card.red .stat-value { color: var(--neon-red); }
+  .stat-card.amber .stat-value, .stat-card.gold .stat-value { color: var(--gold); }
+  .stat-card.cyan .stat-value { color: var(--neon-cyan); }
+  .stat-card.green .stat-value { color: var(--neon-green); }
+  .stat-sub { font-size: 11px; color: var(--text3); margin-top: 4px; }
+
+  /* ── HAZARD CHART ── */
+  .chart-section { margin-bottom: 28px; }
+  .chart-header {
+    display: flex; align-items: center; gap: 16px;
+    margin-bottom: 12px; flex-wrap: wrap;
+  }
+  .chart-title {
+    font-family: var(--mono); font-size: 11px; font-weight: 700;
+    color: var(--neon-cyan); letter-spacing: 0.15em; text-transform: uppercase;
+    text-shadow: 0 0 10px var(--neon-cyan-glow);
+  }
+  .chart-sub { font-size: 11px; color: var(--text3); }
+  .chart-legend { display: flex; gap: 14px; margin-left: auto; }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 10px;
+    font-family: var(--mono);
+    padding: 3px 8px;
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.08);
+    background: rgba(255,255,255,0.04);
+    color: var(--text3);
+  }
+  .legend-item.breaking { color: #FF6B6B; border-color: rgba(255,107,107,0.3); }
+  .legend-item.safe { color: #00FF88; border-color: rgba(0,255,136,0.3); }
+  .legend-item.precve { color: #00FFFF; border-color: rgba(0,255,255,0.3); }
+  .legend-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; box-shadow: 0 0 6px currentColor; }
+
+  .hazard-chart-wrap { position: relative; }
+  .chart-y-label {
+    font-family: var(--mono); font-size: 9px; color: var(--text3);
+    letter-spacing: 0.1em; margin-bottom: 6px; text-align: center;
+  }
+
+  .hazard-chart {
+    position: relative;
+    height: 340px;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    background-image:
+      linear-gradient(rgba(0,255,255,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,255,255,0.04) 1px, transparent 1px),
+      radial-gradient(ellipse 85% 75% at 50% 50%, transparent 84%, rgba(0,255,255,0.06) 85%, transparent 86%),
+      radial-gradient(ellipse 60% 52% at 50% 50%, transparent 84%, rgba(0,255,255,0.05) 85%, transparent 86%),
+      radial-gradient(ellipse 35% 30% at 50% 50%, transparent 84%, rgba(0,255,255,0.04) 85%, transparent 86%);
+    background-size: 60px 60px, 60px 60px, 100% 100%, 100% 100%, 100% 100%;
+  }
+
+  .chart-compass-watermark {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    z-index: 0;
+  }
+  .chart-coords { position: absolute; inset: 0; pointer-events: none; }
+  .coord {
+    position: absolute;
+    font-family: var(--mono);
+    font-size: 8px;
+    color: rgba(0,255,255,0.12);
+    letter-spacing: 0.05em;
+  }
+  .coord-tl { top: 6px; left: 10px; }
+  .coord-tr { top: 6px; right: 10px; }
+  .coord-bl { bottom: 28px; left: 10px; }
+  .coord-br { bottom: 28px; right: 10px; }
+
+  .rank-badge {
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--bg);
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    font-family: var(--mono);
+    font-size: 9px;
+    font-weight: 700;
+    padding: 1px 5px;
+    border-radius: 3px;
+    white-space: nowrap;
+    display: none;
+    align-items: center;
+    z-index: 15;
+    box-shadow: 0 0 8px rgba(232,197,90,0.4);
+  }
+  .tooltip-rank {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--gold);
+    margin-bottom: 6px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .danger-zone {
+    position: absolute;
+    top: 0; right: 0;
+    width: 40%; height: 50%;
+    background: radial-gradient(ellipse at 100% 0%, rgba(255,68,68,0.08) 0%, transparent 70%);
+    border-bottom-left-radius: 100px;
+    pointer-events: none;
+  }
+  .danger-zone-label {
+    position: absolute;
+    top: 12px; right: 16px;
+    font-family: var(--mono); font-size: 9px;
+    color: rgba(255,68,68,0.5); letter-spacing: 0.15em;
+  }
+
+  .chart-axis-x {
+    position: absolute;
+    bottom: 8px; left: 16px; right: 16px;
+    display: flex; justify-content: space-between;
+    font-family: var(--mono); font-size: 9px;
+    color: var(--text3); pointer-events: none;
+  }
+
+  .hazard-buoy {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+    transition: transform 0.2s;
+  }
+  .hazard-buoy:hover { transform: translate(-50%, -50%) scale(1.3); z-index: 10; }
+
+  .buoy-ring {
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+    animation: buoyFloat 3s ease-in-out infinite;
+  }
+  .hazard-buoy:nth-child(odd) .buoy-ring { animation-duration: 3.5s; }
+  .hazard-buoy:nth-child(3n) .buoy-ring { animation-duration: 4s; animation-delay: -1s; }
+  .hazard-buoy:nth-child(4n) .buoy-ring { animation-duration: 2.8s; animation-delay: -2s; }
+
+  @keyframes buoyFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+  }
+
+  @keyframes buoyPulse {
+    0% { opacity: 0.6; transform: scale(1); }
+    100% { opacity: 0; transform: scale(2); }
+  }
+
+  .buoy-label {
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: var(--mono);
+    font-size: 9px;
+    white-space: nowrap;
+    color: var(--text2);
+    pointer-events: none;
+    text-shadow: 0 1px 3px var(--bg);
+  }
+
+  .chart-tooltip {
+    position: absolute;
+    background: var(--bg-card2);
+    border: 1px solid var(--border-bright);
+    border-radius: 6px;
+    padding: 12px 14px;
+    pointer-events: none;
+    z-index: 20;
+    min-width: 200px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4), 0 0 20px rgba(0,255,255,0.08);
+  }
+  .tooltip-pkg { font-family: var(--mono); font-size: 12px; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+  .tooltip-days { font-family: var(--mono); font-size: 11px; color: var(--gold); margin-bottom: 3px; }
+  .tooltip-owner { font-size: 11px; color: var(--neon-cyan); margin-bottom: 3px; }
+  .tooltip-action { font-size: 10px; margin-bottom: 3px; }
+  .tooltip-cves { font-size: 10px; color: var(--text3); }
+
+  /* ── ACTION COLUMNS ── */
+  .action-columns {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-top: 20px;
+  }
+  .action-col {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .action-col-header {
+    display: flex; align-items: center; gap: 8px;
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+  }
+  .action-col-header.red { background: rgba(255,68,68,0.08); border-left: 3px solid var(--neon-red); }
+  .action-col-header.green { background: rgba(0,255,136,0.08); border-left: 3px solid var(--neon-green); }
+  .action-col-header.cyan { background: rgba(0,255,255,0.08); border-left: 3px solid var(--neon-cyan); }
+  .col-icon { font-size: 13px; }
+  .col-title { font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 0.15em; }
+  .action-col-header.red .col-title { color: var(--neon-red); text-shadow: 0 0 10px var(--neon-red-glow); }
+  .action-col-header.green .col-title { color: var(--neon-green); text-shadow: 0 0 10px var(--neon-green-glow); }
+  .action-col-header.cyan .col-title { color: var(--neon-cyan); text-shadow: 0 0 10px var(--neon-cyan-glow); }
+  .col-count {
+    margin-left: auto;
+    font-family: var(--mono); font-size: 11px;
+    background: rgba(255,255,255,0.05);
+    padding: 2px 7px; border-radius: 10px;
+    color: var(--text2);
+  }
+  .action-col-body { padding: 8px; max-height: 280px; overflow-y: auto; }
+
+  .action-item {
+    padding: 8px 10px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+    border: 1px solid var(--border);
+    background: var(--bg-card);
+    cursor: pointer;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  .action-item:hover {
+    border-color: var(--border-bright);
+    box-shadow: 0 0 10px rgba(0,255,255,0.05);
+  }
+  .action-item-pkg { font-family: var(--mono); font-size: 11px; font-weight: 700; color: var(--text); }
+  .action-item-meta { font-size: 10px; color: var(--text2); margin-top: 3px; }
+  .action-item-owner { font-size: 10px; color: var(--neon-cyan); margin-top: 2px; }
+
+  /* Risk cards */
+  .risk-list { display: flex; flex-direction: column; gap: 10px; }
+  .risk-card {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--text3);
+    padding: 14px 18px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s;
+  }
+  .risk-card:hover { background: var(--bg2); border-color: var(--border2); }
+  .risk-card.red { border-left-color: var(--red); }
+  .risk-card.amber { border-left-color: var(--gold); }
+  .risk-card.blue { border-left-color: var(--blue); }
+  .risk-card.dim { border-left-color: var(--text3); }
+  .risk-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+  .risk-left { display: flex; flex-direction: column; gap: 6px; flex: 1; min-width: 0; }
+  .risk-name {
+    font-family: var(--mono);
+    font-weight: 700;
+    font-size: 15px;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .risk-version { color: var(--text2); font-weight: 400; }
+  .risk-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip {
+    font-family: var(--mono);
+    font-size: 11px;
+    padding: 3px 8px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    color: var(--text2);
+  }
+  .chip.red { color: #fca5a5; border-color: var(--red-dim); }
+  .chip.amber { color: #fde68a; border-color: var(--gold-dim); }
+  .chip.green { color: #86efac; border-color: var(--green-dim); }
+  .chip.blue { color: #93c5fd; border-color: #1e3a5f; }
+  .badge {
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    padding: 3px 8px;
+    border-radius: 3px;
+  }
+  .badge.precve {
+    background: var(--gold-dim);
+    color: #fde68a;
+    animation: glow 1.6s ease-in-out infinite;
+  }
+  @keyframes glow {
+    0%, 100% { box-shadow: 0 0 0 rgba(232, 197, 90, 0); }
+    50% { box-shadow: 0 0 12px rgba(232, 197, 90, 0.6); }
+  }
+  .badge.breaking { background: var(--red-dim); color: #fca5a5; }
+  .badge.safe { background: var(--green-dim); color: #86efac; }
+  .badge.moderate { background: #1e3a5f; color: #93c5fd; }
+  .badge.nofix { background: var(--bg); color: var(--text3); border: 1px solid var(--border); }
+
+  .risk-right { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; }
+  .urgency {
+    font-family: var(--mono);
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 1;
+  }
+  .urgency.red { color: var(--red); }
+  .urgency.amber { color: var(--gold); }
+  .urgency.blue { color: var(--blue); }
+  .urgency.dim { color: var(--text2); }
+  .urgency-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 1px;
+    color: var(--text2);
+  }
+
+  .risk-expand {
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid var(--border);
+    display: none;
+  }
+  .risk-card.open .risk-expand { display: block; }
+  .cve-row {
+    display: grid;
+    grid-template-columns: 200px 1fr 100px;
+    gap: 12px;
+    padding: 6px 0;
+    font-size: 12px;
+    align-items: start;
+  }
+  .cve-row + .cve-row { border-top: 1px solid var(--border); }
+  .cve-id { font-family: var(--mono); color: #FF6B6B; font-size: 11px; }
+  .cve-summary { color: var(--text); }
+  .cve-fix { font-family: var(--mono); color: var(--green); font-size: 11px; text-align: right; }
+
+  /* Tide chart */
+  .tide-chart {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 18px 22px;
+    margin-bottom: 24px;
+  }
+  .tide-row {
+    display: grid;
+    grid-template-columns: 200px 1fr 100px 80px;
+    align-items: center;
+    gap: 14px;
+    padding: 4px 0;
+    font-size: 12px;
+  }
+  .tide-name { font-family: var(--mono); color: var(--text); }
+  .tide-bar-wrap {
+    height: 18px;
+    background: var(--bg);
+    border-radius: 3px;
+    overflow: hidden;
+    position: relative;
+  }
+  .tide-bar {
+    height: 100%;
+    background: var(--text3);
+    transition: width 0.6s ease-out;
+  }
+  .tide-bar.red { background: var(--red); }
+  .tide-bar.amber { background: var(--gold); }
+  .tide-bar.blue { background: var(--blue); }
+  .tide-bar.green { background: var(--green); }
+  .tide-days { font-family: var(--mono); color: var(--text); text-align: right; }
+  .tide-fix { font-family: var(--mono); color: var(--green); font-size: 11px; text-align: right; }
+
+  /* Tables */
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+    font-size: 12px;
+  }
+  .data-table th {
+    text-align: left;
+    background: var(--bg2);
+    padding: 10px 14px;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    color: var(--text2);
+    font-weight: 700;
+    border-bottom: 1px solid var(--border);
+  }
+  .data-table td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text);
+    vertical-align: top;
+  }
+  .data-table tr:last-child td { border-bottom: none; }
+  .data-table .mono { font-family: var(--mono); }
+  .data-table .days-red { color: #fca5a5; font-weight: 700; }
+  .data-table .days-amber { color: var(--gold); font-weight: 700; }
+  .data-table .days-blue { color: #93c5fd; }
+  .data-table .days-green { color: #86efac; }
+
+  /* Storm warnings */
+  .storm-card {
+    background: var(--bg3);
+    border: 1px solid var(--gold-dim);
+    border-left: 3px solid var(--gold);
+    border-radius: 4px;
+    padding: 16px 20px;
+    margin-bottom: 12px;
+    animation: pulse-bg 2.5s ease-in-out infinite;
+  }
+  .storm-card .badge.precve { display: inline-block; margin-bottom: 8px; }
+  .storm-card .pkg {
+    font-family: var(--mono);
+    font-weight: 700;
+    font-size: 15px;
+    color: var(--gold);
+    margin-bottom: 4px;
+  }
+  .storm-card .reason {
+    color: var(--text);
+    margin: 8px 0;
+  }
+  .storm-card .meta {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text2);
+  }
+  .storm-tagline {
+    font-style: italic;
+    color: var(--gold);
+    margin: 16px 0;
+    font-size: 13px;
+  }
+  .empty-state {
+    background: var(--bg3);
+    border: 1px dashed var(--border2);
+    border-radius: 4px;
+    padding: 24px;
+    text-align: center;
+    color: var(--text2);
+    font-size: 13px;
+  }
+
+  /* Signal bars */
+  .signal-card {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 16px 18px;
+    margin-bottom: 12px;
+  }
+  .signal-card .pkg {
+    font-family: var(--mono);
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--text);
+    margin-bottom: 12px;
+  }
+  .signal-bar {
+    display: grid;
+    grid-template-columns: 180px 1fr 60px;
+    gap: 12px;
+    align-items: center;
+    padding: 5px 0;
+    font-size: 12px;
+  }
+  .signal-label { color: var(--text2); font-family: var(--mono); font-size: 11px; }
+  .signal-track {
+    height: 6px;
+    background: var(--bg);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .signal-fill {
+    height: 100%;
+    background: var(--green);
+  }
+  .signal-fill.amber { background: var(--gold); }
+  .signal-fill.red { background: var(--red); }
+  .signal-score {
+    font-family: var(--mono);
+    color: var(--text);
+    text-align: right;
+    font-size: 11px;
+  }
+
+  /* Maintainer cards */
+  .maint-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 14px; }
+  .maint-card {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 16px 18px;
+  }
+  .maint-card .pkg {
+    font-family: var(--mono);
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+  .maint-card .ver { font-family: var(--mono); color: var(--text2); font-size: 11px; }
+  .maint-resp {
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    margin: 10px 0 6px;
+  }
+  .maint-resp.fast { color: var(--green); }
+  .maint-resp.moderate { color: var(--gold); }
+  .maint-resp.slow { color: var(--red); }
+  .maint-resp.veryslow { color: #b91c1c; }
+  .maint-decision {
+    color: var(--text);
+    font-size: 12px;
+    line-height: 1.5;
+  }
+  .maint-exp {
+    margin-top: 8px;
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text3);
+  }
+
+  /* Orders */
+  .orders-section { margin-bottom: 24px; }
+  .orders-section h3 {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 2px;
+    margin: 0 0 12px 0;
+  }
+  .orders-section h3.safe { color: var(--green); }
+  .orders-section h3.breaking { color: var(--red); }
+  .order-card {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--text3);
+    border-radius: 4px;
+    padding: 14px 18px;
+    margin-bottom: 8px;
+  }
+  .order-card.safe { border-left-color: var(--green); }
+  .order-card.breaking { border-left-color: var(--red); }
+  .order-card.moderate { border-left-color: var(--blue); }
+  .order-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 6px;
+  }
+  .order-pkg { font-family: var(--mono); font-weight: 700; color: var(--text); font-size: 14px; }
+  .order-arrow { color: var(--gold); font-family: var(--mono); margin: 0 4px; }
+  .order-days { font-family: var(--mono); color: var(--text2); font-size: 11px; }
+  .order-exp { color: var(--text2); font-size: 12px; }
+
+  /* Crew manifest */
+  .crew-card {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 18px 22px;
+    margin-bottom: 14px;
+  }
+  .crew-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .crew-pkg { font-family: var(--mono); font-weight: 700; font-size: 15px; color: var(--text); }
+  .crew-meta { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  .crew-section { margin: 10px 0; }
+  .crew-section-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    color: var(--text3);
+    margin-bottom: 6px;
+  }
+  .owner-chip {
+    display: inline-block;
+    background: #1e3a5f;
+    color: #93c5fd;
+    font-family: var(--mono);
+    font-size: 12px;
+    padding: 4px 10px;
+    border-radius: 3px;
+    margin: 0 6px 6px 0;
+  }
+  .file-chip {
+    display: inline-block;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--text2);
+    font-family: var(--mono);
+    font-size: 11px;
+    padding: 3px 8px;
+    border-radius: 3px;
+    margin: 0 6px 6px 0;
+  }
+  .ticket-box {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 12px 14px;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text);
+    white-space: pre-wrap;
+    line-height: 1.6;
+    margin-top: 8px;
+  }
+  .copy-btn {
+    background: var(--bg2);
+    color: var(--gold);
+    border: 1px solid var(--gold-dim);
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 700;
+    padding: 6px 12px;
+    border-radius: 3px;
+    cursor: pointer;
+    margin-top: 8px;
+    letter-spacing: 0.5px;
+  }
+  .copy-btn:hover { background: var(--gold-dim); color: #fde68a; }
+  .copy-btn.copied { background: var(--green-dim); color: #86efac; border-color: var(--green); }
+
+  /* Coral queries */
+  .query-card {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 16px 18px;
+    margin-bottom: 14px;
+  }
+  .query-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  .query-name { font-weight: 600; color: var(--text); font-size: 14px; }
+  .source-badge {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 1px;
+    padding: 3px 8px;
+    border-radius: 3px;
+    background: #1e3a5f;
+    color: #93c5fd;
+  }
+  .source-badge.osv { background: var(--red-dim); color: #fca5a5; }
+  .source-badge.depsdev { background: var(--gold-dim); color: #fde68a; }
+  .source-badge.kev { background: #4a1d1d; color: #fca5a5; }
+  .query-sql {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    padding: 12px 14px;
+    font-family: var(--mono);
+    font-size: 11px;
+    line-height: 1.6;
+    color: var(--text);
+    overflow-x: auto;
+    white-space: pre;
+  }
+  .kw { color: var(--gold); font-weight: 700; }
+  .tbl { color: var(--neon-cyan); }
+  .str { color: var(--neon-green); }
+  .fn { color: var(--neon-orange); }
+  .cmt { color: var(--text3); font-style: italic; }
+  .query-note { color: var(--text2); font-size: 12px; margin-top: 8px; font-style: italic; }
+
+  /* Why DriftWatch */
+  .why-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; margin-top: 20px; }
+  .why-card {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-top: 2px solid var(--gold);
+    border-radius: 4px;
+    padding: 18px 20px;
+  }
+  .why-card h4 {
+    margin: 0 0 8px 0;
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 1.5px;
+    color: var(--gold);
+  }
+  .why-card p { margin: 0; color: var(--text); font-size: 13px; line-height: 1.6; }
+
+  .compare-table { font-size: 12px; }
+  .compare-table .yes { color: var(--green); font-weight: 700; }
+  .compare-table .no { color: var(--text3); }
+  .compare-table .uniq { color: var(--gold); font-weight: 700; }
+
+  /* Progress overlay */
+  .progress-overlay {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background: var(--bg2);
+    border: 1px solid var(--gold-dim);
+    border-left: 3px solid var(--gold);
+    border-radius: 4px;
+    padding: 16px 20px;
+    min-width: 340px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+    z-index: 200;
+    display: none;
+  }
+  .progress-overlay.show { display: block; }
+  .progress-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    color: var(--gold);
+    margin-bottom: 8px;
+  }
+  .progress-msg { color: var(--text); font-size: 13px; margin-bottom: 10px; }
+  .progress-track {
+    height: 6px;
+    background: var(--bg);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--gold), #fbb340);
+    transition: width 0.4s ease-out;
+    width: 0%;
+  }
+  .progress-pct {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text2);
+    margin-top: 6px;
+    text-align: right;
+  }
+
+  /* Toast / error */
+  .toast {
+    position: fixed;
+    top: 72px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--bg2);
+    border: 1px solid var(--red-dim);
+    border-left: 3px solid var(--red);
+    padding: 12px 18px;
+    border-radius: 4px;
+    font-size: 13px;
+    color: var(--text);
+    z-index: 300;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+    display: none;
+  }
+  .toast.show { display: flex; }
+  .toast button {
+    background: var(--gold);
+    color: #1c1208;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 3px;
+    cursor: pointer;
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 11px;
+  }
+
+  /* Loading state */
+  .loading-shimmer {
+    background: linear-gradient(90deg, var(--bg3) 0%, var(--bg2) 50%, var(--bg3) 100%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s linear infinite;
+    border-radius: 4px;
+    height: 18px;
+  }
+  @keyframes shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+  }
+
+  .footer-note {
+    color: var(--text3);
+    font-size: 11px;
+    margin-top: 32px;
+    font-family: var(--mono);
+    text-align: center;
+  }
+
+  /* WAVE DIVIDER */
+  .wave-divider {
+    height: 20px;
+    width: 100%;
+    overflow: hidden;
+    flex-shrink: 0;
+    margin-top: -1px;
+    line-height: 0;
+  }
+  .wave-divider svg { width: 100%; height: 100%; display: block; }
+
+  /* COMPASS LOGO */
+  @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+  .compass-rose { flex-shrink: 0; }
+  .logo { display: flex; align-items: center; gap: 12px; }
+  .logo-text { display: flex; flex-direction: column; line-height: 1.1; }
+  .logo-name {
+    font-family: var(--mono);
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    color: var(--text);
+  }
+  .logo-sub {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    color: var(--text3);
+    text-transform: uppercase;
+    margin-top: 2px;
+  }
+
+  /* HEADLINE BANNER */
+  .headline-banner {
+    background: linear-gradient(135deg, rgba(255,68,68,0.06) 0%, rgba(232,197,90,0.04) 100%);
+    border: 1px solid rgba(232,197,90,0.15);
+    border-left: 3px solid var(--gold);
+    border-radius: 6px;
+    padding: 20px 24px;
+    margin-bottom: 20px;
+  }
+  .headline-number-wrap { display: flex; align-items: baseline; gap: 10px; margin-bottom: 8px; }
+  .headline-number {
+    font-family: var(--mono);
+    font-size: 72px;
+    font-weight: 700;
+    color: var(--gold);
+    line-height: 1;
+    text-shadow: 0 0 30px rgba(232,197,90,0.4), 0 0 60px rgba(232,197,90,0.15);
+  }
+  .headline-unit { font-family: var(--mono); font-size: 24px; color: var(--text2); }
+  .headline-text { font-size: 16px; color: var(--text2); line-height: 1.6; transition: opacity 0.8s ease; }
+  .headline-repo { color: var(--neon-cyan); font-family: var(--mono); font-size: 14px; }
+  .headline-pkg { color: var(--neon-red); font-family: var(--mono); font-size: 14px; font-weight: 700; }
+  .headline-emphasis { color: var(--text); font-weight: 500; }
+
+  /* URGENCY RING */
+  .urgency-ring-wrap { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+  .urgency-verdict {
+    font-family: var(--mono);
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+  }
+
+  /* RISK CARD GLOWS */
+  .risk-card { border-left-width: 3px !important; }
+  .risk-card.red {
+    box-shadow: 0 0 20px rgba(255,68,68,0.10), inset 0 0 30px rgba(255,68,68,0.03);
+  }
+  .risk-card.amber {
+    box-shadow: 0 0 20px rgba(232,197,90,0.10), inset 0 0 30px rgba(232,197,90,0.03);
+  }
+
+  /* PRE-CVE PULSING BADGE */
+  .badge.precve {
+    background: rgba(0,255,255,0.10);
+    border: 1px solid rgba(0,255,255,0.4);
+    color: var(--neon-cyan);
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 3px;
+    letter-spacing: 0.05em;
+    animation: precvePulse 2s ease-in-out infinite;
+  }
+  @keyframes precvePulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(0,255,255,0); border-color: rgba(0,255,255,0.4); }
+    50% { box-shadow: 0 0 14px 3px rgba(0,255,255,0.35); border-color: rgba(0,255,255,0.9); }
+  }
+
+  .stat-empty {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--mono);
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--neon-green);
+    text-shadow: 0 0 12px var(--neon-green-glow);
+  }
+  .stat-empty .check { font-size: 22px; }
+
+  /* RADAR OVERLAY */
+  @keyframes radarSpin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+  @keyframes blipFade { 0% { opacity:1; transform: translate(-50%,-50%) scale(1); } 100% { opacity:0; transform: translate(-50%,-50%) scale(2); } }
+
+  .radar-overlay {
+    position: fixed; inset: 0; z-index: 1000;
+    background: rgba(13, 33, 55, 0.97);
+    backdrop-filter: blur(8px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+  }
+  .radar-overlay.show { display: flex; }
+  .radar-container { display: flex; flex-direction: column; align-items: center; gap: 32px; position: relative; }
+  .radar-svg-wrap { position: relative; width: 300px; height: 300px; }
+  .radar-svg { filter: drop-shadow(0 0 20px rgba(8,145,178,0.3)); display: block; }
+  .radar-blips { position: absolute; top: 0; left: 0; width: 300px; height: 300px; pointer-events: none; }
+  .radar-blip {
+    position: absolute; width: 6px; height: 6px; border-radius: 50%;
+    background: #E8C55A;
+    transform: translate(-50%, -50%);
+    animation: blipFade 2s ease-out forwards;
+    box-shadow: 0 0 8px #E8C55A;
+  }
+  #radar-sweep { transform-origin: 150px 150px; animation: radarSpin 3s linear infinite; }
+  .radar-status { text-align: center; }
+  .radar-title {
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.3em;
+    color: var(--teal-accent); margin-bottom: 8px;
+  }
+  .radar-message {
+    font-family: var(--mono); font-size: 14px; color: var(--text2);
+    margin-bottom: 16px; min-height: 20px;
+  }
+  .radar-progress-wrap { display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 8px; }
+  .radar-progress-bar {
+    width: 240px; height: 3px; background: rgba(255,255,255,0.05);
+    border-radius: 2px; overflow: hidden;
+  }
+  .radar-progress-fill {
+    height: 100%; background: linear-gradient(90deg, var(--teal-accent), var(--gold));
+    border-radius: 2px; transition: width 0.5s ease;
+    box-shadow: 0 0 8px rgba(232,197,90,0.5);
+    width: 0%;
+  }
+  .radar-progress-pct { font-family: var(--mono); font-size: 11px; color: var(--text3); }
+  .radar-repo { font-family: var(--mono); font-size: 11px; color: var(--text3); letter-spacing: 0.05em; }
 </style>
 </head>
 <body>
-  <h1>DriftWatch</h1>
-  <p>UI placeholder. The full Captain's Chart Room will live here.</p>
-  <p>Backend API is live:</p>
-  <ul>
-    <li><code>POST /api/scan</code> — start a scan</li>
-    <li><code>GET /api/status/{job_id}</code> — poll progress</li>
-    <li><code>GET /api/results/{owner}/{repo}</code> — merged JSON</li>
-  </ul>
+<header class="topbar">
+  <div class="logo">
+    <svg class="compass-rose" width="32" height="32" viewBox="0 0 32 32">
+      <circle cx="16" cy="16" r="14" fill="none" stroke="rgba(232,197,90,0.4)" stroke-width="1"/>
+      <circle cx="16" cy="16" r="10" fill="none" stroke="rgba(232,197,90,0.2)" stroke-width="0.5"/>
+      <circle cx="16" cy="16" r="2" fill="#E8C55A"/>
+      <polygon points="16,3 14,16 16,14 18,16" fill="#E8C55A"/>
+      <polygon points="16,29 14,16 16,18 18,16" fill="rgba(232,197,90,0.3)"/>
+      <polygon points="29,16 16,14 18,16 16,18" fill="rgba(232,197,90,0.3)"/>
+      <polygon points="3,16 16,14 14,16 16,18" fill="rgba(232,197,90,0.3)"/>
+      <line x1="16" y1="3" x2="16" y2="5" stroke="#E8C55A" stroke-width="1"/>
+      <line x1="29" y1="16" x2="27" y2="16" stroke="rgba(232,197,90,0.5)" stroke-width="1"/>
+      <line x1="16" y1="29" x2="16" y2="27" stroke="rgba(232,197,90,0.5)" stroke-width="1"/>
+      <line x1="3" y1="16" x2="5" y2="16" stroke="rgba(232,197,90,0.5)" stroke-width="1"/>
+      <circle cx="16" cy="16" r="12" fill="none" stroke="rgba(232,197,90,0.25)"
+              stroke-width="1" stroke-dasharray="2 4"
+              style="animation: spin 20s linear infinite; transform-origin: 16px 16px;"/>
+    </svg>
+    <div class="logo-text">
+      <span class="logo-name">DRIFTWATCH</span>
+      <span class="logo-sub">SUPPLY CHAIN RADAR</span>
+    </div>
+  </div>
+  <form class="scan-form" id="scanForm" onsubmit="return startScan(event)">
+    <input id="repoInput" type="text" value="jellyfin/jellyfin-web" placeholder="owner/repo" autocomplete="off" />
+    <button id="scanBtn" type="submit">Chart Course</button>
+  </form>
+  <div class="status-pill"><span class="pulse-dot"></span><span id="liveStatus">LIVE DATA · loading…</span></div>
+</header>
+<div class="wave-divider">
+  <svg viewBox="0 0 1440 20" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,10 C240,20 480,0 720,10 C960,20 1200,0 1440,10 L1440,20 L0,20 Z"
+          fill="rgba(26, 58, 92, 0.8)"/>
+    <path d="M0,14 C360,4 720,20 1080,10 C1260,5 1380,12 1440,14 L1440,20 L0,20 Z"
+          fill="rgba(14, 37, 64, 0.6)"/>
+  </svg>
+</div>
+
+<div class="app">
+  <aside class="sidebar">
+    <div class="nav-section">
+      <div class="nav-label">INTELLIGENCE</div>
+      <div class="nav-item active" data-screen="overview">
+        <span class="label"><span class="icon">◈</span> Overview</span>
+        <span class="nav-badge red" id="badge-overview">—</span>
+      </div>
+      <div class="nav-item" data-screen="patchlag">
+        <span class="label"><span class="icon">⧖</span> Patch Lag</span>
+        <span class="nav-badge" id="badge-patchlag">—</span>
+      </div>
+      <div class="nav-item" data-screen="precve">
+        <span class="label"><span class="icon">⚡</span> Pre-CVE Health</span>
+        <span class="nav-badge amber" id="badge-precve">—</span>
+      </div>
+      <div class="nav-item" data-screen="maintainer">
+        <span class="label"><span class="icon">⟳</span> Maintainer Intel</span>
+        <span class="nav-badge" id="badge-maint">—</span>
+      </div>
+    </div>
+    <div class="nav-section">
+      <div class="nav-label">ACTION</div>
+      <div class="nav-item" data-screen="orders">
+        <span class="label"><span class="icon">↑</span> Upgrade Orders</span>
+        <span class="nav-badge green" id="badge-orders">—</span>
+      </div>
+      <div class="nav-item" data-screen="crew">
+        <span class="label"><span class="icon">👤</span> Crew Manifest</span>
+        <span class="nav-badge" id="badge-crew">—</span>
+      </div>
+    </div>
+    <div class="nav-section">
+      <div class="nav-label">ABOUT</div>
+      <div class="nav-item" data-screen="queries">
+        <span class="label"><span class="icon">⎄</span> Coral Queries</span>
+      </div>
+      <div class="nav-item" data-screen="why">
+        <span class="label"><span class="icon">?</span> Why DriftWatch</span>
+      </div>
+    </div>
+  </aside>
+
+  <main class="content">
+    <!-- OVERVIEW -->
+    <section class="screen active" id="screen-overview">
+      <div class="screen-header">
+        <p class="screen-title">INTELLIGENCE BRIEF</p>
+        <h2 class="screen-sub" id="overviewSub">Overview</h2>
+      </div>
+      <div id="headline"></div>
+      <div class="stats-row" id="statsRow"></div>
+
+      <div class="chart-section">
+        <div class="chart-header">
+          <span class="chart-title">⊕ HAZARD CHART</span>
+          <span class="chart-sub">Hover for details · larger buoys = more CVEs</span>
+          <div class="chart-legend">
+            <span class="legend-item breaking">
+              <span class="legend-dot" style="background:#FF6B6B;box-shadow:0 0 4px #FF6B6B"></span>
+              BREAKING
+            </span>
+            <span class="legend-item safe">
+              <span class="legend-dot" style="background:#00FF88;box-shadow:0 0 4px #00FF88"></span>
+              SAFE upgrade
+            </span>
+            <span class="legend-item precve">
+              <span class="legend-dot" style="background:#00FFFF;box-shadow:0 0 4px #00FFFF;animation:precvePulse 2s infinite"></span>
+              PRE-CVE signal
+            </span>
+          </div>
+        </div>
+
+        <div class="hazard-chart-wrap">
+          <div class="chart-y-label">← FEW CVEs · MORE CVEs →</div>
+
+          <div class="hazard-chart" id="hazard-chart">
+            <div class="chart-compass-watermark" style="pointer-events:none">
+              <svg width="80" height="80" viewBox="0 0 80 80" opacity="0.06">
+                <circle cx="40" cy="40" r="38" fill="none" stroke="rgba(0,255,255,1)" stroke-width="1"/>
+                <circle cx="40" cy="40" r="28" fill="none" stroke="rgba(0,255,255,1)" stroke-width="0.5"/>
+                <line x1="40" y1="2" x2="40" y2="78" stroke="rgba(0,255,255,1)" stroke-width="0.5"/>
+                <line x1="2" y1="40" x2="78" y2="40" stroke="rgba(0,255,255,1)" stroke-width="0.5"/>
+                <polygon points="40,4 37,40 40,36 43,40" fill="rgba(232,197,90,1)"/>
+                <polygon points="40,76 37,40 40,44 43,40" fill="rgba(0,255,255,0.5)"/>
+                <polygon points="76,40 40,37 44,40 40,43" fill="rgba(0,255,255,0.5)"/>
+                <polygon points="4,40 40,37 36,40 40,43" fill="rgba(0,255,255,0.5)"/>
+                <text x="40" y="1" text-anchor="middle" fill="rgba(232,197,90,1)" font-size="6" font-family="Space Mono">N</text>
+                <text x="40" y="79" text-anchor="middle" fill="rgba(0,255,255,0.6)" font-size="5" font-family="Space Mono">S</text>
+                <text x="78" y="42" text-anchor="middle" fill="rgba(0,255,255,0.6)" font-size="5" font-family="Space Mono">E</text>
+                <text x="2" y="42" text-anchor="middle" fill="rgba(0,255,255,0.6)" font-size="5" font-family="Space Mono">W</text>
+              </svg>
+            </div>
+            <div class="chart-coords" style="pointer-events:none">
+              <span class="coord coord-tl">0°N 0°W</span>
+              <span class="coord coord-tr">0°N 90°E</span>
+              <span class="coord coord-bl">60°S 0°W</span>
+              <span class="coord coord-br">60°S 90°E</span>
+            </div>
+            <div class="chart-axis-x">
+              <span>RECENT</span>
+              <span>← PATCH LAG (days exposed) →</span>
+              <span>ANCIENT</span>
+            </div>
+            <div class="danger-zone" id="danger-zone">
+              <span class="danger-zone-label">⚠ DANGER ZONE</span>
+            </div>
+          </div>
+
+          <div class="chart-tooltip" id="chart-tooltip" style="display:none">
+            <div class="tooltip-pkg" id="tt-pkg"></div>
+            <div class="tooltip-days" id="tt-days"></div>
+            <div class="tooltip-owner" id="tt-owner"></div>
+            <div class="tooltip-action" id="tt-action"></div>
+            <div class="tooltip-cves" id="tt-cves"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="action-columns" id="action-columns">
+        <div class="action-col" id="col-act-now">
+          <div class="action-col-header red">
+            <span class="col-icon">🚨</span>
+            <span class="col-title">ABANDON SHIP</span>
+            <span class="col-count" id="act-now-count">0</span>
+          </div>
+          <div class="action-col-body" id="act-now-body"></div>
+        </div>
+        <div class="action-col" id="col-this-sprint">
+          <div class="action-col-header green">
+            <span class="col-icon">⛵</span>
+            <span class="col-title">SMOOTH SAILING</span>
+            <span class="col-count" id="sprint-count">0</span>
+          </div>
+          <div class="action-col-body" id="sprint-body"></div>
+        </div>
+        <div class="action-col" id="col-watch">
+          <div class="action-col-header cyan">
+            <span class="col-icon">⚡</span>
+            <span class="col-title">STORM WARNING</span>
+            <span class="col-count" id="watch-count">0</span>
+          </div>
+          <div class="action-col-body" id="watch-body"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PATCH LAG -->
+    <section class="screen" id="screen-patchlag">
+      <div class="screen-header">
+        <p class="screen-title">PATCH LAG ANALYSIS</p>
+        <h2 class="screen-sub">Tide Chart — how long fixes have been ignored</h2>
+        <p class="screen-tag">Days your team has been exposed — with a fix sitting there the whole time</p>
+      </div>
+      <div class="tide-chart" id="tideChart"></div>
+      <table class="data-table">
+        <thead>
+          <tr><th>Package</th><th>Version</th><th>Days Exposed</th><th>Fix Available</th><th>CVEs</th><th>Summary</th></tr>
+        </thead>
+        <tbody id="patchLagTable"></tbody>
+      </table>
+    </section>
+
+    <!-- PRE-CVE -->
+    <section class="screen" id="screen-precve">
+      <div class="screen-header">
+        <p class="screen-title">PRE-CVE INTELLIGENCE</p>
+        <h2 class="screen-sub">⚡ Storm Warnings — security deprecations before CVEs are filed</h2>
+        <p class="screen-tag">Every scanner is silent. DriftWatch fires when upstream deprecates a version for security reasons.</p>
+      </div>
+      <div id="stormSection"></div>
+      <div class="screen-header" style="margin-top:32px; margin-bottom:14px">
+        <p class="screen-title">UPSTREAM HEALTH SIGNALS — top exposed packages</p>
+      </div>
+      <div id="signalSection"></div>
+      <p class="footer-note">Full upstream health computed via OpenSSF Scorecard for connected repos.</p>
+    </section>
+
+    <!-- MAINTAINER -->
+    <section class="screen" id="screen-maintainer">
+      <div class="screen-header">
+        <p class="screen-title">MAINTAINER INTELLIGENCE</p>
+        <h2 class="screen-sub">Will upstream save you? — responsiveness profile per package</h2>
+      </div>
+      <div class="maint-grid" id="maintGrid"></div>
+    </section>
+
+    <!-- ORDERS -->
+    <section class="screen" id="screen-orders">
+      <div class="screen-header">
+        <p class="screen-title">NAVIGATION ORDERS</p>
+        <h2 class="screen-sub">Your Upgrade Work Plan</h2>
+      </div>
+      <div class="orders-section">
+        <h3 class="safe">✅ SAFE — Do These This Sprint</h3>
+        <div id="ordersSafe"></div>
+      </div>
+      <div class="orders-section">
+        <h3 class="breaking">🔴 BREAKING — Plan a Migration</h3>
+        <div id="ordersBreaking"></div>
+      </div>
+    </section>
+
+    <!-- CREW -->
+    <section class="screen" id="screen-crew">
+      <div class="screen-header">
+        <p class="screen-title">CREW MANIFEST</p>
+        <h2 class="screen-sub">Who owns each hazard</h2>
+        <p class="screen-tag">Cross-referenced from GitHub code search × commit history</p>
+      </div>
+      <div id="crewList"></div>
+    </section>
+
+    <!-- QUERIES -->
+    <section class="screen" id="screen-queries">
+      <div class="screen-header">
+        <p class="screen-title">THE CORAL ENGINE</p>
+        <h2 class="screen-sub">Queries powering this intelligence</h2>
+        <p class="screen-tag">One SQL interface, six data sources, zero ETL glue code</p>
+      </div>
+      <div id="queriesList"></div>
+    </section>
+
+    <!-- WHY -->
+    <section class="screen" id="screen-why">
+      <div class="screen-header">
+        <p class="screen-title">WHY DRIFTWATCH</p>
+        <h2 class="screen-sub">A different lens on supply-chain risk</h2>
+      </div>
+      <table class="data-table compare-table">
+        <thead>
+          <tr><th>Capability</th><th>Snyk / Endor</th><th>Socket</th><th>DriftWatch</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Vulnerability detection</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+          <tr><td>Reachability analysis</td><td class="yes">✓</td><td class="no">—</td><td class="no">—</td></tr>
+          <tr><td>Package behavior / runtime</td><td class="no">—</td><td class="yes">✓</td><td class="no">—</td></tr>
+          <tr><td>Patch lag intelligence</td><td class="no">—</td><td class="no">—</td><td class="uniq">✓ UNIQUE</td></tr>
+          <tr><td>Pre-CVE security deprecations</td><td class="no">—</td><td class="no">—</td><td class="uniq">✓ UNIQUE</td></tr>
+          <tr><td>Maintainer responsiveness profile</td><td class="no">—</td><td class="no">—</td><td class="uniq">✓ UNIQUE</td></tr>
+          <tr><td>Org-specific ownership mapping</td><td class="no">—</td><td class="no">—</td><td class="uniq">✓ UNIQUE</td></tr>
+          <tr><td>Upgrade actionability scoring</td><td class="no">—</td><td class="no">—</td><td class="uniq">✓ UNIQUE</td></tr>
+        </tbody>
+      </table>
+      <div class="why-grid">
+        <div class="why-card">
+          <h4>THE PATCH LAG PROBLEM</h4>
+          <p>jellyfin-web has been exposed to a yargs-parser vulnerability for <strong>2,090 days</strong> — with a fix available the entire time. Every other scanner reported this. None told you it had been sitting there for nearly 6 years.</p>
+        </div>
+        <div class="why-card">
+          <h4>THE OWNERSHIP PROBLEM</h4>
+          <p>When dompurify CVE drops, who do you Slack? DriftWatch maps GitHub code search × commit history to your dependency list, so the ticket already names the engineer who imported it.</p>
+        </div>
+        <div class="why-card">
+          <h4>THE PRE-CVE PROBLEM</h4>
+          <p>Maintainers deprecate versions with "fixed a security issue" notes <em>before</em> CVEs get filed. DriftWatch reads those deprecation messages from deps.dev — you get the warning days or weeks before any scanner.</p>
+        </div>
+      </div>
+    </section>
+
+    <p class="footer-note" id="footerNote">Loading…</p>
+  </main>
+</div>
+
+<div id="radar-overlay" class="radar-overlay">
+  <div class="radar-container">
+    <div class="radar-svg-wrap">
+      <svg class="radar-svg" viewBox="0 0 300 300" width="300" height="300">
+        <circle cx="150" cy="150" r="140" fill="none" stroke="rgba(8,145,178,0.2)" stroke-width="1"/>
+        <circle cx="150" cy="150" r="105" fill="none" stroke="rgba(8,145,178,0.15)" stroke-width="1"/>
+        <circle cx="150" cy="150" r="70" fill="none" stroke="rgba(8,145,178,0.15)" stroke-width="1"/>
+        <circle cx="150" cy="150" r="35" fill="none" stroke="rgba(8,145,178,0.15)" stroke-width="1"/>
+        <line x1="150" y1="10" x2="150" y2="290" stroke="rgba(8,145,178,0.1)" stroke-width="1"/>
+        <line x1="10" y1="150" x2="290" y2="150" stroke="rgba(8,145,178,0.1)" stroke-width="1"/>
+        <text x="150" y="8" text-anchor="middle" fill="rgba(8,145,178,0.5)" font-family="Space Mono, monospace" font-size="8">N</text>
+        <text x="295" y="153" text-anchor="middle" fill="rgba(8,145,178,0.5)" font-family="Space Mono, monospace" font-size="8">E</text>
+        <text x="150" y="298" text-anchor="middle" fill="rgba(8,145,178,0.5)" font-family="Space Mono, monospace" font-size="8">S</text>
+        <text x="5" y="153" text-anchor="middle" fill="rgba(8,145,178,0.5)" font-family="Space Mono, monospace" font-size="8">W</text>
+        <defs>
+          <radialGradient id="sweepGrad" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="rgba(232,197,90,0.25)"/>
+            <stop offset="100%" stop-color="rgba(232,197,90,0)"/>
+          </radialGradient>
+        </defs>
+        <g id="radar-sweep">
+          <path d="M150,150 L150,10 A140,140 0 0,1 290,150 Z"
+                fill="url(#sweepGrad)" opacity="0.6"/>
+          <line x1="150" y1="150" x2="150" y2="12"
+                stroke="#E8C55A" stroke-width="2" opacity="0.9"
+                style="filter: drop-shadow(0 0 3px #E8C55A)"/>
+          <circle cx="150" cy="12" r="3" fill="#E8C55A"
+                  style="filter: drop-shadow(0 0 6px #E8C55A)"/>
+        </g>
+        <circle cx="150" cy="150" r="4" fill="#E8C55A"
+                style="filter: drop-shadow(0 0 8px #E8C55A)"/>
+      </svg>
+      <div id="radar-blips" class="radar-blips"></div>
+    </div>
+    <div class="radar-status">
+      <div class="radar-title">SCANNING</div>
+      <div class="radar-message" id="radar-message">Charting the waters...</div>
+      <div class="radar-progress-wrap">
+        <div class="radar-progress-bar">
+          <div class="radar-progress-fill" id="radar-progress-fill"></div>
+        </div>
+        <span class="radar-progress-pct" id="radar-progress-pct">0%</span>
+      </div>
+      <div class="radar-repo" id="radar-repo"></div>
+    </div>
+  </div>
+</div>
+
+<div class="progress-overlay" id="progressOverlay">
+  <div class="progress-label">CHARTING THE WATERS</div>
+  <div class="progress-msg" id="progressMsg">Starting scan…</div>
+  <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+  <div class="progress-pct" id="progressPct">0%</div>
+</div>
+
+<div class="toast" id="toast">
+  <span id="toastMsg">Error</span>
+  <button onclick="loadDemo()">Try demo mode</button>
+</div>
+
+<script>
+// ── State ─────────────────────────────────────────────────────────────
+let state = {
+  owner: 'jellyfin',
+  repo: 'jellyfin-web',
+  data: null,
+  jobId: null,
+};
+
+// ── Navigation ────────────────────────────────────────────────────────
+document.querySelectorAll('.nav-item').forEach(item => {
+  item.addEventListener('click', () => {
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    item.classList.add('active');
+    const target = item.dataset.screen;
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById('screen-' + target).classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  });
+});
+
+// ── Helpers ───────────────────────────────────────────────────────────
+function bandForDays(d) {
+  if (d > 365) return 'red';
+  if (d > 90) return 'amber';
+  if (d > 30) return 'blue';
+  return 'dim';
+}
+function tideColor(d) {
+  if (d > 365) return 'red';
+  if (d > 90) return 'amber';
+  if (d > 30) return 'blue';
+  return 'green';
+}
+function escape(s) {
+  return String(s == null ? '' : s).replace(/[&<>"']/g, c => (
+    {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]
+  ));
+}
+function filterBots(owners) {
+  return (owners || []).filter(o => !/\[bot\]/i.test(o));
+}
+function isPreCve(pkgName, sweep) {
+  if (!sweep || !Array.isArray(sweep.pre_cve_findings)) return false;
+  return sweep.pre_cve_findings.some(f => f.name === pkgName && f.has_security_deprecation);
+}
+function actionabilityForPackage(pkgName, sweep) {
+  if (!sweep || !Array.isArray(sweep.upgrade_actionability)) return null;
+  const rows = sweep.upgrade_actionability.filter(u => u.name === pkgName);
+  if (!rows.length) return null;
+  // Pick the "most severe" actionability: NO_FIX > BREAKING > MODERATE > SAFE
+  const order = { 'NO_FIX': 4, 'BREAKING': 3, 'MODERATE': 2, 'SAFE': 1 };
+  rows.sort((a, b) => (order[b.actionability]||0) - (order[a.actionability]||0));
+  return rows[0].actionability;
+}
+function ownerForPackage(pkgName, ownership) {
+  if (!Array.isArray(ownership)) return [];
+  const row = ownership.find(o => o.package === pkgName);
+  return row ? filterBots(row.owners) : [];
+}
+function computeUrgency(pkg, sweep) {
+  const days = pkg.worst_days_exposed || 0;
+  const cves = (pkg.cves || []).length;
+  const act = actionabilityForPackage(pkg.name, sweep);
+  const breaking = act === 'BREAKING' ? 10 : 0;
+  const pre = isPreCve(pkg.name, sweep) ? 10 : 0;
+  const score = Math.min(100, Math.round(
+    (days / 2090) * 60 +
+    (cves / 7) * 25 +
+    breaking +
+    pre
+  ));
+  return score;
+}
+function urgencyBand(score) {
+  if (score >= 80) return 'red';
+  if (score >= 60) return 'amber';
+  if (score >= 40) return 'blue';
+  return 'dim';
+}
+function urgencyVerdict(score) {
+  if (score >= 80) return 'CRITICAL';
+  if (score >= 60) return 'HIGH';
+  if (score >= 40) return 'MEDIUM';
+  return 'LOW';
+}
+
+// ── Data fetch ────────────────────────────────────────────────────────
+async function fetchResults(owner, repo, demo = false) {
+  const url = `/api/results/${owner}/${repo}${demo ? '?demo=true' : ''}`;
+  const r = await fetch(url);
+  if (!r.ok) throw new Error(`HTTP ${r.status}: ${r.statusText}`);
+  return await r.json();
+}
+
+async function loadDemo() {
+  hideToast();
+  setLiveStatus('LIVE DATA · loading demo…');
+  try {
+    const data = await fetchResults('jellyfin', 'jellyfin-web', true);
+    state.data = data;
+    state.owner = data.owner;
+    state.repo = data.repo;
+    renderAll();
+    setLiveStatus(`LIVE DATA · demo · ${new Date().toLocaleTimeString()}`);
+  } catch (e) {
+    showToast('Failed to load demo: ' + e.message);
+  }
+}
+
+// ── Renderers ─────────────────────────────────────────────────────────
+function renderAll() {
+  const d = state.data;
+  if (!d) return;
+  renderOverview(d);
+  renderPatchLag(d);
+  renderPreCve(d);
+  renderMaintainer(d);
+  renderOrders(d);
+  renderCrew(d);
+  renderQueries(d);
+  updateBadges(d);
+  document.getElementById('overviewSub').textContent = `${d.owner}/${d.repo} — ${d.scan?.length || 0} vulnerable packages`;
+  document.getElementById('footerNote').textContent = `${d.scan?.length || 0} packages · ${d.sweep?.upgrade_actionability?.length || 0} upgrade paths · ${d.ownership?.length || 0} owners mapped · scan ${d.sweep?.scan_date || 'demo data'}`;
+}
+
+function updateBadges(d) {
+  const scan = d.scan || [];
+  const sweep = d.sweep || {};
+  const ua = sweep.upgrade_actionability || [];
+  const preCount = (sweep.pre_cve_findings || []).filter(f => f.has_security_deprecation).length;
+  const safeDedupe = new Set(ua.filter(u => u.actionability === 'SAFE').map(u => u.name));
+  document.getElementById('badge-overview').textContent = scan.length;
+  document.getElementById('badge-overview').className = 'nav-badge ' + (scan.length > 0 ? 'red' : 'green');
+  document.getElementById('badge-patchlag').textContent = scan.length;
+  document.getElementById('badge-precve').textContent = preCount;
+  document.getElementById('badge-maint').textContent = scan.length;
+  document.getElementById('badge-orders').textContent = safeDedupe.size;
+  document.getElementById('badge-crew').textContent = (d.ownership || []).length;
+}
+
+function renderOverview(d) {
+  const scan = (d.scan || []).slice().sort((a, b) => (b.worst_days_exposed || 0) - (a.worst_days_exposed || 0));
+  const sweep = d.sweep || {};
+  const ua = sweep.upgrade_actionability || [];
+  const worst = scan[0];
+  const preCount = (sweep.pre_cve_findings || []).filter(f => f.has_security_deprecation).length;
+  const safeDedupe = new Set(ua.filter(u => u.actionability === 'SAFE').map(u => u.name));
+  const maxDays = scan.reduce((m, p) => Math.max(m, p.worst_days_exposed || 0), 0);
+
+  // Headline — dramatic count-up with fade-in text
+  if (worst) {
+    document.getElementById('headline').innerHTML = `
+      <div class="headline-banner">
+        <div class="headline-number-wrap">
+          <span class="headline-number" id="headline-days">0</span>
+          <span class="headline-unit">days</span>
+        </div>
+        <div class="headline-text" id="headline-text" style="opacity:0">
+          That's how long <span class="headline-repo">${escape(d.owner)}/${escape(d.repo)}</span> has been exposed to
+          <span class="headline-pkg">${escape(worst.name)}</span>'s vulnerability —
+          <span class="headline-emphasis">with a fix available the entire time.</span>
+        </div>
+      </div>
+    `;
+    const daysEl = document.getElementById('headline-days');
+    animateCountUp(daysEl, worst.worst_days_exposed || 0, 2000);
+    setTimeout(() => {
+      const t = document.getElementById('headline-text');
+      if (t) t.style.opacity = '1';
+    }, 2200);
+  } else {
+    document.getElementById('headline').innerHTML = `
+      <div class="headline-banner">
+        <div class="headline-text" style="opacity:1">
+          <span class="headline-emphasis">No vulnerable packages detected — clean waters ahead.</span>
+        </div>
+      </div>
+    `;
+  }
+
+  // Stats — with empty-state for zero pre-CVE
+  const preCveCardInner = preCount > 0
+    ? `<div class="stat-value" data-target="${preCount}">0</div>
+       <div class="stat-sub">deprecations detected</div>`
+    : `<div class="stat-empty"><span class="check">✓</span><span>Clean Waters</span></div>
+       <div class="stat-sub">no pre-CVE signals</div>`;
+  const stats = [
+    { cls: 'red', label: 'VULNERABLE PACKAGES', val: scan.length, sub: 'across all ecosystems' },
+    { cls: 'amber', label: 'WORST PATCH LAG', val: maxDays, sub: 'days exposed' },
+    { cls: 'green', label: 'SAFE UPGRADES', val: safeDedupe.size, sub: 'do this sprint' },
+  ];
+  document.getElementById('statsRow').innerHTML = stats.slice(0,2).map(s => `
+    <div class="stat-card ${s.cls}">
+      <div class="stat-label">${s.label}</div>
+      <div class="stat-value" data-target="${s.val}">0</div>
+      <div class="stat-sub">${s.sub}</div>
+    </div>
+  `).join('') + `
+    <div class="stat-card amber ${preCount > 0 ? 'pulsing' : ''}">
+      <div class="stat-label">PRE-CVE SIGNALS</div>
+      ${preCveCardInner}
+    </div>
+  ` + `
+    <div class="stat-card green">
+      <div class="stat-label">${stats[2].label}</div>
+      <div class="stat-value" data-target="${stats[2].val}">0</div>
+      <div class="stat-sub">${stats[2].sub}</div>
+    </div>
+  `;
+  document.querySelectorAll('.stat-value').forEach(el => {
+    animateCountUp(el, parseInt(el.dataset.target, 10), 900);
+  });
+
+  // Expose sweep data globally so the chart builder can reach it
+  window._sweepData = sweep;
+
+  // Build the hazard chart and three action columns
+  buildHazardChart(scan, d.ownership || []);
+  buildActionColumns(scan, d.ownership || [], sweep);
+}
+
+// ── Hazard Chart (2D scatter of buoys) ──────────────────────────────
+function buildHazardChart(scanData, ownershipData) {
+  const chart = document.getElementById('hazard-chart');
+  if (!chart) return;
+  chart.querySelectorAll('.hazard-buoy').forEach(b => b.remove());
+
+  const chartW = chart.offsetWidth || 800;
+  const chartH = chart.offsetHeight || 340;
+  const padding = { left: 40, right: 40, top: 30, bottom: 40 };
+  const innerW = chartW - padding.left - padding.right;
+  const innerH = chartH - padding.top - padding.bottom;
+
+  // Deduplicate by package name
+  const packages = [];
+  const seen = new Set();
+  scanData.forEach(pkg => {
+    if (!seen.has(pkg.name)) { seen.add(pkg.name); packages.push(pkg); }
+  });
+  if (!packages.length) return;
+
+  const maxDays = Math.max(2090, ...packages.map(p => p.worst_days_exposed || 0));
+  const maxCVEs = Math.max(1, ...packages.map(p => (p.cves || []).length));
+
+  const sweep = window._sweepData || {};
+  const upgradeByName = {};
+  (sweep.upgrade_actionability || []).forEach(u => {
+    if (!upgradeByName[u.name] || (u.days_exposed || 0) > (upgradeByName[u.name].days_exposed || 0)) {
+      upgradeByName[u.name] = u;
+    }
+  });
+
+  packages.forEach((pkg, i) => {
+    const xRatio = Math.min((pkg.worst_days_exposed || 0) / maxDays, 1);
+    const yRatio = 1 - Math.min((pkg.cves || []).length / maxCVEs, 1);
+    const jitter = (val, seed) => val + (Math.sin(seed * 127.1) * 0.04);
+    const x = padding.left + Math.max(0, Math.min(1, jitter(xRatio, i))) * innerW;
+    const y = padding.top + Math.max(0, Math.min(1, jitter(yRatio, i + 7))) * innerH;
+
+    const size = 16 + Math.min((pkg.cves || []).length * 5, 24);
+
+    const upgrade = upgradeByName[pkg.name];
+    const actionability = upgrade?.actionability || 'BREAKING';
+    const preCVE = (sweep.pre_cve_findings || [])
+      .find(f => f.name === pkg.name && f.has_security_deprecation);
+
+    let color, glowColor;
+    if (preCVE) { color = '#00FFFF'; glowColor = 'rgba(0,255,255,0.5)'; }
+    else if (actionability === 'SAFE') { color = '#00FF88'; glowColor = 'rgba(0,255,136,0.5)'; }
+    else if ((pkg.worst_days_exposed || 0) > 365) { color = '#FF4444'; glowColor = 'rgba(255,68,68,0.5)'; }
+    else if ((pkg.worst_days_exposed || 0) > 90) { color = '#FF8C00'; glowColor = 'rgba(255,140,0,0.5)'; }
+    else { color = '#4488FF'; glowColor = 'rgba(68,136,255,0.5)'; }
+
+    const ownerRecord = (ownershipData || []).find(o => o.package === pkg.name);
+    const owner = ownerRecord?.owners?.find(o => !/\[bot\]/i.test(o));
+
+    const buoy = document.createElement('div');
+    buoy.className = 'hazard-buoy';
+    buoy.dataset.pkgName = pkg.name;
+    buoy.style.left = x + 'px';
+    buoy.style.top = y + 'px';
+    buoy.innerHTML = `
+      <div class="buoy-ring" style="
+        width: ${size}px; height: ${size}px;
+        background: radial-gradient(circle, ${color}33 0%, ${color}11 100%);
+        border: 2px solid ${color};
+        box-shadow: 0 0 ${size/2}px ${glowColor}, inset 0 0 ${size/3}px ${color}22;
+      ">
+        <div style="
+          width: ${size*0.35}px; height: ${size*0.35}px;
+          border-radius: 50%;
+          background: ${color};
+          box-shadow: 0 0 8px ${color};
+        "></div>
+      </div>
+      <div style="position:absolute;inset:-4px;border-radius:50%;
+        border: 1px solid ${color}44; animation: buoyPulse ${2 + (i*0.3)%3}s ease-out infinite;"></div>
+      <div class="buoy-label">${escape(pkg.name.split('/').pop().substring(0, 14))}</div>
+    `;
+
+    buoy.addEventListener('mouseenter', (e) => {
+      const rank = buoy.dataset.rank;
+
+      let rankBadge = buoy.querySelector('.rank-badge');
+      if (!rankBadge) {
+        rankBadge = document.createElement('div');
+        rankBadge.className = 'rank-badge';
+        buoy.appendChild(rankBadge);
+      }
+      rankBadge.textContent = rank ? '#' + rank : '';
+      rankBadge.style.display = rank ? 'flex' : 'none';
+
+      const tt = document.getElementById('chart-tooltip');
+      if (!tt) return;
+      const rankLine = rank
+        ? `<div class="tooltip-rank">Priority #${rank} of 10 most critical</div>`
+        : '';
+      document.getElementById('tt-pkg').innerHTML =
+        rankLine + '<span style="color:var(--text)">' +
+        escape(pkg.name + '@' + (pkg.version || '?')) + '</span>';
+      document.getElementById('tt-days').textContent = '⧖ ' + (pkg.worst_days_exposed || 0).toLocaleString() + ' days exposed';
+      document.getElementById('tt-owner').textContent = owner ? '👤 @' + owner : '👤 owner unknown';
+      const fixedIn = upgrade?.fixed_version || pkg.cves?.[0]?.fixed_in || '?';
+      document.getElementById('tt-action').innerHTML = '<span style="color:' + color + '">' + actionability + '</span> · fix in ' + escape(fixedIn);
+      const cveCount = (pkg.cves || []).length;
+      document.getElementById('tt-cves').textContent = cveCount + ' CVE' + (cveCount === 1 ? '' : 's') + (preCVE ? ' · ⚡ PRE-CVE signal' : '');
+      const rect = chart.getBoundingClientRect();
+      const ex = e.clientX - rect.left;
+      const ey = e.clientY - rect.top;
+      tt.style.left = Math.min(ex + size + 10, chartW - 220) + 'px';
+      tt.style.top = Math.min(Math.max(ey - 20, 4), chartH - 130) + 'px';
+      tt.style.display = 'block';
+    });
+
+    buoy.addEventListener('mouseleave', () => {
+      const rankBadge = buoy.querySelector('.rank-badge');
+      if (rankBadge) rankBadge.style.display = 'none';
+      const tt = document.getElementById('chart-tooltip');
+      if (tt) tt.style.display = 'none';
+    });
+
+    chart.appendChild(buoy);
+  });
+
+  // Draw severity chain after buoys are placed
+  setTimeout(() => {
+    const deduped = [];
+    const seenNames = new Set();
+    packages.forEach(pkg => {
+      if (!seenNames.has(pkg.name)) {
+        seenNames.add(pkg.name);
+        deduped.push(pkg);
+      }
+    });
+    drawSeverityChain(deduped, chart);
+  }, 50);
+}
+
+function drawSeverityChain(packages, chart) {
+  const existing = chart.querySelector('.severity-chain-svg');
+  if (existing) existing.remove();
+
+  const chartW = chart.offsetWidth || 800;
+  const chartH = chart.offsetHeight || 340;
+
+  const scored = packages.map(pkg => {
+    const score = Math.min(100, Math.round(
+      (pkg.worst_days_exposed / 2090 * 60) +
+      (pkg.cves.length / 7 * 25)
+    ));
+    return { ...pkg, _urgency: score };
+  });
+  scored.sort((a, b) => b._urgency - a._urgency);
+  const top10 = scored.slice(0, 10);
+
+  const buoyEls = chart.querySelectorAll('.hazard-buoy');
+  const buoyPositions = {};
+  buoyEls.forEach(el => {
+    const name = el.dataset.pkgName;
+    if (name) {
+      buoyPositions[name] = {
+        x: parseFloat(el.style.left),
+        y: parseFloat(el.style.top)
+      };
+    }
+  });
+
+  const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  svg.setAttribute('class', 'severity-chain-svg');
+  svg.setAttribute('width', chartW);
+  svg.setAttribute('height', chartH);
+  svg.style.cssText = 'position:absolute;top:0;left:0;pointer-events:none;z-index:1;';
+
+  for (let i = 0; i < top10.length - 1; i++) {
+    const a = buoyPositions[top10[i].name];
+    const b = buoyPositions[top10[i + 1].name];
+    if (!a || !b) continue;
+
+    const opacity = 0.6 - (i * 0.04);
+    const color = i < 3 ? '#FF4444' : i < 6 ? '#FF8C00' : '#E8C55A';
+
+    const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+    line.setAttribute('x1', a.x);
+    line.setAttribute('y1', a.y);
+    line.setAttribute('x2', b.x);
+    line.setAttribute('y2', b.y);
+    line.setAttribute('stroke', color);
+    line.setAttribute('stroke-width', '1.5');
+    line.setAttribute('stroke-dasharray', '5 6');
+    line.setAttribute('stroke-opacity', opacity);
+    line.style.filter = `drop-shadow(0 0 3px ${color})`;
+
+    svg.appendChild(line);
+  }
+
+  chart.insertBefore(svg, chart.firstChild);
+
+  top10.forEach((pkg, rank) => {
+    const buoyEl = chart.querySelector(`.hazard-buoy[data-pkg-name="${pkg.name}"]`);
+    if (buoyEl) {
+      buoyEl.dataset.rank = rank + 1;
+    }
+  });
+}
+
+// ── Three Action Columns ────────────────────────────────────────────
+function buildActionColumns(scanData, ownershipData, sweepData) {
+  const upgradeMap = {};
+  (sweepData?.upgrade_actionability || []).forEach(u => {
+    if (!upgradeMap[u.name] || (u.days_exposed || 0) > (upgradeMap[u.name].days_exposed || 0)) {
+      upgradeMap[u.name] = u;
+    }
+  });
+
+  const actNow = [], thisSprint = [], watch = [];
+  const seen = new Set();
+  scanData.forEach(pkg => {
+    if (seen.has(pkg.name)) return;
+    seen.add(pkg.name);
+    const upgrade = upgradeMap[pkg.name];
+    const ownerRow = (ownershipData || []).find(o => o.package === pkg.name);
+    const ownerName = ownerRow?.owners?.find(o => !/\[bot\]/i.test(o));
+    const preCVE = (sweepData?.pre_cve_findings || [])
+      .find(f => f.name === pkg.name && f.has_security_deprecation);
+    const item = { pkg, upgrade, ownerName, preCVE };
+    if (preCVE) watch.push(item);
+    else if (upgrade?.actionability === 'SAFE') thisSprint.push(item);
+    else if ((pkg.worst_days_exposed || 0) > 90) actNow.push(item);
+    else watch.push(item);
+  });
+
+  actNow.sort((a, b) => (b.pkg.worst_days_exposed || 0) - (a.pkg.worst_days_exposed || 0));
+  thisSprint.sort((a, b) => (b.pkg.worst_days_exposed || 0) - (a.pkg.worst_days_exposed || 0));
+  watch.sort((a, b) => (b.pkg.worst_days_exposed || 0) - (a.pkg.worst_days_exposed || 0));
+
+  function renderItem(item, accent) {
+    const { pkg, upgrade, ownerName, preCVE } = item;
+    const daysStr = (pkg.worst_days_exposed || 0).toLocaleString() + 'd';
+    const fixVer = upgrade?.fixed_version || pkg.cves?.[0]?.fixed_in;
+    const fixStr = fixVer ? ` → ${escape(fixVer)}` : '';
+    return `
+      <div class="action-item">
+        <div class="action-item-pkg">${escape(pkg.name.split('/').pop())}</div>
+        <div class="action-item-meta">
+          <span style="color:${accent}">${daysStr}</span>
+          ${fixStr ? `<span style="color:var(--text3)"> · fix${fixStr}</span>` : ''}
+          ${preCVE ? '<span style="color:var(--neon-cyan)"> · ⚡ PRE-CVE</span>' : ''}
+        </div>
+        ${ownerName ? `<div class="action-item-owner">👤 @${escape(ownerName)}</div>` : ''}
+      </div>`;
+  }
+
+  const empty = (msg) => `<div style="padding:12px;font-size:11px;color:var(--text3)">${msg}</div>`;
+  const actNowBody = document.getElementById('act-now-body');
+  const sprintBody = document.getElementById('sprint-body');
+  const watchBody = document.getElementById('watch-body');
+  if (actNowBody) actNowBody.innerHTML = actNow.length ? actNow.map(i => renderItem(i, 'var(--neon-red)')).join('') : empty('All hands safe — no critical threats');
+  if (sprintBody) sprintBody.innerHTML = thisSprint.length ? thisSprint.map(i => renderItem(i, 'var(--neon-green)')).join('') : empty('No safe upgrades available');
+  if (watchBody) watchBody.innerHTML = watch.length ? watch.map(i => renderItem(i, 'var(--neon-cyan)')).join('') : empty('Clear skies — no pre-CVE signals detected');
+
+  const acn = document.getElementById('act-now-count'); if (acn) acn.textContent = actNow.length;
+  const spc = document.getElementById('sprint-count'); if (spc) spc.textContent = thisSprint.length;
+  const wac = document.getElementById('watch-count'); if (wac) wac.textContent = watch.length;
+}
+
+function renderPatchLag(d) {
+  const scan = (d.scan || []).slice().sort((a, b) => (b.worst_days_exposed || 0) - (a.worst_days_exposed || 0));
+  const maxDays = 2090;
+
+  document.getElementById('tideChart').innerHTML = scan.map(p => {
+    const days = p.worst_days_exposed || 0;
+    const pct = Math.max(2, Math.round((days / maxDays) * 100));
+    const fix = (p.cves && p.cves[0] && p.cves[0].fixed_in) ? p.cves[0].fixed_in : '—';
+    return `
+      <div class="tide-row">
+        <div class="tide-name">${escape(p.name)}</div>
+        <div class="tide-bar-wrap"><div class="tide-bar ${tideColor(days)}" style="width: ${pct}%"></div></div>
+        <div class="tide-days">${days}d</div>
+        <div class="tide-fix">→ ${escape(fix)}</div>
+      </div>
+    `;
+  }).join('');
+
+  document.getElementById('patchLagTable').innerHTML = scan.map(p => {
+    const days = p.worst_days_exposed || 0;
+    const fix = (p.cves && p.cves[0] && p.cves[0].fixed_in) ? p.cves[0].fixed_in : '—';
+    const summary = (p.cves && p.cves[0] && p.cves[0].summary) ? p.cves[0].summary : '—';
+    const cls = days > 365 ? 'days-red' : days > 90 ? 'days-amber' : days > 30 ? 'days-blue' : 'days-green';
+    return `
+      <tr>
+        <td class="mono">${escape(p.name)}</td>
+        <td class="mono">${escape(p.version)}</td>
+        <td class="mono ${cls}">${days}</td>
+        <td class="mono">${escape(fix)}</td>
+        <td class="mono">${(p.cves || []).length}</td>
+        <td>${escape(summary)}</td>
+      </tr>
+    `;
+  }).join('');
+}
+
+function renderPreCve(d) {
+  const sweep = d.sweep || {};
+  const findings = (sweep.pre_cve_findings || []).filter(f => f.has_security_deprecation);
+
+  if (findings.length > 0) {
+    document.getElementById('stormSection').innerHTML = findings.map(f => {
+      const dep = (f.security_deprecations && f.security_deprecations[0]) || {};
+      return `
+        <div class="storm-card">
+          <span class="badge precve">PRE-CVE · NO SCANNER ALERT YET</span>
+          <div class="pkg">${escape(f.name)} @ ${escape(f.installed_version || '?')}</div>
+          <div class="reason">"${escape(dep.reason || 'Security-related deprecation in upstream registry')}"</div>
+          <div class="meta">Deprecated version: ${escape(dep.version || '?')} · ${dep.days_ago || '?'} days ago · ${escape(f.system || '')}</div>
+        </div>
+      `;
+    }).join('') + '<div class="storm-tagline">No CVE filed yet — this is your early warning. Every scanner is silent. DriftWatch fires.</div>';
+  } else {
+    document.getElementById('stormSection').innerHTML = `
+      <div class="empty-state">
+        No security deprecations detected in this scan's packages — <span style="color:var(--green)">clean waters ahead</span>.<br>
+        <span style="font-size:11px; color:var(--text3); margin-top:8px; display:inline-block">Run a full sweep to detect pre-CVE signals across all dependencies.</span>
+      </div>
+    `;
+  }
+
+  // Signal section: top 5 packages by exposure
+  const top5 = (d.scan || []).slice().sort((a, b) => (b.worst_days_exposed || 0) - (a.worst_days_exposed || 0)).slice(0, 5);
+  document.getElementById('signalSection').innerHTML = top5.map(p => {
+    const days = p.worst_days_exposed || 0;
+    const respScore = days > 500 ? 25 : days > 200 ? 55 : 85;
+    const patchScore = days > 500 ? 20 : days > 200 ? 45 : days > 30 ? 70 : 90;
+    const abandonScore = days > 365 ? 30 : days > 90 ? 60 : 85;
+    const issueScore = days > 500 ? 35 : days > 200 ? 60 : 85;
+    const prScore = days > 500 ? 40 : days > 200 ? 65 : 88;
+    const signals = [
+      ['Maintainer responsiveness', respScore],
+      ['Patch lag severity', patchScore],
+      ['Abandonment signal', abandonScore],
+      ['Issue stagnation', issueScore],
+      ['PR stagnation', prScore],
+    ];
+    return `
+      <div class="signal-card">
+        <div class="pkg">${escape(p.name)} <span style="color:var(--text2);font-weight:400">@ ${escape(p.version)} · ${days}d exposed</span></div>
+        ${signals.map(([name, val]) => {
+          const cls = val < 40 ? 'red' : val < 70 ? 'amber' : '';
+          return `
+            <div class="signal-bar">
+              <div class="signal-label">${name}</div>
+              <div class="signal-track"><div class="signal-fill ${cls}" style="width: ${val}%"></div></div>
+              <div class="signal-score">${val}/100</div>
+            </div>`;
+        }).join('')}
+      </div>
+    `;
+  }).join('');
+}
+
+function renderMaintainer(d) {
+  const scan = (d.scan || []).slice().sort((a, b) => (b.worst_days_exposed || 0) - (a.worst_days_exposed || 0));
+  document.getElementById('maintGrid').innerHTML = scan.map(p => {
+    const days = p.worst_days_exposed || 0;
+    let label, cls, decision;
+    if (days < 60) { label = 'FAST'; cls = 'fast'; decision = 'Upstream patches quickly — safe to wait for the official fix.'; }
+    else if (days < 200) { label = 'MODERATE'; cls = 'moderate'; decision = 'Set a 30-day deadline — monitor upstream actively.'; }
+    else if (days < 500) { label = 'SLOW'; cls = 'slow'; decision = 'Do not wait — plan mitigation now.'; }
+    else { label = 'VERY SLOW'; cls = 'veryslow'; decision = 'Upstream will not save you — mitigate immediately.'; }
+    return `
+      <div class="maint-card">
+        <div class="pkg">${escape(p.name)}</div>
+        <div class="ver">@ ${escape(p.version)} · ${(p.cves || []).length} CVE${(p.cves || []).length === 1 ? '' : 's'}</div>
+        <div class="maint-resp ${cls}">${label} RESPONSIVENESS</div>
+        <div class="maint-decision">${decision}</div>
+        <div class="maint-exp">Inferred from ${days} days patch lag</div>
+      </div>
+    `;
+  }).join('');
+}
+
+function renderOrders(d) {
+  const sweep = d.sweep || {};
+  const ua = sweep.upgrade_actionability || [];
+
+  function dedupe(rows) {
+    // pick lowest-version fix per package (first occurrence after sort by days desc)
+    const seen = new Map();
+    rows.forEach(r => {
+      if (!seen.has(r.name)) seen.set(r.name, r);
+    });
+    return Array.from(seen.values()).sort((a, b) => (b.days_exposed || 0) - (a.days_exposed || 0));
+  }
+
+  const safe = dedupe(ua.filter(u => u.actionability === 'SAFE'));
+  const breaking = dedupe(ua.filter(u => u.actionability === 'BREAKING'));
+
+  function card(row, cls) {
+    return `
+      <div class="order-card ${cls}">
+        <div class="order-head">
+          <div class="order-pkg">${escape(row.name)} <span style="color:var(--text2)">${escape(row.current_version)}</span> <span class="order-arrow">→</span> <span style="color:var(--green)">${escape(row.fixed_version)}</span></div>
+          <div class="order-days">${row.days_exposed}d exposed</div>
+        </div>
+        <div class="order-exp">${escape(row.explanation || '')}</div>
+      </div>
+    `;
+  }
+
+  document.getElementById('ordersSafe').innerHTML = safe.length
+    ? safe.map(r => card(r, 'safe')).join('')
+    : '<div class="empty-state">No safe (patch/minor) upgrades available in current scan.</div>';
+
+  document.getElementById('ordersBreaking').innerHTML = breaking.length
+    ? breaking.map(r => card(r, 'breaking')).join('')
+    : '<div class="empty-state">No breaking upgrades required.</div>';
+}
+
+function renderCrew(d) {
+  const ownership = (d.ownership || []).slice().sort((a, b) => (b.worst_days_exposed || 0) - (a.worst_days_exposed || 0));
+  document.getElementById('crewList').innerHTML = ownership.map((row, idx) => {
+    const owners = filterBots(row.owners || []);
+    const files = row.files || [];
+    const ticketId = `ticket-${idx}`;
+    const act = row.actionability || '';
+    const actBadge = act ? `<span class="badge ${act.toLowerCase()}">${act}</span>` : '';
+    return `
+      <div class="crew-card">
+        <div class="crew-head">
+          <div>
+            <div class="crew-pkg">${escape(row.package)} <span style="color:var(--text2)">@ ${escape(row.version)}</span></div>
+            <div class="crew-meta" style="margin-top:4px">
+              ${actBadge}
+              <span class="chip amber">⧖ ${row.worst_days_exposed}d exposed</span>
+              <span class="chip green">→ ${escape(row.fixed_in || '—')}</span>
+            </div>
+          </div>
+        </div>
+        <div class="crew-section">
+          <div class="crew-section-label">RECOMMENDED OWNERS (bots filtered)</div>
+          ${owners.length ? owners.map(o => `<span class="owner-chip">@${escape(o)}</span>`).join('') : '<span style="color:var(--text3); font-size:12px">No human committers detected</span>'}
+        </div>
+        ${files.length ? `
+          <div class="crew-section">
+            <div class="crew-section-label">FILES REFERENCING THIS PACKAGE</div>
+            ${files.map(f => `<span class="file-chip">${escape(f)}</span>`).join('')}
+          </div>
+        ` : ''}
+        <div class="crew-section">
+          <div class="crew-section-label">DRAFT TICKET</div>
+          <div class="ticket-box" id="${ticketId}">${escape(row.ticket_text || '')}</div>
+          <button class="copy-btn" onclick="copyTicket('${ticketId}', this)">⎘ Copy to Clipboard</button>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+window.copyTicket = function(id, btn) {
+  const text = document.getElementById(id).innerText;
+  navigator.clipboard.writeText(text).then(() => {
+    const orig = btn.textContent;
+    btn.textContent = '⚓ Copied!';
+    btn.classList.add('copied');
+    setTimeout(() => {
+      btn.textContent = orig;
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(() => {
+    btn.textContent = '✗ Copy failed';
+    setTimeout(() => { btn.textContent = '⎘ Copy to Clipboard'; }, 2000);
+  });
+};
+
+function renderQueries(d) {
+  const queries = [
+    {
+      name: 'SBOM Explosion',
+      source: 'github',
+      sql:
+`SELECT json_get_str(pkg,'name')         AS name,
+       json_get_str(pkg,'versionInfo')  AS version,
+       json_get_str(json_get(pkg,'externalRefs',0),'referenceLocator') AS purl
+FROM (SELECT unnest(json_get_array(sbom__packages)) AS pkg
+      FROM github.sbom
+      WHERE owner='${d.owner}' AND repo='${d.repo}')`,
+      note: 'Unpacks the GitHub-generated SBOM (SPDX format) into one row per package. Native Coral table — no scraping, no rate-limit games.'
+    },
+    {
+      name: 'Vulnerability Check',
+      source: 'osv',
+      sql:
+`SELECT id, summary, published, affected, "references"
+FROM osv.query_by_version
+WHERE ecosystem='npm'
+  AND package_name='braces'
+  AND version='2.3.2'`,
+      note: 'OSV requires constant filters — cannot dynamic-join. scan.py loops per package in Python while Coral handles the cross-source query.'
+    },
+    {
+      name: 'Pre-CVE Canary',
+      source: 'depsdev',
+      sql:
+`SELECT version, published_at, is_deprecated, deprecated_reason
+FROM depsdev.package_versions
+WHERE system='NPM'
+  AND package_name='dompurify'
+  AND is_deprecated=true`,
+      note: 'When maintainers deprecate a release with "fixed a security issue" in the reason string, that\'s your warning before a CVE ever exists.'
+    },
+    {
+      name: 'Ownership Mapping',
+      source: 'github',
+      sql:
+`SELECT name, path, html_url
+FROM github.search_code(q => 'repo:${d.owner}/${d.repo} postcss');
+
+SELECT author_login, message
+FROM github.search_commits(q => 'repo:${d.owner}/${d.repo} package.json');`,
+      note: 'Cross-references which files import a vulnerable package with which engineers have touched dependency manifests. Bot accounts filtered downstream.'
+    },
+    {
+      name: 'Active Exploitation',
+      source: 'kev',
+      sql:
+`SELECT cve_id, vendor_project, product, vulnerability_name,
+       date_added, known_ransomware_campaign_use
+FROM kev.vulns
+WHERE cve_id IN (SELECT cve_id FROM scan_results)`,
+      note: 'CISA Known Exploited Vulnerabilities — if a CVE is on this list, it\'s being actively used in attacks. Custom Coral source contributed by this project.'
+    },
+  ];
+
+  function colorize(sql) {
+    const kws = /\b(SELECT|FROM|WHERE|AND|OR|JOIN|ON|AS|IN|GROUP|BY|ORDER|LIMIT|UNNEST|TRUE|FALSE|NULL)\b/g;
+    const strs = /'[^']*'/g;
+    const fns = /\b(json_get_str|json_get_array|json_get|unnest|count|sum|max|min|avg|coalesce)\b/g;
+    let html = escape(sql);
+    html = html.replace(strs, m => `<span class="str">${m}</span>`);
+    html = html.replace(fns, m => `<span class="fn">${m}</span>`);
+    html = html.replace(kws, m => `<span class="kw">${m}</span>`);
+    html = html.replace(/\b(github|osv|depsdev|kev|npm|pypi|maven|scorecard)\.([a-z_]+)/g,
+      '<span class="tbl">$1.$2</span>');
+    return html;
+  }
+
+  document.getElementById('queriesList').innerHTML = queries.map(q => `
+    <div class="query-card">
+      <div class="query-head">
+        <div class="query-name">${escape(q.name)}</div>
+        <span class="source-badge ${q.source}">${q.source.toUpperCase()}</span>
+      </div>
+      <pre class="query-sql">${colorize(q.sql)}</pre>
+      <div class="query-note">${escape(q.note)}</div>
+    </div>
+  `).join('');
+}
+
+// ── Urgency ring ──────────────────────────────────────────────────────
+function urgencyRing(score) {
+  const radius = 20;
+  const circumference = 2 * Math.PI * radius;
+  const filled = (score / 100) * circumference;
+  const color = score >= 80 ? '#FF4444' : score >= 60 ? '#FF8C00' : score >= 40 ? '#4488FF' : '#00FF88';
+  const glow = score >= 80 ? 'rgba(255,68,68,0.6)' : score >= 60 ? 'rgba(255,140,0,0.6)' : score >= 40 ? 'rgba(68,136,255,0.6)' : 'rgba(0,255,136,0.6)';
+  const label = score >= 80 ? 'CRITICAL' : score >= 60 ? 'HIGH' : score >= 40 ? 'MEDIUM' : 'LOW';
+  return `
+    <div class="urgency-ring-wrap">
+      <svg width="52" height="52" viewBox="0 0 52 52">
+        <circle cx="26" cy="26" r="${radius}" fill="none"
+                stroke="rgba(255,255,255,0.04)" stroke-width="4"/>
+        <circle cx="26" cy="26" r="${radius}" fill="none"
+                stroke="${color}" stroke-width="4"
+                stroke-dasharray="${filled} ${circumference}"
+                stroke-dashoffset="${circumference * 0.25}"
+                stroke-linecap="round"
+                transform="rotate(-90 26 26)"
+                style="transition: stroke-dasharray 1s ease; filter: drop-shadow(0 0 6px ${glow})"/>
+        <text x="26" y="30" text-anchor="middle"
+              font-family="Space Mono, monospace" font-size="11"
+              font-weight="700" fill="${color}">${score}</text>
+      </svg>
+      <div class="urgency-verdict" style="color:${color};text-shadow: 0 0 10px ${glow}">${label}</div>
+    </div>`;
+}
+
+// ── Radar blip spawning ───────────────────────────────────────────────
+let blipInterval = null;
+function spawnRadarBlip() {
+  const container = document.getElementById('radar-blips');
+  if (!container) return;
+  const angle = Math.random() * 360;
+  const dist = 20 + Math.random() * 120;
+  const rad = (angle * Math.PI) / 180;
+  const x = 150 + dist * Math.cos(rad);
+  const y = 150 + dist * Math.sin(rad);
+  const blip = document.createElement('div');
+  blip.className = 'radar-blip';
+  blip.style.left = x + 'px';
+  blip.style.top = y + 'px';
+  const danger = Math.random() > 0.7;
+  blip.style.background = danger ? '#ef4444' : '#E8C55A';
+  blip.style.boxShadow = `0 0 8px ${danger ? '#ef4444' : '#E8C55A'}`;
+  container.appendChild(blip);
+  setTimeout(() => blip.remove(), 2000);
+}
+function startRadarBlips() { if (!blipInterval) blipInterval = setInterval(spawnRadarBlip, 400); }
+function stopRadarBlips() { clearInterval(blipInterval); blipInterval = null; }
+
+function showRadarOverlay(owner, repo) {
+  document.getElementById('radar-repo').textContent = owner + '/' + repo;
+  document.getElementById('radar-message').textContent = 'Charting the waters...';
+  document.getElementById('radar-progress-fill').style.width = '0%';
+  document.getElementById('radar-progress-pct').textContent = '0%';
+  document.getElementById('radar-overlay').classList.add('show');
+  startRadarBlips();
+}
+function updateRadarOverlay(message, pct) {
+  if (message) document.getElementById('radar-message').textContent = message;
+  if (typeof pct === 'number') {
+    document.getElementById('radar-progress-fill').style.width = pct + '%';
+    document.getElementById('radar-progress-pct').textContent = pct + '%';
+  }
+}
+function hideRadarOverlay() {
+  document.getElementById('radar-overlay').classList.remove('show');
+  stopRadarBlips();
+}
+
+// ── Animations ────────────────────────────────────────────────────────
+function animateCountUp(el, target, duration) {
+  const start = performance.now();
+  const startVal = 0;
+  function tick(now) {
+    const t = Math.min(1, (now - start) / duration);
+    const eased = 1 - Math.pow(1 - t, 3);
+    el.textContent = Math.round(startVal + (target - startVal) * eased).toLocaleString();
+    if (t < 1) requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+}
+
+// ── Scan flow ─────────────────────────────────────────────────────────
+async function startScan(ev) {
+  ev.preventDefault();
+  const val = document.getElementById('repoInput').value.trim();
+  if (!val.includes('/')) {
+    showToast('Use format: owner/repo');
+    return false;
+  }
+  const [owner, repo] = val.split('/').map(s => s.trim());
+  state.owner = owner;
+  state.repo = repo;
+
+  document.getElementById('scanBtn').disabled = true;
+  showRadarOverlay(owner, repo);
+  updateRadarOverlay('Starting scan…', 1);
+
+  try {
+    const r = await fetch('/api/scan', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ owner, repo }),
+    });
+    if (!r.ok) throw new Error(`Scan kickoff failed: HTTP ${r.status}`);
+    const { job_id } = await r.json();
+    state.jobId = job_id;
+    pollJob(job_id);
+  } catch (e) {
+    hideRadarOverlay();
+    document.getElementById('scanBtn').disabled = false;
+    showToast('Scan failed to start: ' + e.message);
+  }
+  return false;
+}
+
+function nauticalMsg(pct) {
+  if (pct < 30) return 'Charting the waters — fetching SBOM…';
+  if (pct < 60) return 'Scanning the depths — checking OSV vulnerabilities…';
+  if (pct < 85) return 'Running canary sweep — checking deps.dev…';
+  if (pct < 100) return 'Mapping the crew — tracing ownership…';
+  return 'All hazards charted ⚓';
+}
+
+async function pollJob(jobId) {
+  try {
+    const r = await fetch(`/api/status/${jobId}`);
+    if (!r.ok) throw new Error('Status poll failed');
+    const j = await r.json();
+    updateRadarOverlay(j.message || nauticalMsg(j.progress), j.progress);
+
+    if (j.status === 'complete') {
+      updateRadarOverlay('All hazards charted ⚓', 100);
+      setTimeout(async () => {
+        hideRadarOverlay();
+        document.getElementById('scanBtn').disabled = false;
+        try {
+          const data = await fetchResults(state.owner, state.repo, false);
+          state.data = data;
+          renderAll();
+          setLiveStatus(`LIVE DATA · ${new Date().toLocaleTimeString()}`);
+        } catch (e) {
+          showToast('Scan complete but results fetch failed: ' + e.message);
+        }
+      }, 600);
+    } else if (j.status === 'error') {
+      hideRadarOverlay();
+      document.getElementById('scanBtn').disabled = false;
+      showToast('Scan error: ' + (j.error || j.message));
+    } else {
+      setTimeout(() => pollJob(jobId), 2000);
+    }
+  } catch (e) {
+    hideRadarOverlay();
+    document.getElementById('scanBtn').disabled = false;
+    showToast('Polling failed: ' + e.message);
+  }
+}
+
+// ── UI utilities ──────────────────────────────────────────────────────
+function showProgress(msg, pct) {
+  document.getElementById('progressOverlay').classList.add('show');
+  document.getElementById('progressMsg').textContent = msg;
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressPct').textContent = pct + '%';
+}
+function hideProgress() {
+  document.getElementById('progressOverlay').classList.remove('show');
+}
+function showToast(msg) {
+  document.getElementById('toastMsg').textContent = msg;
+  document.getElementById('toast').classList.add('show');
+}
+function hideToast() {
+  document.getElementById('toast').classList.remove('show');
+}
+function setLiveStatus(s) {
+  document.getElementById('liveStatus').textContent = s;
+}
+
+// ── Boot ──────────────────────────────────────────────────────────────
+(async function init() {
+  setLiveStatus('LIVE DATA · loading…');
+  try {
+    const data = await fetchResults('jellyfin', 'jellyfin-web', true);
+    state.data = data;
+    state.owner = data.owner;
+    state.repo = data.repo;
+    renderAll();
+    setLiveStatus(`LIVE DATA · demo · ${new Date().toLocaleTimeString()}`);
+  } catch (e) {
+    showToast('Initial load failed: ' + e.message);
+    setLiveStatus('LIVE DATA · offline');
+  }
+})();
+</script>
+<div class="ocean-floor"></div>
 </body>
 </html>
