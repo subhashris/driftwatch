@@ -101,6 +101,21 @@ def get_depsdev_versions(system, package_name):
 
 # ── SECURITY-RELATED DEPRECATION KEYWORDS ───────────────────────────────────
 # These keywords in a deprecation reason suggest a security issue
+def scan_ecosystem_to_depsdev(system):
+    """Map scan.py ecosystem names to deps.dev system names."""
+    if not system:
+        return None
+    mapping = {
+        "npm": "NPM",
+        "pypi": "PYPI",
+        "maven": "MAVEN",
+        "cargo": "CARGO",
+        "golang": "GO",
+        "go": "GO",
+    }
+    return mapping.get(str(system).lower(), str(system).upper())
+
+
 SECURITY_KEYWORDS = [
     "security", "vulnerability", "vuln", "cve", "exploit", "injection",
     "xss", "csrf", "rce", "attack", "malicious", "compromise", "breach",
@@ -289,17 +304,29 @@ def main():
             with open(args.scan_json, encoding="utf-8") as f:
                 scan_data = json.load(f)
 
+            version_cache = {}
             for finding in scan_data:
                 name = finding.get("name")
                 version = finding.get("version")
+                system = scan_ecosystem_to_depsdev(finding.get("ecosystem"))
+                versions = []
+                if system:
+                    cache_key = (system, name)
+                    if cache_key not in version_cache:
+                        version_cache[cache_key] = get_depsdev_versions(system, name)
+                        time.sleep(args.delay)
+                    versions = version_cache[cache_key]
                 for cve in finding.get("cves", []):
                     fixed_in = cve.get("fixed_in")
                     label, explanation = upgrade_actionability(version, fixed_in)
                     days_exposed = cve.get("days_exposed", 0)
+                    fix_row = next((v for v in versions if v.get("version") == fixed_in), {})
                     upgrade_findings.append({
                         "name": name,
                         "current_version": version,
                         "fixed_version": fixed_in,
+                        "published_at": fix_row.get("published_at"),
+                        "fix_published_at": fix_row.get("published_at"),
                         "cve_id": cve.get("id"),
                         "days_exposed": days_exposed,
                         "actionability": label,

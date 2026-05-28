@@ -3,10 +3,11 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>DriftWatch — Captain's Chart Room</title>
+<title>DriftWatch â€” Captain's Chart Room</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%2032%2032%27%3E%3Crect%20width%3D%2732%27%20height%3D%2732%27%20fill%3D%27%23061420%27%2F%3E%3Ccircle%20cx%3D%2716%27%20cy%3D%2712%27%20r%3D%277%27%20fill%3D%27%23C8A84B%27%2F%3E%3Cline%20x1%3D%2710%27%20y1%3D%2718%27%20x2%3D%278%27%20y2%3D%2724%27%20stroke%3D%27%23C8A84B%27%20stroke-width%3D%272%27%2F%3E%3Cline%20x1%3D%2722%27%20y1%3D%2718%27%20x2%3D%2724%27%20y2%3D%2724%27%20stroke%3D%27%23C8A84B%27%20stroke-width%3D%272%27%2F%3E%3Cline%20x1%3D%278%27%20y1%3D%2724%27%20x2%3D%2724%27%20y2%3D%2724%27%20stroke%3D%27%23C8A84B%27%20stroke-width%3D%272%27%2F%3E%3C%2Fsvg%3E">
 <style>
   :root {
     /* Ocean depths */
@@ -23,9 +24,11 @@
     --border-glow: rgba(232, 197, 90, 0.3);
 
     /* Neon accents */
-    --gold: #E8C55A;
-    --gold-glow: rgba(232, 197, 90, 0.2);
-    --gold-dim: rgba(232, 197, 90, 0.08);
+    --gold: #C8A84B;
+    --gold-shine: #F0D898;
+    --gold-shadow: #8B6914;
+    --gold-glow: rgba(200, 168, 75, 0.25);
+    --gold-dim: rgba(200, 168, 75, 0.08);
     --neon-red: #FF4444;
     --neon-red-glow: rgba(255, 68, 68, 0.3);
     --neon-orange: #FF8C00;
@@ -35,7 +38,7 @@
     --neon-cyan-glow: rgba(0, 255, 255, 0.2);
     --neon-blue: #4488FF;
 
-    /* Legacy aliases — map old names to the new neon palette so existing rules pick up the theme */
+    /* Legacy aliases â€” map old names to the new neon palette so existing rules pick up the theme */
     --red: #FF4444;
     --red-dim: rgba(255, 68, 68, 0.15);
     --green: #00FF88;
@@ -57,12 +60,23 @@
   * { box-sizing: border-box; }
   html, body { margin: 0; padding: 0; height: 100%; }
   body {
-    background-color: var(--bg);
-    background-image:
-      radial-gradient(ellipse at 15% 85%, rgba(0, 255, 136, 0.03) 0%, transparent 45%),
-      radial-gradient(ellipse at 85% 15%, rgba(0, 255, 255, 0.03) 0%, transparent 45%),
-      radial-gradient(ellipse at 50% 50%, rgba(232, 197, 90, 0.015) 0%, transparent 60%),
-      linear-gradient(180deg, rgba(0, 255, 255, 0.02) 0%, transparent 100%);
+    background:
+      radial-gradient(
+        ellipse at 50% 0%,
+        rgba(0,80,100,0.15) 0%,
+        transparent 60%
+      ),
+      radial-gradient(
+        ellipse at 20% 50%,
+        rgba(0,40,60,0.1) 0%,
+        transparent 50%
+      ),
+      linear-gradient(
+        180deg,
+        #061420 0%,
+        #040e18 40%,
+        #030c14 100%
+      );
     background-attachment: fixed;
     color: var(--text);
     font-family: var(--sans);
@@ -71,41 +85,190 @@
     overflow-x: hidden;
   }
 
-  /* Ocean floor — subtle floating light at the bottom of the viewport */
+  /* Gold metallic gradient â€” for large display text only */
+  .gold-metal {
+    background: linear-gradient(
+      160deg,
+      #8B6914 0%,
+      #F0D898 35%,
+      #C8A84B 50%,
+      #F0D898 65%,
+      #8B6914 100%
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Bioluminescence â€” drifting particles in deep water */
+  .bioluminescence {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+  }
+  .bioluminescence::before,
+  .bioluminescence::after {
+    content: '';
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    border-radius: 50%;
+    background: rgba(0, 255, 200, 0.4);
+    box-shadow:
+      120px 400px 0 rgba(0,255,200,0.3),
+      340px 600px 0 rgba(0,200,255,0.2),
+      580px 300px 0 rgba(0,255,200,0.25),
+      780px 700px 0 rgba(0,200,255,0.2),
+      920px 200px 0 rgba(0,255,200,0.15),
+      1100px 500px 0 rgba(0,200,255,0.3),
+      1300px 350px 0 rgba(0,255,200,0.2),
+      200px 800px 0 rgba(0,200,255,0.15),
+      450px 150px 0 rgba(0,255,200,0.2),
+      670px 650px 0 rgba(0,200,255,0.25),
+      850px 450px 0 rgba(0,255,200,0.2),
+      1050px 250px 0 rgba(0,200,255,0.15),
+      1250px 600px 0 rgba(0,255,200,0.3);
+    animation: drift 20s ease-in-out infinite alternate;
+  }
+  .bioluminescence::after {
+    background: rgba(0, 200, 255, 0.3);
+    animation-delay: -10s;
+    animation-duration: 25s;
+  }
+  @keyframes drift {
+    0% { transform: translateY(0) translateX(0); opacity: 0.6; }
+    50% { opacity: 1; }
+    100% { transform: translateY(-80px) translateX(20px); opacity: 0.4; }
+  }
+
+  /* Ocean floor â€” full SVG waves at bottom of viewport, every screen */
   .ocean-floor {
     position: fixed;
     bottom: 0;
     left: 0;
     right: 0;
-    height: 60px;
+    height: 120px;
     pointer-events: none;
     z-index: 0;
-    overflow: hidden;
   }
-  .ocean-floor::before {
-    content: '';
+  .ocean-waves {
+    width: 100%;
+    height: 100%;
+  }
+  @keyframes waveBack {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-540px); }
+  }
+  @keyframes waveMid {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-600px); }
+  }
+  @keyframes waveFront {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-450px); }
+  }
+  .wave-back {
+    animation: waveBack 12s linear infinite;
+    transform-origin: center;
+  }
+  .wave-mid {
+    animation: waveMid 8s linear infinite;
+  }
+  .wave-front {
+    animation: waveFront 6s linear infinite;
+  }
+  .wave-foam {
     position: absolute;
-    bottom: 0;
-    left: -50%;
-    width: 200%;
+    bottom: 85px;
+    left: 0;
+    right: 0;
+    height: 6px;
+    background: repeating-linear-gradient(
+      90deg,
+      transparent 0px,
+      transparent 20px,
+      rgba(255,255,255,0.08) 20px,
+      rgba(255,255,255,0.08) 22px
+    );
+    animation: waveMid 8s linear infinite;
+  }
+
+  /* Ship watermark â€” sails on the Command Bridge */
+  .ship-watermark {
+    position: absolute;
+    right: 40px;
+    top: 20px;
+    width: 380px;
+    height: 190px;
+    pointer-events: none;
+    opacity: 1;
+    animation: shipRock 8s ease-in-out infinite;
+    z-index: 0;
+  }
+  @keyframes shipRock {
+    0%, 100% { transform: rotate(-1deg) translateY(0px); }
+    25% { transform: rotate(0.5deg) translateY(-3px); }
+    50% { transform: rotate(1deg) translateY(0px); }
+    75% { transform: rotate(-0.5deg) translateY(-2px); }
+  }
+
+  /* Sidebar wood knot decoration */
+  .sidebar-wood-knot {
+    position: absolute;
+    bottom: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0.06;
+    width: 80px;
     height: 60px;
-    background: radial-gradient(ellipse at 50% 100%, rgba(0, 255, 255, 0.04) 0%, transparent 70%);
-    animation: oceanFloat 8s ease-in-out infinite;
+    pointer-events: none;
   }
-  .ocean-floor::after {
-    content: '';
+
+  /* Sidebar parrot */
+  .sidebar-parrot {
+    width: 36px;
+    height: 44px;
+    margin: 8px auto 0;
+    display: block;
+    animation: parrotBob 3s ease-in-out infinite;
+    cursor: pointer;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+  }
+  @keyframes parrotBob {
+    0%, 100% { transform: translateY(0) rotate(-3deg); }
+    50% { transform: translateY(-4px) rotate(3deg); }
+  }
+  .sidebar-parrot:hover {
+    animation: parrotExcited 0.3s ease-in-out infinite alternate;
+  }
+  @keyframes parrotExcited {
+    0% { transform: translateY(0) rotate(-8deg) scale(1.05); }
+    100% { transform: translateY(-6px) rotate(8deg) scale(1.05); }
+  }
+  .parrot-wrap {
+    position: relative;
+    margin: 0 18px 12px;
+  }
+  .parrot-bubble {
     position: absolute;
-    bottom: 0;
-    left: -50%;
-    width: 200%;
-    height: 40px;
-    background: radial-gradient(ellipse at 30% 100%, rgba(232, 197, 90, 0.03) 0%, transparent 60%);
-    animation: oceanFloat 12s ease-in-out infinite reverse;
+    left: 110%;
+    top: 0;
+    background: var(--bg-card);
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    font-family: var(--mono);
+    font-size: 10px;
+    padding: 6px 10px;
+    border-radius: 4px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+    z-index: 100;
   }
-  @keyframes oceanFloat {
-    0%, 100% { transform: translateX(0); }
-    50% { transform: translateX(5%); }
-  }
+  .parrot-bubble.visible { opacity: 1; }
 
   /* HEADER */
   header.topbar {
@@ -197,13 +360,37 @@
   aside.sidebar {
     width: 200px;
     flex-shrink: 0;
-    background: var(--bg2);
-    border-right: 1px solid var(--border);
+    background:
+      repeating-linear-gradient(
+        90deg,
+        transparent,
+        transparent 2px,
+        rgba(0,0,0,0.15) 2px,
+        rgba(0,0,0,0.15) 3px
+      ),
+      repeating-linear-gradient(
+        180deg,
+        transparent,
+        transparent 40px,
+        rgba(255,255,255,0.02) 40px,
+        rgba(255,255,255,0.02) 42px
+      ),
+      linear-gradient(
+        180deg,
+        #0a1a10 0%,
+        #061408 40%,
+        #0a1a10 70%,
+        #061408 100%
+      );
+    border-right: 2px solid #2A1F0A;
+    box-shadow: inset -4px 0 12px rgba(0,0,0,0.4),
+                2px 0 8px rgba(0,0,0,0.3);
     padding: 18px 0;
     position: sticky;
     top: 56px;
     height: calc(100vh - 56px);
     overflow-y: auto;
+    z-index: 2;
   }
   .nav-section {
     padding: 0 18px;
@@ -256,10 +443,12 @@
   /* MAIN */
   main.content {
     flex: 1;
-    padding: 28px 36px;
+    padding: 28px 36px 140px;
     overflow-x: hidden;
+    position: relative;
+    z-index: 1;
   }
-  .screen { display: none; }
+  .screen { display: none; position: relative; }
   .screen.active { display: block; }
 
   .screen-header { margin-bottom: 24px; }
@@ -364,7 +553,7 @@
   .stat-card.green .stat-value { color: var(--neon-green); }
   .stat-sub { font-size: 11px; color: var(--text3); margin-top: 4px; }
 
-  /* ── HAZARD CHART ── */
+  /* â”€â”€ HAZARD CHART â”€â”€ */
   .chart-section { margin-bottom: 28px; }
   .chart-header {
     display: flex; align-items: center; gap: 16px;
@@ -546,7 +735,7 @@
   .tooltip-action { font-size: 10px; margin-bottom: 3px; }
   .tooltip-cves { font-size: 10px; color: var(--text3); }
 
-  /* ── ACTION COLUMNS ── */
+  /* â”€â”€ ACTION COLUMNS â”€â”€ */
   .action-columns {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -1326,6 +1515,1271 @@
   .radar-progress-pct { font-family: var(--mono); font-size: 11px; color: var(--text3); }
   .radar-repo { font-family: var(--mono); font-size: 11px; color: var(--text3); letter-spacing: 0.05em; }
 </style>
+<style>
+  /* â”€â”€ PATCH LAG (3-act redesign, .pl- scope) â”€â”€ */
+  .pl-hero {
+    background: linear-gradient(135deg, rgba(255,68,68,0.08) 0%, rgba(232,197,90,0.05) 100%);
+    border: 1px solid rgba(232,197,90,0.18);
+    border-left: 3px solid var(--gold);
+    border-radius: 6px;
+    padding: 28px 32px;
+    margin-bottom: 24px;
+  }
+  .pl-hero-numwrap { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+  .pl-hero-number {
+    font-family: var(--mono);
+    font-size: 72px;
+    font-weight: 700;
+    color: var(--gold);
+    line-height: 1;
+    text-shadow: 0 0 30px rgba(232,197,90,0.4), 0 0 60px rgba(232,197,90,0.15);
+  }
+  .pl-hero-unit {
+    font-family: var(--mono);
+    font-size: 22px;
+    color: var(--text2);
+    letter-spacing: 0.05em;
+  }
+  .pl-hero-sub {
+    margin-top: 14px;
+    font-size: 14px;
+    color: var(--text2);
+    line-height: 1.7;
+  }
+  .pl-hero-safe { color: var(--gold); font-weight: 700; font-family: var(--mono); }
+  .pl-hero-condemn { color: var(--neon-red); font-weight: 600; }
+
+  .pl-timeline {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .pl-row {
+    border-bottom: 1px solid var(--border);
+    transition: background 0.15s, border-left-color 0.15s;
+    border-left: 2px solid transparent;
+  }
+  .pl-row:last-child { border-bottom: none; }
+  .pl-row-main {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding: 14px 18px;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .pl-row-main:hover { background: var(--bg-card2); }
+  .pl-row.open { border-left-color: var(--gold); }
+  .pl-row.open .pl-row-main { background: var(--bg-card2); }
+
+  .pl-left {
+    width: 200px;
+    flex-shrink: 0;
+    min-width: 0;
+  }
+  .pl-pkg-name {
+    font-family: var(--mono);
+    color: var(--gold);
+    font-size: 13px;
+    font-weight: 700;
+    word-break: break-all;
+    line-height: 1.3;
+  }
+  .pl-pkg-version {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text2);
+    margin-top: 3px;
+  }
+  .pl-owners {
+    margin-top: 7px;
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+  }
+  .pl-owner-badge {
+    background: var(--bg-card2);
+    border: 1px solid var(--border2);
+    border-radius: 10px;
+    padding: 2px 8px;
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text);
+  }
+  .pl-no-owner {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text3);
+    margin-top: 7px;
+    font-style: italic;
+  }
+
+  .pl-center {
+    flex: 1;
+    min-width: 0;
+    padding: 8px 0 0;
+  }
+  .pl-track-wrap { position: relative; }
+  .pl-track {
+    display: flex;
+    align-items: center;
+    background: var(--bg3);
+    border-radius: 4px;
+    height: 8px;
+    position: relative;
+  }
+  .pl-seg-before {
+    height: 2px;
+    background: var(--text3);
+    border-radius: 1px;
+    align-self: center;
+  }
+  .pl-seg-ignored {
+    height: 12px;
+    background: var(--neon-red);
+    border-radius: 4px;
+    box-shadow: 0 0 10px var(--neon-red-glow);
+    animation: ignoredPulse 2s ease infinite;
+    position: relative;
+    z-index: 1;
+  }
+  @keyframes ignoredPulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.6; }
+  }
+  .pl-seg-today {
+    width: 2px;
+    height: 22px;
+    background: var(--gold);
+    margin-left: 2px;
+    position: relative;
+    box-shadow: 0 0 8px rgba(232,197,90,0.6);
+    flex-shrink: 0;
+  }
+  .pl-today-label {
+    position: absolute;
+    top: -14px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--gold);
+    letter-spacing: 0.1em;
+    white-space: nowrap;
+  }
+  .pl-caption-row {
+    position: relative;
+    height: 16px;
+    margin-top: 6px;
+  }
+  .pl-track-caption {
+    position: absolute;
+    top: 0;
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--neon-red);
+    transform: translateX(-50%);
+    white-space: nowrap;
+  }
+
+  .pl-right {
+    width: 220px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 6px;
+  }
+  .pl-badge {
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    padding: 4px 12px;
+    border-radius: 12px;
+    color: #000;
+    text-transform: uppercase;
+  }
+  .pl-badge.no-excuse { background: var(--neon-red); }
+  .pl-badge.hard      { background: var(--neon-orange); }
+  .pl-badge.act-now   { background: var(--neon-green); }
+  .pl-badge.watching  { background: var(--neon-cyan); }
+  .pl-cve-count {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text2);
+  }
+
+  .pl-detail {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 200ms ease;
+    background: var(--bg-card2);
+    border-top: 1px solid var(--border2);
+  }
+  .pl-row.open .pl-detail { max-height: 600px; }
+  .pl-detail-inner {
+    display: flex;
+    gap: 28px;
+    padding: 16px 20px;
+  }
+  .pl-detail-cves { flex: 1; min-width: 0; }
+  .pl-detail-ticket { width: 360px; flex-shrink: 0; }
+
+  .pl-block-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    color: var(--text3);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .pl-cve-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 7px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 12px;
+  }
+  .pl-cve-item:last-child { border-bottom: none; }
+  .pl-sev-badge {
+    font-family: var(--mono);
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    padding: 2px 6px;
+    border-radius: 3px;
+    color: #000;
+    flex-shrink: 0;
+    text-transform: uppercase;
+  }
+  .pl-sev-badge.critical, .pl-sev-badge.high { background: var(--neon-red); }
+  .pl-sev-badge.medium { background: var(--neon-orange); }
+  .pl-sev-badge.low    { background: var(--neon-green); }
+  .pl-cve-id   { font-family: var(--mono); font-size: 11px; color: var(--text); flex-shrink: 0; }
+  .pl-cve-sum  { color: var(--text2); font-size: 11px; min-width: 0; }
+
+  .pl-ticket-text {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 10px 12px;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text);
+    white-space: pre-wrap;
+    line-height: 1.6;
+    margin-bottom: 10px;
+    max-height: 180px;
+    overflow-y: auto;
+  }
+  .pl-copy-btn {
+    background: var(--bg-card);
+    color: var(--gold);
+    border: 1px solid var(--gold);
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 700;
+    padding: 7px 14px;
+    border-radius: 3px;
+    cursor: pointer;
+    letter-spacing: 0.06em;
+    transition: background 0.15s, color 0.15s;
+  }
+  .pl-copy-btn:hover { background: rgba(232,197,90,0.08); }
+  .pl-copy-btn.copied {
+    background: rgba(0,255,136,0.10);
+    color: var(--neon-green);
+    border-color: var(--neon-green);
+  }
+</style>
+<style>
+  /* â”€â”€ ASK THE WATCH (.atw- scope) â”€â”€ */
+  .atw-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 0 0 16px 0;
+  }
+  .atw-pill {
+    border: 1px solid var(--border2);
+    background: var(--bg-card);
+    color: var(--text2);
+    font-family: var(--mono);
+    font-size: 11px;
+    border-radius: 20px;
+    padding: 6px 14px;
+    cursor: pointer;
+    transition: border-color 0.15s, color 0.15s;
+  }
+  .atw-pill:hover {
+    border-color: var(--gold);
+    color: var(--gold);
+  }
+  .atw-chat {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px;
+    height: calc(100vh - 340px);
+    min-height: 300px;
+    overflow-y: auto;
+  }
+  .atw-bubble {
+    padding: 12px 16px;
+    margin-bottom: 12px;
+    border-radius: 0 8px 8px 0;
+    font-family: var(--sans);
+    font-size: 14px;
+    color: var(--text);
+    line-height: 1.5;
+  }
+  .atw-bubble-user {
+    background: var(--bg-card2);
+    border-left: 3px solid var(--gold);
+  }
+  .atw-bubble-assistant {
+    background: var(--bg3);
+    border-left: 3px solid var(--neon-cyan);
+  }
+  .atw-bubble-thinking {
+    border-left-color: var(--text3);
+  }
+  .atw-bubble-label {
+    display: block;
+    font-family: var(--mono);
+    font-size: 10px;
+    margin-bottom: 6px;
+    letter-spacing: 0.05em;
+  }
+  .atw-bubble-user .atw-bubble-label { color: var(--gold); }
+  .atw-bubble-assistant .atw-bubble-label { color: var(--neon-cyan); }
+  .atw-bubble-body { word-wrap: break-word; }
+  .atw-input-row {
+    display: flex;
+    margin-top: 16px;
+  }
+  .atw-input {
+    flex: 1 1 auto;
+    min-width: 0;
+    background: var(--bg-card);
+    border: 1px solid var(--border2);
+    color: var(--text);
+    font-family: var(--mono);
+    font-size: 13px;
+    padding: 12px 16px;
+    border-radius: 6px 0 0 6px;
+    outline: none;
+  }
+  .atw-input:focus { border-color: var(--gold); }
+  .atw-input:disabled { opacity: 0.55; }
+  .atw-send {
+    background: var(--gold);
+    color: var(--bg);
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 700;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 0 6px 6px 0;
+    cursor: pointer;
+    letter-spacing: 0.05em;
+  }
+  .atw-send:hover { opacity: 0.85; }
+  .atw-send:disabled { opacity: 0.5; cursor: not-allowed; }
+  .atw-thinking-dots {
+    display: inline-flex;
+    gap: 4px;
+    font-size: 22px;
+    line-height: 1;
+    color: var(--text2);
+  }
+  .atw-thinking-dots span {
+    opacity: 0;
+    animation: thinkingDot 1.4s infinite ease-in-out;
+  }
+  .atw-thinking-dots span:nth-child(1) { animation-delay: 0s; }
+  .atw-thinking-dots span:nth-child(2) { animation-delay: 0.2s; }
+  .atw-thinking-dots span:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes thinkingDot {
+    0%, 80%, 100% { opacity: 0; }
+    40% { opacity: 1; }
+  }
+</style>
+<style>
+  /* â”€â”€ CREW ACCOUNTABILITY (.ca- scope) â”€â”€ */
+  .ca-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+  .ca-stat-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px 24px;
+  }
+  .ca-stat-value {
+    font-family: var(--mono);
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 1.1;
+  }
+  .ca-stat-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    color: var(--text2);
+    margin-top: 8px;
+    text-transform: uppercase;
+  }
+  .ca-stat-sub {
+    font-size: 12px;
+    color: var(--text2);
+    margin-top: 4px;
+  }
+  .ca-gold { color: var(--gold); }
+  .ca-red { color: var(--neon-red); }
+  .ca-orange { color: var(--neon-orange); }
+  .ca-green { color: var(--neon-green); }
+
+  .ca-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    margin-bottom: 16px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: border-color 0.15s;
+  }
+  .ca-card:hover { border-color: var(--border2); }
+
+  .ca-card-header {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 20px 24px;
+  }
+  .ca-card-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
+  }
+  .ca-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--bg3);
+    border: 2px solid var(--border2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--gold);
+    font-family: var(--mono);
+    font-size: 18px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .ca-login {
+    color: var(--gold);
+    font-family: var(--mono);
+    font-size: 16px;
+    font-weight: 700;
+  }
+  .ca-pkg-count {
+    font-family: var(--sans);
+    font-size: 12px;
+    color: var(--text2);
+    margin-top: 2px;
+  }
+
+  .ca-card-center {
+    flex-grow: 1;
+    text-align: center;
+  }
+  .ca-bignum {
+    font-family: var(--mono);
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 1;
+  }
+  .ca-bignum-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text3);
+    margin-top: 6px;
+  }
+
+  .ca-card-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 6px;
+    flex-shrink: 0;
+  }
+  .ca-pill {
+    font-family: var(--mono);
+    font-size: 11px;
+    padding: 3px 8px;
+    border-radius: 4px;
+    line-height: 1.3;
+  }
+  .ca-pill-breaking {
+    background: rgba(255, 68, 68, 0.15);
+    border: 1px solid var(--neon-red);
+    color: var(--neon-red);
+  }
+  .ca-pill-noexcuse {
+    background: rgba(255, 140, 0, 0.15);
+    border: 1px solid var(--neon-orange);
+    color: var(--neon-orange);
+  }
+  .ca-chevron {
+    color: var(--text3);
+    font-size: 12px;
+    margin-top: 4px;
+    transition: transform 0.2s ease;
+    line-height: 1;
+  }
+  .ca-card.open .ca-chevron { transform: rotate(180deg); }
+
+  .ca-panel {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 250ms ease;
+    background: var(--bg2);
+    border-top: 1px solid transparent;
+  }
+  .ca-card.open .ca-panel {
+    max-height: 800px;
+    border-top-color: var(--border);
+  }
+  .ca-panel-inner {
+    padding: 0 24px 20px 24px;
+  }
+
+  .ca-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  .ca-table th {
+    text-align: left;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text3);
+    padding: 12px 8px 8px 8px;
+    font-weight: 700;
+    border-bottom: 1px solid var(--border);
+  }
+  .ca-table td {
+    padding: 10px 8px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: middle;
+  }
+  .ca-table tbody tr { transition: background 0.12s; }
+  .ca-table tbody tr:hover { background: var(--bg3); }
+  .ca-table tbody tr:last-child td { border-bottom: none; }
+
+  .ca-td-pkg {
+    color: var(--gold);
+    font-family: var(--mono);
+    font-size: 13px;
+    word-break: break-all;
+  }
+  .ca-td-ver {
+    color: var(--text2);
+    font-family: var(--mono);
+    font-size: 12px;
+  }
+  .ca-td-days {
+    font-family: var(--mono);
+    font-size: 13px;
+  }
+  .ca-td-days.ca-bold { font-weight: 700; }
+  .ca-td-action {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--neon-cyan);
+  }
+
+  .ca-sev {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 10px;
+    padding: 2px 6px;
+    border-radius: 3px;
+    letter-spacing: 0.05em;
+  }
+  .ca-sev-breaking {
+    background: rgba(255, 68, 68, 0.15);
+    border: 1px solid var(--neon-red);
+    color: var(--neon-red);
+  }
+  .ca-sev-safe {
+    background: rgba(0, 255, 136, 0.15);
+    border: 1px solid var(--neon-green);
+    color: var(--neon-green);
+  }
+  .ca-sev-moderate {
+    background: rgba(255, 140, 0, 0.15);
+    border: 1px solid var(--neon-orange);
+    color: var(--neon-orange);
+  }
+  .ca-sev-no_fix {
+    background: rgba(255, 68, 68, 0.15);
+    border: 1px solid var(--neon-red);
+    color: var(--neon-red);
+  }
+
+  .ca-copy-all {
+    margin-top: 16px;
+    border: 1px solid var(--border2);
+    background: var(--bg-card);
+    color: var(--text2);
+    font-family: var(--mono);
+    font-size: 11px;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    letter-spacing: 0.05em;
+    transition: border-color 0.15s, color 0.15s;
+  }
+  .ca-copy-all:hover {
+    border-color: var(--gold);
+    color: var(--gold);
+  }
+
+  .ca-empty {
+    color: var(--text2);
+    font-family: var(--mono);
+    text-align: center;
+    padding: 80px 0;
+    white-space: pre-line;
+    line-height: 1.7;
+  }
+
+  /* Sprint Planner */
+  .ca-sprint-board {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--gold);
+    border-radius: 8px;
+    margin-top: 28px;
+    padding: 20px 24px;
+  }
+  .ca-sprint-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+  .ca-sprint-title {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    color: var(--gold);
+  }
+  .ca-sprint-stat {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text2);
+    margin-top: 4px;
+  }
+  .ca-sprint-list {
+    display: grid;
+    gap: 10px;
+  }
+  .ca-sprint-order {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 14px 16px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 14px;
+    align-items: center;
+  }
+  .ca-sprint-pkg {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--text);
+    word-break: break-word;
+  }
+  .ca-sprint-arrow {
+    color: var(--gold);
+    padding: 0 6px;
+  }
+  .ca-sprint-meta {
+    margin-top: 7px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text2);
+  }
+  .ca-sprint-days-red { color: var(--neon-red); }
+  .ca-sprint-days-amber { color: var(--gold); }
+  .ca-sprint-days-green { color: var(--neon-green); }
+  .ca-sprint-empty {
+    font-family: var(--mono);
+    color: var(--text2);
+    padding: 18px 0 4px;
+  }
+
+  /* ── WANTED WALL LAYOUT ── */
+  /*
+   * Next sprint enhancements:
+   * - Add receipt-level links from incident rows to the exact dependency manifest commit.
+   * - Add timeline grouping for fix-published date vs. owner manifest-touch date.
+   */
+  #screen-crew {
+    overflow: visible;
+  }
+
+  .wanted-wall {
+    display: grid;
+    grid-template-columns: 65fr 35fr;
+    gap: 20px;
+    align-items: start;
+  }
+
+  .poster-wall {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  /* ── POSTER SHARED STYLES ── */
+  .poster {
+    position: relative;
+    background:
+      repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 24px,
+        rgba(0,255,255,0.015) 24px,
+        rgba(0,255,255,0.015) 25px
+      ),
+      linear-gradient(
+        135deg,
+        #071828 0%,
+        #0a2035 30%,
+        #081c2e 60%,
+        #0c2540 100%
+      );
+    border: 1px solid rgba(200,168,75,0.25);
+    border-radius: 4px;
+    overflow: visible;
+    cursor: pointer;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+
+  .poster:hover {
+    border-color: rgba(200,168,75,0.5);
+    box-shadow: 0 0 30px rgba(200,168,75,0.08), 0 8px 32px rgba(0,0,0,0.4);
+  }
+
+  .poster::before {
+    content: '';
+    position: absolute;
+    top: -6px;
+    left: 0;
+    right: 0;
+    height: 8px;
+    background: inherit;
+    clip-path: polygon(
+      0% 100%, 2% 20%, 4% 80%, 6% 10%, 8% 70%, 10% 30%,
+      12% 90%, 14% 20%, 16% 75%, 18% 15%, 20% 85%,
+      22% 25%, 24% 70%, 26% 10%, 28% 80%, 30% 20%,
+      32% 90%, 34% 30%, 36% 75%, 38% 15%, 40% 80%,
+      42% 20%, 44% 90%, 46% 25%, 48% 70%, 50% 15%,
+      52% 80%, 54% 20%, 56% 85%, 58% 25%, 60% 75%,
+      62% 10%, 64% 80%, 66% 30%, 68% 90%, 70% 20%,
+      72% 75%, 74% 15%, 76% 80%, 78% 25%, 80% 70%,
+      82% 10%, 84% 85%, 86% 20%, 88% 75%, 90% 30%,
+      92% 90%, 94% 20%, 96% 80%, 98% 25%, 100% 80%,
+      100% 100%
+    );
+    border-left: 1px solid rgba(200,168,75,0.25);
+    border-right: 1px solid rgba(200,168,75,0.25);
+    z-index: 1;
+  }
+
+  .poster::after {
+    content: '';
+    position: absolute;
+    bottom: -6px;
+    left: 0;
+    right: 0;
+    height: 8px;
+    background: inherit;
+    clip-path: polygon(
+      0% 0%, 100% 0%, 98% 80%, 95% 20%, 92% 75%,
+      89% 15%, 86% 80%, 83% 25%, 80% 70%, 77% 10%,
+      74% 85%, 71% 20%, 68% 75%, 65% 30%, 62% 90%,
+      59% 20%, 56% 80%, 53% 25%, 50% 75%, 47% 10%,
+      44% 80%, 41% 30%, 38% 90%, 35% 15%, 32% 75%,
+      29% 25%, 26% 80%, 23% 20%, 20% 85%, 17% 25%,
+      14% 75%, 11% 15%, 8% 80%, 5% 20%, 2% 75%, 0% 20%
+    );
+    border-left: 1px solid rgba(200,168,75,0.25);
+    border-right: 1px solid rgba(200,168,75,0.25);
+    z-index: 1;
+  }
+
+  /* ── HERO POSTER ── */
+  .hero-poster {
+    margin-bottom: 24px;
+    padding: 28px 32px 32px;
+    margin-top: 8px;
+  }
+
+  .hero-poster-stamp {
+    position: absolute;
+    top: 16px;
+    right: 20px;
+    transform: rotate(12deg);
+    opacity: 0.85;
+  }
+
+  .poster-border-decoration {
+    position: absolute;
+    inset: 6px;
+    border: 1px solid rgba(200,168,75,0.12);
+    border-radius: 2px;
+    pointer-events: none;
+  }
+
+  .corner-ornament {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    border-color: rgba(200,168,75,0.3);
+    border-style: solid;
+  }
+  .corner-ornament.tl { top: 10px; left: 10px; border-width: 2px 0 0 2px; }
+  .corner-ornament.tr { top: 10px; right: 10px; border-width: 2px 2px 0 0; }
+  .corner-ornament.bl { bottom: 10px; left: 10px; border-width: 0 0 2px 2px; }
+  .corner-ornament.br { bottom: 10px; right: 10px; border-width: 0 2px 2px 0; }
+
+  .hero-poster-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.4em;
+    color: rgba(200,168,75,0.5);
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: 12px;
+  }
+
+  .hero-poster-divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(200,168,75,0.3), transparent);
+    margin: 10px 0;
+  }
+
+  .hero-poster-name {
+    font-family: var(--mono);
+    font-size: 40px;
+    font-weight: 700;
+    text-align: center;
+    line-height: 1.1;
+    background: linear-gradient(160deg, #8B6914 0%, #F0D898 35%, #C8A84B 55%, #F0D898 75%, #8B6914 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin: 12px 0;
+    word-break: break-all;
+  }
+
+  .hero-bounty-label {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    color: var(--text3);
+    text-align: center;
+    text-transform: uppercase;
+    margin-top: 16px;
+  }
+
+  .hero-bounty-value {
+    font-family: var(--mono);
+    font-size: 52px;
+    font-weight: 700;
+    text-align: center;
+    color: var(--neon-red);
+    line-height: 1;
+    text-shadow: 0 0 20px rgba(255,68,68,0.5), 0 0 40px rgba(255,68,68,0.2);
+  }
+
+  .hero-bounty-unit {
+    font-family: var(--mono);
+    font-size: 14px;
+    text-align: center;
+    color: var(--text2);
+    margin-bottom: 4px;
+  }
+
+  .hero-since {
+    font-family: var(--mono);
+    font-size: 11px;
+    text-align: center;
+    color: var(--neon-orange);
+    margin-bottom: 16px;
+  }
+
+  .hero-stats-row {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    margin: 16px 0;
+  }
+
+  .hero-stat-item {
+    text-align: center;
+  }
+
+  .hero-stat-num {
+    font-family: var(--mono);
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  .hero-stat-lbl {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    color: var(--text3);
+    text-transform: uppercase;
+    margin-top: 3px;
+  }
+
+  .hero-crime {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text2);
+    text-align: center;
+    font-style: italic;
+    margin: 12px 0 20px;
+    line-height: 1.6;
+    padding: 0 16px;
+  }
+
+  .exposure-burn-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--neon-red), var(--neon-orange), var(--gold));
+    border-radius: 0 0 3px 3px;
+    transition: width 1.5s ease;
+    box-shadow: 0 0 8px rgba(255,68,68,0.5);
+  }
+
+  .hero-brief-btn {
+    display: block;
+    width: calc(100% - 32px);
+    margin: 0 auto;
+    padding: 10px;
+    background: linear-gradient(135deg, rgba(200,168,75,0.15), rgba(200,168,75,0.08));
+    border: 1px solid rgba(200,168,75,0.4);
+    border-radius: 4px;
+    color: var(--gold);
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-align: center;
+    cursor: pointer;
+    transition: background 0.2s, box-shadow 0.2s;
+    text-transform: uppercase;
+  }
+  .hero-brief-btn:hover {
+    background: linear-gradient(135deg, rgba(200,168,75,0.25), rgba(200,168,75,0.15));
+    box-shadow: 0 0 16px rgba(200,168,75,0.2);
+  }
+
+  /* ── CREW POSTER GRID ── */
+  .crew-poster-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  .poster.small-poster {
+    padding: 16px 14px 18px;
+    min-height: 0;
+  }
+
+  .small-poster-name {
+    font-family: var(--mono);
+    font-size: 15px;
+    font-weight: 700;
+    background: linear-gradient(160deg, #8B6914 0%, #F0D898 35%, #C8A84B 55%, #F0D898 75%, #8B6914 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin: 6px 0 4px;
+    word-break: break-all;
+  }
+
+  .small-poster-days {
+    font-family: var(--mono);
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--neon-red);
+    line-height: 1;
+    text-shadow: 0 0 10px rgba(255,68,68,0.4);
+  }
+
+  .small-poster-since {
+    font-family: var(--mono);
+    font-size: 9px;
+    color: var(--neon-orange);
+    margin-top: 2px;
+  }
+
+  .small-poster-meta {
+    margin-top: 8px;
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .wax-seal {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 35%, #FF6B6B, #CC2222);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.2);
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 700;
+    color: white;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+    flex-shrink: 0;
+    position: relative;
+  }
+
+  .wax-seal::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 8px;
+    height: 6px;
+    background: radial-gradient(ellipse, #CC2222, #991111);
+    clip-path: polygon(20% 0%, 80% 0%, 100% 100%, 50% 80%, 0% 100%);
+  }
+
+  .gold-coin {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, #F0D898, #C8A84B, #8B6914);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.3);
+    font-family: var(--mono);
+    font-size: 9px;
+    font-weight: 700;
+    color: #4A3000;
+    flex-shrink: 0;
+    border: 1px solid #F0D898;
+  }
+
+  .all-clear-stamp {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-15deg);
+    border: 3px solid #00FF88;
+    border-radius: 4px;
+    padding: 4px 10px;
+    font-family: var(--mono);
+    font-size: 16px;
+    font-weight: 700;
+    color: #00FF88;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    opacity: 0.7;
+    pointer-events: none;
+    text-shadow: 0 0 10px rgba(0,255,136,0.5);
+    box-shadow: inset 0 0 8px rgba(0,255,136,0.1);
+  }
+
+  .absolved-stamp {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-12deg);
+    border: 2px solid #00FF88;
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 700;
+    color: #00FF88;
+    letter-spacing: 0.1em;
+    opacity: 0.6;
+    pointer-events: none;
+  }
+
+  /* ── INCIDENT LOG ── */
+  .incident-log-panel {
+    position: sticky;
+    top: 72px;
+    max-height: calc(100vh - 90px);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    align-self: start;
+  }
+
+  .log-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+    background: var(--bg3);
+    flex-shrink: 0;
+    color: var(--text2);
+  }
+
+  .log-title {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--neon-cyan);
+    flex: 1;
+  }
+
+  .log-filter-hint {
+    font-family: var(--mono);
+    font-size: 9px;
+    color: var(--text3);
+    background: var(--bg);
+    padding: 2px 6px;
+    border-radius: 3px;
+    border: 1px solid var(--border);
+  }
+
+  .incident-feed {
+    overflow-y: auto;
+    flex: 1;
+    padding: 8px;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border2) transparent;
+  }
+
+  .incident-entry {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--border);
+    border-radius: 4px;
+    margin-bottom: 4px;
+    background: var(--bg-card);
+    border-left: 2px solid transparent;
+    transition: border-color 0.15s, background 0.15s;
+    opacity: 0;
+    transform: translateX(20px);
+    animation: incidentSlideIn 0.4s ease forwards;
+  }
+
+  .incident-entry.breaking { border-left-color: var(--neon-red); }
+  .incident-entry.safe { border-left-color: var(--neon-green); }
+  .incident-entry.highlighted { background: rgba(200,168,75,0.05); border-color: rgba(200,168,75,0.2); }
+
+  @keyframes incidentSlideIn {
+    to { opacity: 1; transform: translateX(0); }
+  }
+
+  .incident-pkg {
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  .incident-days {
+    font-family: var(--mono);
+    font-size: 11px;
+    margin-top: 3px;
+  }
+
+  .incident-since {
+    font-size: 10px;
+    color: var(--text2);
+    margin-top: 2px;
+    line-height: 1.5;
+  }
+
+  .incident-fix {
+    font-size: 10px;
+    color: var(--neon-orange);
+    margin-top: 1px;
+  }
+
+  .incident-owner {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--neon-cyan);
+    margin-top: 4px;
+  }
+
+  .coral-source-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-family: var(--mono);
+    font-size: 9px;
+    color: var(--text3);
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    padding: 2px 5px;
+    margin-top: 5px;
+  }
+
+  .coral-source-badge .coral-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--neon-cyan);
+    box-shadow: 0 0 4px var(--neon-cyan);
+  }
+
+  @keyframes countUp {
+    from { opacity: 0.3; transform: translateY(4px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .bounty-animate { animation: countUp 0.1s ease; }
+</style>
 </head>
 <body>
 <header class="topbar">
@@ -1347,7 +2801,7 @@
               style="animation: spin 20s linear infinite; transform-origin: 16px 16px;"/>
     </svg>
     <div class="logo-text">
-      <span class="logo-name">DRIFTWATCH</span>
+      <span class="logo-name gold-metal">DRIFTWATCH</span>
       <span class="logo-sub">SUPPLY CHAIN RADAR</span>
     </div>
   </div>
@@ -1355,7 +2809,7 @@
     <input id="repoInput" type="text" value="jellyfin/jellyfin-web" placeholder="owner/repo" autocomplete="off" />
     <button id="scanBtn" type="submit">Chart Course</button>
   </form>
-  <div class="status-pill"><span class="pulse-dot"></span><span id="liveStatus">LIVE DATA · loading…</span></div>
+  <div class="status-pill"><span class="pulse-dot"></span><span id="liveStatus">LIVE DATA Â· loadingâ€¦</span></div>
 </header>
 <div class="wave-divider">
   <svg viewBox="0 0 1440 20" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
@@ -1368,50 +2822,124 @@
 
 <div class="app">
   <aside class="sidebar">
+    <div class="parrot-wrap">
+      <svg id="sidebarParrot" class="sidebar-parrot" viewBox="0 0 40 50"
+           xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <ellipse cx="20" cy="32" rx="10" ry="13" fill="#1a6b3a"/>
+        <circle cx="20" cy="16" r="9" fill="#2a8a4a"/>
+        <circle cx="23" cy="14" r="2.5" fill="#fff"/>
+        <circle cx="24" cy="14" r="1.2" fill="#1a1a1a"/>
+        <circle cx="24.5" cy="13.5" r="0.4" fill="#fff"/>
+        <path d="M26,17 L30,19 L26,21 Z" fill="#C8A84B"/>
+        <path d="M12,28 C8,32 9,40 14,42 C16,36 16,30 20,28 Z" fill="#156030"/>
+        <path d="M16,44 L14,54 M20,45 L20,56 M24,44 L26,54"
+              stroke="#1a6b3a" stroke-width="2.5"
+              stroke-linecap="round" fill="none"/>
+        <circle cx="17" cy="13" r="4" fill="#cc3333" opacity="0.7"/>
+        <line x1="16" y1="44" x2="13" y2="48"
+              stroke="#C8A84B" stroke-width="1.5"/>
+        <line x1="20" y1="45" x2="20" y2="49"
+              stroke="#C8A84B" stroke-width="1.5"/>
+      </svg>
+      <div id="parrotBubble" class="parrot-bubble"></div>
+    </div>
     <div class="nav-section">
       <div class="nav-label">INTELLIGENCE</div>
       <div class="nav-item active" data-screen="overview">
-        <span class="label"><span class="icon">◈</span> Overview</span>
-        <span class="nav-badge red" id="badge-overview">—</span>
+        <span class="label">Overview</span>
+        <span class="nav-badge red" id="badge-overview">â€”</span>
       </div>
       <div class="nav-item" data-screen="patchlag">
-        <span class="label"><span class="icon">⧖</span> Patch Lag</span>
-        <span class="nav-badge" id="badge-patchlag">—</span>
+        <span class="label">Threat Intel</span>
+        <span class="nav-badge" id="badge-patchlag">â€”</span>
       </div>
       <div class="nav-item" data-screen="precve">
-        <span class="label"><span class="icon">⚡</span> Pre-CVE Health</span>
-        <span class="nav-badge amber" id="badge-precve">—</span>
+        <span class="label">Pre-CVE Health</span>
+        <span class="nav-badge amber" id="badge-precve">â€”</span>
       </div>
       <div class="nav-item" data-screen="maintainer">
-        <span class="label"><span class="icon">⟳</span> Maintainer Intel</span>
-        <span class="nav-badge" id="badge-maint">—</span>
+        <span class="label">Maintainer Intel</span>
+        <span class="nav-badge" id="badge-maint">â€”</span>
       </div>
     </div>
     <div class="nav-section">
       <div class="nav-label">ACTION</div>
       <div class="nav-item" data-screen="orders">
-        <span class="label"><span class="icon">↑</span> Upgrade Orders</span>
-        <span class="nav-badge green" id="badge-orders">—</span>
+        <span class="label">Upgrade Orders</span>
+        <span class="nav-badge green" id="badge-orders">â€”</span>
       </div>
       <div class="nav-item" data-screen="crew">
-        <span class="label"><span class="icon">👤</span> Crew Manifest</span>
-        <span class="nav-badge" id="badge-crew">—</span>
+        <span class="label">Crew Accountability</span>
+        <span class="nav-badge" id="badge-crew">â€”</span>
+      </div>
+      <div class="nav-item" id="navAskWatch">
+        <span class="label">Ask the Watch</span>
       </div>
     </div>
     <div class="nav-section">
       <div class="nav-label">ABOUT</div>
       <div class="nav-item" data-screen="queries">
-        <span class="label"><span class="icon">⎄</span> Coral Queries</span>
+        <span class="label">Coral Queries</span>
       </div>
       <div class="nav-item" data-screen="why">
-        <span class="label"><span class="icon">?</span> Why DriftWatch</span>
+        <span class="label">Why DriftWatch</span>
       </div>
     </div>
+    <svg class="sidebar-wood-knot" viewBox="0 0 60 60"
+         xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <ellipse cx="30" cy="30" rx="28" ry="20"
+               fill="none" stroke="#8B6914" stroke-width="1"/>
+      <ellipse cx="30" cy="30" rx="20" ry="14"
+               fill="none" stroke="#8B6914" stroke-width="1"/>
+      <ellipse cx="30" cy="30" rx="12" ry="8"
+               fill="none" stroke="#8B6914" stroke-width="1"/>
+      <ellipse cx="30" cy="30" rx="5" ry="3"
+               fill="none" stroke="#8B6914" stroke-width="1"/>
+    </svg>
   </aside>
 
   <main class="content">
     <!-- OVERVIEW -->
     <section class="screen active" id="screen-overview">
+      <svg class="ship-watermark" viewBox="0 0 400 200"
+           xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M60,140 Q200,155 340,140 L320,160 Q200,170 80,160 Z"
+              fill="rgba(200,168,75,0.06)"
+              stroke="rgba(200,168,75,0.12)" stroke-width="1"/>
+        <line x1="200" y1="140" x2="200" y2="40"
+              stroke="rgba(200,168,75,0.15)" stroke-width="2"/>
+        <line x1="130" y1="140" x2="130" y2="65"
+              stroke="rgba(200,168,75,0.1)" stroke-width="1.5"/>
+        <line x1="270" y1="140" x2="270" y2="65"
+              stroke="rgba(200,168,75,0.1)" stroke-width="1.5"/>
+        <path d="M200,42 C220,60 225,100 215,138
+                 L185,138 C175,100 180,60 200,42 Z"
+              fill="rgba(200,168,75,0.05)"
+              stroke="rgba(200,168,75,0.1)" stroke-width="1"/>
+        <path d="M130,67 C148,80 150,110 144,138
+                 L116,138 C110,110 112,80 130,67 Z"
+              fill="rgba(200,168,75,0.04)"
+              stroke="rgba(200,168,75,0.08)" stroke-width="1"/>
+        <path d="M270,67 C288,80 290,110 284,138
+                 L256,138 C250,110 252,80 270,67 Z"
+              fill="rgba(200,168,75,0.04)"
+              stroke="rgba(200,168,75,0.08)" stroke-width="1"/>
+        <rect x="200" y="40" width="20" height="14"
+              fill="rgba(200,168,75,0.12)"
+              stroke="rgba(200,168,75,0.2)" stroke-width="0.5"/>
+        <circle cx="207" cy="45" r="2.5"
+                fill="rgba(200,168,75,0.2)"/>
+        <line x1="204" y1="49" x2="206" y2="51"
+              stroke="rgba(200,168,75,0.2)" stroke-width="1"/>
+        <line x1="210" y1="49" x2="208" y2="51"
+              stroke="rgba(200,168,75,0.2)" stroke-width="1"/>
+        <line x1="60" y1="143" x2="20" y2="130"
+              stroke="rgba(200,168,75,0.1)" stroke-width="1.5"/>
+        <path d="M40,162 Q120,158 200,162 Q280,166 360,162"
+              fill="none" stroke="rgba(0,150,200,0.1)" stroke-width="1"/>
+        <path d="M60,167 Q140,163 220,167 Q300,171 360,167"
+              fill="none" stroke="rgba(0,150,200,0.07)" stroke-width="1"/>
+      </svg>
       <div class="screen-header">
         <p class="screen-title">INTELLIGENCE BRIEF</p>
         <h2 class="screen-sub" id="overviewSub">Overview</h2>
@@ -1421,8 +2949,8 @@
 
       <div class="chart-section">
         <div class="chart-header">
-          <span class="chart-title">⊕ HAZARD CHART</span>
-          <span class="chart-sub">Hover for details · larger buoys = more CVEs</span>
+          <span class="chart-title">âŠ• HAZARD CHART</span>
+          <span class="chart-sub">Hover for details Â· larger buoys = more CVEs</span>
           <div class="chart-legend">
             <span class="legend-item breaking">
               <span class="legend-dot" style="background:#FF6B6B;box-shadow:0 0 4px #FF6B6B"></span>
@@ -1440,7 +2968,7 @@
         </div>
 
         <div class="hazard-chart-wrap">
-          <div class="chart-y-label">← FEW CVEs · MORE CVEs →</div>
+          <div class="chart-y-label">â† FEW CVEs Â· MORE CVEs â†’</div>
 
           <div class="hazard-chart" id="hazard-chart">
             <div class="chart-compass-watermark" style="pointer-events:none">
@@ -1460,18 +2988,18 @@
               </svg>
             </div>
             <div class="chart-coords" style="pointer-events:none">
-              <span class="coord coord-tl">0°N 0°W</span>
-              <span class="coord coord-tr">0°N 90°E</span>
-              <span class="coord coord-bl">60°S 0°W</span>
-              <span class="coord coord-br">60°S 90°E</span>
+              <span class="coord coord-tl">0Â°N 0Â°W</span>
+              <span class="coord coord-tr">0Â°N 90Â°E</span>
+              <span class="coord coord-bl">60Â°S 0Â°W</span>
+              <span class="coord coord-br">60Â°S 90Â°E</span>
             </div>
             <div class="chart-axis-x">
               <span>RECENT</span>
-              <span>← PATCH LAG (days exposed) →</span>
+              <span>â† PATCH LAG (days exposed) â†’</span>
               <span>ANCIENT</span>
             </div>
             <div class="danger-zone" id="danger-zone">
-              <span class="danger-zone-label">⚠ DANGER ZONE</span>
+              <span class="danger-zone-label">âš  DANGER ZONE</span>
             </div>
           </div>
 
@@ -1488,7 +3016,7 @@
       <div class="action-columns" id="action-columns">
         <div class="action-col" id="col-act-now">
           <div class="action-col-header red">
-            <span class="col-icon">🚨</span>
+            <span class="col-icon">ðŸš¨</span>
             <span class="col-title">ABANDON SHIP</span>
             <span class="col-count" id="act-now-count">0</span>
           </div>
@@ -1496,7 +3024,7 @@
         </div>
         <div class="action-col" id="col-this-sprint">
           <div class="action-col-header green">
-            <span class="col-icon">⛵</span>
+            <span class="col-icon">â›µ</span>
             <span class="col-title">SMOOTH SAILING</span>
             <span class="col-count" id="sprint-count">0</span>
           </div>
@@ -1504,7 +3032,7 @@
         </div>
         <div class="action-col" id="col-watch">
           <div class="action-col-header cyan">
-            <span class="col-icon">⚡</span>
+            <span class="col-icon">âš¡</span>
             <span class="col-title">STORM WARNING</span>
             <span class="col-count" id="watch-count">0</span>
           </div>
@@ -1516,29 +3044,23 @@
     <!-- PATCH LAG -->
     <section class="screen" id="screen-patchlag">
       <div class="screen-header">
-        <p class="screen-title">PATCH LAG ANALYSIS</p>
-        <h2 class="screen-sub">Tide Chart — how long fixes have been ignored</h2>
-        <p class="screen-tag">Days your team has been exposed — with a fix sitting there the whole time</p>
+        <p class="screen-title">THREAT INTELLIGENCE</p>
+        <h2 class="screen-sub">Tide Chart â€” how long fixes have been ignored</h2>
+        <p class="screen-tag">Not just what's vulnerable â€” who ignored the fix, and for how long.</p>
       </div>
-      <div class="tide-chart" id="tideChart"></div>
-      <table class="data-table">
-        <thead>
-          <tr><th>Package</th><th>Version</th><th>Days Exposed</th><th>Fix Available</th><th>CVEs</th><th>Summary</th></tr>
-        </thead>
-        <tbody id="patchLagTable"></tbody>
-      </table>
+      <div id="threatIntelRoot" class="ti2-screen"></div>
     </section>
 
     <!-- PRE-CVE -->
     <section class="screen" id="screen-precve">
       <div class="screen-header">
         <p class="screen-title">PRE-CVE INTELLIGENCE</p>
-        <h2 class="screen-sub">⚡ Storm Warnings — security deprecations before CVEs are filed</h2>
+        <h2 class="screen-sub">âš¡ Storm Warnings â€” security deprecations before CVEs are filed</h2>
         <p class="screen-tag">Every scanner is silent. DriftWatch fires when upstream deprecates a version for security reasons.</p>
       </div>
       <div id="stormSection"></div>
       <div class="screen-header" style="margin-top:32px; margin-bottom:14px">
-        <p class="screen-title">UPSTREAM HEALTH SIGNALS — top exposed packages</p>
+        <p class="screen-title">UPSTREAM HEALTH SIGNALS â€” top exposed packages</p>
       </div>
       <div id="signalSection"></div>
       <p class="footer-note">Full upstream health computed via OpenSSF Scorecard for connected repos.</p>
@@ -1548,7 +3070,7 @@
     <section class="screen" id="screen-maintainer">
       <div class="screen-header">
         <p class="screen-title">MAINTAINER INTELLIGENCE</p>
-        <h2 class="screen-sub">Will upstream save you? — responsiveness profile per package</h2>
+        <h2 class="screen-sub">Will upstream save you? â€” responsiveness profile per package</h2>
       </div>
       <div class="maint-grid" id="maintGrid"></div>
     </section>
@@ -1560,11 +3082,11 @@
         <h2 class="screen-sub">Your Upgrade Work Plan</h2>
       </div>
       <div class="orders-section">
-        <h3 class="safe">✅ SAFE — Do These This Sprint</h3>
+        <h3 class="safe">âœ… SAFE â€” Do These This Sprint</h3>
         <div id="ordersSafe"></div>
       </div>
       <div class="orders-section">
-        <h3 class="breaking">🔴 BREAKING — Plan a Migration</h3>
+        <h3 class="breaking">ðŸ”´ BREAKING â€” Plan a Migration</h3>
         <div id="ordersBreaking"></div>
       </div>
     </section>
@@ -1572,9 +3094,9 @@
     <!-- CREW -->
     <section class="screen" id="screen-crew">
       <div class="screen-header">
-        <p class="screen-title">CREW MANIFEST</p>
-        <h2 class="screen-sub">Who owns each hazard</h2>
-        <p class="screen-tag">Cross-referenced from GitHub code search × commit history</p>
+        <p class="screen-title">CREW ACCOUNTABILITY</p>
+        <h2 class="screen-sub">Who owns the negligence?</h2>
+        <p class="screen-tag">Cross-referenced from GitHub commit history Ã— code search â€” every day of exposure mapped to a human.</p>
       </div>
       <div id="crewList"></div>
     </section>
@@ -1600,33 +3122,54 @@
           <tr><th>Capability</th><th>Snyk / Endor</th><th>Socket</th><th>DriftWatch</th></tr>
         </thead>
         <tbody>
-          <tr><td>Vulnerability detection</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td></tr>
-          <tr><td>Reachability analysis</td><td class="yes">✓</td><td class="no">—</td><td class="no">—</td></tr>
-          <tr><td>Package behavior / runtime</td><td class="no">—</td><td class="yes">✓</td><td class="no">—</td></tr>
-          <tr><td>Patch lag intelligence</td><td class="no">—</td><td class="no">—</td><td class="uniq">✓ UNIQUE</td></tr>
-          <tr><td>Pre-CVE security deprecations</td><td class="no">—</td><td class="no">—</td><td class="uniq">✓ UNIQUE</td></tr>
-          <tr><td>Maintainer responsiveness profile</td><td class="no">—</td><td class="no">—</td><td class="uniq">✓ UNIQUE</td></tr>
-          <tr><td>Org-specific ownership mapping</td><td class="no">—</td><td class="no">—</td><td class="uniq">✓ UNIQUE</td></tr>
-          <tr><td>Upgrade actionability scoring</td><td class="no">—</td><td class="no">—</td><td class="uniq">✓ UNIQUE</td></tr>
+          <tr><td>Vulnerability detection</td><td class="yes">âœ“</td><td class="yes">âœ“</td><td class="yes">âœ“</td></tr>
+          <tr><td>Reachability analysis</td><td class="yes">âœ“</td><td class="no">â€”</td><td class="no">â€”</td></tr>
+          <tr><td>Package behavior / runtime</td><td class="no">â€”</td><td class="yes">âœ“</td><td class="no">â€”</td></tr>
+          <tr><td>Patch lag intelligence</td><td class="no">â€”</td><td class="no">â€”</td><td class="uniq">âœ“ UNIQUE</td></tr>
+          <tr><td>Pre-CVE security deprecations</td><td class="no">â€”</td><td class="no">â€”</td><td class="uniq">âœ“ UNIQUE</td></tr>
+          <tr><td>Maintainer responsiveness profile</td><td class="no">â€”</td><td class="no">â€”</td><td class="uniq">âœ“ UNIQUE</td></tr>
+          <tr><td>Org-specific ownership mapping</td><td class="no">â€”</td><td class="no">â€”</td><td class="uniq">âœ“ UNIQUE</td></tr>
+          <tr><td>Upgrade actionability scoring</td><td class="no">â€”</td><td class="no">â€”</td><td class="uniq">âœ“ UNIQUE</td></tr>
         </tbody>
       </table>
       <div class="why-grid">
         <div class="why-card">
           <h4>THE PATCH LAG PROBLEM</h4>
-          <p>jellyfin-web has been exposed to a yargs-parser vulnerability for <strong>2,090 days</strong> — with a fix available the entire time. Every other scanner reported this. None told you it had been sitting there for nearly 6 years.</p>
+          <p>jellyfin-web has been exposed to a yargs-parser vulnerability for <strong>2,090 days</strong> â€” with a fix available the entire time. Every other scanner reported this. None told you it had been sitting there for nearly 6 years.</p>
         </div>
         <div class="why-card">
           <h4>THE OWNERSHIP PROBLEM</h4>
-          <p>When dompurify CVE drops, who do you Slack? DriftWatch maps GitHub code search × commit history to your dependency list, so the ticket already names the engineer who imported it.</p>
+          <p>When dompurify CVE drops, who do you Slack? DriftWatch maps GitHub code search Ã— commit history to your dependency list, so the ticket already names the engineer who imported it.</p>
         </div>
         <div class="why-card">
           <h4>THE PRE-CVE PROBLEM</h4>
-          <p>Maintainers deprecate versions with "fixed a security issue" notes <em>before</em> CVEs get filed. DriftWatch reads those deprecation messages from deps.dev — you get the warning days or weeks before any scanner.</p>
+          <p>Maintainers deprecate versions with "fixed a security issue" notes <em>before</em> CVEs get filed. DriftWatch reads those deprecation messages from deps.dev â€” you get the warning days or weeks before any scanner.</p>
         </div>
       </div>
     </section>
 
-    <p class="footer-note" id="footerNote">Loading…</p>
+    <!-- ASK THE WATCH -->
+    <section class="screen" id="screenAskWatch">
+      <div class="screen-header">
+        <p class="screen-title">AGENT INTERFACE</p>
+        <h2 class="screen-sub">â—Ž Ask the Watch</h2>
+        <p class="screen-tag">Query your supply-chain intelligence in plain English â€” powered by Groq</p>
+      </div>
+      <div class="atw-pills" id="watchPills">
+        <button type="button" class="atw-pill">Who is most accountable for our risk?</button>
+        <button type="button" class="atw-pill">What can I fix this sprint?</button>
+        <button type="button" class="atw-pill">Is dompurify about to get a CVE?</button>
+        <button type="button" class="atw-pill">What's our #1 threat right now?</button>
+        <button type="button" class="atw-pill">Which packages has @thornbill ignored?</button>
+      </div>
+      <div class="atw-chat" id="watchChatMessages"></div>
+      <div class="atw-input-row">
+        <input type="text" id="watchInput" class="atw-input" placeholder="Chart a course â€” ask anything..." autocomplete="off" />
+        <button type="button" id="watchSendBtn" class="atw-send">SIGNAL â–¶</button>
+      </div>
+    </section>
+
+    <p class="footer-note" id="footerNote">Loadingâ€¦</p>
   </main>
 </div>
 
@@ -1680,7 +3223,7 @@
 
 <div class="progress-overlay" id="progressOverlay">
   <div class="progress-label">CHARTING THE WATERS</div>
-  <div class="progress-msg" id="progressMsg">Starting scan…</div>
+  <div class="progress-msg" id="progressMsg">Starting scanâ€¦</div>
   <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
   <div class="progress-pct" id="progressPct">0%</div>
 </div>
@@ -1691,7 +3234,7 @@
 </div>
 
 <script>
-// ── State ─────────────────────────────────────────────────────────────
+// â”€â”€ State â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 let state = {
   owner: 'jellyfin',
   repo: 'jellyfin-web',
@@ -1699,19 +3242,29 @@ let state = {
   jobId: null,
 };
 
-// ── Navigation ────────────────────────────────────────────────────────
+// â”€â”€ Navigation â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 document.querySelectorAll('.nav-item').forEach(item => {
   item.addEventListener('click', () => {
     document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
     item.classList.add('active');
     const target = item.dataset.screen;
     document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-    document.getElementById('screen-' + target).classList.add('active');
+    if (target) {
+      const screenEl = document.getElementById('screen-' + target);
+      if (screenEl) screenEl.classList.add('active');
+      if (target === 'patchlag' && typeof renderThreatIntel === 'function') renderThreatIntel();
+    }
     window.scrollTo({ top: 0, behavior: 'instant' });
   });
 });
+// New case: navAskWatch â†’ screenAskWatch (camelCase ids, not screen-X convention)
+document.getElementById('navAskWatch')?.addEventListener('click', () => {
+  const target = document.getElementById('screenAskWatch');
+  if (target) target.classList.add('active');
+  if (typeof window.initWatchOnNav === 'function') window.initWatchOnNav();
+});
 
-// ── Helpers ───────────────────────────────────────────────────────────
+// â”€â”€ Helpers â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function bandForDays(d) {
   if (d > 365) return 'red';
   if (d > 90) return 'amber';
@@ -1777,7 +3330,7 @@ function urgencyVerdict(score) {
   return 'LOW';
 }
 
-// ── Data fetch ────────────────────────────────────────────────────────
+// â”€â”€ Data fetch â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 async function fetchResults(owner, repo, demo = false) {
   const url = `/api/results/${owner}/${repo}${demo ? '?demo=true' : ''}`;
   const r = await fetch(url);
@@ -1787,23 +3340,24 @@ async function fetchResults(owner, repo, demo = false) {
 
 async function loadDemo() {
   hideToast();
-  setLiveStatus('LIVE DATA · loading demo…');
+  setLiveStatus('LIVE DATA Â· loading demoâ€¦');
   try {
     const data = await fetchResults('jellyfin', 'jellyfin-web', true);
     state.data = data;
     state.owner = data.owner;
     state.repo = data.repo;
     renderAll();
-    setLiveStatus(`LIVE DATA · demo · ${new Date().toLocaleTimeString()}`);
+    setLiveStatus(`LIVE DATA Â· demo Â· ${new Date().toLocaleTimeString()}`);
   } catch (e) {
     showToast('Failed to load demo: ' + e.message);
   }
 }
 
-// ── Renderers ─────────────────────────────────────────────────────────
+// â”€â”€ Renderers â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function renderAll() {
   const d = state.data;
   if (!d) return;
+  window.currentData = d;
   renderOverview(d);
   renderPatchLag(d);
   renderPreCve(d);
@@ -1812,8 +3366,8 @@ function renderAll() {
   renderCrew(d);
   renderQueries(d);
   updateBadges(d);
-  document.getElementById('overviewSub').textContent = `${d.owner}/${d.repo} — ${d.scan?.length || 0} vulnerable packages`;
-  document.getElementById('footerNote').textContent = `${d.scan?.length || 0} packages · ${d.sweep?.upgrade_actionability?.length || 0} upgrade paths · ${d.ownership?.length || 0} owners mapped · scan ${d.sweep?.scan_date || 'demo data'}`;
+  document.getElementById('overviewSub').textContent = `${d.owner}/${d.repo} â€” ${d.scan?.length || 0} vulnerable packages`;
+  document.getElementById('footerNote').textContent = `${d.scan?.length || 0} packages Â· ${d.sweep?.upgrade_actionability?.length || 0} upgrade paths Â· ${d.ownership?.length || 0} owners mapped Â· scan ${d.sweep?.scan_date || 'demo data'}`;
 }
 
 function updateBadges(d) {
@@ -1840,17 +3394,17 @@ function renderOverview(d) {
   const safeDedupe = new Set(ua.filter(u => u.actionability === 'SAFE').map(u => u.name));
   const maxDays = scan.reduce((m, p) => Math.max(m, p.worst_days_exposed || 0), 0);
 
-  // Headline — dramatic count-up with fade-in text
+  // Headline â€” dramatic count-up with fade-in text
   if (worst) {
     document.getElementById('headline').innerHTML = `
       <div class="headline-banner">
         <div class="headline-number-wrap">
-          <span class="headline-number" id="headline-days">0</span>
+          <span class="headline-number gold-metal" id="headline-days">0</span>
           <span class="headline-unit">days</span>
         </div>
         <div class="headline-text" id="headline-text" style="opacity:0">
           That's how long <span class="headline-repo">${escape(d.owner)}/${escape(d.repo)}</span> has been exposed to
-          <span class="headline-pkg">${escape(worst.name)}</span>'s vulnerability —
+          <span class="headline-pkg">${escape(worst.name)}</span>'s vulnerability â€”
           <span class="headline-emphasis">with a fix available the entire time.</span>
         </div>
       </div>
@@ -1865,17 +3419,17 @@ function renderOverview(d) {
     document.getElementById('headline').innerHTML = `
       <div class="headline-banner">
         <div class="headline-text" style="opacity:1">
-          <span class="headline-emphasis">No vulnerable packages detected — clean waters ahead.</span>
+          <span class="headline-emphasis">No vulnerable packages detected â€” clean waters ahead.</span>
         </div>
       </div>
     `;
   }
 
-  // Stats — with empty-state for zero pre-CVE
+  // Stats â€” with empty-state for zero pre-CVE
   const preCveCardInner = preCount > 0
     ? `<div class="stat-value" data-target="${preCount}">0</div>
        <div class="stat-sub">deprecations detected</div>`
-    : `<div class="stat-empty"><span class="check">✓</span><span>Clean Waters</span></div>
+    : `<div class="stat-empty"><span class="check">âœ“</span><span>Clean Waters</span></div>
        <div class="stat-sub">no pre-CVE signals</div>`;
   const stats = [
     { cls: 'red', label: 'VULNERABLE PACKAGES', val: scan.length, sub: 'across all ecosystems' },
@@ -1912,7 +3466,7 @@ function renderOverview(d) {
   buildActionColumns(scan, d.ownership || [], sweep);
 }
 
-// ── Hazard Chart (2D scatter of buoys) ──────────────────────────────
+// â”€â”€ Hazard Chart (2D scatter of buoys) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function buildHazardChart(scanData, ownershipData) {
   const chart = document.getElementById('hazard-chart');
   if (!chart) return;
@@ -2011,12 +3565,12 @@ function buildHazardChart(scanData, ownershipData) {
       document.getElementById('tt-pkg').innerHTML =
         rankLine + '<span style="color:var(--text)">' +
         escape(pkg.name + '@' + (pkg.version || '?')) + '</span>';
-      document.getElementById('tt-days').textContent = '⧖ ' + (pkg.worst_days_exposed || 0).toLocaleString() + ' days exposed';
-      document.getElementById('tt-owner').textContent = owner ? '👤 @' + owner : '👤 owner unknown';
+      document.getElementById('tt-days').textContent = 'â§– ' + (pkg.worst_days_exposed || 0).toLocaleString() + ' days exposed';
+      document.getElementById('tt-owner').textContent = owner ? 'ðŸ‘¤ @' + owner : 'ðŸ‘¤ owner unknown';
       const fixedIn = upgrade?.fixed_version || pkg.cves?.[0]?.fixed_in || '?';
-      document.getElementById('tt-action').innerHTML = '<span style="color:' + color + '">' + actionability + '</span> · fix in ' + escape(fixedIn);
+      document.getElementById('tt-action').innerHTML = '<span style="color:' + color + '">' + actionability + '</span> Â· fix in ' + escape(fixedIn);
       const cveCount = (pkg.cves || []).length;
-      document.getElementById('tt-cves').textContent = cveCount + ' CVE' + (cveCount === 1 ? '' : 's') + (preCVE ? ' · ⚡ PRE-CVE signal' : '');
+      document.getElementById('tt-cves').textContent = cveCount + ' CVE' + (cveCount === 1 ? '' : 's') + (preCVE ? ' Â· âš¡ PRE-CVE signal' : '');
       const rect = chart.getBoundingClientRect();
       const ex = e.clientX - rect.left;
       const ey = e.clientY - rect.top;
@@ -2116,7 +3670,7 @@ function drawSeverityChain(packages, chart) {
   });
 }
 
-// ── Three Action Columns ────────────────────────────────────────────
+// â”€â”€ Three Action Columns â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function buildActionColumns(scanData, ownershipData, sweepData) {
   const upgradeMap = {};
   (sweepData?.upgrade_actionability || []).forEach(u => {
@@ -2150,16 +3704,16 @@ function buildActionColumns(scanData, ownershipData, sweepData) {
     const { pkg, upgrade, ownerName, preCVE } = item;
     const daysStr = (pkg.worst_days_exposed || 0).toLocaleString() + 'd';
     const fixVer = upgrade?.fixed_version || pkg.cves?.[0]?.fixed_in;
-    const fixStr = fixVer ? ` → ${escape(fixVer)}` : '';
+    const fixStr = fixVer ? ` â†’ ${escape(fixVer)}` : '';
     return `
       <div class="action-item">
         <div class="action-item-pkg">${escape(pkg.name.split('/').pop())}</div>
         <div class="action-item-meta">
           <span style="color:${accent}">${daysStr}</span>
-          ${fixStr ? `<span style="color:var(--text3)"> · fix${fixStr}</span>` : ''}
-          ${preCVE ? '<span style="color:var(--neon-cyan)"> · ⚡ PRE-CVE</span>' : ''}
+          ${fixStr ? `<span style="color:var(--text3)"> Â· fix${fixStr}</span>` : ''}
+          ${preCVE ? '<span style="color:var(--neon-cyan)"> Â· âš¡ PRE-CVE</span>' : ''}
         </div>
-        ${ownerName ? `<div class="action-item-owner">👤 @${escape(ownerName)}</div>` : ''}
+        ${ownerName ? `<div class="action-item-owner">ðŸ‘¤ @${escape(ownerName)}</div>` : ''}
       </div>`;
   }
 
@@ -2167,49 +3721,826 @@ function buildActionColumns(scanData, ownershipData, sweepData) {
   const actNowBody = document.getElementById('act-now-body');
   const sprintBody = document.getElementById('sprint-body');
   const watchBody = document.getElementById('watch-body');
-  if (actNowBody) actNowBody.innerHTML = actNow.length ? actNow.map(i => renderItem(i, 'var(--neon-red)')).join('') : empty('All hands safe — no critical threats');
+  if (actNowBody) actNowBody.innerHTML = actNow.length ? actNow.map(i => renderItem(i, 'var(--neon-red)')).join('') : empty('All hands safe â€” no critical threats');
   if (sprintBody) sprintBody.innerHTML = thisSprint.length ? thisSprint.map(i => renderItem(i, 'var(--neon-green)')).join('') : empty('No safe upgrades available');
-  if (watchBody) watchBody.innerHTML = watch.length ? watch.map(i => renderItem(i, 'var(--neon-cyan)')).join('') : empty('Clear skies — no pre-CVE signals detected');
+  if (watchBody) watchBody.innerHTML = watch.length ? watch.map(i => renderItem(i, 'var(--neon-cyan)')).join('') : empty('Clear skies â€” no pre-CVE signals detected');
 
   const acn = document.getElementById('act-now-count'); if (acn) acn.textContent = actNow.length;
   const spc = document.getElementById('sprint-count'); if (spc) spc.textContent = thisSprint.length;
   const wac = document.getElementById('watch-count'); if (wac) wac.textContent = watch.length;
 }
 
-function renderPatchLag(d) {
-  const scan = (d.scan || []).slice().sort((a, b) => (b.worst_days_exposed || 0) - (a.worst_days_exposed || 0));
-  const maxDays = 2090;
+function renderThreatIntelLegacy(data) {
+  const d = data || window.currentData;
+  const screen = document.getElementById('screen-patchlag');
+  if (!screen) return;
 
-  document.getElementById('tideChart').innerHTML = scan.map(p => {
+  screen.innerHTML = `
+    <style>
+      .ti-kicker { font-family: var(--mono); font-size: 11px; letter-spacing: 3px; color: var(--gold); margin: 0 0 4px; text-transform: uppercase; }
+      .ti-subtitle { color: var(--text2); font-size: 14px; margin: 6px 0 0; }
+      .ti-divider { width: 100%; max-width: 600px; height: 30px; margin: 12px 0 24px; display: block; }
+      .ti-panels { display: grid; grid-template-columns: 2fr 1.5fr 1.5fr; gap: 20px; align-items: stretch; }
+      .ti-panel { min-height: 520px; background: linear-gradient(180deg, #0d1e30 0%, #0a1a28 100%); border: 1px solid rgba(200,168,75,0.2); border-radius: 8px; overflow: hidden; position: relative; display: flex; flex-direction: column; }
+      .ti-panel + .ti-panel::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: linear-gradient(180deg, transparent, rgba(200,168,75,0.4), rgba(200,168,75,0.2), rgba(200,168,75,0.4), transparent); pointer-events: none; }
+      .ti-panel-header { padding: 16px 20px 12px; border-bottom: 1px solid rgba(200,168,75,0.15); display: flex; align-items: center; gap: 10px; }
+      .ti-panel-label { font-family: var(--mono); font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); }
+      .ti-panel-body { flex: 1; position: relative; }
+      .ti-hazards-body { padding: 20px 16px; }
+      .ti-flag-scroll { width: 100%; overflow-x: auto; overflow-y: hidden; }
+      .ti-flags-svg { display: block; min-width: 100%; }
+      .ti-seafloor { width: 100%; height: 20px; margin-bottom: 8px; }
+      .ti-legend { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; margin-top: 12px; font-family: var(--mono); font-size: 9px; color: var(--text2); }
+      .ti-legend-item { display: inline-flex; align-items: center; gap: 5px; }
+      .ti-pennant { width: 0; height: 0; border-top: 5px solid transparent; border-bottom: 5px solid transparent; border-left: 10px solid currentColor; }
+      .ti-radar-body { padding: 16px; overflow: hidden; }
+      .ti-radar-bg { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; opacity: 0.8; }
+      .ti-radar-sweep { transform-origin: 150px 150px; animation: radarSpin 6s linear infinite; }
+      @keyframes radarSpin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+      .ti-weather-list { position: relative; z-index: 1; }
+      .ti-weather-row { display: flex; align-items: center; gap: 10px; padding: 8px 4px; border-bottom: 1px solid rgba(255,255,255,0.04); }
+      .ti-weather-main { min-width: 0; flex: 1; }
+      .ti-weather-pkg { color: var(--gold); font-family: var(--mono); font-size: 11px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+      .ti-weather-speed { font-family: var(--mono); font-size: 9px; }
+      .ti-weather-verdict { color: var(--text3); font-family: var(--mono); font-size: 9px; text-align: right; max-width: 90px; }
+      .ti-orders-body { padding: 16px; font-family: var(--mono); }
+      .ti-section-header { display: flex; align-items: center; gap: 8px; padding: 10px 0 8px; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; }
+      .ti-safe { color: var(--neon-green); }
+      .ti-breaking { color: var(--neon-red); }
+      .ti-section-sub { font-size: 9px; opacity: 0.6; letter-spacing: 1px; margin-left: 4px; }
+      .ti-log-entry { display: flex; align-items: center; gap: 6px; padding: 7px 4px; border-bottom: 1px solid rgba(255,255,255,0.04); font-size: 11px; }
+      .ti-log-entry:hover { background: rgba(255,255,255,0.02); }
+      .ti-log-badge { font-size: 9px; padding: 2px 5px; border-radius: 3px; flex-shrink: 0; }
+      .ti-badge-safe { background: rgba(0,255,136,0.1); border: 1px solid var(--neon-green); color: var(--neon-green); }
+      .ti-badge-breaking { background: rgba(255,68,68,0.1); border: 1px solid var(--neon-red); color: var(--neon-red); }
+      .ti-log-pkg { color: var(--gold); flex-shrink: 0; max-width: 90px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+      .ti-log-arrow { color: var(--text3); }
+      .ti-log-fix { color: var(--neon-cyan); flex-shrink: 0; }
+      .ti-log-days { margin-left: auto; color: var(--text2); flex-shrink: 0; }
+      .ti-days-red { color: var(--neon-red); }
+      .ti-rope { width: 100%; height: 16px; margin: 12px 0; }
+      .ti-empty { min-height: 520px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; color: var(--text2); font-family: var(--mono); }
+    </style>
+    <div class="screen-header">
+      <p class="ti-kicker">THREAT INTELLIGENCE</p>
+      <h1 class="screen-sub">The Navigator's Chart</h1>
+      <p class="ti-subtitle">Every hazard plotted. Every storm forecast. Orders written in the captain's log.</p>
+      <svg viewBox="0 0 600 30" class="ti-divider" xmlns="http://www.w3.org/2000/svg">
+        <line x1="0" y1="15" x2="255" y2="15" stroke="rgba(200,168,75,0.3)" stroke-width="1"/>
+        <line x1="345" y1="15" x2="600" y2="15" stroke="rgba(200,168,75,0.3)" stroke-width="1"/>
+        <circle cx="300" cy="15" r="12" fill="none" stroke="rgba(200,168,75,0.4)" stroke-width="1"/>
+        <polygon points="300,3 303,13 300,11 297,13" fill="rgba(200,168,75,0.7)"/>
+        <polygon points="300,27 303,17 300,19 297,17" fill="rgba(200,168,75,0.4)"/>
+        <polygon points="288,15 298,12 296,15 298,18" fill="rgba(200,168,75,0.4)"/>
+        <polygon points="312,15 302,12 304,15 302,18" fill="rgba(200,168,75,0.7)"/>
+        <circle cx="300" cy="15" r="2" fill="rgba(200,168,75,0.8)"/>
+      </svg>
+    </div>
+    <div id="threatIntelRoot"></div>
+  `;
+
+  const root = document.getElementById('threatIntelRoot');
+  if (!window.currentData || !window.currentData.scan) {
+    root.innerHTML = `<div class="ti-empty">
+      <svg viewBox="0 0 16 20" width="28" height="34" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="8" cy="4" r="3" fill="none" stroke="var(--gold)" stroke-width="1.2"/>
+        <line x1="8" y1="7" x2="8" y2="18" stroke="var(--gold)" stroke-width="1.2"/>
+        <path d="M2,11 Q8,14 14,11" fill="none" stroke="var(--gold)" stroke-width="1.2"/>
+      </svg>
+      <div>No intelligence loaded — chart a course first.</div>
+    </div>`;
+    return;
+  }
+
+  const rawScan = window.currentData.scan || [];
+  const ownership = window.currentData.ownership || [];
+  const sweep = window.currentData.sweep || {};
+  function getFirstOwner(pkgName) {
+    const o = ownership.find(x => String(x.package || '').toLowerCase() === String(pkgName || '').toLowerCase());
+    return o && o.owners && o.owners[0] ? '@' + o.owners[0] : '';
+  }
+  const scan = rawScan.map(p => {
+    const u = actionabilityForPackage(p.name, sweep);
+    const own = ownership.find(x => String(x.package || '').toLowerCase() === String(p.name || '').toLowerCase()) || {};
+    return {
+      package: p.name,
+      version: p.version || '?',
+      days_exposed: p.days_exposed || p.worst_days_exposed || 0,
+      actionability: u || own.actionability || 'MODERATE',
+      fix_version: own.fixed_in || p.fix_version || p.fixed_version || (p.cves && p.cves[0] && p.cves[0].fixed_in) || '?',
+      owner: getFirstOwner(p.name)
+    };
+  }).sort((a, b) => b.days_exposed - a.days_exposed);
+
+  const maxDays = Math.max(1, ...scan.map(p => p.days_exposed));
+  const panelWidth = 340;
+  const flagCount = scan.length || 1;
+  const slotWidth = Math.max(22, Math.floor(panelWidth / flagCount));
+  const chartHeight = 200;
+  const svgWidth = Math.max(340, flagCount * slotWidth);
+  let flagsSVG = `<svg class="ti-flags-svg" viewBox="0 0 ${svgWidth} ${chartHeight + 60}" xmlns="http://www.w3.org/2000/svg">
+    <defs><linearGradient id="depthGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="rgba(0,40,80,0.0)"/><stop offset="100%" stop-color="rgba(0,80,120,0.15)"/></linearGradient></defs>
+    <rect width="100%" height="${chartHeight}" fill="url(#depthGrad)" rx="4"/>`;
+  scan.forEach((pkg, i) => {
+    const flagHeight = Math.max(30, Math.round((pkg.days_exposed / maxDays) * 160));
+    const x = i * slotWidth + slotWidth / 2;
+    const baseY = chartHeight - 10;
+    const topY = baseY - flagHeight;
+    const color = pkg.actionability === 'BREAKING' ? '#FF4444' : pkg.actionability === 'SAFE' ? '#00FF88' : '#FF8C00';
+    const pw = Math.min(18, slotWidth - 2);
+    const shortName = pkg.package.length > 8 ? pkg.package.slice(0, 7) + '…' : pkg.package;
+    flagsSVG += `<line x1="${x}" y1="${baseY}" x2="${x}" y2="${topY}" stroke="rgba(200,168,75,0.6)" stroke-width="1.5"/>
+      <polygon points="${x},${topY} ${x + pw},${topY + pw/2} ${x},${topY + pw}" fill="${color}" opacity="0.85"/>
+      <circle cx="${x}" cy="${baseY}" r="2.5" fill="rgba(200,168,75,0.5)"/>
+      <text x="${x}" y="${baseY + 14}" font-family="monospace" font-size="7" fill="rgba(200,168,75,0.6)" text-anchor="middle" transform="rotate(45, ${x}, ${baseY + 14})">${escape(shortName)}</text>
+      <text x="${x}" y="${topY - 4}" font-family="monospace" font-size="7" fill="${color}" text-anchor="middle" opacity="0.9">${pkg.days_exposed}d</text>`;
+  });
+  flagsSVG += `<path d="M0,${chartHeight - 8} C60,${chartHeight-12} 120,${chartHeight-4} 180,${chartHeight-8} C240,${chartHeight-12} 300,${chartHeight-4} ${svgWidth},${chartHeight-8}" fill="none" stroke="rgba(0,150,200,0.25)" stroke-width="1.5"/></svg>`;
+
+  const weatherIcons = {
+    VERY_SLOW: `<svg viewBox="0 0 24 24" width="24" height="24"><path d="M3,9 Q3,5 7,5 Q8,2 12,2 Q17,2 17,6 Q20,5 21,8 Q23,8 23,10 Q23,13 20,13 L5,13 Q3,13 3,11 Z" fill="none" stroke="#FF4444" stroke-width="1.2"/><polyline points="10,14 8,18 11,18 9,22" fill="none" stroke="#FF8C00" stroke-width="1.5" stroke-linejoin="round"/></svg>`,
+    SLOW: `<svg viewBox="0 0 24 24" width="24" height="24"><path d="M4,9 Q4,6 7,6 Q8,3 12,3 Q16,3 16,7 Q19,6 20,9 Q22,9 22,11 Q22,13 19,13 L5,13 Q4,13 4,11 Z" fill="none" stroke="#FF8C00" stroke-width="1.2"/><line x1="8" y1="15" x2="7" y2="18" stroke="#FF8C00" stroke-width="1.2"/><line x1="12" y1="15" x2="11" y2="18" stroke="#FF8C00" stroke-width="1.2"/><line x1="16" y1="15" x2="15" y2="18" stroke="#FF8C00" stroke-width="1.2"/></svg>`,
+    MODERATE: `<svg viewBox="0 0 24 24" width="24" height="24"><circle cx="8" cy="14" r="5" fill="none" stroke="#C8A84B" stroke-width="1.2"/><path d="M11,10 Q11,6 15,6 Q19,6 19,10 Q21,10 21,12 Q21,14 18,14 L12,14" fill="none" stroke="var(--text2)" stroke-width="1.2"/></svg>`,
+    FAST: `<svg viewBox="0 0 24 24" width="24" height="24"><circle cx="12" cy="12" r="4" fill="none" stroke="#00FF88" stroke-width="1.2"/><line x1="12" y1="2" x2="12" y2="5" stroke="#00FF88" stroke-width="1.2"/><line x1="12" y1="19" x2="12" y2="22" stroke="#00FF88" stroke-width="1.2"/><line x1="2" y1="12" x2="5" y2="12" stroke="#00FF88" stroke-width="1.2"/><line x1="19" y1="12" x2="22" y2="12" stroke="#00FF88" stroke-width="1.2"/><line x1="4.9" y1="4.9" x2="7.1" y2="7.1" stroke="#00FF88" stroke-width="1.2"/><line x1="16.9" y1="16.9" x2="19.1" y2="19.1" stroke="#00FF88" stroke-width="1.2"/></svg>`
+  };
+  function speedFor(days) { return days > 500 ? 'VERY_SLOW' : days > 150 ? 'SLOW' : days > 60 ? 'MODERATE' : 'FAST'; }
+  const speedColor = { VERY_SLOW: 'var(--neon-red)', SLOW: 'var(--neon-orange)', MODERATE: 'var(--gold)', FAST: 'var(--neon-green)' };
+  const verdict = { VERY_SLOW: "don't wait upstream", SLOW: 'plan your own fix', MODERATE: 'monitor upstream', FAST: 'wait for patch' };
+  const weatherRows = scan.map(pkg => {
+    const speed = speedFor(pkg.days_exposed);
+    return `<div class="ti-weather-row">${weatherIcons[speed]}<div class="ti-weather-main"><div class="ti-weather-pkg">${escape(pkg.package)}</div><div class="ti-weather-speed" style="color:${speedColor[speed]}">${speed.replace('_', ' ')}</div></div><div class="ti-weather-verdict">${verdict[speed]}</div></div>`;
+  }).join('');
+  const safeRows = scan.filter(p => p.actionability === 'SAFE').map(p => `<div class="ti-log-entry ti-log-safe"><span class="ti-log-badge ti-badge-safe">SAFE</span><span class="ti-log-pkg" title="${escape(p.package)}">${escape(p.package)}</span><span class="ti-log-arrow">→</span><span class="ti-log-fix">${escape(p.fix_version)}</span><span class="ti-log-days">${p.days_exposed}d</span></div>`).join('');
+  const breakingRows = scan.filter(p => p.actionability === 'BREAKING').sort((a, b) => b.days_exposed - a.days_exposed).map(p => `<div class="ti-log-entry ti-log-breaking"><span class="ti-log-badge ti-badge-breaking">⚠</span><span class="ti-log-pkg" title="${escape(p.package)}">${escape(p.package)}</span><span class="ti-log-arrow">→</span><span class="ti-log-fix">${escape(p.fix_version)}</span><span class="ti-log-days ti-days-red">${p.days_exposed}d</span></div>`).join('');
+
+  root.innerHTML = `<div class="ti-panels">
+    <section class="ti-panel"><div class="ti-panel-header"><svg viewBox="0 0 24 16" width="24" height="16" xmlns="http://www.w3.org/2000/svg"><rect x="0" y="6" width="14" height="5" rx="2" fill="none" stroke="var(--gold)" stroke-width="1.2"/><rect x="13" y="4" width="7" height="9" rx="1.5" fill="none" stroke="var(--gold)" stroke-width="1.2"/><line x1="20" y1="7" x2="24" y2="5" stroke="var(--gold)" stroke-width="1.2"/><line x1="20" y1="11" x2="24" y2="13" stroke="var(--gold)" stroke-width="1.2"/><line x1="6" y1="11" x2="5" y2="16" stroke="var(--gold)" stroke-width="1.2"/><line x1="10" y1="11" x2="10" y2="16" stroke="var(--gold)" stroke-width="1.2"/></svg><span class="ti-panel-label">CHARTED HAZARDS</span></div><div class="ti-panel-body ti-hazards-body"><div class="ti-flag-scroll">${flagsSVG}</div><svg class="ti-seafloor" viewBox="0 0 400 20" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><path d="M0,10 C40,5 80,15 120,10 C160,5 200,15 240,10 C280,5 320,15 360,10 C380,7 390,12 400,10" fill="none" stroke="rgba(0,150,200,0.2)" stroke-width="1.5"/><path d="M0,15 C50,10 100,18 150,13 C200,8 250,18 300,13 C350,8 380,16 400,14" fill="none" stroke="rgba(0,150,200,0.1)" stroke-width="1"/></svg><div class="ti-legend"><span class="ti-legend-item" style="color:#FF4444"><span class="ti-pennant"></span>BREAKING</span><span class="ti-legend-item" style="color:#00FF88"><span class="ti-pennant"></span>SAFE</span><span class="ti-legend-item" style="color:#FF8C00"><span class="ti-pennant"></span>MODERATE</span></div></div></section>
+    <section class="ti-panel"><div class="ti-panel-header"><svg viewBox="0 0 20 14" width="20" height="14" xmlns="http://www.w3.org/2000/svg"><path d="M4,10 Q2,10 2,8 Q2,5 5,5 Q5,2 9,2 Q13,2 13,5 Q16,4 17,7 Q19,7 19,9 Q19,11 17,11 L5,11 Q4,11 4,10Z" fill="none" stroke="var(--neon-cyan)" stroke-width="1"/><line x1="8" y1="12" x2="7" y2="14" stroke="var(--gold)" stroke-width="1.2"/><line x1="11" y1="12" x2="10" y2="14" stroke="var(--gold)" stroke-width="1.2"/></svg><span class="ti-panel-label">UPSTREAM FORECAST</span></div><div class="ti-panel-body ti-radar-body"><svg class="ti-radar-bg" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg"><defs><radialGradient id="radarFade" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="rgba(0,255,200,0.03)"/><stop offset="100%" stop-color="transparent"/></radialGradient></defs><circle cx="150" cy="150" r="140" fill="url(#radarFade)"/><circle cx="150" cy="150" r="100" fill="none" stroke="rgba(0,255,200,0.04)" stroke-width="1"/><circle cx="150" cy="150" r="65" fill="none" stroke="rgba(0,255,200,0.04)" stroke-width="1"/><circle cx="150" cy="150" r="33" fill="none" stroke="rgba(0,255,200,0.04)" stroke-width="1"/><g class="ti-radar-sweep"><line x1="150" y1="150" x2="150" y2="15" stroke="rgba(0,255,136,0.3)" stroke-width="2"/><path d="M150,150 L150,15 A135,135 0 0,1 195,30 Z" fill="rgba(0,255,136,0.06)"/></g></svg><div class="ti-weather-list">${weatherRows}</div></div></section>
+    <section class="ti-panel"><div class="ti-panel-header"><svg viewBox="0 0 18 18" width="18" height="18" xmlns="http://www.w3.org/2000/svg"><circle cx="9" cy="9" r="7" fill="none" stroke="var(--gold)" stroke-width="1"/><circle cx="9" cy="9" r="2.5" fill="none" stroke="var(--gold)" stroke-width="1"/><line x1="9" y1="2" x2="9" y2="6.5" stroke="var(--gold)" stroke-width="1"/><line x1="9" y1="11.5" x2="9" y2="16" stroke="var(--gold)" stroke-width="1"/><line x1="2" y1="9" x2="6.5" y2="9" stroke="var(--gold)" stroke-width="1"/><line x1="11.5" y1="9" x2="16" y2="9" stroke="var(--gold)" stroke-width="1"/><line x1="3.9" y1="3.9" x2="6.9" y2="6.9" stroke="var(--gold)" stroke-width="1"/><line x1="11.1" y1="11.1" x2="14.1" y2="14.1" stroke="var(--gold)" stroke-width="1"/><line x1="14.1" y1="3.9" x2="11.1" y2="6.9" stroke="var(--gold)" stroke-width="1"/><line x1="6.9" y1="11.1" x2="3.9" y2="14.1" stroke="var(--gold)" stroke-width="1"/></svg><span class="ti-panel-label">NAVIGATION ORDERS</span></div><div class="ti-panel-body ti-orders-body"><div class="ti-section-header ti-safe"><svg viewBox="0 0 16 20" width="14" height="18" xmlns="http://www.w3.org/2000/svg"><circle cx="8" cy="4" r="3" fill="none" stroke="var(--neon-green)" stroke-width="1.2"/><line x1="8" y1="7" x2="8" y2="18" stroke="var(--neon-green)" stroke-width="1.2"/><path d="M2,11 Q8,14 14,11" fill="none" stroke="var(--neon-green)" stroke-width="1.2"/><path d="M2,18 Q5,15 8,18 Q11,15 14,18" fill="none" stroke="var(--neon-green)" stroke-width="1.2"/></svg><span>SAFE HARBOUR</span><span class="ti-section-sub">do this sprint</span></div>${safeRows || '<div class="ti-log-entry">No safe harbour orders.</div>'}<svg class="ti-rope" viewBox="0 0 200 16" xmlns="http://www.w3.org/2000/svg"><path d="M0,8 C20,4 30,12 50,8 C70,4 80,12 100,8 C120,4 130,12 150,8 C170,4 180,12 200,8" fill="none" stroke="rgba(200,168,75,0.35)" stroke-width="2.5" stroke-linecap="round"/><path d="M0,8 C20,12 30,4 50,8 C70,12 80,4 100,8 C120,12 130,4 150,8 C170,12 180,4 200,8" fill="none" stroke="rgba(200,168,75,0.15)" stroke-width="1"/></svg><div class="ti-section-header ti-breaking"><svg viewBox="0 0 18 20" width="14" height="16" xmlns="http://www.w3.org/2000/svg"><path d="M3,10 Q3,3 9,3 Q15,3 15,10 Q15,14 13,15 L13,17 L5,17 L5,15 Q3,14 3,10Z" fill="none" stroke="var(--neon-red)" stroke-width="1.2"/><circle cx="6.5" cy="10" r="1.8" fill="var(--neon-red)" opacity="0.7"/><circle cx="11.5" cy="10" r="1.8" fill="var(--neon-red)" opacity="0.7"/><line x1="7" y1="17" x2="7" y2="19" stroke="var(--neon-red)" stroke-width="1.5"/><line x1="11" y1="17" x2="11" y2="19" stroke="var(--neon-red)" stroke-width="1.5"/><line x1="5" y1="18" x2="13" y2="18" stroke="var(--neon-red)" stroke-width="1"/></svg><span>STORM AHEAD</span><span class="ti-section-sub">plan migration</span></div>${breakingRows || '<div class="ti-log-entry">No breaking migration orders.</div>'}</div></section>
+  </div>`;
+}
+
+let ti2ActivePkg = null;
+
+function showTI2EmptyState() {
+  const screen = document.getElementById('screen-patchlag');
+  if (!screen) return;
+  screen.innerHTML = `
+    <div class="ti2-screen">
+      <div style="text-align:center;padding:80px 20px;font-family:var(--mono);color:var(--text2);">
+        \u2693 No intelligence loaded \u2014 chart a course first.
+      </div>
+    </div>`;
+}
+
+function renderThreatIntel(data) {
+  const d = data || window.currentData;
+  if (d) window.currentData = d;
+  if (!window.currentData?.scan?.length) {
+    showTI2EmptyState();
+    return;
+  }
+
+  const scanSource = window.currentData.scan;
+  const ownership = window.currentData.ownership || [];
+  const sweep = window.currentData.sweep || {};
+  const preCVE = sweep.pre_cve_findings || [];
+  const upgradeData = sweep.upgrade_actionability || [];
+
+  const ownerMap = {};
+  ownership.forEach(o => {
+    if (o.package) ownerMap[o.package.toLowerCase()] = filterBots(o.owners || []);
+  });
+
+  const upgradeMap = {};
+  upgradeData.forEach(u => {
+    const key = (u.package || u.name || '').toLowerCase();
+    if (key) upgradeMap[key] = u;
+  });
+
+  function packageName(p) { return p.package || p.name || ''; }
+  function fixedVersion(p, u) {
+    return p.fix_version || p.fixed_version || u?.to || u?.fixed_version || u?.fixedVersion || p.cves?.[0]?.fixed_in || '?';
+  }
+  function normalizedActionability(p, u) {
+    return p.actionability || u?.kind || u?.actionability || actionabilityForPackage(packageName(p), sweep) || 'MODERATE';
+  }
+
+  const scan = scanSource.map(p => {
+    const name = packageName(p);
+    const u = upgradeMap[name.toLowerCase()];
+    return {
+      ...p,
+      package: name,
+      version: p.version || u?.from || u?.current_version || '?',
+      days_exposed: p.days_exposed || p.worst_days_exposed || 0,
+      actionability: normalizedActionability(p, u),
+      fix_version: fixedVersion(p, u),
+      cves: p.cves || []
+    };
+  });
+
+  function estimateEffort(pkg) {
+    const u = upgradeMap[pkg.package.toLowerCase()];
+    if (!u) {
+      if (pkg.actionability === 'SAFE') return 'est. ~2 hrs';
+      if (pkg.actionability === 'BREAKING') return 'est. 2-4 days';
+      return 'est. ~1 day';
+    }
+    const majorJump = u.major_versions_jumped || 0;
+    if (majorJump === 0) return 'est. ~1 hr';
+    if (majorJump === 1) return 'est. ~1 day';
+    if (majorJump <= 3) return 'est. 2-3 days';
+    return 'est. 1+ week';
+  }
+
+  function maintainerSpeed(days) {
+    if (days > 500) return 'VERY_SLOW';
+    if (days > 150) return 'SLOW';
+    if (days > 60) return 'MODERATE';
+    return 'FAST';
+  }
+
+  function getQuadrant(pkg) {
+    const old = pkg.days_exposed > 150;
+    const breaking = pkg.actionability === 'BREAKING';
+    if (old && breaking) return 'DEEP_REEF';
+    if (old && !breaking) return 'NO_EXCUSE';
+    if (!old && breaking) return 'ROCKY_SHALLOW';
+    return 'SAFE_HARBOUR';
+  }
+
+  const preCVENames = new Set(preCVE.map(p => (p.package || p.name || '').toLowerCase()));
+
+  const sorted = [...scan].sort((a, b) => {
+    const score = p =>
+      (p.days_exposed / 2090 * 60) +
+      ((p.cves || []).length / 7 * 25) +
+      (p.actionability === 'BREAKING' ? 10 : 0) +
+      (preCVENames.has(p.package.toLowerCase()) ? 10 : 0);
+    return score(b) - score(a);
+  });
+
+  renderTI2Panels(sorted, ownerMap, preCVENames, estimateEffort, maintainerSpeed, getQuadrant, preCVE, upgradeMap);
+}
+
+function renderTI2Panels(sorted, ownerMap, preCVENames, estimateEffort, maintainerSpeed, getQuadrant, preCVE, upgradeMap) {
+  const screen = document.getElementById('screen-patchlag');
+  if (!screen) return;
+
+  const maxDays = Math.max(1, ...sorted.map(p => p.days_exposed || 0));
+  const weatherIcons = {
+    VERY_SLOW: '<svg viewBox="0 0 24 24" width="24" height="24"><path d="M3,9 Q3,5 7,5 Q8,2 12,2 Q17,2 17,6 Q20,5 21,8 Q23,8 23,10 Q23,13 20,13 L5,13 Q3,13 3,11 Z" fill="none" stroke="#FF4444" stroke-width="1.2"/><polyline points="10,14 8,18 11,18 9,22" fill="none" stroke="#FF8C00" stroke-width="1.5" stroke-linejoin="round"/></svg>',
+    SLOW: '<svg viewBox="0 0 24 24" width="24" height="24"><path d="M4,9 Q4,6 7,6 Q8,3 12,3 Q16,3 16,7 Q19,6 20,9 Q22,9 22,11 Q22,13 19,13 L5,13 Q4,13 4,11 Z" fill="none" stroke="#FF8C00" stroke-width="1.2"/><line x1="8" y1="15" x2="7" y2="18" stroke="#FF8C00" stroke-width="1.2"/><line x1="12" y1="15" x2="11" y2="18" stroke="#FF8C00" stroke-width="1.2"/><line x1="16" y1="15" x2="15" y2="18" stroke="#FF8C00" stroke-width="1.2"/></svg>',
+    MODERATE: '<svg viewBox="0 0 24 24" width="24" height="24"><circle cx="8" cy="14" r="5" fill="none" stroke="#C8A84B" stroke-width="1.2"/><path d="M11,10 Q11,6 15,6 Q19,6 19,10 Q21,10 21,12 Q21,14 18,14 L12,14" fill="none" stroke="var(--text2)" stroke-width="1.2"/></svg>',
+    FAST: '<svg viewBox="0 0 24 24" width="24" height="24"><circle cx="12" cy="12" r="4" fill="none" stroke="#00FF88" stroke-width="1.2"/><line x1="12" y1="2" x2="12" y2="5" stroke="#00FF88" stroke-width="1.2"/><line x1="12" y1="19" x2="12" y2="22" stroke="#00FF88" stroke-width="1.2"/><line x1="2" y1="12" x2="5" y2="12" stroke="#00FF88" stroke-width="1.2"/><line x1="19" y1="12" x2="22" y2="12" stroke="#00FF88" stroke-width="1.2"/></svg>'
+  };
+
+  function seededOffset(name, range) {
+    const seed = String(name).split('').reduce((a, c) => a + c.charCodeAt(0), 0);
+    return (seed % (range * 2)) - range;
+  }
+  function flagX(pkg, svgW) {
+    const seed = Math.abs(seededOffset(pkg.package, 1000)) / 1000;
+    if (pkg.actionability === 'BREAKING') return svgW * 0.55 + seed * svgW * 0.35;
+    if (pkg.actionability === 'SAFE') return svgW * 0.05 + seed * svgW * 0.35;
+    return svgW * 0.35 + seed * svgW * 0.15;
+  }
+  function flagY(pkg, max, svgH) {
+    const ratio = (pkg.days_exposed || 0) / max;
+    return 260 - ratio * 240;
+  }
+  function pennantColor(pkg) {
+    if (preCVENames.has(pkg.package.toLowerCase())) return '#FFFFFF';
+    if (pkg.actionability === 'BREAKING') return '#FF4444';
+    if (pkg.actionability === 'SAFE') return '#00FF88';
+    return '#FF8C00';
+  }
+  function verdictText(speed) {
+    return {
+      VERY_SLOW: 'Upstream will not save you. Fix this yourself - immediately.',
+      SLOW: 'Do not wait for upstream. Plan your own remediation.',
+      MODERATE: 'Monitor upstream. Set a 30-day deadline.',
+      FAST: 'Upstream patches quickly. Safe to wait for the official fix.'
+    }[speed];
+  }
+  function speedLabel(speed) { return speed.replace('_', ' '); }
+  function shortName(name) { return name.length > 8 ? name.slice(0, 8) : name; }
+  function ownersFor(pkg) { return ownerMap[pkg.package.toLowerCase()] || []; }
+  function firstOwner(pkg) { return ownersFor(pkg)[0] || ''; }
+  function hasUpgrade(pkg) { return !!upgradeMap[pkg.package.toLowerCase()]; }
+  function flagIcon(color) {
+    return `<svg viewBox="0 0 12 10" width="12" height="10" xmlns="http://www.w3.org/2000/svg"><polygon points="0,0 12,5 0,10" fill="${color}" opacity="0.9"/></svg>`;
+  }
+  function skullIcon(color) {
+    return `<svg viewBox="0 0 14 16" width="14" height="16" xmlns="http://www.w3.org/2000/svg"><path d="M2,7 Q2,1 7,1 Q12,1 12,7 Q12,10 10,11 L10,14 L4,14 L4,11 Q2,10 2,7Z" fill="none" stroke="${color}" stroke-width="1.1"/><circle cx="5" cy="7" r="1.4" fill="${color}" opacity="0.8"/><circle cx="9" cy="7" r="1.4" fill="${color}" opacity="0.8"/><line x1="4" y1="15" x2="10" y2="15" stroke="${color}" stroke-width="1"/></svg>`;
+  }
+
+  const flags = sorted.map((pkg, i) => {
+    const x = Math.max(25, Math.min(470, flagX(pkg, 500) + seededOffset(pkg.package, 15)));
+    const y = Math.max(18, Math.min(268, flagY(pkg, maxDays, 320) + seededOffset(pkg.package, 8)));
+    const base = y + Math.max(20, (pkg.days_exposed / maxDays) * 100);
+    const color = pennantColor(pkg);
+    const pre = preCVENames.has(pkg.package.toLowerCase());
+    const label = `${pkg.package}, ${pkg.days_exposed}d, ${pkg.actionability}, ${firstOwner(pkg) || 'unowned'}`;
+    const pennant = pre
+      ? `<rect x="${x}" y="${y}" width="14" height="10" fill="#1a1a2e" stroke="#FFFFFF" stroke-width="0.8"/><circle cx="${x + 7}" cy="${y + 4}" r="3" fill="none" stroke="#FFFFFF" stroke-width="0.8"/><line x1="${x + 3}" y1="${y + 10}" x2="${x + 11}" y2="${y + 14}" stroke="#FFFFFF" stroke-width="0.8"/><line x1="${x + 11}" y1="${y + 10}" x2="${x + 3}" y2="${y + 14}" stroke="#FFFFFF" stroke-width="0.8"/>`
+      : `<polygon points="${x},${y} ${x + 12},${y + 6} ${x},${y + 12}" fill="${color}" opacity="0.9"/>`;
+    return `<g class="ti2-flag ${pre ? 'ti2-flag-precve' : ''}" data-pkg="${escape(pkg.package)}" data-idx="${i}" data-quad="${getQuadrant(pkg)}" color="${color}">
+      <title>${escape(label)}</title>
+      <line x1="${x}" y1="${base}" x2="${x}" y2="${y}" stroke="rgba(200,168,75,0.7)" stroke-width="1.5"/>
+      ${pennant}
+      <circle cx="${x}" cy="${base}" r="2.5" fill="rgba(200,168,75,0.5)"/>
+      <text x="${x + 6}" y="${y - 4}" font-family="monospace" font-size="7" fill="${color}" text-anchor="middle">${pkg.days_exposed}d</text>
+      <text x="${x}" y="${base + 12}" font-family="monospace" font-size="6" fill="rgba(200,168,75,0.5)" transform="rotate(40 ${x} ${base + 12})">${escape(shortName(pkg.package))}</text>
+    </g>`;
+  }).join('');
+
+  const chartSvg = `<svg class="ti2-flags-svg" viewBox="0 0 500 320" xmlns="http://www.w3.org/2000/svg">
+    <defs><radialGradient id="ti2DangerGlow" cx="100%" cy="0%" r="65%"><stop offset="0%" stop-color="rgba(255,68,68,0.22)"/><stop offset="100%" stop-color="rgba(255,68,68,0)"/></radialGradient></defs>
+    <rect x="0" y="0" width="250" height="160" fill="rgba(255,140,0,0.08)"/>
+    <rect x="250" y="0" width="250" height="160" fill="rgba(255,68,68,0.10)"/>
+    <rect x="0" y="160" width="250" height="160" fill="rgba(0,255,136,0.04)"/>
+    <rect x="250" y="160" width="250" height="160" fill="rgba(0,150,255,0.04)"/>
+    <rect width="500" height="320" fill="url(#ti2DangerGlow)"/>
+    <line x1="250" y1="0" x2="250" y2="320" stroke="rgba(255,255,255,0.05)" stroke-dasharray="4,4"/>
+    <line x1="0" y1="160" x2="500" y2="160" stroke="rgba(255,255,255,0.05)" stroke-dasharray="4,4"/>
+    <path d="M0,255 C60,245 120,268 180,257 C240,246 300,268 360,257 C420,246 460,266 500,255" fill="none" stroke="rgba(0,100,150,0.1)" stroke-width="2"/>
+    <path d="M0,285 C80,275 130,300 210,287 C290,274 350,300 430,286 C460,280 480,282 500,286" fill="none" stroke="rgba(0,100,150,0.1)" stroke-width="1.5"/>
+    <text x="20" y="146" font-family="monospace" font-size="9" fill="var(--neon-orange)" opacity="0.6">! NO EXCUSE</text>
+    <text x="348" y="30" font-family="monospace" font-size="9" fill="var(--neon-red)" opacity="0.7">DANGER ZONE</text>
+    <text x="20" y="300" font-family="monospace" font-size="9" fill="var(--neon-green)" opacity="0.4">SAFE HARBOUR</text>
+    <text x="360" y="300" font-family="monospace" font-size="9" fill="var(--neon-blue)" opacity="0.4">ROCKY SHALLOW</text>
+    <text x="250" y="314" font-family="monospace" font-size="8" fill="var(--text3)" text-anchor="middle">&lt;- SAFE    BREAKING -&gt;</text>
+    <text x="-160" y="12" font-family="monospace" font-size="8" fill="var(--text3)" transform="rotate(-90)">SHALLOW ^ DEEP</text>
+    ${flags}
+  </svg>`;
+
+  const evidence = sorted.map((pkg, i) => {
+    const speed = maintainerSpeed(pkg.days_exposed);
+    const owners = ownersFor(pkg);
+    const upgrade = hasUpgrade(pkg);
+    return `<div class="ti2-evidence-card" data-pkg="${escape(pkg.package)}" data-idx="${i}">
+      <div class="ti2-ev-header">
+        <div class="ti2-ev-icon">${weatherIcons[speed]}</div>
+        <div class="ti2-ev-meta"><span class="ti2-ev-name">${escape(pkg.package)}</span><span class="ti2-ev-speed ti2-speed-${speed}">${speedLabel(speed)}</span></div>
+        <span class="ti2-ev-chevron">&rsaquo;</span>
+      </div>
+      <div class="ti2-ev-detail" id="ti2EV${i}">
+        <div class="ti2-ev-fact"><span class="ti2-ev-fact-label">EXPOSURE</span><span class="ti2-ev-fact-val ti2-days-color">${pkg.days_exposed}d ignored</span></div>
+        <div class="ti2-ev-fact"><span class="ti2-ev-fact-label">CVEs</span><span class="ti2-ev-fact-val">${(pkg.cves || []).length} known vulnerabilities</span></div>
+        <div class="ti2-ev-fact"><span class="ti2-ev-fact-label">OWNERS</span><span class="ti2-ev-fact-val">${escape(owners.length ? owners.join(', ') : 'unowned')}</span></div>
+        <div class="ti2-ev-fact" style="display:${upgrade ? 'flex' : 'none'}"><span class="ti2-ev-fact-label">VERSION JUMP</span><span class="ti2-ev-fact-val">${escape(pkg.version)} &rarr; ${escape(pkg.fix_version)}</span></div>
+        <div class="ti2-ev-verdict ti2-speed-${speed}">${verdictText(speed)}</div>
+      </div>
+    </div>`;
+  }).join('');
+
+  let orderNum = 1;
+  const safeOrders = sorted.filter(p => p.actionability === 'SAFE').sort((a, b) => b.days_exposed - a.days_exposed).map(pkg => renderTI2Order(pkg, orderNum++, false)).join('');
+  const breakingOrders = sorted.filter(p => p.actionability === 'BREAKING').sort((a, b) => b.days_exposed - a.days_exposed).map(pkg => renderTI2Order(pkg, orderNum++, true)).join('');
+
+  function renderTI2Order(pkg, n, breaking) {
+    const owner = firstOwner(pkg);
+    const color = breaking ? '#FF4444' : '#00FF88';
+    return `<div class="ti2-order-entry ti2-order-${breaking ? 'breaking' : 'safe'}" data-pkg="${escape(pkg.package)}" data-idx="${n}">
+      <div class="ti2-order-num ${breaking ? 'ti2-num-red' : ''}">#${n}</div>
+      <div class="ti2-order-content">
+        <div class="ti2-order-top">${flagIcon(color)}<span class="ti2-order-pkg">${escape(pkg.package)}</span><span class="ti2-order-arrow">&rarr;</span><span class="ti2-order-fix">${escape(pkg.fix_version)}</span></div>
+        <div class="ti2-order-meta"><span class="ti2-order-effort">${estimateEffort(pkg)}</span><span class="ti2-order-sep">&middot;</span><span class="ti2-order-days ${breaking ? 'ti2-days-red' : ''}">${pkg.days_exposed}d ignored</span><span class="ti2-order-sep">&middot;</span><span class="ti2-order-owner">${owner ? 'assign ' + escape(owner) : 'unowned'}</span></div>
+      </div>
+      <div class="ti2-order-badge ${breaking ? 'ti2-badge-breaking' : 'ti2-badge-safe'}">${breaking ? skullIcon('#FF4444') : 'SAFE'}</div>
+    </div>`;
+  }
+
+  screen.innerHTML = `
+    <style>
+      .ti2-screen { padding: 24px 28px 140px; }
+      .ti2-label { font-family: var(--mono); font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 6px; }
+      .ti2-title { font-size: 26px; font-weight: 700; color: var(--text); margin: 0 0 6px; }
+      .ti2-subtitle { color: var(--text2); font-size: 13px; margin: 0 0 8px; }
+      .ti2-divider { width: 100%; max-width: 600px; height: 30px; margin: 10px 0 20px; display: block; }
+      .ti2-precve-banner { display: none; align-items: center; background: rgba(255,68,68,0.08); border: 1px solid rgba(255,68,68,0.3); border-radius: 4px; padding: 8px 14px; margin-bottom: 12px; font-family: var(--mono); font-size: 11px; color: var(--neon-red); animation: ti2BannerPulse 3s ease infinite; }
+      @keyframes ti2BannerPulse { 0%,100% { border-color: rgba(255,68,68,0.3); } 50% { border-color: rgba(255,68,68,0.7); } }
+      .ti2-panels { display: grid; grid-template-columns: 2fr 1.5fr 1.5fr; gap: 16px; align-items: start; }
+      .ti2-panel { background: linear-gradient(180deg, #0d1e30 0%, #0a1a28 100%); border: 1px solid rgba(200,168,75,0.18); border-radius: 8px; overflow: hidden; position: relative; min-height: 500px; }
+      .ti2-panel + .ti2-panel { border-left: 3px solid rgba(200,168,75,0.15); }
+      .ti2-panel-header { display: flex; align-items: center; gap: 8px; padding: 14px 16px 10px; border-bottom: 1px solid rgba(200,168,75,0.12); font-family: var(--mono); font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); }
+      .ti2-panel-body { padding: 14px 12px; position: relative; overflow-y: auto; max-height: 560px; }
+      .ti2-panel-chart .ti2-panel-body { padding: 8px; overflow-x: auto; }
+      .ti2-flags-svg { width: 100%; min-width: 300px; display: block; }
+      .ti2-radar-bg { position: absolute; inset: 0; pointer-events: none; overflow: hidden; opacity: 0.7; }
+      .ti2-radar-bg svg { width: 100%; height: 100%; }
+      .ti2-radar-sweep { transform-origin: 50% 50%; animation: ti2RadarSpin 6s linear infinite; }
+      @keyframes ti2RadarSpin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+      .ti2-forecast-entries { position: relative; z-index: 1; }
+      @keyframes ti2JollyPulse { 0%,100% { opacity:1; filter:drop-shadow(0 0 3px #fff); } 50% { opacity:0.6; filter:drop-shadow(0 0 8px #fff); } }
+      .ti2-flag-precve { animation: ti2JollyPulse 2s ease infinite; }
+      .ti2-flag-highlighted line { stroke: var(--gold) !important; stroke-width: 2.5 !important; }
+      .ti2-flag-highlighted polygon, .ti2-flag-highlighted rect { filter: drop-shadow(0 0 6px currentColor); opacity: 1 !important; }
+      .ti2-flag-highlighted text { fill: var(--text) !important; font-size: 8px !important; }
+      .ti2-evidence-card { position: relative; z-index: 1; padding: 8px 10px; border-bottom: 1px solid rgba(255,255,255,0.04); cursor: pointer; transition: background 0.15s; }
+      .ti2-evidence-card:hover, .ti2-evidence-card.ti2-highlighted { background: rgba(200,168,75,0.06); border-left: 2px solid var(--gold); }
+      .ti2-ev-header { display: flex; align-items: center; gap: 8px; }
+      .ti2-ev-name { font-family: var(--mono); font-size: 11px; color: var(--gold); display: block; max-width: 110px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+      .ti2-ev-speed { font-family: var(--mono); font-size: 9px; display: block; }
+      .ti2-speed-VERY_SLOW { color: var(--neon-red); } .ti2-speed-SLOW { color: var(--neon-orange); } .ti2-speed-MODERATE { color: var(--gold); } .ti2-speed-FAST { color: var(--neon-green); }
+      .ti2-ev-chevron { margin-left: auto; color: var(--text3); font-size: 14px; transition: transform 0.15s; }
+      .ti2-evidence-card:hover .ti2-ev-chevron { transform: rotate(90deg); }
+      .ti2-ev-detail { max-height: 0; overflow: hidden; transition: max-height 0.2s ease; }
+      .ti2-evidence-card:hover .ti2-ev-detail { max-height: 200px; }
+      .ti2-ev-fact { display: flex; justify-content: space-between; gap: 10px; padding: 3px 0; }
+      .ti2-ev-fact-label { font-family: var(--mono); font-size: 8px; color: var(--text3); text-transform: uppercase; letter-spacing: 1px; }
+      .ti2-ev-fact-val { font-family: var(--mono); font-size: 9px; color: var(--text2); text-align: right; }
+      .ti2-ev-verdict { font-family: var(--mono); font-size: 9px; margin-top: 6px; padding-top: 6px; border-top: 1px solid rgba(255,255,255,0.06); letter-spacing: 0.5px; line-height: 1.4; }
+      .ti2-orders-section-header { display: flex; align-items: center; gap: 8px; padding: 12px 0 8px; font-family: var(--mono); font-size: 10px; letter-spacing: 2px; text-transform: uppercase; }
+      .ti2-osh-safe { color: var(--neon-green); } .ti2-osh-breaking { color: var(--neon-red); }
+      .ti2-osh-sub { font-size: 9px; opacity: 0.5; letter-spacing: 1px; }
+      .ti2-order-entry { display: flex; align-items: flex-start; gap: 8px; padding: 8px 4px; border-bottom: 1px solid rgba(255,255,255,0.04); cursor: pointer; transition: background 0.15s; border-left: 2px solid transparent; }
+      .ti2-order-entry:hover, .ti2-order-entry.ti2-highlighted { background: rgba(200,168,75,0.05); border-left-color: var(--gold); }
+      .ti2-order-num { font-family: var(--mono); font-size: 11px; color: var(--text3); flex-shrink: 0; width: 24px; }
+      .ti2-num-red { color: var(--neon-red); }
+      .ti2-order-content { flex: 1; min-width: 0; }
+      .ti2-order-top { display: flex; align-items: center; gap: 4px; flex-wrap: wrap; }
+      .ti2-order-pkg { font-family: var(--mono); font-size: 11px; color: var(--gold); max-width: 100px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+      .ti2-order-arrow { color: var(--text3); font-size: 11px; }
+      .ti2-order-fix { font-family: var(--mono); font-size: 11px; color: var(--neon-cyan); }
+      .ti2-order-meta { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 3px; font-family: var(--mono); font-size: 9px; color: var(--text3); }
+      .ti2-order-effort { color: var(--text2); } .ti2-order-owner { color: var(--neon-cyan); opacity: 0.8; } .ti2-days-red { color: var(--neon-red); }
+      .ti2-order-badge { flex-shrink: 0; font-family: var(--mono); font-size: 8px; padding: 2px 5px; border-radius: 3px; align-self: flex-start; display: flex; align-items: center; }
+      .ti2-badge-safe { background: rgba(0,255,136,0.1); border: 1px solid var(--neon-green); color: var(--neon-green); }
+      .ti2-badge-breaking { background: rgba(255,68,68,0.1); border: 1px solid var(--neon-red); color: var(--neon-red); }
+      .ti2-rope-divider { width: 100%; height: 20px; margin: 10px 0; }
+      @media (max-width: 1100px) { .ti2-panels { grid-template-columns: 1fr; } .ti2-panel { min-height: auto; } }
+    </style>
+    <div class="ti2-screen">
+      <div class="ti2-header">
+        <div class="ti2-label">THREAT INTELLIGENCE</div>
+        <h1 class="ti2-title">The Navigator's Chart</h1>
+        <p class="ti2-subtitle">Every hazard plotted &middot; Every storm forecast &middot; Orders written in the captain's log</p>
+        <div class="ti2-precve-banner" id="ti2PreCVEBanner"></div>
+        <svg class="ti2-divider" viewBox="0 0 600 30" xmlns="http://www.w3.org/2000/svg"><line x1="0" y1="15" x2="255" y2="15" stroke="rgba(200,168,75,0.3)" stroke-width="1"/><line x1="345" y1="15" x2="600" y2="15" stroke="rgba(200,168,75,0.3)" stroke-width="1"/><circle cx="300" cy="15" r="12" fill="none" stroke="rgba(200,168,75,0.4)" stroke-width="1"/><polygon points="300,3 303,13 300,11 297,13" fill="rgba(200,168,75,0.7)"/><polygon points="300,27 303,17 300,19 297,17" fill="rgba(200,168,75,0.4)"/><polygon points="288,15 298,12 296,15 298,18" fill="rgba(200,168,75,0.4)"/><polygon points="312,15 302,12 304,15 302,18" fill="rgba(200,168,75,0.7)"/><circle cx="300" cy="15" r="2" fill="rgba(200,168,75,0.8)"/></svg>
+      </div>
+      <div class="ti2-panels">
+        <div class="ti2-panel ti2-panel-chart" id="ti2Panel1"><div class="ti2-panel-header"><svg viewBox="0 0 24 16" width="24" height="16" xmlns="http://www.w3.org/2000/svg"><rect x="0" y="6" width="14" height="5" rx="2" fill="none" stroke="var(--gold)" stroke-width="1.2"/><rect x="13" y="4" width="7" height="9" rx="1.5" fill="none" stroke="var(--gold)" stroke-width="1.2"/><line x1="20" y1="7" x2="24" y2="5" stroke="var(--gold)" stroke-width="1.2"/><line x1="20" y1="11" x2="24" y2="13" stroke="var(--gold)" stroke-width="1.2"/></svg><span>ADMIRALTY CHART</span></div><div class="ti2-panel-body" id="ti2ChartBody">${chartSvg}</div></div>
+        <div class="ti2-panel ti2-panel-forecast" id="ti2Panel2"><div class="ti2-panel-header"><svg viewBox="0 0 20 14" width="20" height="14" xmlns="http://www.w3.org/2000/svg"><path d="M4,10 Q2,10 2,8 Q2,5 5,5 Q5,2 9,2 Q13,2 13,5 Q16,4 17,7 Q19,7 19,9 Q19,11 17,11 L5,11 Q4,11 4,10Z" fill="none" stroke="var(--neon-cyan)" stroke-width="1"/></svg><span>HARBOURMASTER'S REPORT</span></div><div class="ti2-panel-body" id="ti2ForecastBody"><div class="ti2-radar-bg" aria-hidden="true"><svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg"><circle cx="150" cy="150" r="120" fill="none" stroke="rgba(0,255,200,0.04)"/><circle cx="150" cy="150" r="80" fill="none" stroke="rgba(0,255,200,0.04)"/><circle cx="150" cy="150" r="40" fill="none" stroke="rgba(0,255,200,0.04)"/><g class="ti2-radar-sweep"><line x1="150" y1="150" x2="150" y2="20" stroke="rgba(0,255,136,0.3)" stroke-width="2"/><path d="M150,150 L150,20 A130,130 0 0,1 200,30 Z" fill="rgba(0,255,136,0.06)"/></g></svg></div><div class="ti2-forecast-entries" id="ti2ForecastEntries">${evidence}</div></div></div>
+        <div class="ti2-panel ti2-panel-orders" id="ti2Panel3"><div class="ti2-panel-header"><svg viewBox="0 0 18 18" width="18" height="18" xmlns="http://www.w3.org/2000/svg"><circle cx="9" cy="9" r="7" fill="none" stroke="var(--gold)" stroke-width="1"/><circle cx="9" cy="9" r="2.5" fill="none" stroke="var(--gold)" stroke-width="1"/><line x1="9" y1="2" x2="9" y2="16" stroke="var(--gold)" stroke-width="1"/><line x1="2" y1="9" x2="16" y2="9" stroke="var(--gold)" stroke-width="1"/></svg><span>CAPTAIN'S ORDERS</span></div><div class="ti2-panel-body" id="ti2OrdersBody"><div class="ti2-orders-section-header ti2-osh-safe"><svg viewBox="0 0 16 20" width="14" height="18" xmlns="http://www.w3.org/2000/svg"><circle cx="8" cy="4" r="3" fill="none" stroke="var(--neon-green)" stroke-width="1.2"/><line x1="8" y1="7" x2="8" y2="18" stroke="var(--neon-green)" stroke-width="1.2"/><path d="M2,11 Q8,14 14,11" fill="none" stroke="var(--neon-green)" stroke-width="1.2"/></svg><span>SAFE HARBOUR</span><span class="ti2-osh-sub">execute this sprint</span></div>${safeOrders || '<div class="ti2-order-entry"><div class="ti2-order-content">No safe harbour orders.</div></div>'}<svg class="ti2-rope-divider" viewBox="0 0 240 20" xmlns="http://www.w3.org/2000/svg"><path d="M0,10 C20,5 40,15 60,10 C80,5 100,15 120,10 C140,5 160,15 180,10 C200,5 220,15 240,10" fill="none" stroke="rgba(200,168,75,0.4)" stroke-width="3" stroke-linecap="round"/><path d="M0,10 C20,15 40,5 60,10 C80,15 100,5 120,10 C140,15 160,5 180,10 C200,15 220,5 240,10" fill="none" stroke="rgba(200,168,75,0.15)" stroke-width="1.5"/><circle cx="120" cy="10" r="4" fill="none" stroke="rgba(200,168,75,0.5)" stroke-width="1.5"/><circle cx="120" cy="10" r="1.5" fill="rgba(200,168,75,0.4)"/></svg><div class="ti2-orders-section-header ti2-osh-breaking">${skullIcon('var(--neon-red)')}<span>STORM AHEAD</span><span class="ti2-osh-sub">plan migration</span></div>${breakingOrders || '<div class="ti2-order-entry"><div class="ti2-order-content">No breaking migration orders.</div></div>'}</div></div>
+      </div>
+    </div>`;
+
+  const banner = document.getElementById('ti2PreCVEBanner');
+  if (banner && preCVE.length > 0) {
+    banner.style.display = 'flex';
+    const names = preCVE.map(p => p.package || p.name).filter(Boolean).join(', ');
+    const icon = document.createElement('span');
+    icon.textContent = '\u2691 ';
+    icon.style.cssText = 'color:var(--neon-red);margin-right:6px';
+    const msg = document.createElement('span');
+    msg.textContent = preCVE.length + ' pre-CVE signal' + (preCVE.length > 1 ? 's' : '') + ' detected';
+    if (names) {
+      const detail = document.createElement('span');
+      detail.textContent = ' \u2014 ' + names + '. Every other scanner is silent.';
+      detail.style.color = 'var(--text2)';
+      msg.appendChild(detail);
+    }
+    banner.appendChild(icon);
+    banner.appendChild(msg);
+  } else if (banner) {
+    banner.style.display = 'none';
+  }
+
+  attachTI2HoverEvents();
+}
+
+function ti2FindByPackage(selector, pkgName) {
+  const key = String(pkgName || '').toLowerCase();
+  return Array.from(document.querySelectorAll(selector)).find(el => String(el.dataset.pkg || '').toLowerCase() === key);
+}
+
+function ti2Highlight(pkgName) {
+  if (ti2ActivePkg === pkgName) return;
+  ti2ClearHighlights();
+  ti2ActivePkg = pkgName;
+  if (!pkgName) return;
+
+  const flag = ti2FindByPackage('.ti2-flag', pkgName);
+  if (flag) flag.classList.add('ti2-flag-highlighted');
+
+  const card = ti2FindByPackage('.ti2-evidence-card', pkgName);
+  if (card) {
+    card.classList.add('ti2-highlighted');
+    const detail = card.querySelector('.ti2-ev-detail');
+    if (detail) detail.style.maxHeight = '200px';
+    card.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+  }
+
+  const order = ti2FindByPackage('.ti2-order-entry', pkgName);
+  if (order) {
+    order.classList.add('ti2-highlighted');
+    order.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+  }
+}
+
+function ti2ClearHighlights() {
+  ti2ActivePkg = null;
+  document.querySelectorAll('.ti2-flag-highlighted').forEach(el => el.classList.remove('ti2-flag-highlighted'));
+  document.querySelectorAll('.ti2-highlighted').forEach(el => el.classList.remove('ti2-highlighted'));
+  document.querySelectorAll('.ti2-ev-detail').forEach(el => el.style.maxHeight = '');
+}
+
+function attachTI2HoverEvents() {
+  document.querySelectorAll('.ti2-flag').forEach(flag => {
+    const pkg = flag.dataset.pkg;
+    flag.addEventListener('mouseenter', () => ti2Highlight(pkg));
+    flag.addEventListener('mouseleave', ti2ClearHighlights);
+    flag.style.cursor = 'pointer';
+  });
+  document.querySelectorAll('.ti2-evidence-card').forEach(card => {
+    const pkg = card.dataset.pkg;
+    card.addEventListener('mouseenter', () => ti2Highlight(pkg));
+    card.addEventListener('mouseleave', ti2ClearHighlights);
+  });
+  document.querySelectorAll('.ti2-order-entry[data-pkg]').forEach(order => {
+    const pkg = order.dataset.pkg;
+    order.addEventListener('mouseenter', () => ti2Highlight(pkg));
+    order.addEventListener('mouseleave', ti2ClearHighlights);
+  });
+}
+
+function renderPatchLag(d) {
+  renderThreatIntel(d);
+  return;
+  const scan = d.scan || [];
+  const ownership = d.ownership || [];
+  const sweep = d.sweep || {};
+
+  // Join scan Ã— ownership by package name (case-insensitive)
+  const ownerMap = {};
+  ownership.forEach(o => {
+    if (o && o.package) ownerMap[String(o.package).toLowerCase()] = o;
+  });
+  const joinedData = scan.map(p => {
+    const own = ownerMap[String(p.name || '').toLowerCase()];
     const days = p.worst_days_exposed || 0;
-    const pct = Math.max(2, Math.round((days / maxDays) * 100));
-    const fix = (p.cves && p.cves[0] && p.cves[0].fixed_in) ? p.cves[0].fixed_in : '—';
-    return `
-      <div class="tide-row">
-        <div class="tide-name">${escape(p.name)}</div>
-        <div class="tide-bar-wrap"><div class="tide-bar ${tideColor(days)}" style="width: ${pct}%"></div></div>
-        <div class="tide-days">${days}d</div>
-        <div class="tide-fix">→ ${escape(fix)}</div>
+    const cves = p.cves || [];
+    const fix_version = own?.fixed_in
+      || (cves[0] && cves[0].fixed_in)
+      || 'â€”';
+    const actionability = own?.actionability
+      || actionabilityForPackage(p.name, sweep)
+      || 'BREAKING';
+    const owners = own ? filterBots(own.owners) : [];
+    const ticket_text = own?.ticket_text
+      || `@${owners[0] || 'team'} â€” ${p.name} exposed ${days}d, ${actionability} fix â†’ upgrade to ${fix_version}`;
+    return {
+      package: p.name,
+      version: p.version,
+      days_exposed: days,
+      fix_version,
+      actionability,
+      cves,
+      owners,
+      ticket_text,
+    };
+  });
+
+  // ACT 1 â€” Hero
+  const totalCveDays = joinedData.reduce((s, r) => s + r.days_exposed * r.cves.length, 0);
+  const safeCount = joinedData.filter(r => r.actionability === 'SAFE').length;
+  const hero = document.getElementById('plHero');
+  if (hero) {
+    hero.innerHTML = `
+      <div class="pl-hero-numwrap">
+        <span class="pl-hero-number gold-metal">${totalCveDays.toLocaleString()}</span>
+        <span class="pl-hero-unit">CVE-days of negligence</span>
+      </div>
+      <div class="pl-hero-sub">
+        <span class="pl-hero-safe">${safeCount}</span> packages had a SAFE fix available and were never upgraded.<br>
+        Your team <span class="pl-hero-condemn">chose not to act</span>. Here is the evidence.
       </div>
     `;
-  }).join('');
+  }
 
-  document.getElementById('patchLagTable').innerHTML = scan.map(p => {
-    const days = p.worst_days_exposed || 0;
-    const fix = (p.cves && p.cves[0] && p.cves[0].fixed_in) ? p.cves[0].fixed_in : '—';
-    const summary = (p.cves && p.cves[0] && p.cves[0].summary) ? p.cves[0].summary : '—';
-    const cls = days > 365 ? 'days-red' : days > 90 ? 'days-amber' : days > 30 ? 'days-blue' : 'days-green';
-    return `
-      <tr>
-        <td class="mono">${escape(p.name)}</td>
-        <td class="mono">${escape(p.version)}</td>
-        <td class="mono ${cls}">${days}</td>
-        <td class="mono">${escape(fix)}</td>
-        <td class="mono">${(p.cves || []).length}</td>
-        <td>${escape(summary)}</td>
-      </tr>
-    `;
-  }).join('');
+  // ACT 2 â€” Sort by urgency, render rows
+  joinedData.forEach(r => {
+    r._urgency = (r.days_exposed / 2090) * 60
+               + (r.cves.length / 7) * 25
+               + (r.actionability === 'BREAKING' ? 10 : 0);
+  });
+  joinedData.sort((a, b) => b._urgency - a._urgency);
+
+  const maxDays = Math.max(1, ...joinedData.map(r => r.days_exposed));
+
+  function quadrant(r) {
+    if (r.actionability === 'SAFE' && r.days_exposed > 100) return { cls: 'no-excuse', text: 'NO EXCUSE' };
+    if (r.actionability === 'BREAKING' && r.days_exposed > 200) return { cls: 'hard', text: 'HARD PROBLEM' };
+    if (r.actionability === 'SAFE' && r.days_exposed <= 100) return { cls: 'act-now', text: 'ACT NOW' };
+    return { cls: 'watching', text: 'WATCHING' };
+  }
+
+  const container = document.getElementById('plTimeline');
+  if (!container) return;
+  container.innerHTML = '';
+
+  joinedData.forEach(r => {
+    const row = document.createElement('div');
+    row.className = 'pl-row';
+
+    const main = document.createElement('div');
+    main.className = 'pl-row-main';
+
+    // LEFT â€” package, version, owners
+    const left = document.createElement('div');
+    left.className = 'pl-left';
+    const pkgName = document.createElement('div');
+    pkgName.className = 'pl-pkg-name';
+    pkgName.textContent = r.package;
+    const ver = document.createElement('div');
+    ver.className = 'pl-pkg-version';
+    ver.textContent = r.version || '?';
+    left.appendChild(pkgName);
+    left.appendChild(ver);
+    if (r.owners.length === 0) {
+      const none = document.createElement('div');
+      none.className = 'pl-no-owner';
+      none.textContent = 'â€” unowned';
+      left.appendChild(none);
+    } else {
+      const ownersWrap = document.createElement('div');
+      ownersWrap.className = 'pl-owners';
+      r.owners.slice(0, 2).forEach(o => {
+        const b = document.createElement('span');
+        b.className = 'pl-owner-badge';
+        b.textContent = '@' + (o.length > 8 ? o.substring(0, 8) : o);
+        ownersWrap.appendChild(b);
+      });
+      left.appendChild(ownersWrap);
+    }
+
+    // CENTER â€” timeline track
+    const center = document.createElement('div');
+    center.className = 'pl-center';
+
+    const trackWrap = document.createElement('div');
+    trackWrap.className = 'pl-track-wrap';
+    const track = document.createElement('div');
+    track.className = 'pl-track';
+
+    // Optional "Before CVE" segment if cves[0].published available
+    let beforePct = 0;
+    if (r.cves[0] && r.cves[0].published) {
+      const pub = new Date(r.cves[0].published);
+      if (!isNaN(pub.getTime())) {
+        const ageDays = Math.max(0, Math.floor((Date.now() - pub.getTime()) / 86400000));
+        if (ageDays > r.days_exposed) {
+          const beforeDays = ageDays - r.days_exposed;
+          beforePct = Math.min(20, (beforeDays / maxDays) * 100);
+        }
+      }
+    }
+    const ignoredPct = Math.max(4, (r.days_exposed / maxDays) * 100);
+
+    if (beforePct > 0) {
+      const seg1 = document.createElement('div');
+      seg1.className = 'pl-seg-before';
+      seg1.style.width = beforePct + '%';
+      seg1.title = 'Before CVE';
+      track.appendChild(seg1);
+    }
+    const seg2 = document.createElement('div');
+    seg2.className = 'pl-seg-ignored';
+    seg2.style.width = ignoredPct + '%';
+    seg2.title = 'Fix Available, Ignored';
+    track.appendChild(seg2);
+
+    const seg3 = document.createElement('div');
+    seg3.className = 'pl-seg-today';
+    const todayLabel = document.createElement('span');
+    todayLabel.className = 'pl-today-label';
+    todayLabel.textContent = 'TODAY';
+    seg3.appendChild(todayLabel);
+    track.appendChild(seg3);
+
+    trackWrap.appendChild(track);
+
+    const captionRow = document.createElement('div');
+    captionRow.className = 'pl-caption-row';
+    const caption = document.createElement('div');
+    caption.className = 'pl-track-caption';
+    caption.style.left = (beforePct + ignoredPct / 2) + '%';
+    caption.textContent = `Ignored: ${r.days_exposed}d`;
+    captionRow.appendChild(caption);
+
+    center.appendChild(trackWrap);
+    center.appendChild(captionRow);
+
+    // RIGHT â€” quadrant + cve count
+    const right = document.createElement('div');
+    right.className = 'pl-right';
+    const q = quadrant(r);
+    const badge = document.createElement('span');
+    badge.className = 'pl-badge ' + q.cls;
+    badge.textContent = q.text;
+    right.appendChild(badge);
+    const cveCt = document.createElement('div');
+    cveCt.className = 'pl-cve-count';
+    cveCt.textContent = r.cves.length + ' CVE' + (r.cves.length === 1 ? '' : 's');
+    right.appendChild(cveCt);
+
+    main.appendChild(left);
+    main.appendChild(center);
+    main.appendChild(right);
+
+    // DETAIL â€” CVE list + ticket
+    const detail = document.createElement('div');
+    detail.className = 'pl-detail';
+    const inner = document.createElement('div');
+    inner.className = 'pl-detail-inner';
+
+    const cveBlock = document.createElement('div');
+    cveBlock.className = 'pl-detail-cves';
+    const cveLabel = document.createElement('div');
+    cveLabel.className = 'pl-block-label';
+    cveLabel.textContent = 'CVEs';
+    cveBlock.appendChild(cveLabel);
+    if (r.cves.length === 0) {
+      const none = document.createElement('div');
+      none.style.cssText = 'color:var(--text3);font-size:11px;font-family:var(--mono);';
+      none.textContent = 'â€” no CVEs in record';
+      cveBlock.appendChild(none);
+    }
+    r.cves.forEach(c => {
+      const item = document.createElement('div');
+      item.className = 'pl-cve-item';
+      const sevRaw = String(c.severity || 'MEDIUM').toLowerCase();
+      const sevCls = sevRaw === 'critical' ? 'critical'
+                  : sevRaw === 'high'     ? 'high'
+                  : sevRaw === 'low'      ? 'low'
+                  : 'medium';
+      const sevBadge = document.createElement('span');
+      sevBadge.className = 'pl-sev-badge ' + sevCls;
+      sevBadge.textContent = sevCls.toUpperCase();
+      const id = document.createElement('span');
+      id.className = 'pl-cve-id';
+      id.textContent = c.id || 'â€”';
+      const sum = document.createElement('span');
+      sum.className = 'pl-cve-sum';
+      const sumText = c.summary || 'â€”';
+      sum.textContent = 'â€” ' + (sumText.length > 80 ? sumText.substring(0, 80) + 'â€¦' : sumText);
+      item.appendChild(sevBadge);
+      item.appendChild(id);
+      item.appendChild(sum);
+      cveBlock.appendChild(item);
+    });
+
+    const ticketBlock = document.createElement('div');
+    ticketBlock.className = 'pl-detail-ticket';
+    const tLabel = document.createElement('div');
+    tLabel.className = 'pl-block-label';
+    tLabel.textContent = 'Assign to crew';
+    const tBody = document.createElement('div');
+    tBody.className = 'pl-ticket-text';
+    tBody.textContent = r.ticket_text;
+    const btn = document.createElement('button');
+    btn.className = 'pl-copy-btn';
+    btn.type = 'button';
+    btn.textContent = 'COPY TICKET';
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const reset = () => {
+        btn.textContent = 'COPY TICKET';
+        btn.classList.remove('copied');
+      };
+      const onOk = () => {
+        btn.textContent = 'âœ“ COPIED';
+        btn.classList.add('copied');
+        setTimeout(reset, 2000);
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(r.ticket_text).then(onOk).catch(onOk);
+      } else {
+        onOk();
+      }
+    });
+    ticketBlock.appendChild(tLabel);
+    ticketBlock.appendChild(tBody);
+    ticketBlock.appendChild(btn);
+
+    inner.appendChild(cveBlock);
+    inner.appendChild(ticketBlock);
+    detail.appendChild(inner);
+
+    row.appendChild(main);
+    row.appendChild(detail);
+
+    main.addEventListener('click', () => {
+      const wasOpen = row.classList.contains('open');
+      container.querySelectorAll('.pl-row.open').forEach(r => r.classList.remove('open'));
+      if (!wasOpen) row.classList.add('open');
+    });
+
+    container.appendChild(row);
+  });
 }
 
 function renderPreCve(d) {
@@ -2221,17 +4552,17 @@ function renderPreCve(d) {
       const dep = (f.security_deprecations && f.security_deprecations[0]) || {};
       return `
         <div class="storm-card">
-          <span class="badge precve">PRE-CVE · NO SCANNER ALERT YET</span>
+          <span class="badge precve">PRE-CVE Â· NO SCANNER ALERT YET</span>
           <div class="pkg">${escape(f.name)} @ ${escape(f.installed_version || '?')}</div>
           <div class="reason">"${escape(dep.reason || 'Security-related deprecation in upstream registry')}"</div>
-          <div class="meta">Deprecated version: ${escape(dep.version || '?')} · ${dep.days_ago || '?'} days ago · ${escape(f.system || '')}</div>
+          <div class="meta">Deprecated version: ${escape(dep.version || '?')} Â· ${dep.days_ago || '?'} days ago Â· ${escape(f.system || '')}</div>
         </div>
       `;
-    }).join('') + '<div class="storm-tagline">No CVE filed yet — this is your early warning. Every scanner is silent. DriftWatch fires.</div>';
+    }).join('') + '<div class="storm-tagline">No CVE filed yet â€” this is your early warning. Every scanner is silent. DriftWatch fires.</div>';
   } else {
     document.getElementById('stormSection').innerHTML = `
       <div class="empty-state">
-        No security deprecations detected in this scan's packages — <span style="color:var(--green)">clean waters ahead</span>.<br>
+        No security deprecations detected in this scan's packages â€” <span style="color:var(--green)">clean waters ahead</span>.<br>
         <span style="font-size:11px; color:var(--text3); margin-top:8px; display:inline-block">Run a full sweep to detect pre-CVE signals across all dependencies.</span>
       </div>
     `;
@@ -2255,7 +4586,7 @@ function renderPreCve(d) {
     ];
     return `
       <div class="signal-card">
-        <div class="pkg">${escape(p.name)} <span style="color:var(--text2);font-weight:400">@ ${escape(p.version)} · ${days}d exposed</span></div>
+        <div class="pkg">${escape(p.name)} <span style="color:var(--text2);font-weight:400">@ ${escape(p.version)} Â· ${days}d exposed</span></div>
         ${signals.map(([name, val]) => {
           const cls = val < 40 ? 'red' : val < 70 ? 'amber' : '';
           return `
@@ -2275,14 +4606,14 @@ function renderMaintainer(d) {
   document.getElementById('maintGrid').innerHTML = scan.map(p => {
     const days = p.worst_days_exposed || 0;
     let label, cls, decision;
-    if (days < 60) { label = 'FAST'; cls = 'fast'; decision = 'Upstream patches quickly — safe to wait for the official fix.'; }
-    else if (days < 200) { label = 'MODERATE'; cls = 'moderate'; decision = 'Set a 30-day deadline — monitor upstream actively.'; }
-    else if (days < 500) { label = 'SLOW'; cls = 'slow'; decision = 'Do not wait — plan mitigation now.'; }
-    else { label = 'VERY SLOW'; cls = 'veryslow'; decision = 'Upstream will not save you — mitigate immediately.'; }
+    if (days < 60) { label = 'FAST'; cls = 'fast'; decision = 'Upstream patches quickly â€” safe to wait for the official fix.'; }
+    else if (days < 200) { label = 'MODERATE'; cls = 'moderate'; decision = 'Set a 30-day deadline â€” monitor upstream actively.'; }
+    else if (days < 500) { label = 'SLOW'; cls = 'slow'; decision = 'Do not wait â€” plan mitigation now.'; }
+    else { label = 'VERY SLOW'; cls = 'veryslow'; decision = 'Upstream will not save you â€” mitigate immediately.'; }
     return `
       <div class="maint-card">
         <div class="pkg">${escape(p.name)}</div>
-        <div class="ver">@ ${escape(p.version)} · ${(p.cves || []).length} CVE${(p.cves || []).length === 1 ? '' : 's'}</div>
+        <div class="ver">@ ${escape(p.version)} Â· ${(p.cves || []).length} CVE${(p.cves || []).length === 1 ? '' : 's'}</div>
         <div class="maint-resp ${cls}">${label} RESPONSIVENESS</div>
         <div class="maint-decision">${decision}</div>
         <div class="maint-exp">Inferred from ${days} days patch lag</div>
@@ -2311,7 +4642,7 @@ function renderOrders(d) {
     return `
       <div class="order-card ${cls}">
         <div class="order-head">
-          <div class="order-pkg">${escape(row.name)} <span style="color:var(--text2)">${escape(row.current_version)}</span> <span class="order-arrow">→</span> <span style="color:var(--green)">${escape(row.fixed_version)}</span></div>
+          <div class="order-pkg">${escape(row.name)} <span style="color:var(--text2)">${escape(row.current_version)}</span> <span class="order-arrow">â†’</span> <span style="color:var(--green)">${escape(row.fixed_version)}</span></div>
           <div class="order-days">${row.days_exposed}d exposed</div>
         </div>
         <div class="order-exp">${escape(row.explanation || '')}</div>
@@ -2328,59 +4659,607 @@ function renderOrders(d) {
     : '<div class="empty-state">No breaking upgrades required.</div>';
 }
 
+function buildCrewMap(data) {
+  // ownerMap: package name (lowercase) â†’ { owners, ticket_text, actionability, fixed_in }
+  const ownerMap = {};
+  (data.ownership || []).forEach(o => {
+    const key = String(o.package || '').toLowerCase();
+    ownerMap[key] = {
+      owners: filterBots(o.owners || []),
+      ticket_text: o.ticket_text || '',
+      actionability: o.actionability || '',
+      fixed_in: o.fixed_in || '',
+      files: o.files || [],
+      manifest_path: o.manifest_path || 'package.json',
+      manifest_touches: o.manifest_touches || []
+    };
+  });
+
+  // Sweep upgrade map: pkg name â†’ most-severe row (by days_exposed)
+  const sweep = data.sweep || {};
+  const upgradeMap = {};
+  (sweep.upgrade_actionability || []).forEach(u => {
+    if (!upgradeMap[u.name] || (u.days_exposed || 0) > (upgradeMap[u.name].days_exposed || 0)) {
+      upgradeMap[u.name] = u;
+    }
+  });
+
+  // crewMap: owner login â†’ stats
+  const crewMap = {};
+  (data.scan || []).forEach(pkg => {
+    const pkgName = pkg.name;
+    if (!pkgName) return;
+    const key = pkgName.toLowerCase();
+    const ownerData = ownerMap[key] || { owners: [], ticket_text: '', actionability: '', fixed_in: '' };
+    const owners = ownerData.owners;
+    const upgrade = upgradeMap[pkgName] || {};
+    const actionability = ownerData.actionability || upgrade.actionability || 'BREAKING';
+    const fixVersion = ownerData.fixed_in || upgrade.fixed_version || (pkg.cves && pkg.cves[0] && pkg.cves[0].fixed_in) || '?';
+    const daysExposed = pkg.worst_days_exposed || 0;
+
+    owners.forEach(login => {
+      if (!crewMap[login]) {
+        crewMap[login] = {
+          login,
+          packages: [],
+          totalDays: 0,
+          safeIgnored: 0,
+          breakingCount: 0
+        };
+      }
+      // Only add if not already in this person's list
+      const alreadyHas = crewMap[login].packages.some(p => p.name === pkgName);
+      if (!alreadyHas) {
+      crewMap[login].packages.push({
+        name: pkgName,
+        version: pkg.version,
+        days_exposed: daysExposed,
+        actionability,
+        fix_version: fixVersion,
+        cve_count: (pkg.cves || []).length,
+        files: ownerData.files || [],
+        manifest_path: ownerData.manifest_path || 'package.json',
+        manifest_touches: ownerData.manifest_touches || [],
+        ticket_text: ownerData.ticket_text
+          || `@${login} â€” ${pkgName} exposed ${daysExposed}d, ${actionability} fix â†’ upgrade to ${fixVersion}`
+      });
+        crewMap[login].totalDays += daysExposed;
+        if (actionability === 'SAFE') crewMap[login].safeIgnored++;
+        if (actionability === 'BREAKING') crewMap[login].breakingCount++;
+      }
+    });
+  });
+
+  return Object.values(crewMap).sort((a, b) => b.totalDays - a.totalDays);
+}
+
+// ── SVG helpers (module scope) ──
+function skullStampSVG(size) {
+  size = size || 60;
+  return `<svg width="${size}" height="${size}" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+    <ellipse cx="30" cy="26" rx="16" ry="15" fill="rgba(255,68,68,0.9)" stroke="#FF4444" stroke-width="1"/>
+    <ellipse cx="24" cy="25" rx="4" ry="4.5" fill="#061420"/>
+    <ellipse cx="36" cy="25" rx="4" ry="4.5" fill="#061420"/>
+    <path d="M28.5 31 L30 29 L31.5 31 Z" fill="#061420"/>
+    <rect x="22" y="34" width="4" height="5" rx="1" fill="rgba(255,68,68,0.9)" stroke="#FF4444" stroke-width="0.5"/>
+    <rect x="28" y="34" width="4" height="5" rx="1" fill="rgba(255,68,68,0.9)" stroke="#FF4444" stroke-width="0.5"/>
+    <rect x="34" y="34" width="4" height="5" rx="1" fill="rgba(255,68,68,0.9)" stroke="#FF4444" stroke-width="0.5"/>
+    <line x1="8" y1="48" x2="52" y2="12" stroke="#FF4444" stroke-width="4" stroke-linecap="round" opacity="0.8"/>
+    <line x1="52" y1="48" x2="8" y2="12" stroke="#FF4444" stroke-width="4" stroke-linecap="round" opacity="0.8"/>
+    <circle cx="8" cy="48" r="4" fill="#FF4444" opacity="0.8"/>
+    <circle cx="52" cy="12" r="4" fill="#FF4444" opacity="0.8"/>
+    <circle cx="52" cy="48" r="4" fill="#FF4444" opacity="0.8"/>
+    <circle cx="8" cy="12" r="4" fill="#FF4444" opacity="0.8"/>
+    <circle cx="30" cy="30" r="28" fill="none" stroke="#FF4444" stroke-width="2" stroke-dasharray="4 3" opacity="0.6"/>
+  </svg>`;
+}
+
+function telescopeSVG() {
+  return `<svg width="14" height="14" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle">
+    <line x1="2" y1="10" x2="12" y2="4" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="10" y1="3" x2="13" y2="5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="1" y1="9" x2="4" y2="11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+    <circle cx="12" cy="3.5" r="1.5" fill="currentColor" opacity="0.6"/>
+  </svg>`;
+}
+
+function treasureSVG(size) {
+  size = size || 20;
+  return `<svg width="${size}" height="${size}" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle">
+    <rect x="2" y="9" width="16" height="9" rx="1" fill="rgba(200,168,75,0.3)" stroke="#C8A84B" stroke-width="1"/>
+    <rect x="2" y="7" width="16" height="4" rx="1" fill="rgba(200,168,75,0.5)" stroke="#C8A84B" stroke-width="1"/>
+    <rect x="2" y="9" width="16" height="2" fill="rgba(200,168,75,0.4)"/>
+    <rect x="8" y="10" width="4" height="4" rx="1" fill="rgba(200,168,75,0.8)" stroke="#F0D898" stroke-width="0.5"/>
+    <line x1="2" y1="13" x2="18" y2="13" stroke="rgba(200,168,75,0.3)" stroke-width="0.5"/>
+    <circle cx="4" cy="12" r="1" fill="rgba(200,168,75,0.4)"/>
+    <circle cx="16" cy="12" r="1" fill="rgba(200,168,75,0.4)"/>
+  </svg>`;
+}
+
+function coinSVG() {
+  return `<svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <radialGradient id="coinGrad" cx="35%" cy="30%">
+        <stop offset="0%" stop-color="#F0D898"/>
+        <stop offset="60%" stop-color="#C8A84B"/>
+        <stop offset="100%" stop-color="#8B6914"/>
+      </radialGradient>
+    </defs>
+    <circle cx="8" cy="8" r="7" fill="url(#coinGrad)" stroke="#F0D898" stroke-width="0.5"/>
+    <text x="8" y="11" text-anchor="middle" font-size="8" font-family="serif" font-weight="bold" fill="#4A3000">$</text>
+  </svg>`;
+}
+
 function renderCrew(d) {
-  const ownership = (d.ownership || []).slice().sort((a, b) => (b.worst_days_exposed || 0) - (a.worst_days_exposed || 0));
-  document.getElementById('crewList').innerHTML = ownership.map((row, idx) => {
-    const owners = filterBots(row.owners || []);
-    const files = row.files || [];
-    const ticketId = `ticket-${idx}`;
-    const act = row.actionability || '';
-    const actBadge = act ? `<span class="badge ${act.toLowerCase()}">${act}</span>` : '';
-    return `
-      <div class="crew-card">
-        <div class="crew-head">
-          <div>
-            <div class="crew-pkg">${escape(row.package)} <span style="color:var(--text2)">@ ${escape(row.version)}</span></div>
-            <div class="crew-meta" style="margin-top:4px">
-              ${actBadge}
-              <span class="chip amber">⧖ ${row.worst_days_exposed}d exposed</span>
-              <span class="chip green">→ ${escape(row.fixed_in || '—')}</span>
-            </div>
-          </div>
+  const crewList = document.getElementById('crewList');
+  if (!crewList) return;
+  crewList.innerHTML = '';
+
+  const crew = buildCrewMap(d);
+
+  if (crew.length === 0) {
+    crewList.innerHTML = '<div style="padding:40px;text-align:center;font-family:var(--mono);color:var(--text3)">No crew data charted. Load a repository with ownership data.</div>';
+    return;
+  }
+
+  const maxDays = crew[0]?.totalDays || 1;
+
+  function sinceDate(days) {
+    const dt = new Date(Date.now() - days * 86400000);
+    return dt.toLocaleDateString('en-GB', { month: 'short', year: 'numeric' });
+  }
+
+  function worstExposure(member) {
+    const worstPkg = member.packages.reduce((a, b) =>
+      ((a.days_exposed || a.days || 0) > (b.days_exposed || b.days || 0)) ? a : b,
+      member.packages[0] || {}
+    );
+    return {
+      pkg: worstPkg,
+      days: worstPkg.days_exposed || worstPkg.days || 0
+    };
+  }
+
+  function crimeText(member) {
+    const since = sinceDate(worstExposure(member).days);
+    const noExcuse = member.safeIgnored > 0
+      ? ` ${member.safeIgnored} SAFE fix${member.safeIgnored > 1 ? 'es' : ''} deliberately ignored.`
+      : '';
+    return `Negligent dependency management since ${since}.${noExcuse} ${member.breakingCount} major upgrade${member.breakingCount !== 1 ? 's' : ''} deferred without explanation.`;
+  }
+
+  function slotCountUp(el, target, duration) {
+    duration = duration || 1200;
+    const start = performance.now();
+    const easeOut = t => 1 - Math.pow(1 - t, 3);
+    function tick(now) {
+      const p = Math.min((now - start) / duration, 1);
+      const val = Math.round(easeOut(p) * target);
+      el.textContent = val.toLocaleString();
+      el.classList.add('bounty-animate');
+      setTimeout(() => el.classList.remove('bounty-animate'), 100);
+      if (p < 1) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  }
+
+  const wall = document.createElement('div');
+  wall.className = 'wanted-wall';
+
+  const posterWall = document.createElement('div');
+  posterWall.className = 'poster-wall';
+
+  // ── HERO POSTER ──
+  const hero = crew[0];
+  const heroWorst = worstExposure(hero);
+  const heroBurnWidth = Math.round((hero.totalDays / maxDays) * 100);
+
+  const heroEl = document.createElement('div');
+  heroEl.className = 'poster hero-poster';
+  heroEl.dataset.login = hero.login;
+
+  heroEl.innerHTML = `
+    <div class="poster-border-decoration"></div>
+    <div class="corner-ornament tl"></div>
+    <div class="corner-ornament tr"></div>
+    <div class="corner-ornament bl"></div>
+    <div class="corner-ornament br"></div>
+
+    <div class="hero-poster-stamp">${skullStampSVG(64)}</div>
+
+    <div class="hero-poster-label">☠ &nbsp; M O S T &nbsp; W A N T E D &nbsp; ☠</div>
+    <div class="hero-poster-divider"></div>
+
+    <div class="hero-poster-name">@${hero.login}</div>
+
+    <div class="hero-poster-divider"></div>
+
+    <div class="hero-bounty-label">${treasureSVG(16)} &nbsp; B O U N T Y</div>
+    <div class="hero-bounty-value" id="hero-bounty-num">0</div>
+    <div class="hero-bounty-unit">days of exposure</div>
+    <div class="hero-since">${telescopeSVG()} Worst single exposure since ${sinceDate(heroWorst.days)}</div>
+
+    <div class="hero-stats-row">
+      <div class="hero-stat-item">
+        <div class="hero-stat-num" style="color:var(--neon-red)">${hero.packages.length}</div>
+        <div class="hero-stat-lbl">Packages</div>
+      </div>
+      <div class="hero-stat-item">
+        <div class="hero-stat-num" style="color:var(--neon-orange)">${hero.breakingCount}</div>
+        <div class="hero-stat-lbl">Breaking</div>
+      </div>
+      <div class="hero-stat-item">
+        <div class="hero-stat-num" style="color:var(--gold)">${hero.safeIgnored}</div>
+        <div class="hero-stat-lbl">Easy Wins Ignored</div>
+      </div>
+    </div>
+
+    <div class="hero-crime">"${crimeText(hero)}"</div>
+
+    <button class="hero-brief-btn" data-login="${hero.login}">
+      ⚓ &nbsp; GENERATE CAPTAIN'S BRIEF
+    </button>
+
+    <div class="exposure-burn-bar" style="width:0%" data-target="${heroBurnWidth}"></div>
+  `;
+
+  setTimeout(() => {
+    const bountyEl = heroEl.querySelector('#hero-bounty-num');
+    if (bountyEl) slotCountUp(bountyEl, hero.totalDays);
+    const burnBar = heroEl.querySelector('.exposure-burn-bar');
+    if (burnBar) burnBar.style.width = burnBar.dataset.target + '%';
+  }, 300);
+
+  heroEl.querySelector('.hero-brief-btn').addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (typeof generateBrief === 'function') {
+      generateBrief(hero.login, d);
+    } else {
+      showCaptainsBrief(hero, d);
+    }
+  });
+
+  heroEl.addEventListener('click', () => filterIncidentLog(hero.login));
+
+  posterWall.appendChild(heroEl);
+
+  // ── CREW POSTER GRID ──
+  const grid = document.createElement('div');
+  grid.className = 'crew-poster-grid';
+
+  crew.slice(1).forEach((member, i) => {
+    const isCleared = member.totalDays === 0 || member.packages.length === 0;
+    const heightPx = isCleared ? 120 : Math.max(140, Math.round((member.totalDays / maxDays) * 280) + 100);
+    const burnWidth = Math.round((member.totalDays / maxDays) * 100);
+    const memberWorst = worstExposure(member);
+
+    const card = document.createElement('div');
+    card.className = 'poster small-poster';
+    card.style.height = heightPx + 'px';
+    card.dataset.login = member.login;
+
+    let stampHTML = '';
+    if (isCleared) {
+      stampHTML = `<div class="absolved-stamp">CLEARED</div>`;
+    }
+
+    card.innerHTML = `
+      <div class="corner-ornament tl"></div>
+      <div class="corner-ornament br"></div>
+
+      ${stampHTML}
+
+      <div class="hero-poster-label" style="font-size:8px;margin-bottom:4px">WANTED</div>
+      <div class="small-poster-name">@${member.login}</div>
+      <div class="small-poster-days" id="bounty-${i}">${isCleared ? '0' : '—'}</div>
+      <div class="small-poster-since">${telescopeSVG()} Worst single exposure since ${sinceDate(memberWorst.days)}</div>
+
+      <div class="small-poster-meta">
+        ${member.breakingCount > 0
+          ? `<div class="wax-seal" title="${member.breakingCount} BREAKING">${member.breakingCount}</div>`
+          : ''}
+        ${member.safeIgnored > 0
+          ? `<div class="gold-coin" title="${member.safeIgnored} easy wins ignored">${member.safeIgnored}</div>`
+          : ''}
+        <div style="font-family:var(--mono);font-size:9px;color:var(--text3);margin-top:4px">
+          ${member.packages.length} pkg${member.packages.length !== 1 ? 's' : ''}
         </div>
-        <div class="crew-section">
-          <div class="crew-section-label">RECOMMENDED OWNERS (bots filtered)</div>
-          ${owners.length ? owners.map(o => `<span class="owner-chip">@${escape(o)}</span>`).join('') : '<span style="color:var(--text3); font-size:12px">No human committers detected</span>'}
-        </div>
-        ${files.length ? `
-          <div class="crew-section">
-            <div class="crew-section-label">FILES REFERENCING THIS PACKAGE</div>
-            ${files.map(f => `<span class="file-chip">${escape(f)}</span>`).join('')}
-          </div>
-        ` : ''}
-        <div class="crew-section">
-          <div class="crew-section-label">DRAFT TICKET</div>
-          <div class="ticket-box" id="${ticketId}">${escape(row.ticket_text || '')}</div>
-          <button class="copy-btn" onclick="copyTicket('${ticketId}', this)">⎘ Copy to Clipboard</button>
+      </div>
+
+      <div class="exposure-burn-bar" style="width:0%;height:2px" data-target="${burnWidth}"></div>
+    `;
+
+    if (!isCleared) {
+      setTimeout(() => {
+        const el = card.querySelector(`#bounty-${i}`);
+        if (el) slotCountUp(el, member.totalDays, 900 + i * 100);
+        const bar = card.querySelector('.exposure-burn-bar');
+        if (bar) bar.style.width = bar.dataset.target + '%';
+      }, 400 + i * 120);
+    }
+
+    card.addEventListener('click', () => filterIncidentLog(member.login));
+    grid.appendChild(card);
+  });
+
+  posterWall.appendChild(grid);
+  wall.appendChild(posterWall);
+
+  // ── RIGHT: INCIDENT LOG ──
+  const logPanel = document.createElement('div');
+  logPanel.className = 'incident-log-panel';
+
+  logPanel.innerHTML = `
+    <div class="log-header">
+      <svg width="14" height="14" viewBox="0 0 14 14">
+        <rect x="2" y="1" width="10" height="12" rx="1" fill="none" stroke="currentColor" stroke-width="1.2"/>
+        <line x1="4" y1="4.5" x2="10" y2="4.5" stroke="currentColor" stroke-width="0.7"/>
+        <line x1="4" y1="6.5" x2="10" y2="6.5" stroke="currentColor" stroke-width="0.7"/>
+        <line x1="4" y1="8.5" x2="8" y2="8.5" stroke="currentColor" stroke-width="0.7"/>
+      </svg>
+      <span class="log-title">SHIP'S LOG — INCIDENT REPORTS</span>
+      <span class="log-filter-hint" id="log-filter-label">All crew</span>
+    </div>
+    <div class="incident-feed" id="incident-feed"></div>
+  `;
+
+  wall.appendChild(logPanel);
+  crewList.appendChild(wall);
+
+  buildIncidentFeed(crew, d, null);
+
+  function showCaptainsBrief(member, data) {
+    const existing = document.getElementById('captains-brief-modal');
+    if (existing) existing.remove();
+
+    const todayBrief = new Date().toLocaleDateString('en-GB', { day:'numeric', month:'long', year:'numeric' });
+    const briefContent = (member, today) => {
+      const worstPkg = member.packages.reduce((a, b) =>
+        ((a.days_exposed || a.days || 0) > (b.days_exposed || b.days || 0)) ? a : b,
+        member.packages[0] || {}
+      );
+      const safeList = member.packages
+        .filter(p => p.actionability === 'SAFE')
+        .slice(0, 3)
+        .map(p => `  • ${p.name} (${p.version || '?'} → ${p.fix_version || 'fix available'})`)
+        .join('\n');
+      const breakingList = member.packages
+        .filter(p => p.actionability === 'BREAKING')
+        .slice(0, 4)
+        .map(p => `  • ${p.name} (${p.days_exposed || p.days || 0}d · ${p.version || '?'} → ${p.fix_version || 'see OSV'})`)
+        .join('\n');
+      return `TO: Engineering Leadership
+FROM: DriftWatch Security Intelligence
+DATE: ${today}
+RE: Dependency Risk Summary — @${member.login}
+CLASSIFICATION: Internal · Security Sensitive
+
+EXECUTIVE SUMMARY
+
+@${member.login} is the primary maintainer for ${member.packages.length} dependencies currently carrying known security vulnerabilities. Combined exposure across owned packages totals ${member.totalDays.toLocaleString()} days.
+
+IMMEDIATE ACTIONS AVAILABLE (Low Engineering Effort)
+${safeList || '  None identified — all fixes require migration planning'}
+
+PLANNED REMEDIATION REQUIRED (Requires Sprint Planning)
+${breakingList || '  None'}
+
+RISK CONTEXT
+
+The longest single exposure is ${worstPkg.name || 'unknown'} at ${(worstPkg.days_exposed || worstPkg.days || 0).toLocaleString()} days. ${member.safeIgnored > 0 ? `${member.safeIgnored} fix${member.safeIgnored > 1 ? 'es require' : ' requires'} only a version bump — these can be resolved within the current sprint with minimal risk.` : 'All fixes require major version migration planning.'}
+
+INTELLIGENCE SOURCES
+
+This brief was generated by DriftWatch using cross-source SQL joins via Coral:
+GitHub SBOM × OSV Vulnerability DB × deps.dev × OpenSSF Scorecard × GitHub commit history
+
+All data reflects live repository state as of ${today}.`;
+    };
+
+    const enterpriseModal = document.createElement('div');
+    enterpriseModal.id = 'captains-brief-modal';
+    enterpriseModal.style.cssText = 'position:fixed;inset:0;z-index:9999;background:rgba(6,20,32,0.92);display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px)';
+    enterpriseModal.innerHTML = `
+      <div style="background:linear-gradient(135deg,#071828,#0a2035);border:1px solid rgba(200,168,75,0.4);border-radius:6px;padding:32px 36px;max-width:640px;width:90%;font-family:var(--mono);position:relative">
+        <div class="corner-ornament tl"></div>
+        <div class="corner-ornament tr"></div>
+        <div class="corner-ornament bl"></div>
+        <div class="corner-ornament br"></div>
+        <div style="font-size:11px;letter-spacing:0.3em;color:var(--text3);margin-bottom:4px">CAPTAIN'S BRIEF — CONFIDENTIAL</div>
+        <div style="height:1px;background:linear-gradient(90deg,transparent,rgba(200,168,75,0.3),transparent);margin:8px 0 20px"></div>
+        <div id="brief-text-content" style="font-size:12px;color:var(--text);line-height:1.8;white-space:pre-line">${briefContent(member, todayBrief)}</div>
+        <div style="height:1px;background:linear-gradient(90deg,transparent,rgba(200,168,75,0.2),transparent);margin:16px 0"></div>
+        <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:16px">
+          <button id="copy-brief-btn" onclick="copyBriefContent()" style="background:rgba(0,255,136,0.08);border:1px solid rgba(0,255,136,0.3);color:var(--neon-green);font-family:var(--mono);font-size:11px;padding:8px 20px;border-radius:4px;cursor:pointer;letter-spacing:0.1em">⎘ COPY BRIEF</button>
+          <button onclick="document.getElementById('captains-brief-modal').remove()" style="background:rgba(200,168,75,0.08);border:1px solid rgba(200,168,75,0.3);color:var(--gold);font-family:var(--mono);font-size:11px;padding:8px 20px;border-radius:4px;cursor:pointer;letter-spacing:0.1em">DISMISS ✕</button>
         </div>
       </div>
     `;
-  }).join('');
+    enterpriseModal.addEventListener('click', e => {
+      if (e.target === enterpriseModal) enterpriseModal.remove();
+    });
+    document.body.appendChild(enterpriseModal);
+    return;
+
+    const modal = document.createElement('div');
+    modal.id = 'captains-brief-modal';
+    modal.style.cssText = `
+      position:fixed;inset:0;z-index:9999;
+      background:rgba(6,20,32,0.92);
+      display:flex;align-items:center;justify-content:center;
+      backdrop-filter:blur(4px);
+    `;
+
+    const today = new Date().toLocaleDateString('en-GB', { day:'numeric', month:'long', year:'numeric' });
+    const pkgList = member.packages.slice(0, 6)
+      .map(p => `  • ${p.name}@${p.version || '?'} — ${p.days_exposed || 0} days exposed`)
+      .join('\n');
+
+    modal.innerHTML = `
+      <div style="
+        background: linear-gradient(135deg, #071828, #0a2035);
+        border: 1px solid rgba(200,168,75,0.4);
+        border-radius: 6px;
+        padding: 32px 36px;
+        max-width: 520px;
+        width: 90%;
+        font-family: var(--mono);
+        position: relative;
+      ">
+        <div class="corner-ornament tl"></div>
+        <div class="corner-ornament tr"></div>
+        <div class="corner-ornament bl"></div>
+        <div class="corner-ornament br"></div>
+
+        <div style="font-size:11px;letter-spacing:0.3em;color:var(--text3);margin-bottom:4px">⚓ CAPTAIN'S BRIEF — CONFIDENTIAL</div>
+        <div style="height:1px;background:linear-gradient(90deg,transparent,rgba(200,168,75,0.3),transparent);margin:8px 0 20px"></div>
+
+        <div style="font-size:11px;color:var(--text2);line-height:1.8">
+          <div><strong style="color:var(--gold)">TO:</strong> Engineering Leadership</div>
+          <div><strong style="color:var(--gold)">FROM:</strong> DriftWatch Security Intelligence</div>
+          <div><strong style="color:var(--gold)">DATE:</strong> ${today}</div>
+          <div><strong style="color:var(--gold)">RE:</strong> Accountability — @${member.login}</div>
+        </div>
+
+        <div style="height:1px;background:linear-gradient(90deg,transparent,rgba(200,168,75,0.2),transparent);margin:16px 0"></div>
+
+        <div style="font-size:12px;color:var(--text);line-height:1.8;white-space:pre-line">@${member.login} is accountable for <span style="color:var(--neon-red);font-weight:700">${member.totalDays.toLocaleString()} combined days</span> of supply-chain exposure across <strong>${member.packages.length} packages</strong>.
+
+${member.safeIgnored > 0 ? `⚠ ${member.safeIgnored} SAFE upgrade${member.safeIgnored > 1 ? 's were' : ' was'} available but not applied — no technical blocker existed.
+
+` : ''}Packages under accountability:
+${pkgList}
+
+<span style="color:var(--text2);font-size:11px">Intelligence sourced via Coral SQL across GitHub SBOM × OSV × deps.dev × OpenSSF Scorecard</span></div>
+
+        <div style="height:1px;background:linear-gradient(90deg,transparent,rgba(200,168,75,0.2),transparent);margin:16px 0"></div>
+
+        <button onclick="document.getElementById('captains-brief-modal').remove()" style="
+          background:rgba(200,168,75,0.1);border:1px solid rgba(200,168,75,0.3);
+          color:var(--gold);font-family:var(--mono);font-size:11px;
+          padding:8px 20px;border-radius:4px;cursor:pointer;
+          letter-spacing:0.1em;float:right;
+        ">DISMISS ✕</button>
+      </div>
+    `;
+
+    modal.addEventListener('click', e => {
+      if (e.target === modal) modal.remove();
+    });
+    document.body.appendChild(modal);
+  }
+
+  window._showCaptainsBrief = showCaptainsBrief;
+}
+
+function copyBriefContent() {
+  const briefText = document.getElementById('brief-text-content')?.innerText;
+  if (!briefText) return;
+  navigator.clipboard.writeText(briefText).then(() => {
+    const btn = document.getElementById('copy-brief-btn');
+    if (btn) {
+      btn.textContent = '✓ COPIED';
+      btn.style.color = 'var(--neon-green)';
+      setTimeout(() => {
+        btn.textContent = '⎘ COPY BRIEF';
+      }, 2000);
+    }
+  });
+}
+
+function buildIncidentFeed(crew, d, filterLogin) {
+  const feed = document.getElementById('incident-feed');
+  const filterLabel = document.getElementById('log-filter-label');
+  if (!feed) return;
+  if (filterLabel) filterLabel.textContent = filterLogin ? '@' + filterLogin : 'All crew';
+
+  feed.innerHTML = '';
+
+  const incidents = [];
+  crew.forEach(member => {
+    if (filterLogin && member.login !== filterLogin) return;
+    member.packages.forEach(pkg => {
+      incidents.push({ member, pkg });
+    });
+  });
+
+  incidents.sort((a, b) => (b.pkg.days_exposed || 0) - (a.pkg.days_exposed || 0));
+
+  if (incidents.length === 0) {
+    feed.innerHTML = '<div style="padding:20px;text-align:center;font-family:var(--mono);font-size:11px;color:var(--text3)">No incidents on record.</div>';
+    return;
+  }
+
+  incidents.forEach(({ member, pkg }, idx) => {
+    const isBreaking = pkg.actionability === 'BREAKING' || pkg.actionability == null;
+    const days = pkg.days_exposed || 0;
+    const since = new Date(Date.now() - days * 86400000)
+      .toLocaleDateString('en-GB', { month: 'short', year: 'numeric' });
+
+    const fixNote = pkg.fix_version && pkg.fix_version !== '?'
+      ? `Fix available: ${pkg.fix_version} — ignored`
+      : 'No fix listed';
+
+    const entry = document.createElement('div');
+    entry.className = `incident-entry ${isBreaking ? 'breaking' : 'safe'}${filterLogin ? ' highlighted' : ''}`;
+    entry.style.animationDelay = (idx * 40) + 'ms';
+
+    entry.innerHTML = `
+      <div class="incident-pkg">${pkg.name}<span style="color:var(--text3);font-size:10px"> @${pkg.version || '?'}</span></div>
+      <div class="incident-days">
+        <span style="color:${isBreaking ? 'var(--neon-red)' : 'var(--neon-green)'}">
+          ${days.toLocaleString()} days
+        </span>
+      </div>
+      <div class="incident-since">
+        ${telescopeSVG()} Since ${since} · ${pkg.actionability || 'UNKNOWN'}
+      </div>
+      <div class="incident-fix">${fixNote}</div>
+      <div class="incident-owner">@${member.login}</div>
+      <div class="coral-source-badge">
+        <span class="coral-dot"></span>
+        Coral × OSV × GitHub
+      </div>
+    `;
+
+    feed.appendChild(entry);
+  });
+}
+
+function filterIncidentLog(login) {
+  const d = window.currentData;
+  if (!d) return;
+  const crew = buildCrewMap(d);
+
+  const currentFilter = document.getElementById('log-filter-label')?.textContent;
+  const newFilter = currentFilter === '@' + login ? null : login;
+
+  document.querySelectorAll('.poster').forEach(p => {
+    if (p.dataset.login === login && newFilter) {
+      p.style.borderColor = 'rgba(200,168,75,0.6)';
+      p.style.boxShadow = '0 0 24px rgba(200,168,75,0.12)';
+    } else {
+      p.style.borderColor = '';
+      p.style.boxShadow = '';
+    }
+  });
+
+  buildIncidentFeed(crew, d, newFilter);
 }
 
 window.copyTicket = function(id, btn) {
   const text = document.getElementById(id).innerText;
   navigator.clipboard.writeText(text).then(() => {
     const orig = btn.textContent;
-    btn.textContent = '⚓ Copied!';
+    btn.textContent = 'âš“ Copied!';
     btn.classList.add('copied');
     setTimeout(() => {
       btn.textContent = orig;
       btn.classList.remove('copied');
     }, 2000);
   }).catch(() => {
-    btn.textContent = '✗ Copy failed';
-    setTimeout(() => { btn.textContent = '⎘ Copy to Clipboard'; }, 2000);
+    btn.textContent = 'âœ— Copy failed';
+    setTimeout(() => { btn.textContent = 'âŽ˜ Copy to Clipboard'; }, 2000);
   });
 };
 
@@ -2396,7 +5275,7 @@ function renderQueries(d) {
 FROM (SELECT unnest(json_get_array(sbom__packages)) AS pkg
       FROM github.sbom
       WHERE owner='${d.owner}' AND repo='${d.repo}')`,
-      note: 'Unpacks the GitHub-generated SBOM (SPDX format) into one row per package. Native Coral table — no scraping, no rate-limit games.'
+      note: 'Unpacks the GitHub-generated SBOM (SPDX format) into one row per package. Native Coral table â€” no scraping, no rate-limit games.'
     },
     {
       name: 'Vulnerability Check',
@@ -2407,7 +5286,7 @@ FROM osv.query_by_version
 WHERE ecosystem='npm'
   AND package_name='braces'
   AND version='2.3.2'`,
-      note: 'OSV requires constant filters — cannot dynamic-join. scan.py loops per package in Python while Coral handles the cross-source query.'
+      note: 'OSV requires constant filters â€” cannot dynamic-join. scan.py loops per package in Python while Coral handles the cross-source query.'
     },
     {
       name: 'Pre-CVE Canary',
@@ -2439,7 +5318,7 @@ FROM github.search_commits(q => 'repo:${d.owner}/${d.repo} package.json');`,
        date_added, known_ransomware_campaign_use
 FROM kev.vulns
 WHERE cve_id IN (SELECT cve_id FROM scan_results)`,
-      note: 'CISA Known Exploited Vulnerabilities — if a CVE is on this list, it\'s being actively used in attacks. Custom Coral source contributed by this project.'
+      note: 'CISA Known Exploited Vulnerabilities â€” if a CVE is on this list, it\'s being actively used in attacks. Custom Coral source contributed by this project.'
     },
   ];
 
@@ -2468,7 +5347,7 @@ WHERE cve_id IN (SELECT cve_id FROM scan_results)`,
   `).join('');
 }
 
-// ── Urgency ring ──────────────────────────────────────────────────────
+// â”€â”€ Urgency ring â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function urgencyRing(score) {
   const radius = 20;
   const circumference = 2 * Math.PI * radius;
@@ -2496,7 +5375,7 @@ function urgencyRing(score) {
     </div>`;
 }
 
-// ── Radar blip spawning ───────────────────────────────────────────────
+// â”€â”€ Radar blip spawning â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 let blipInterval = null;
 function spawnRadarBlip() {
   const container = document.getElementById('radar-blips');
@@ -2539,7 +5418,7 @@ function hideRadarOverlay() {
   stopRadarBlips();
 }
 
-// ── Animations ────────────────────────────────────────────────────────
+// â”€â”€ Animations â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function animateCountUp(el, target, duration) {
   const start = performance.now();
   const startVal = 0;
@@ -2552,7 +5431,7 @@ function animateCountUp(el, target, duration) {
   requestAnimationFrame(tick);
 }
 
-// ── Scan flow ─────────────────────────────────────────────────────────
+// â”€â”€ Scan flow â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 async function startScan(ev) {
   ev.preventDefault();
   const val = document.getElementById('repoInput').value.trim();
@@ -2566,7 +5445,7 @@ async function startScan(ev) {
 
   document.getElementById('scanBtn').disabled = true;
   showRadarOverlay(owner, repo);
-  updateRadarOverlay('Starting scan…', 1);
+  updateRadarOverlay('Starting scanâ€¦', 1);
 
   try {
     const r = await fetch('/api/scan', {
@@ -2587,11 +5466,11 @@ async function startScan(ev) {
 }
 
 function nauticalMsg(pct) {
-  if (pct < 30) return 'Charting the waters — fetching SBOM…';
-  if (pct < 60) return 'Scanning the depths — checking OSV vulnerabilities…';
-  if (pct < 85) return 'Running canary sweep — checking deps.dev…';
-  if (pct < 100) return 'Mapping the crew — tracing ownership…';
-  return 'All hazards charted ⚓';
+  if (pct < 30) return 'Charting the waters â€” fetching SBOMâ€¦';
+  if (pct < 60) return 'Scanning the depths â€” checking OSV vulnerabilitiesâ€¦';
+  if (pct < 85) return 'Running canary sweep â€” checking deps.devâ€¦';
+  if (pct < 100) return 'Mapping the crew â€” tracing ownershipâ€¦';
+  return 'All hazards charted âš“';
 }
 
 async function pollJob(jobId) {
@@ -2602,7 +5481,7 @@ async function pollJob(jobId) {
     updateRadarOverlay(j.message || nauticalMsg(j.progress), j.progress);
 
     if (j.status === 'complete') {
-      updateRadarOverlay('All hazards charted ⚓', 100);
+      updateRadarOverlay('All hazards charted âš“', 100);
       setTimeout(async () => {
         hideRadarOverlay();
         document.getElementById('scanBtn').disabled = false;
@@ -2610,7 +5489,7 @@ async function pollJob(jobId) {
           const data = await fetchResults(state.owner, state.repo, false);
           state.data = data;
           renderAll();
-          setLiveStatus(`LIVE DATA · ${new Date().toLocaleTimeString()}`);
+          setLiveStatus(`LIVE DATA Â· ${new Date().toLocaleTimeString()}`);
         } catch (e) {
           showToast('Scan complete but results fetch failed: ' + e.message);
         }
@@ -2629,7 +5508,7 @@ async function pollJob(jobId) {
   }
 }
 
-// ── UI utilities ──────────────────────────────────────────────────────
+// â”€â”€ UI utilities â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function showProgress(msg, pct) {
   document.getElementById('progressOverlay').classList.add('show');
   document.getElementById('progressMsg').textContent = msg;
@@ -2650,22 +5529,317 @@ function setLiveStatus(s) {
   document.getElementById('liveStatus').textContent = s;
 }
 
-// ── Boot ──────────────────────────────────────────────────────────────
+// â”€â”€ Boot â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 (async function init() {
-  setLiveStatus('LIVE DATA · loading…');
+  setLiveStatus('LIVE DATA Â· loadingâ€¦');
   try {
     const data = await fetchResults('jellyfin', 'jellyfin-web', true);
     state.data = data;
     state.owner = data.owner;
     state.repo = data.repo;
     renderAll();
-    setLiveStatus(`LIVE DATA · demo · ${new Date().toLocaleTimeString()}`);
+    setLiveStatus(`LIVE DATA Â· demo Â· ${new Date().toLocaleTimeString()}`);
   } catch (e) {
     showToast('Initial load failed: ' + e.message);
-    setLiveStatus('LIVE DATA · offline');
+    setLiveStatus('LIVE DATA Â· offline');
   }
 })();
 </script>
-<div class="ocean-floor"></div>
+<script>
+// â”€â”€ Ask the Watch â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+(function() {
+  let watchHistory = [];
+  let watchInitialized = false;
+  let watchCurrentRepo = null;
+
+  function getData() { return window.currentData || null; }
+  function repoKey() {
+    const d = getData();
+    return d ? (d.owner + '/' + d.repo) : null;
+  }
+  function maybeResetForNewRepo() {
+    const r = repoKey();
+    if (r && r !== watchCurrentRepo) {
+      watchCurrentRepo = r;
+      watchHistory = [];
+      watchInitialized = false;
+    }
+  }
+
+  function escapeHtml(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, c => (
+      {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]
+    ));
+  }
+
+  function buildGreetingText() {
+    const d = getData();
+    if (!d) return 'Load a repository first to activate the Watch.';
+    const scan = d.scan || [];
+    const N = scan.length;
+    const X = scan.reduce((m, p) => Math.max(m, p.worst_days_exposed || 0), 0);
+    const ownerSet = new Set();
+    (d.ownership || []).forEach(o => {
+      (o.owners || []).forEach(name => {
+        if (!/\[bot\]/i.test(name)) ownerSet.add(name);
+      });
+    });
+    const Y = ownerSet.size;
+    return 'â—Ž WATCH OFFICER ONLINE\n'
+         + 'Intelligence loaded: ' + d.owner + '/' + d.repo + '\n'
+         + N + ' vulnerable packages Â· ' + X + ' days worst exposure Â· ' + Y + ' crew members identified\n'
+         + 'Ask me anything about your supply chain.';
+  }
+
+  function makeBubble(role, text) {
+    const wrap = document.createElement('div');
+    wrap.className = 'atw-bubble atw-bubble-' + (role === 'user' ? 'user' : 'assistant');
+    const label = document.createElement('span');
+    label.className = 'atw-bubble-label';
+    label.textContent = role === 'user' ? 'YOU Â·' : 'â—Ž WATCH Â·';
+    const body = document.createElement('div');
+    body.className = 'atw-bubble-body';
+    body.innerHTML = escapeHtml(text).replace(/\n/g, '<br>');
+    wrap.appendChild(label);
+    wrap.appendChild(body);
+    return wrap;
+  }
+
+  function addBubble(role, text) {
+    const container = document.getElementById('watchChatMessages');
+    if (!container) return;
+    container.appendChild(makeBubble(role, text));
+    container.scrollTop = container.scrollHeight;
+  }
+
+  function addThinkingBubble() {
+    const container = document.getElementById('watchChatMessages');
+    if (!container) return;
+    const wrap = document.createElement('div');
+    wrap.className = 'atw-bubble atw-bubble-assistant atw-bubble-thinking';
+    wrap.id = 'watchThinking';
+    const label = document.createElement('span');
+    label.className = 'atw-bubble-label';
+    label.textContent = 'â—Ž WATCH Â·';
+    const dots = document.createElement('div');
+    dots.className = 'atw-thinking-dots';
+    dots.innerHTML = '<span>â€¢</span><span>â€¢</span><span>â€¢</span>';
+    wrap.appendChild(label);
+    wrap.appendChild(dots);
+    container.appendChild(wrap);
+    container.scrollTop = container.scrollHeight;
+  }
+
+  function removeThinkingBubble() {
+    const el = document.getElementById('watchThinking');
+    if (el) el.remove();
+  }
+
+  function renderGreeting() {
+    const container = document.getElementById('watchChatMessages');
+    if (!container) return;
+    container.innerHTML = '';
+    container.appendChild(makeBubble('assistant', buildGreetingText()));
+  }
+
+  function buildSystemPrompt() {
+    const d = getData();
+    if (!d) {
+      return 'You are the Watch Officer of DriftWatch. No repository intelligence is currently loaded. Ask the user to load a repository first before answering any questions.';
+    }
+    const owner = d.owner;
+    const repo = d.repo;
+    const scan = d.scan || [];
+    const sweep = d.sweep || {};
+    const ownership = d.ownership || [];
+
+    // Package name â†’ owner logins
+    const ownerMap = {};
+    ownership.forEach(o => {
+      ownerMap[String(o.package || '').toLowerCase()] = (o.owners || []).filter(n => !/\[bot\]/i.test(n));
+    });
+
+    // Most-severe upgrade row per package
+    const upgradeMap = {};
+    (sweep.upgrade_actionability || []).forEach(u => {
+      const k = u.name;
+      if (!upgradeMap[k] || (u.days_exposed || 0) > (upgradeMap[k].days_exposed || 0)) {
+        upgradeMap[k] = u;
+      }
+    });
+
+    const pkgLines = scan.map(p => {
+      const days = p.worst_days_exposed || 0;
+      const cveCount = (p.cves || []).length;
+      const ug = upgradeMap[p.name];
+      const fix = (ug && ug.fixed_version) || (p.cves && p.cves[0] && p.cves[0].fixed_in) || '?';
+      const action = (ug && ug.actionability) || 'BREAKING';
+      const owners = ownerMap[String(p.name).toLowerCase()] || [];
+      const ownerStr = owners.length ? owners.join(', ') : 'unowned';
+      return '- ' + p.name + ' v' + (p.version || '?') + ': ' + days + 'd exposed, ' + cveCount + ' CVEs, ' + action + ' fix â†’ ' + fix + ', owners: ' + ownerStr;
+    }).join('\n');
+
+    const crewMap = {};
+    ownership.forEach(o => {
+      (o.owners || []).filter(n => !/\[bot\]/i.test(n)).forEach(name => {
+        if (!crewMap[name]) crewMap[name] = [];
+        crewMap[name].push(o.package);
+      });
+    });
+    const ownerLines = Object.keys(crewMap).map(n => '- @' + n + ': responsible for ' + crewMap[n].join(', ')).join('\n');
+
+    const preCve = (sweep.pre_cve_findings || []).filter(f => f.has_security_deprecation);
+    const preCveLines = preCve.length
+      ? preCve.map(f => {
+          const dep = (f.security_deprecations && f.security_deprecations[0]) || {};
+          return '- ' + f.name + ' v' + (f.installed_version || '?') + ': deprecated ' + (dep.days_ago != null ? dep.days_ago + 'd' : '?') + ' ago â€” "' + (dep.reason || '') + '"';
+        }).join('\n')
+      : 'None detected';
+
+    return 'You are the Watch Officer of DriftWatch â€” a supply-chain security intelligence agent. You are speaking to a security engineer about the repository ' + owner + '/' + repo + '.\n\n'
+         + 'Speak with the authority of a ship\'s navigator: precise, urgent, no filler. Use nautical metaphors sparingly and only when they land naturally. Always end your response with one concrete recommended action.\n\n'
+         + 'You have full intelligence on this repository:\n\n'
+         + 'VULNERABLE PACKAGES (' + scan.length + ' total):\n'
+         + (pkgLines || '(none)') + '\n\n'
+         + 'CREW ACCOUNTABILITY:\n'
+         + (ownerLines || '(none mapped)') + '\n\n'
+         + 'PRE-CVE SIGNALS:\n'
+         + preCveLines + '\n\n'
+         + 'Answer questions about risk, ownership, prioritization, and remediation using only this data. Be specific with names, numbers, and days. Never make up data not in the above.';
+  }
+
+  async function sendMessage() {
+    const input = document.getElementById('watchInput');
+    const btn = document.getElementById('watchSendBtn');
+    if (!input || !btn) return;
+    const text = input.value.trim();
+    if (!text) return;
+
+    if (!getData()) {
+      addBubble('assistant', 'Load a repository first â€” I need intelligence data before I can chart a course.');
+      return;
+    }
+
+    maybeResetForNewRepo();
+
+    addBubble('user', text);
+    input.value = '';
+    input.disabled = true;
+    btn.disabled = true;
+    addThinkingBubble();
+
+    watchHistory.push({ role: 'user', content: text });
+
+    try {
+      const response = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          system: buildSystemPrompt(),
+          messages: watchHistory
+        })
+      });
+      const data = await response.json();
+      removeThinkingBubble();
+      if (!response.ok) {
+        const detail = data && data.detail ? data.detail : 'Unknown backend error';
+        const msg = typeof detail === 'string'
+          ? detail
+          : (detail.error && detail.error.message) || JSON.stringify(detail);
+        addBubble('assistant', 'âš  Signal lost â€” ' + msg);
+      } else if (!data || !data.content) {
+        addBubble('assistant', 'âš  Signal lost â€” no answer came back from the intelligence layer.');
+      } else {
+        const reply = data.content;
+        watchHistory.push({ role: 'assistant', content: reply });
+        addBubble('assistant', reply);
+      }
+    } catch (e) {
+      removeThinkingBubble();
+      addBubble('assistant', 'âš  Signal lost â€” could not reach the intelligence layer. Check your connection and try again.');
+    } finally {
+      input.disabled = false;
+      btn.disabled = false;
+      input.focus();
+    }
+  }
+
+  function wire() {
+    document.querySelectorAll('#watchPills .atw-pill').forEach(p => {
+      p.addEventListener('click', () => {
+        const input = document.getElementById('watchInput');
+        if (input) { input.value = p.textContent.trim(); input.focus(); }
+      });
+    });
+    const btn = document.getElementById('watchSendBtn');
+    if (btn) btn.addEventListener('click', sendMessage);
+    const input = document.getElementById('watchInput');
+    if (input) input.addEventListener('keydown', e => {
+      if (e.key === 'Enter') { e.preventDefault(); sendMessage(); }
+    });
+    renderGreeting();
+  }
+
+  // Screen activation hook â€” called from the navAskWatch click listener above
+  window.initWatchOnNav = function() {
+    const r = repoKey();
+    if (r && r !== watchCurrentRepo) {
+      // New repo loaded since last visit â€” wipe state and re-greet
+      watchCurrentRepo = r;
+      watchHistory = [];
+      watchInitialized = false;
+    }
+    if (getData() && !watchInitialized) {
+      renderGreeting();
+      watchInitialized = true;
+    }
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', wire);
+  } else {
+    wire();
+  }
+})();
+</script>
+<div class="bioluminescence" aria-hidden="true"></div>
+<div class="ocean-floor" aria-hidden="true">
+  <svg class="ocean-waves" viewBox="0 0 1440 120"
+       preserveAspectRatio="none"
+       xmlns="http://www.w3.org/2000/svg">
+    <path class="wave wave-back"
+      d="M0,60 C180,20 360,100 540,60 C720,20 900,100 1080,60
+         C1260,20 1380,80 1440,60 L1440,120 L0,120 Z"
+      fill="rgba(0,60,80,0.4)"/>
+    <path class="wave wave-mid"
+      d="M0,70 C200,30 400,110 600,70 C800,30 1000,110 1200,70
+         C1350,40 1420,85 1440,70 L1440,120 L0,120 Z"
+      fill="rgba(0,80,100,0.3)"/>
+    <path class="wave wave-front"
+      d="M0,80 C150,50 300,110 450,80 C600,50 750,110 900,80
+         C1050,50 1200,110 1350,80 L1440,85 L1440,120 L0,120 Z"
+      fill="rgba(6,20,32,0.95)"/>
+  </svg>
+  <div class="wave-foam" aria-hidden="true"></div>
+</div>
+<script>
+(function() {
+  var parrot = document.getElementById('sidebarParrot');
+  var bubble = document.getElementById('parrotBubble');
+  if (!parrot || !bubble) return;
+  var hideTimer = null;
+  parrot.addEventListener('click', function() {
+    var n = (window.currentData && Array.isArray(window.currentData.scan))
+      ? window.currentData.scan.length
+      : 'unknown';
+    bubble.textContent = 'Squawk! ' + n + ' hazards in these waters! âš“';
+    bubble.classList.add('visible');
+    if (hideTimer) clearTimeout(hideTimer);
+    hideTimer = setTimeout(function() {
+      bubble.classList.remove('visible');
+    }, 3000);
+  });
+})();
+</script>
 </body>
 </html>

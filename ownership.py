@@ -80,6 +80,30 @@ def find_committers_for_package(owner, repo, package_name):
     return unique
 
 
+def find_manifest_touches(owner, repo, manifest_path="package.json"):
+    """Find recent human touches to the dependency manifest."""
+    query = (
+        "SELECT author_login, message, commit__author__date, html_url "
+        "FROM github.search_commits("
+        f"q => 'repo:{owner}/{repo} path:{manifest_path}') LIMIT 25"
+    )
+    rows = run_coral(query)
+    touches = []
+    for r in rows:
+        login = r.get("author_login")
+        if not login or "[bot]" in login.lower():
+            continue
+        touches.append({
+            "author_login": login,
+            "manifest_path": manifest_path,
+            "committed_at": r.get("commit__author__date") or r.get("author_date") or r.get("committed_at"),
+            "message": r.get("message", ""),
+            "html_url": r.get("html_url", "")
+        })
+    touches.sort(key=lambda r: r.get("committed_at") or "", reverse=True)
+    return touches
+
+
 def get_top_contributors(owner, repo):
     """Get top contributors for cross-reference."""
     return run_coral(
@@ -196,6 +220,12 @@ def main():
             print("→ owner not found")
 
         file_paths = [f.get("path", "") for f in files[:3]]
+        manifest_path = next(
+            (p for p in file_paths if p.endswith(("package.json", "package-lock.json", "yarn.lock", "pnpm-lock.yaml"))),
+            "package.json"
+        )
+        manifest_touches = find_manifest_touches(args.owner, args.repo, manifest_path)
+        time.sleep(args.delay)
 
         # Determine actionability (simplified — sweep.py has full version)
         from sweep import upgrade_actionability
@@ -214,6 +244,8 @@ def main():
             "actionability": actionability,
             "files": file_paths,
             "owners": top_owners,
+            "manifest_path": manifest_path,
+            "manifest_touches": manifest_touches,
             "ticket_text": ticket,
         })
 

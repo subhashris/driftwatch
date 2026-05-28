@@ -28,6 +28,7 @@ from typing import Optional
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import FileResponse, JSONResponse
 from pydantic import BaseModel
+import httpx
 
 
 # ── Paths ────────────────────────────────────────────────────────────────────
@@ -39,6 +40,39 @@ OUTPUT_DIR.mkdir(exist_ok=True)
 DEMO_DIR = PROJECT_ROOT / "demo_data"
 
 CORAL_BIN_DIR = Path(os.environ["USERPROFILE"]) / ".local" / "bin" if "USERPROFILE" in os.environ else None
+
+
+def get_config_value(name: str) -> tuple[Optional[str], Optional[str]]:
+    value = os.environ.get(name)
+    if value:
+        return value, "process"
+
+    for env_path in (PROJECT_ROOT / ".env.local", PROJECT_ROOT / ".env"):
+        if not env_path.exists():
+            continue
+        for raw_line in env_path.read_text(encoding="utf-8").splitlines():
+            line = raw_line.strip()
+            if not line or line.startswith("#") or "=" not in line:
+                continue
+            key, raw_value = line.split("=", 1)
+            if key.strip() != name:
+                continue
+            value = raw_value.strip().strip('"').strip("'")
+            if value:
+                return value, env_path.name
+
+    if os.name == "nt":
+        try:
+            import winreg
+
+            with winreg.OpenKey(winreg.HKEY_CURRENT_USER, "Environment") as key:
+                value, _ = winreg.QueryValueEx(key, name)
+            if value:
+                return str(value), "windows-user-env"
+        except OSError:
+            pass
+
+    return None, None
 
 
 def subprocess_env() -> dict:
@@ -308,10 +342,59 @@ def get_results(owner: str, repo: str, demo: bool = False):
 
 @app.get("/api/health")
 def health():
+    _, groq_source = get_config_value("GROQ_API_KEY")
     return {
         "ok": True,
         "python": sys.version.split()[0],
         "project_root": str(PROJECT_ROOT),
         "output_dir": str(OUTPUT_DIR),
         "coral_on_path": bool(CORAL_BIN_DIR and CORAL_BIN_DIR.exists()),
+        "groq_configured": bool(groq_source),
+        "groq_source": groq_source,
     }
+
+@app.post("/api/chat")
+async def chat(req: dict):
+    api_key, api_key_source = get_config_value("GROQ_API_KEY")
+    if not api_key:
+        raise HTTPException(
+            status_code=500,
+            detail="GROQ_API_KEY was not found in the process env, .env.local, .env, or Windows user environment. Set it and restart uvicorn.",
+        )
+
+    try:
+        system_prompt = req["system"]
+        messages = req["messages"]
+    except KeyError as exc:
+        raise HTTPException(status_code=400, detail=f"Missing chat field: {exc.args[0]}") from exc
+
+    try:
+        async with httpx.AsyncClient(timeout=60) as client:
+            r = await client.post(
+                "https://api.groq.com/openai/v1/chat/completions",
+                headers={
+                    "Authorization": f"Bearer {api_key}",
+                    "Content-Type": "application/json",
+                },
+                json={
+                    "model": get_config_value("GROQ_MODEL")[0] or "llama-3.3-70b-versatile",
+                    "messages": [
+                        {"role": "system", "content": system_prompt},
+                        *messages,
+                    ],
+                    "max_tokens": 1000,
+                },
+            )
+            r.raise_for_status()
+    except httpx.HTTPStatusError as exc:
+        try:
+            detail = exc.response.json()
+        except ValueError:
+            detail = exc.response.text
+        raise HTTPException(status_code=exc.response.status_code, detail=detail) from exc
+    except httpx.HTTPError as exc:
+        raise HTTPException(status_code=502, detail=f"Could not reach Groq: {exc}") from exc
+
+    data = r.json()
+    content = data.get("choices", [{}])[0].get("message", {}).get("content")
+    return {"content": content, "provider": "groq", "api_key_source": api_key_source, "raw": data}
