@@ -3980,87 +3980,134 @@ function renderTI2Deck(packages) {
     `<option value="${i}">${escape(p.package)}  —  ${ti2Weeks(p.days_exposed)} weeks  ·  ${p.actionability}</option>`
   ).join('');
 
-  const visible = packages.slice(0, 12);
-  const fanSpread = (visible.length - 1) * 19;
-  const cards = visible.map((p, i) => {
-    const angle = ti2SeededAngle(p.package);
-    const offsetX = i * 38;
-    const badgeColor = p.actionability === 'BREAKING' ? '#FF4444' : p.actionability === 'SAFE' ? '#00FF88' : '#FFB347';
-    const preMarker = p.pre_cve ? '<span class="ti2p-precve-dot" title="Pre-CVE signal">&#9679;</span>' : '';
-    return `<div class="ti2p-card" data-idx="${i}" style="--angle:${angle}deg;--offset:${offsetX}px;--z:${visible.length - i}">
-      <div class="ti2p-card-inner">
-        ${preMarker}
-        <div class="ti2p-card-name" title="${escape(p.package)}">${escape(p.package)}</div>
-        <div class="ti2p-card-weeks">${ti2Weeks(p.days_exposed)}<span>weeks exposed</span></div>
-        <div class="ti2p-card-badge" style="color:${badgeColor};border-color:${badgeColor}">${p.actionability}</div>
-      </div>
+  function badgeColorFor(act) {
+    return act === 'BREAKING' ? '#FF4444' : act === 'SAFE' ? '#00FF88' : '#FFB347';
+  }
+
+  const top8 = packages.slice(0, 8);
+  // Ensure exactly 8 cards: if fewer real packages exist, repeat the last one
+  // so each of the 8 spokes carries a card and none is left empty.
+  while (top8.length > 0 && top8.length < 8) {
+    top8.push(top8[top8.length - 1]);
+  }
+  console.log('[helm] top 8 packages on wheel:', top8.map(p => `${p.package}@${p.version} (${p.days_exposed}d)`));
+  const WHEEL_CENTER = 300;
+  const CARD_RADIUS = 245;
+  const CARD_W = 72, CARD_H = 88;
+
+  const rimCards = top8.map((p, i) => {
+    const angleRad = (i * 45 - 90) * Math.PI / 180;
+    const x = WHEEL_CENTER + CARD_RADIUS * Math.cos(angleRad) - CARD_W / 2;
+    const y = WHEEL_CENTER + CARD_RADIUS * Math.sin(angleRad) - CARD_H / 2;
+    const tox = (WHEEL_CENTER - x).toFixed(2);
+    const toy = (WHEEL_CENTER - y).toFixed(2);
+    const color = badgeColorFor(p.actionability);
+    const shortName = p.package.length > 10 ? p.package.slice(0, 10) : p.package;
+    return `<div class="ti2w-card helm-rim-card" data-idx="${i}">
+      <div class="ti2w-card-pkg" title="${escape(p.package)}">${escape(shortName)}</div>
+      <div class="ti2w-card-days">${p.days_exposed}</div>
+      <div class="ti2w-card-badge" style="color:${color};border-color:${color}">${p.actionability}</div>
     </div>`;
+  }).join('');
+
+  const spokeLines = [0,1,2,3,4,5,6,7].map(i => {
+    const a = (i * 45 - 90) * Math.PI / 180;
+    const x1 = (250 + 32 * Math.cos(a)).toFixed(2);
+    const y1 = (250 + 32 * Math.sin(a)).toFixed(2);
+    const x2 = (250 + 180 * Math.cos(a)).toFixed(2);
+    const y2 = (250 + 180 * Math.sin(a)).toFixed(2);
+    return `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#5C2E0A" stroke-width="10" stroke-linecap="round"/>`;
+  }).join('');
+  const spokeKnobs = [0,1,2,3,4,5,6,7].map(i => {
+    const a = (i * 45 - 90) * Math.PI / 180;
+    const cx = (250 + 220 * Math.cos(a)).toFixed(2);
+    const cy = (250 + 220 * Math.sin(a)).toFixed(2);
+    return `<circle cx="${cx}" cy="${cy}" r="7" fill="#C8A84B"/>`;
   }).join('');
 
   screen.innerHTML = `
     <style>
       .ti2p-screen { padding: 24px 28px 80px; }
       .ti2p-header { display:flex; align-items:flex-end; justify-content:space-between; flex-wrap:wrap; gap:16px; margin-bottom: 22px; }
+      .ti2p-header-text { flex: 1 1 auto; min-width: 0; }
       .ti2p-label { font-family: var(--mono); font-size: 11px; letter-spacing: 3px; color: var(--gold); text-transform: uppercase; margin-bottom: 6px; }
       .ti2p-title { font-size: 26px; font-weight: 700; color: var(--text); margin: 0; }
-      .ti2p-subtitle { color: var(--text2); font-size: 13px; margin: 4px 0 0; }
-      .ti2p-select-wrap { display:flex; flex-direction:column; gap:6px; align-items:flex-end; }
+      .ti2p-subtitle { color: var(--text2); font-size: 13px; margin: 4px 0 0; white-space: normal; overflow: visible; }
+      .ti2p-select-wrap { display:flex; flex-direction:column; gap:6px; align-items:flex-end; flex: 0 0 auto; min-width: 280px; }
       .ti2p-select-label { font-family: var(--mono); font-size: 10px; color: var(--gold); letter-spacing: 2px; }
       .ti2p-select { background: linear-gradient(180deg, #071828, #0a2035); border: 1px solid var(--gold); color: var(--gold); font-family: var(--mono); font-size: 12px; padding: 9px 14px; border-radius: 4px; min-width: 320px; cursor:pointer; outline:none; }
       .ti2p-select:focus { box-shadow: 0 0 0 2px rgba(200,168,75,0.2); }
       .ti2p-select option { background: #0a2035; color: var(--text); }
 
-      .ti2p-deck-wrap { position: relative; min-height: 280px; padding: 30px 0 40px; }
-      .ti2p-deck { position: relative; height: 240px; margin: 0 auto; max-width: 800px; }
-      .ti2p-card {
-        position: absolute; top: 0; left: 50%;
-        width: 160px; height: 220px;
-        transform: translateX(calc(-50% + var(--offset) - ${fanSpread}px)) rotate(var(--angle));
-        z-index: var(--z);
+      .ti2w-stage { width: 100%; display: flex; justify-content: center; padding: 30px 0 40px; }
+      .ti2w-wheel-container { position: relative; width: 600px; height: 600px; }
+      .ti2w-wheel-svg {
+        position: absolute; top: 0; left: 0; width: 600px; height: 600px;
+        transform-origin: 300px 300px;
+        pointer-events: none;
+      }
+      .ti2w-card.helm-rim-card {
+        position: absolute;
+        width: 72px; height: 88px;
+        background: #0c2340;
+        border: 1px solid #C8A84B;
+        border-radius: 6px;
+        font-size: 10px;
+        text-align: center;
+        color: var(--text);
+        display: flex; flex-direction: column;
+        align-items: center; justify-content: center;
+        gap: 4px; padding: 6px 4px;
+        box-shadow: 0 0 14px rgba(200,168,75,0.35), inset 0 0 6px rgba(200,168,75,0.12);
         cursor: pointer;
-        transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.3s;
+        transition: opacity 0.3s, box-shadow 0.3s, border-color 0.3s;
+        z-index: 2;
       }
-      .ti2p-card-inner {
-        width: 100%; height: 100%;
-        background: linear-gradient(160deg, #102a44, #0a1d30 70%, #0e2540);
-        border: 1px solid rgba(200,168,75,0.45);
-        border-radius: 8px;
-        padding: 16px 14px 14px;
-        display: flex; flex-direction: column; gap: 8px;
-        box-shadow: 0 6px 18px rgba(0,0,0,0.5), inset 0 1px 0 rgba(240,216,152,0.08);
-        position: relative;
-        overflow: hidden;
+      .ti2w-card.helm-rim-card:hover {
+        box-shadow: 0 0 22px rgba(200,168,75,0.6), inset 0 0 8px rgba(200,168,75,0.2);
       }
-      .ti2p-card-inner::after {
-        content:''; position:absolute; inset:6px; border:1px solid rgba(200,168,75,0.12); border-radius:5px; pointer-events:none;
-      }
-      .ti2p-card:hover {
-        transform: translateX(calc(-50% + var(--offset) - ${fanSpread}px)) rotate(0deg) translateY(-14px);
-        z-index: 50;
-      }
-      .ti2p-card.ti2p-card-active {
-        transform: translateX(calc(-50% + var(--offset) - ${fanSpread}px)) rotate(0deg) translateY(-22px) scale(1.06);
-        z-index: 100;
-      }
-      .ti2p-card.ti2p-card-active .ti2p-card-inner {
-        border-color: var(--gold);
-        box-shadow: 0 14px 32px rgba(0,0,0,0.6), 0 0 28px rgba(200,168,75,0.35), inset 0 1px 0 rgba(240,216,152,0.18);
-      }
-      .ti2p-card-name { font-family: var(--mono); font-size: 13px; font-weight: 700; color: var(--gold); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-      .ti2p-card-weeks { font-family: var(--mono); font-size: 32px; font-weight: 700; color: var(--text); line-height: 1.1; }
-      .ti2p-card-weeks span { display:block; font-size: 9px; letter-spacing: 2px; color: var(--text3); margin-top: 6px; font-weight: 400; text-transform: uppercase; }
-      .ti2p-card-badge { font-family: var(--mono); font-size: 9px; letter-spacing: 1.5px; padding: 4px 8px; border: 1px solid; border-radius: 3px; align-self: flex-start; margin-top: auto; background: rgba(0,0,0,0.25); }
-      .ti2p-precve-dot { position:absolute; top:8px; right:10px; color:#FFB347; font-size:16px; animation: ti2p-pulse 1.4s ease-in-out infinite; text-shadow: 0 0 8px #FFB347; z-index: 2; }
-      @keyframes ti2p-pulse { 0%,100% { opacity:1; } 50% { opacity:0.4; } }
+      .ti2w-card.helm-rim-card.card-active { opacity: 0; }
+      .ti2w-card-pkg { font-family: var(--mono); font-size: 9px; font-weight: 700; color: #C8A84B; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 64px; letter-spacing: 0.5px; }
+      .ti2w-card-days { font-family: var(--mono); font-size: 20px; font-weight: 700; color: var(--text); line-height: 1; }
+      .ti2w-card-badge { font-family: var(--mono); font-size: 8px; letter-spacing: 1px; padding: 2px 4px; border: 1px solid; border-radius: 2px; background: rgba(0,0,0,0.25); }
 
-      .ti2p-hint { text-align:center; font-family: var(--mono); font-size: 10px; color: var(--text3); letter-spacing: 2px; margin-top: 32px; text-transform: uppercase; }
-      .ti2p-stack-count { text-align:center; font-family: var(--mono); font-size: 10px; color: var(--text3); margin-top: 6px; }
+      #helm-center-card {
+        position: absolute;
+        left: 210px; top: 200px;
+        width: 180px; height: 200px;
+        background: #0e2848;
+        border: 2px solid #C8A84B;
+        border-radius: 8px;
+        box-shadow: 0 0 32px rgba(200,168,75,0.55), inset 0 0 12px rgba(200,168,75,0.15);
+        z-index: 10;
+        display: none;
+        flex-direction: column;
+        align-items: center; justify-content: center;
+        gap: 6px; padding: 14px 12px;
+        cursor: pointer;
+        color: var(--text); text-align: center;
+      }
+      #helm-center-card.visible { display: flex; }
+      #helm-center-card .cc-pkg { font-family: var(--mono); font-size: 12px; font-weight: 700; color: #C8A84B; word-break: break-word; white-space: normal; width: 100%; text-align: center; }
+      #helm-center-card .cc-days { font-family: var(--mono); font-size: 36px; font-weight: 700; color: var(--text); line-height: 1; }
+      #helm-center-card .cc-days-lbl { font-family: var(--mono); font-size: 9px; letter-spacing: 1.5px; color: var(--text3); text-transform: uppercase; }
+      #helm-center-card .cc-fix { font-family: var(--mono); font-size: 11px; color: var(--neon-cyan); }
+      #helm-center-card .cc-badge { font-family: var(--mono); font-size: 10px; letter-spacing: 1.5px; padding: 4px 10px; border: 1px solid; border-radius: 3px; background: rgba(0,0,0,0.3); }
+      #helm-center-card .cc-cves { font-family: var(--mono); font-size: 10px; color: var(--text2); }
+      #helm-center-card .cc-hint { font-family: var(--mono); font-size: 9px; color: var(--text2); margin-top: 4px; letter-spacing: 0.5px; }
+
+      .ti2w-hint { text-align:center; font-family: var(--mono); font-size: 10px; color: var(--text3); letter-spacing: 2px; margin-top: 16px; text-transform: uppercase; }
 
       /* ----- Parchment treasure-map modal ----- */
-      .ti2p-modal-backdrop { position: fixed; inset: 0; background: rgba(6,12,20,0.78); backdrop-filter: blur(3px); z-index: 9000; display:flex; align-items:center; justify-content:center; animation: ti2p-fade-in 0.3s ease; padding: 20px; }
+      .ti2p-modal-backdrop { position: fixed; inset: 0; background: rgba(6,12,20,0.78); backdrop-filter: blur(3px); z-index: 999; animation: ti2p-fade-in 0.3s ease; }
       @keyframes ti2p-fade-in { from { opacity: 0; } to { opacity: 1; } }
       .ti2p-parchment {
-        position: relative; width: min(880px, 100%); max-height: 92vh; overflow-y: auto;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 1000;
+        width: min(880px, 100%); max-height: min(92vh, 800px); overflow: hidden;
         background:
           radial-gradient(ellipse at 20% 15%, rgba(255,230,180,0.45) 0%, transparent 60%),
           radial-gradient(ellipse at 85% 80%, rgba(120,80,40,0.4) 0%, transparent 55%),
@@ -4068,7 +4115,7 @@ function renderTI2Deck(packages) {
           linear-gradient(150deg, #E8C28F 0%, #D4A96A 30%, #C49A5A 65%, #B8894E 100%);
         color: #3D2B1F;
         font-family: 'Georgia', 'Times New Roman', serif;
-        padding: 56px 60px 48px;
+        padding: 20px 28px;
         box-shadow: 0 20px 60px rgba(0,0,0,0.7), 0 0 0 1px rgba(60,40,20,0.25);
         clip-path: polygon(
           0% 3%, 3% 0%, 8% 2%, 15% 1%, 22% 3%, 30% 0%, 38% 2%, 46% 0%, 54% 3%, 62% 1%, 70% 2%, 78% 0%, 86% 2%, 94% 1%, 100% 3%,
@@ -4078,7 +4125,7 @@ function renderTI2Deck(packages) {
         );
         animation: ti2p-pop-in 0.32s cubic-bezier(0.34, 1.4, 0.64, 1);
       }
-      @keyframes ti2p-pop-in { from { opacity: 0; transform: scale(0.85); } to { opacity: 1; transform: scale(1); } }
+      @keyframes ti2p-pop-in { from { opacity: 0; transform: translate(-50%, -50%) scale(0.85); } to { opacity: 1; transform: translate(-50%, -50%) scale(1); } }
       .ti2p-parchment::before {
         content: ''; position: absolute; inset: 0; pointer-events: none;
         background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' seed='4'/><feColorMatrix values='0 0 0 0 0.24 0 0 0 0 0.17 0 0 0 0 0.12 0 0 0 0.18 0'/></filter><rect width='240' height='240' filter='url(%23n)'/></svg>");
@@ -4092,7 +4139,7 @@ function renderTI2Deck(packages) {
       .ti2p-seal-close { position: absolute; top: 16px; right: 16px; width: 44px; height: 44px; cursor: pointer; border:none; background:transparent; padding:0; z-index: 10; transition: transform 0.2s; }
       .ti2p-seal-close:hover { transform: rotate(-8deg) scale(1.08); }
 
-      .ti2p-map-head { text-align: center; margin: 0 0 18px; padding-top: 28px; }
+      .ti2p-map-head { text-align: center; margin: 0 0 10px; padding-top: 28px; }
       .ti2p-map-pkg { font-family: 'Georgia', serif; font-size: 36px; font-weight: 700; color: #3D2B1F; letter-spacing: 1px; text-shadow: 1px 1px 0 rgba(255,240,210,0.4); margin: 0; word-break: break-word; }
       .ti2p-map-version { font-family: 'Georgia', serif; font-size: 16px; color: #5A3F2A; margin-top: 6px; font-style: italic; }
 
@@ -4114,7 +4161,7 @@ function renderTI2Deck(packages) {
       .ti2p-speed-SLOW { color: #8B4513; border-color: #8B4513; }
       .ti2p-speed-FAST { color: #2A5028; border-color: #2A5028; background: rgba(42,80,40,0.08); }
 
-      .ti2p-signals { margin: 30px 0 22px; padding: 22px 26px; border: 1.5px dashed rgba(61,43,31,0.55); background: rgba(232,194,143,0.25); }
+      .ti2p-signals { margin: 10px 0 8px; padding: 22px 26px; border: 1.5px dashed rgba(61,43,31,0.55); background: rgba(232,194,143,0.25); }
       .ti2p-signals-title { font-family: 'Georgia', serif; font-size: 14px; letter-spacing: 4px; text-transform: uppercase; color: #3D2B1F; margin: 0 0 16px; border-bottom: 1px solid rgba(61,43,31,0.4); padding-bottom: 6px; }
       .ti2p-signal-row { display: grid; grid-template-columns: 220px 1fr 60px; gap: 14px; align-items: center; padding: 6px 0; }
       .ti2p-signal-label { font-family: 'Georgia', serif; font-size: 13px; color: #3D2B1F; }
@@ -4122,16 +4169,16 @@ function renderTI2Deck(packages) {
       .ti2p-signal-bar { height: 100%; background: repeating-linear-gradient(45deg, #5A3F2A 0 4px, #6B4A2F 4px 8px); border-right: 1px solid #3D2B1F; }
       .ti2p-signal-score { font-family: 'Georgia', serif; font-size: 14px; font-weight: 700; text-align: right; color: #3D2B1F; }
 
-      .ti2p-jump { margin: 24px 0; text-align: center; font-family: 'Georgia', serif; font-size: 18px; color: #3D2B1F; }
+      .ti2p-jump { margin: 10px 0 10px; text-align: center; font-family: 'Georgia', serif; font-size: 18px; color: #3D2B1F; }
       .ti2p-jump-from { color: #6B1F0F; font-weight: 700; }
       .ti2p-jump-to { color: #2A5028; font-weight: 700; }
       .ti2p-jump-arrow { display: inline-block; margin: 0 14px; font-size: 20px; letter-spacing: 4px; }
 
-      .ti2p-verdict { margin: 22px 0 6px; text-align: center; font-family: 'Georgia', serif; font-size: 15px; font-style: italic; color: #3D2B1F; line-height: 1.55; padding: 0 30px; }
+      .ti2p-verdict { display: block; visibility: visible; opacity: 1; overflow: visible; white-space: normal; margin: 10px 0 10px; text-align: center; font-family: 'Georgia', serif; font-size: 13px; font-style: italic; color: #3D2B1F; line-height: 1.55; padding: 0 16px; }
       .ti2p-verdict-lead { font-weight: 700; font-style: normal; }
 
       .ti2p-precve-stamp {
-        margin: 28px auto 0; display: flex; align-items: center; gap: 10px;
+        margin: 10px auto 0; display: flex; align-items: center; gap: 10px;
         font-family: 'Georgia', serif; font-size: 13px; font-weight: 700; letter-spacing: 2px;
         color: #8B0000; border: 3px solid #8B0000;
         padding: 10px 18px; transform: rotate(-6deg);
@@ -4150,10 +4197,10 @@ function renderTI2Deck(packages) {
 
     <div class="ti2p-screen">
       <div class="ti2p-header">
-        <div>
+        <div class="ti2p-header-text">
           <div class="ti2p-label">THREAT INTELLIGENCE</div>
-          <h1 class="ti2p-title">The Hazard Deck</h1>
-          <p class="ti2p-subtitle">Every charted hazard, fanned for inspection &middot; select a card to open its map</p>
+          <h1 class="ti2p-title">The Helm</h1>
+          <p class="ti2p-subtitle">Top 8 charted hazards mounted on the helm &middot; select a card to bring it to centre</p>
         </div>
         <div class="ti2p-select-wrap">
           <label class="ti2p-select-label" for="ti2p-select">CHART A HAZARD</label>
@@ -4161,40 +4208,106 @@ function renderTI2Deck(packages) {
         </div>
       </div>
 
-      <div class="ti2p-deck-wrap">
-        <div class="ti2p-deck" id="ti2p-deck">${cards}</div>
-        <div class="ti2p-hint">&#9758; click any card to open its parchment map</div>
-        ${packages.length > 12 ? `<div class="ti2p-stack-count">+${packages.length - 12} hazards stacked beneath</div>` : ''}
+      <div class="ti2w-stage">
+        <div class="ti2w-wheel-container" id="ti2w-wheel">
+          <svg class="ti2w-wheel-svg" id="helm-svg" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="250" cy="250" r="220" fill="none" stroke="#3D1F0A" stroke-width="18"/>
+            <circle cx="250" cy="250" r="228" fill="none" stroke="#C8A84B" stroke-width="2"/>
+            ${spokeLines}
+            ${spokeKnobs}
+            <circle cx="250" cy="250" r="32" fill="#C8A84B"/>
+            <circle cx="250" cy="250" r="18" fill="#3D1F0A"/>
+          </svg>
+          ${rimCards}
+          <div id="helm-center-card"></div>
+        </div>
       </div>
+
+      <div class="ti2w-hint">&#9758; click a card on the wheel to open its parchment map</div>
     </div>
   `;
 
   const select = document.getElementById('ti2p-select');
-  const cardEls = Array.from(document.querySelectorAll('#ti2p-deck .ti2p-card'));
+  const cardEls = Array.from(document.querySelectorAll('#ti2w-wheel .helm-rim-card'));
+  const centerCard = document.getElementById('helm-center-card');
+  let currentCenterIdx = -1;
 
-  function setActive(idx) {
-    cardEls.forEach(el => el.classList.remove('ti2p-card-active'));
-    const target = cardEls[idx];
-    if (target) target.classList.add('ti2p-card-active');
-    if (select && Number(select.value) !== idx) select.value = String(idx);
+  // JS-driven helm: rotate the SVG and position cards at their spoke tips, kept upright.
+  let wheelAngle = 0;
+  const wheelEl = document.getElementById('helm-svg');
+  const rimCardNodes = document.querySelectorAll('.helm-rim-card');
+  const centerX = 300;
+  const centerY = 300;
+  const radius = 255;
+
+  function animateHelm() {
+    wheelAngle += 0.06;
+    if (wheelEl) wheelEl.style.transform = `rotate(${wheelAngle}deg)`;
+    rimCardNodes.forEach((card, i) => {
+      const baseAngle = (i * 45) * Math.PI / 180;
+      const currentAngle = baseAngle + (wheelAngle * Math.PI / 180);
+      const x = centerX + radius * Math.sin(currentAngle) - 36;
+      const y = centerY - radius * Math.cos(currentAngle) - 44;
+      card.style.left = x + 'px';
+      card.style.top = y + 'px';
+      card.style.transform = 'none';
+    });
+    requestAnimationFrame(animateHelm);
+  }
+  animateHelm();
+
+  function hideCenter() {
+    if (!centerCard) return;
+    centerCard.classList.remove('visible');
+    centerCard.innerHTML = '';
+    currentCenterIdx = -1;
+    cardEls.forEach(el => el.classList.remove('card-active'));
+  }
+
+  function showCenter(idx) {
+    const pkg = packages[idx];
+    if (!pkg || !centerCard) return;
+    currentCenterIdx = idx;
+    cardEls.forEach(el => el.classList.remove('card-active'));
+    if (idx < cardEls.length) cardEls[idx].classList.add('card-active');
+    const color = badgeColorFor(pkg.actionability);
+    const cveCount = (pkg.cves || []).length;
+    centerCard.innerHTML = `
+      <div class="cc-pkg" title="${escape(pkg.package)}">${escape(pkg.package)}</div>
+      <div class="cc-days">${pkg.days_exposed}</div>
+      <div class="cc-days-lbl">days exposed</div>
+      <div class="cc-fix">&rarr; ${escape(pkg.fix_version)}</div>
+      <div class="cc-badge" style="color:${color};border-color:${color}">${pkg.actionability}</div>
+      <div class="cc-cves">${cveCount} CVE${cveCount === 1 ? '' : 's'}</div>
+      <div class="cc-hint">click to open map</div>
+    `;
+    centerCard.classList.add('visible');
   }
 
   cardEls.forEach((el, i) => {
-    el.addEventListener('click', () => {
-      setActive(i);
-      openTI2ParchmentMap(packages[i]);
+    el.style.cursor = 'pointer';
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (select) select.value = String(i);
+      showCenter(i);
+      const pkg = top8[i];
+      if (pkg) openTI2ParchmentMap(pkg);
     });
   });
 
   if (select) {
     select.addEventListener('change', () => {
       const i = Number(select.value);
-      setActive(i);
-      openTI2ParchmentMap(packages[i]);
+      if (Number.isFinite(i)) showCenter(i);
     });
   }
 
-  setActive(0);
+  if (centerCard) {
+    centerCard.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (currentCenterIdx >= 0) openTI2ParchmentMap(packages[currentCenterIdx]);
+    });
+  }
 }
 
 function openTI2ParchmentMap(pkg) {
@@ -4304,7 +4417,6 @@ function openTI2ParchmentMap(pkg) {
       <button class="ti2p-seal-close" id="ti2p-close" aria-label="Close">${closeSealSVG}</button>
       ${compassSVG}
       ${shipSVG}
-      ${pirateSVG}
 
       <div class="ti2p-map-head">
         <h2 class="ti2p-map-pkg">${escape(pkg.package)}</h2>
