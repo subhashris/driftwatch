@@ -2552,132 +2552,115 @@
     overflow: visible;
   }
 
+  @keyframes captain-pulse {
+    0%, 100% { box-shadow: 0 0 16px rgba(200,168,75,0.3), 0 0 40px rgba(200,168,75,0.1); }
+    50% { box-shadow: 0 0 28px rgba(200,168,75,0.6), 0 0 60px rgba(200,168,75,0.25); }
+  }
+
   .crew-layout {
-    display: grid;
-    grid-template-columns: 60fr 40fr;
-    gap: 24px;
-    align-items: start;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 
   .captain-card {
-    background: #0a1f35;
+    width: 520px;
+    margin: 0 auto 32px auto;
+    background: linear-gradient(135deg, #0a1f35, #0e2848);
     border: 2px solid #C8A84B;
     border-radius: 8px;
     padding: 32px 28px;
     cursor: pointer;
-    transition: transform 0.2s, box-shadow 0.2s;
-    box-shadow: 0 0 20px rgba(200,168,75,0.15), 0 4px 24px rgba(0,0,0,0.4);
-  }
-
-  .captain-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 0 32px rgba(200,168,75,0.25), 0 8px 32px rgba(0,0,0,0.5);
+    animation: captain-pulse 2.5s ease-in-out infinite;
   }
 
   .captain-rank-label {
     font-family: var(--mono);
     font-size: 11px;
-    letter-spacing: 0.3em;
+    letter-spacing: 3px;
     color: #C8A84B;
-    text-transform: uppercase;
+    font-weight: bold;
     margin-bottom: 16px;
   }
 
   .captain-username {
-    font-family: var(--mono);
-    font-size: 36px;
-    font-weight: 700;
-    color: var(--text);
-    margin-bottom: 12px;
+    font-size: 42px;
+    font-weight: bold;
+    margin-bottom: 8px;
     word-break: break-all;
   }
 
   .captain-days {
     font-family: var(--mono);
     font-size: 52px;
-    font-weight: 700;
+    font-weight: bold;
     color: #FF4444;
     line-height: 1;
-    margin-bottom: 4px;
+    margin-bottom: 2px;
   }
 
   .captain-days-label {
-    font-family: var(--mono);
-    font-size: 12px;
-    color: var(--text2);
-    margin-bottom: 20px;
+    font-size: 13px;
+    color: #6B9BB8;
+    margin-bottom: 16px;
   }
 
   .captain-stats-row {
-    display: flex;
-    gap: 0;
     font-family: var(--mono);
     font-size: 13px;
-    color: var(--text2);
-    margin-bottom: 16px;
-    flex-wrap: wrap;
-  }
-
-  .captain-stat {
-    color: var(--text);
-    font-weight: 700;
-  }
-
-  .captain-stat-sep {
-    color: var(--text3);
-    margin: 0 8px;
+    color: #00FFFF;
+    letter-spacing: 2px;
+    margin-bottom: 12px;
   }
 
   .captain-subtitle {
-    font-family: var(--sans);
-    font-size: 13px;
-    color: var(--text3);
     font-style: italic;
+    color: #6B9BB8;
+    font-size: 12px;
   }
 
-  .officers-column {
+  .officers-row {
     display: flex;
-    flex-direction: column;
-    gap: 16px;
+    gap: 20px;
+    justify-content: center;
+    margin-top: 8px;
   }
 
   .officer-card {
-    background: #0a1f35;
-    border: 1px solid rgba(200,168,75,0.4);
-    border-radius: 6px;
+    flex: 1;
+    max-width: 280px;
+    background: #0c2340;
+    border: 1px solid rgba(200,168,75,0.35);
+    border-radius: 10px;
     padding: 20px;
     cursor: pointer;
-    transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+    transition: transform 0.2s;
   }
 
   .officer-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 20px rgba(0,0,0,0.4);
-    border-color: rgba(200,168,75,0.7);
+    transform: translateY(-4px);
   }
 
   .officer-rank-label {
     font-family: var(--mono);
     font-size: 10px;
-    letter-spacing: 0.2em;
+    letter-spacing: 2px;
     color: #C8A84B;
-    text-transform: uppercase;
     margin-bottom: 8px;
   }
 
   .officer-username {
-    font-family: var(--mono);
-    font-size: 20px;
-    font-weight: 700;
-    color: var(--text);
+    font-size: 22px;
+    color: #F0D898;
+    font-weight: bold;
     margin-bottom: 6px;
     word-break: break-all;
   }
 
   .officer-days {
     font-family: var(--mono);
-    font-size: 28px;
-    font-weight: 700;
+    font-size: 32px;
+    font-weight: bold;
     color: #FF8C00;
     line-height: 1;
     margin-bottom: 4px;
@@ -2687,118 +2670,111 @@
     font-family: var(--mono);
     font-size: 10px;
     color: var(--text3);
-    margin-bottom: 8px;
+    margin-bottom: 6px;
   }
 
   .officer-stats {
     font-family: var(--mono);
-    font-size: 11px;
-    color: var(--text2);
+    font-size: 12px;
+    color: #00FFFF;
   }
 
   /* Book overlay */
   #crew-book-overlay {
     position: fixed;
     inset: 0;
-    background: rgba(0,0,0,0.85);
+    background: rgba(0,0,0,0.88);
     z-index: 1000;
     display: none;
+    align-items: center;
+    justify-content: center;
   }
 
   #crew-book-overlay.open {
-    display: block;
+    display: flex;
   }
 
   #crew-book {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    position: relative;
     width: 900px;
     height: 580px;
-    background: #8B5E3C;
-    border-radius: 4px 12px 12px 4px;
-    box-shadow: -8px 8px 40px rgba(0,0,0,0.8), inset -3px 0 8px rgba(0,0,0,0.4);
+  }
+
+  #book-pages-wrapper {
+    position: absolute;
+    inset: 0;
     display: flex;
-    overflow: visible;
+    border-radius: 4px 12px 12px 4px;
+    overflow: hidden;
+    box-shadow: -8px 8px 40px rgba(0,0,0,0.8);
   }
 
   #book-spine {
     width: 24px;
+    background: linear-gradient(90deg, #3B1F0A, #6B3A1F, #3B1F0A);
     flex-shrink: 0;
-    background: linear-gradient(90deg, #5C3A1E, #8B5E3C, #5C3A1E);
-    border-radius: 4px 0 0 4px;
-  }
-
-  .book-pages-area {
-    display: flex;
-    flex: 1;
-    overflow: hidden;
-    border-radius: 0 12px 12px 0;
   }
 
   .book-page {
-    width: 50%;
+    flex: 1;
     background: linear-gradient(135deg, #F5E6C8 0%, #EDD9A3 40%, #E8D08A 100%);
-    padding: 32px 28px;
-    color: #2C1810;
-    font-family: Georgia, serif;
+    padding: 0;
     overflow: hidden;
-    position: relative;
     box-sizing: border-box;
+    position: relative;
+    display: flex;
+    flex-direction: column;
   }
 
   #book-left-page {
-    box-shadow: inset -4px 0 12px rgba(0,0,0,0.15);
+    box-shadow: inset -4px 0 12px rgba(0,0,0,0.12);
   }
 
   #book-right-page {
-    box-shadow: inset 4px 0 8px rgba(0,0,0,0.1);
-    transform-origin: left center;
+    box-shadow: inset 4px 0 8px rgba(0,0,0,0.08);
   }
 
   #book-bookmark {
     position: absolute;
-    right: -36px;
-    top: 120px;
-    width: 36px;
-    height: 120px;
+    right: -38px;
+    top: 100px;
+    width: 38px;
+    height: 130px;
     background: linear-gradient(180deg, #8B1A1A, #C0392B);
     border-radius: 0 6px 6px 0;
     writing-mode: vertical-rl;
     text-align: center;
+    color: white;
+    font-size: 10px;
+    letter-spacing: 2px;
+    cursor: pointer;
+    z-index: 6;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: white;
-    font-size: 11px;
-    letter-spacing: 2px;
-    font-family: var(--mono);
-    cursor: pointer;
+    padding: 8px 0;
+    box-shadow: 3px 0 8px rgba(0,0,0,0.4);
     transition: filter 0.2s;
-    z-index: 10;
   }
 
-  #book-bookmark:hover {
-    filter: brightness(1.3);
-  }
+  #book-bookmark:hover { filter: brightness(1.3); }
 
   #book-prev, #book-next {
     position: absolute;
-    bottom: -44px;
-    background: rgba(139,94,60,0.8);
+    bottom: 16px;
+    z-index: 6;
+    background: #8B5E3C;
     border: 1px solid #C8A84B;
     color: #F5E6C8;
-    padding: 8px 16px;
+    padding: 7px 18px;
     border-radius: 4px;
+    font-size: 16px;
     cursor: pointer;
-    font-family: var(--mono);
-    font-size: 14px;
     transition: background 0.2s;
   }
 
   #book-prev { left: 36px; }
-  #book-next { right: 0; }
+  #book-next { right: 16px; }
 
   #book-prev:hover, #book-next:hover {
     background: rgba(139,94,60,1);
@@ -2806,7 +2782,7 @@
 
   #book-close {
     position: fixed;
-    top: 24px;
+    top: 20px;
     right: 24px;
     width: 36px;
     height: 36px;
@@ -2820,45 +2796,45 @@
     align-items: center;
     justify-content: center;
     transition: background 0.2s;
-    z-index: 1001;
+    z-index: 1010;
     line-height: 1;
   }
 
-  #book-close:hover {
-    background: #C0392B;
-  }
+  #book-close:hover { background: #C0392B; }
 
   .book-page-header {
+    height: 28px;
+    flex-shrink: 0;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-size: 11px;
+    font-size: 10px;
     color: #8B6914;
-    margin-bottom: 8px;
-    padding-bottom: 8px;
-    border-bottom: 1px solid #C8A84B;
+    padding: 0 26px;
+    border-bottom: 1px solid rgba(200,168,75,0.5);
+    font-family: Georgia, serif;
   }
 
-  .book-pkg-name {
-    font-size: 22px;
-    font-weight: bold;
-    color: #2C1810;
-    margin-bottom: 8px;
+  .pkg-entry {
+    height: 50%;
+    box-sizing: border-box;
+    padding: 28px 34px 22px;
     display: flex;
-    align-items: center;
-    gap: 10px;
-    flex-wrap: wrap;
-    line-height: 1.2;
+    flex-direction: column;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .pkg-entry:first-child {
+    border-bottom: 1px dashed rgba(139,94,60,0.5);
   }
 
   .book-badge-breaking {
     background: #8B1A1A;
     color: white;
     padding: 2px 8px;
-    font-size: 11px;
+    font-size: 10px;
     border-radius: 3px;
     font-family: var(--mono);
-    font-weight: normal;
     white-space: nowrap;
   }
 
@@ -2866,26 +2842,10 @@
     background: #1A5C2A;
     color: white;
     padding: 2px 8px;
-    font-size: 11px;
+    font-size: 10px;
     border-radius: 3px;
     font-family: var(--mono);
-    font-weight: normal;
     white-space: nowrap;
-  }
-
-  .book-days-num {
-    font-size: 36px;
-    color: #8B1A1A;
-    font-weight: bold;
-    line-height: 1.1;
-    margin: 8px 0 4px;
-  }
-
-  .book-detail-line {
-    font-size: 14px;
-    margin: 8px 0;
-    color: #3D1F0A;
-    line-height: 1.5;
   }
 
   .book-end-page {
@@ -2898,64 +2858,58 @@
   }
 
   .book-end-text {
-    font-size: 15px;
+    font-size: 14px;
     font-style: italic;
     color: #8B6914;
-    margin-top: 16px;
+    margin-top: 12px;
     line-height: 1.8;
+    font-family: Georgia, serif;
   }
 
-  .book-brief-wrap {
+  .book-brief-page {
+    height: 100%;
+    box-sizing: border-box;
+    padding: 34px 40px 30px;
+    font-family: Georgia, serif;
+    color: #2C1810;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .book-brief-title {
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+  }
+
+  .book-brief-rule {
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, #8B6914, rgba(139,105,20,0.25), transparent);
+    margin-bottom: 20px;
+    flex-shrink: 0;
+  }
+
+  .book-brief-text {
+    margin: 0;
+    flex: 1;
+    min-height: 0;
+    font-style: italic;
+    font-size: 15px;
+    line-height: 2;
+    color: #2C1810;
+    overflow: hidden;
+  }
+
+  .book-brief-seal-page {
+    height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 100%;
-    padding: 0 8px;
-    text-align: center;
-  }
-
-  .book-brief-header {
-    font-size: 18px;
-    font-weight: bold;
-    color: #2C1810;
-    text-align: center;
-    margin-bottom: 6px;
     font-family: Georgia, serif;
-  }
-
-  .book-brief-divider {
-    width: 80%;
-    height: 2px;
-    background: linear-gradient(90deg, transparent, #C8A84B, transparent);
-    margin: 6px auto 14px;
-  }
-
-  .book-brief-text {
-    font-size: 15px;
-    font-style: italic;
-    color: #2C1810;
-    line-height: 1.8;
-    font-family: Georgia, serif;
-    max-height: 320px;
-    overflow-y: auto;
-  }
-
-  .book-back-btn {
-    margin-top: 16px;
-    background: rgba(139,94,60,0.3);
-    border: 1px solid #C8A84B;
-    color: #2C1810;
-    padding: 7px 18px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-family: Georgia, serif;
-    font-size: 13px;
-    transition: background 0.2s;
-  }
-
-  .book-back-btn:hover {
-    background: rgba(139,94,60,0.5);
   }
 
   .wanted-wall { display: none; }
@@ -3332,7 +3286,7 @@
       <div class="screen-header">
         <p class="screen-title">CREW ACCOUNTABILITY</p>
         <h2 class="screen-sub">Who owns the negligence?</h2>
-        <p class="screen-tag">Cross-referenced from GitHub commit history Ãƒâ€” code search Ã¢â‚¬â€ every day of exposure mapped to a human.</p>
+        <p class="screen-tag">Cross-referenced from GitHub commit history &times; code search &mdash; every day of exposure mapped to a human.</p>
       </div>
       <div id="crewList"></div>
     </section>
@@ -3340,16 +3294,18 @@
     <!-- CREW BOOK OVERLAY -->
     <div id="crew-book-overlay">
       <div id="crew-book">
-        <div id="book-spine"></div>
-        <div class="book-pages-area">
+        <!-- Layer 1: Pages (always behind cover) -->
+        <div id="book-pages-wrapper">
+          <div id="book-spine"></div>
           <div id="book-left-page" class="book-page"></div>
           <div id="book-right-page" class="book-page"></div>
         </div>
-        <div id="book-bookmark">CAPTAIN'S BRIEF</div>
-        <button id="book-prev">&#9664;</button>
-        <button id="book-next">&#9654;</button>
+        <!-- Layer 2: Bookmark + nav (always on top of pages) -->
+        <div id="book-bookmark" onclick="generateCrewBrief()">CAPTAIN'S BRIEF</div>
+        <button id="book-prev" onclick="bookPrev()">&#9664;</button>
+        <button id="book-next" onclick="bookNext()">&#9654;</button>
       </div>
-      <button id="book-close">&#10005;</button>
+      <button id="book-close" onclick="closeCrewBook()">&#10005;</button>
     </div>
 
     <!-- QUERIES -->
@@ -5320,43 +5276,38 @@ function renderCrew(d) {
   var layout = document.createElement('div');
   layout.className = 'crew-layout';
 
-  // Captain column
-  var captainCol = document.createElement('div');
+  // Captain card (top, centered)
   var captainCard = document.createElement('div');
   captainCard.className = 'captain-card';
   captainCard.onclick = (function(p) { return function() { openCrewBook(p); }; })(captain);
   captainCard.innerHTML =
     '<div class="captain-rank-label">⚓ CAPTAIN</div>' +
-    '<div class="captain-username">@' + captain.login + '</div>' +
+    '<div class="captain-username gold-metal">@' + captain.login + '</div>' +
     '<div class="captain-days">' + captain.totalDays.toLocaleString() + '</div>' +
     '<div class="captain-days-label">days of exposure</div>' +
-    '<div class="captain-stats-row">' +
-      '<span class="captain-stat">' + captain.packages.length + ' PACKAGES</span>' +
-      '<span class="captain-stat-sep">·</span>' +
-      '<span class="captain-stat">' + captain.breakingCount + ' BREAKING</span>' +
-      '<span class="captain-stat-sep">·</span>' +
-      '<span class="captain-stat">' + captain.safeIgnored + ' EASY WINS</span>' +
-    '</div>' +
-    '<div class="captain-subtitle">Responsible for ' + captainWeeks + ' weeks of exposure</div>';
-  captainCol.appendChild(captainCard);
-  layout.appendChild(captainCol);
+    '<div class="captain-stats-row">' + captain.packages.length + ' PACKAGES · ' + captain.breakingCount + ' BREAKING · ' + captain.safeIgnored + ' EASY WINS</div>' +
+    '<div class="captain-subtitle">Responsible for ' + captainWeeks + 'w of exposure</div>';
+  layout.appendChild(captainCard);
 
-  // Officers column
-  var officersCol = document.createElement('div');
-  officersCol.className = 'officers-column';
-  officers.forEach(function(member) {
-    var card = document.createElement('div');
-    card.className = 'officer-card';
-    card.onclick = (function(m) { return function() { openCrewBook(m); }; })(member);
-    card.innerHTML =
-      '<div class="officer-rank-label">🔱 OFFICER</div>' +
-      '<div class="officer-username">@' + member.login + '</div>' +
-      '<div class="officer-days">' + member.totalDays.toLocaleString() + '</div>' +
-      '<div class="officer-days-label">days of exposure</div>' +
-      '<div class="officer-stats">' + member.packages.length + ' pkgs · ' + member.breakingCount + ' breaking</div>';
-    officersCol.appendChild(card);
-  });
-  layout.appendChild(officersCol);
+  // Officers row (below captain)
+  if (officers.length > 0) {
+    var officersRow = document.createElement('div');
+    officersRow.className = 'officers-row';
+    officers.forEach(function(member) {
+      var card = document.createElement('div');
+      card.className = 'officer-card';
+      card.onclick = (function(m) { return function() { openCrewBook(m); }; })(member);
+      card.innerHTML =
+        '<div class="officer-rank-label">🔱 OFFICER</div>' +
+        '<div class="officer-username">@' + member.login + '</div>' +
+        '<div class="officer-days">' + member.totalDays.toLocaleString() + '</div>' +
+        '<div class="officer-days-label">days of exposure</div>' +
+        '<div class="officer-stats">' + member.packages.length + ' pkgs · ' + member.breakingCount + ' breaking</div>';
+      officersRow.appendChild(card);
+    });
+    layout.appendChild(officersRow);
+  }
+
   crewList.appendChild(layout);
 }
 
@@ -5364,7 +5315,6 @@ function renderCrew(d) {
 var _bookPerson = null;
 var _bookCurrentSpread = 0;
 var _bookSpreads = [];
-var _bookBriefMode = false;
 
 function _sinceDate(days) {
   var dt = new Date(Date.now() - days * 86400000);
@@ -5375,52 +5325,75 @@ function buildSpreads(person) {
   var pkgs = person.packages.slice().sort(function(a, b) {
     return (b.days_exposed || 0) - (a.days_exposed || 0);
   });
+  // Each spread = 4 packages (2 per page)
   var spreads = [];
-  for (var i = 0; i < pkgs.length; i += 2) {
-    spreads.push({ left: pkgs[i], right: pkgs[i + 1] || null });
+  for (var i = 0; i < pkgs.length; i += 4) {
+    spreads.push({
+      left: [pkgs[i] || null, pkgs[i+1] || null],
+      right: [pkgs[i+2] || null, pkgs[i+3] || null]
+    });
   }
   return spreads;
 }
 
-function renderBookPage(pkg, person, pageNum, totalPages) {
-  if (!pkg) {
-    return '<div class="book-end-page">' +
-      '<svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">' +
-        '<circle cx="30" cy="30" r="28" stroke="#C8A84B" stroke-width="2"/>' +
-        '<path d="M30 12 L30 26 M24 32 C24 38 27 44 30 46 C33 44 36 38 36 32 C36 26 30 26 30 26 C30 26 24 26 24 32Z" stroke="#8B6914" stroke-width="2" fill="none"/>' +
-        '<circle cx="30" cy="20" r="3" fill="#C8A84B"/>' +
-        '<path d="M18 42 L42 42" stroke="#C8A84B" stroke-width="1.5"/>' +
-      '</svg>' +
-      '<div class="book-end-text">All charges logged.<br/>Fair winds ahead — if you act.</div>' +
-    '</div>';
-  }
+function renderPkgEntry(pkg, person) {
+  if (!pkg) return '';
   var badge = (pkg.actionability === 'SAFE')
     ? '<span class="book-badge-safe">SAFE</span>'
     : '<span class="book-badge-breaking">BREAKING</span>';
   var fixVer = pkg.fix_version && pkg.fix_version !== '?' ? pkg.fix_version : '(see OSV)';
   var since = _sinceDate(pkg.days_exposed || 0);
   var days = (pkg.days_exposed || 0).toLocaleString();
-  return '<div class="book-page-header">' +
-      '<span>@' + person.login + '</span>' +
-      '<span>Page ' + pageNum + ' of ' + totalPages + '</span>' +
+  var weeks = Math.round((pkg.days_exposed || 0) / 7);
+  return '<div class="pkg-entry">' +
+    '<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">' +
+      '<span style="font-size:19px;font-weight:bold;color:#2C1810;font-family:Georgia,serif;">' + pkg.name + '</span>' +
+      badge +
     '</div>' +
-    '<div class="book-pkg-name">' + pkg.name + ' ' + badge + '</div>' +
-    '<div class="book-days-num">' + days + '</div>' +
-    '<div class="book-detail-line">⏱  ' + days + ' days exposed</div>' +
-    '<div class="book-detail-line">📅  Since ' + since + '</div>' +
-    '<div class="book-detail-line">🔧  Fix: v' + (pkg.version || '?') + ' → v' + fixVer + '</div>' +
-    '<div class="book-detail-line">👤  Owner: @' + person.login + '</div>';
+    '<div style="font-size:44px;font-weight:bold;color:#8B1A1A;font-family:Georgia,serif;line-height:1;">' + days +
+      '<span style="font-size:14px;color:#6B3A1F;font-weight:normal;"> days (' + weeks + 'w)</span>' +
+    '</div>' +
+    '<div style="font-size:12.5px;color:#3D1F0A;margin-top:8px;line-height:2;">' +
+      '📅 Since ' + since + '<br>' +
+      '🔧 Fix: v' + (pkg.version || '?') + ' → v' + fixVer + '<br>' +
+      '👤 Owner: @' + person.login +
+    '</div>' +
+  '</div>';
 }
 
-function updateBookContent(spread) {
+function renderPageHtml(pkgPair, person, pageNum, totalPages) {
+  var pkgs = pkgPair.filter(function(p) { return p !== null; });
+  if (pkgs.length === 0) {
+    return '<div style="height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:Georgia,serif;">' +
+      '<svg width="60" height="60" viewBox="0 0 60 60" fill="none"><circle cx="30" cy="30" r="28" stroke="#C8A84B" stroke-width="2"/><path d="M30 12 L30 26 M24 32 C24 38 27 44 30 46 C33 44 36 38 36 32 C36 26 30 26 30 26 C30 26 24 26 24 32Z" stroke="#8B6914" stroke-width="2" fill="none"/><circle cx="30" cy="20" r="3" fill="#C8A84B"/><path d="M18 42 L42 42" stroke="#C8A84B" stroke-width="1.5"/></svg>' +
+      '<div style="color:#8B6914;font-style:italic;text-align:center;margin-top:12px;">All charges logged.<br/>Fair winds ahead — if you act.</div>' +
+    '</div>';
+  }
+  var header = '<div class="book-page-header"><span>@' + person.login + '</span><span>Page ' + pageNum + ' of ' + totalPages + '</span></div>';
+  var inner = '<div class="book-page-body" style="flex:1;display:flex;flex-direction:column;overflow:hidden;">';
+  if (pkgs.length === 1) {
+    inner += renderPkgEntry(pkgs[0], person);
+    inner += '<div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;border-top:1px dashed rgba(139,94,60,0.4);color:#8B6914;font-family:Georgia,serif;font-style:italic;font-size:13px;text-align:center;gap:8px;">' +
+      '<svg width="28" height="28" viewBox="0 0 28 28"><text x="14" y="20" text-anchor="middle" font-size="20">⚓</text></svg>' +
+      'All charges logged.<br>Fair winds ahead — if you act.' +
+    '</div>';
+  } else {
+    inner += renderPkgEntry(pkgs[0], person) + renderPkgEntry(pkgs[1], person);
+  }
+  inner += '</div>';
+  return header + inner;
+}
+
+function updateBookContent(person, spread) {
   var leftPage = document.getElementById('book-left-page');
   var rightPage = document.getElementById('book-right-page');
-  if (!leftPage || !rightPage || !_bookSpreads.length) return;
+  if (!leftPage || !rightPage) return;
+  if (!_bookSpreads.length) return;
 
   var s = _bookSpreads[spread];
   var totalPages = _bookSpreads.length * 2;
-  leftPage.innerHTML = renderBookPage(s.left, _bookPerson, spread * 2 + 1, totalPages);
-  rightPage.innerHTML = renderBookPage(s.right, _bookPerson, spread * 2 + 2, totalPages);
+  leftPage.innerHTML = renderPageHtml(s.left, person, spread * 2 + 1, totalPages);
+  rightPage.innerHTML = renderPageHtml(s.right, person, spread * 2 + 2, totalPages);
 
   var prevBtn = document.getElementById('book-prev');
   var nextBtn = document.getElementById('book-next');
@@ -5430,114 +5403,134 @@ function updateBookContent(spread) {
 
 function openCrewBook(person) {
   _bookPerson = person;
-  _bookBriefMode = false;
   _bookSpreads = buildSpreads(person);
   _bookCurrentSpread = 0;
 
+  updateBookContent(person, 0);
+
   var overlay = document.getElementById('crew-book-overlay');
   if (overlay) overlay.classList.add('open');
-  updateBookContent(0);
 }
 
 function closeCrewBook() {
   var overlay = document.getElementById('crew-book-overlay');
   if (overlay) overlay.classList.remove('open');
-  _bookBriefMode = false;
 }
 
-function flipPageForward() {
+function bookNext() {
   if (_bookCurrentSpread >= _bookSpreads.length - 1) return;
-  var rightPage = document.getElementById('book-right-page');
-  if (!rightPage) return;
-  rightPage.style.transition = 'transform 0.6s ease-in-out';
-  rightPage.style.transformOrigin = 'left center';
-  rightPage.style.transform = 'perspective(1200px) rotateY(-180deg)';
-  setTimeout(function() {
-    _bookCurrentSpread++;
-    updateBookContent(_bookCurrentSpread);
-    rightPage.style.transition = 'none';
-    rightPage.style.transform = '';
-  }, 300);
+  _bookCurrentSpread++;
+  updateBookContent(_bookPerson, _bookCurrentSpread);
 }
 
-function flipPageBackward() {
+function bookPrev() {
   if (_bookCurrentSpread <= 0) return;
-  var leftPage = document.getElementById('book-left-page');
-  if (!leftPage) return;
-  leftPage.style.transition = 'transform 0.6s ease-in-out';
-  leftPage.style.transformOrigin = 'right center';
-  leftPage.style.transform = 'perspective(1200px) rotateY(180deg)';
-  setTimeout(function() {
-    _bookCurrentSpread--;
-    updateBookContent(_bookCurrentSpread);
-    leftPage.style.transition = 'none';
-    leftPage.style.transform = '';
-  }, 300);
+  _bookCurrentSpread--;
+  updateBookContent(_bookPerson, _bookCurrentSpread);
 }
 
-function showBookBrief() {
+function briefSealHTML(person) {
+  return '<div style="text-align:center;padding-bottom:16px;">' +
+    '<svg width="52" height="52" viewBox="0 0 52 52">' +
+      '<circle cx="26" cy="26" r="24" fill="#8B1A1A" stroke="#C8A84B" stroke-width="1.5"/>' +
+      '<text x="26" y="31" text-anchor="middle" font-size="20" fill="#F5E6C8">⚓</text>' +
+    '</svg>' +
+    '<div style="margin-top:12px;">' +
+      '<button onclick="returnToLog()" style="background:rgba(139,94,60,0.3);border:1px solid #8B5E3C;color:#3D1F0A;padding:7px 20px;border-radius:4px;font-family:Georgia,serif;font-size:13px;cursor:pointer;">← BACK TO LOG</button>' +
+    '</div>' +
+  '</div>';
+}
+
+function renderBrief(person, briefText) {
+  var leftPage = document.getElementById('book-left-page');
+  var rightPage = document.getElementById('book-right-page');
+
+  leftPage.innerHTML =
+    '<div class="book-brief-page" id="brief-left-content">' +
+      '<div class="book-brief-title">CAPTAIN\'S BRIEF — @' + person.login + '</div>' +
+      '<div class="book-brief-rule"></div>' +
+      '<p id="brief-text-left" class="book-brief-text">' + briefText + '</p>' +
+    '</div>';
+
+  var textEl = document.getElementById('brief-text-left');
+  var containerEl = document.getElementById('brief-left-content');
+
+  if (textEl.scrollHeight > textEl.clientHeight) {
+    var sentences = briefText.match(/[^.!?]+[.!?]+/g) || [briefText];
+    var leftText = '';
+    var rightText = '';
+    for (var i = 0; i < sentences.length; i++) {
+      leftText += sentences[i];
+      textEl.textContent = leftText;
+      if (textEl.scrollHeight > textEl.clientHeight) {
+        leftText = sentences.slice(0, i).join('');
+        rightText = sentences.slice(i).join('');
+        break;
+      }
+    }
+    document.getElementById('brief-text-left').innerHTML = leftText;
+    rightPage.innerHTML =
+      '<div class="book-brief-page">' +
+        '<p class="book-brief-text">' + rightText + '</p>' +
+        briefSealHTML(person) +
+      '</div>';
+  } else {
+    rightPage.innerHTML =
+      '<div class="book-brief-seal-page">' +
+        briefSealHTML(person) +
+      '</div>';
+  }
+}
+
+function generateCrewBrief() {
   if (!_bookPerson) return;
   var leftPage = document.getElementById('book-left-page');
   var rightPage = document.getElementById('book-right-page');
-  _bookBriefMode = true;
-
-  var loadingHTML = '<div class="book-brief-wrap"><div style="font-size:18px;font-style:italic;color:#8B6914;text-align:center">⚓ Consulting the watch…</div></div>';
-  if (leftPage) leftPage.innerHTML = loadingHTML;
-  if (rightPage) rightPage.innerHTML = '';
-
   var prevBtn = document.getElementById('book-prev');
   var nextBtn = document.getElementById('book-next');
   if (prevBtn) prevBtn.style.display = 'none';
   if (nextBtn) nextBtn.style.display = 'none';
 
+  if (leftPage) leftPage.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100%;font-family:Georgia,serif;font-style:italic;color:#8B6914;font-size:16px;">⚓ Consulting the watch...</div>';
+  if (rightPage) rightPage.innerHTML = '';
+
+  var person = _bookPerson;
   fetch('/api/chat', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      system: "You are DriftWatch, a supply chain security officer. Give a crisp 4-sentence captain's brief for this crew member's security debt. Be direct, naval in tone, no fluff.",
-      messages: [{ role: 'user', content: "Generate a captain's brief for " + _bookPerson.login + '. Their packages: ' + JSON.stringify(_bookPerson.packages) }]
+      system: 'You are a ship\'s captain writing a personal log entry addressed directly to a crew member about their security negligence.\nRules:\n- Address them by name (@' + person.login + ') in the first sentence\n- Name at least 3 specific packages by name with their exact days exposed\n- Call out BREAKING packages as unacceptable derelictions\n- Call out SAFE packages as inexcusable easy wins that were ignored\n- Give specific orders: exact package names and fix versions to ship\n- Naval tone: direct, authoritative, no corporate language\n- Write in exactly 2 paragraphs separated by a blank line\n- Paragraph 1: the damage — what they let happen and for how long\n- Paragraph 2: the orders — exactly what they must fix and in what priority\n- Under 130 words total. No bullet points. No generic advice.',
+      messages: [{
+        role: 'user',
+        content: 'Write the captain\'s log entry for @' + person.login + '.\nTheir packages (ordered by severity):\n' +
+          person.packages.map(function(p) {
+            return '- ' + p.name + ': ' + (p.days_exposed || 0) + ' days exposed, ' + (p.actionability || 'BREAKING') + ', fix: ' + (p.version || '?') + ' → ' + (p.fix_version || '?');
+          }).join('\n') +
+          '\nTotal exposure: ' + (person.totalDays || 0) + ' days. Breaking count: ' + (person.breakingCount || 0) + '. Safe fixes ignored: ' + (person.safeIgnored || 0) + '.'
+      }]
     })
   })
   .then(function(r) { return r.json(); })
   .then(function(data) {
-    var text = (data && data.content) ? data.content : 'No intelligence received from the watch.';
-    var waxSeal = '<svg width="56" height="56" viewBox="0 0 56 56" class="book-wax-seal"><circle cx="28" cy="28" r="26" fill="#8B1A1A" stroke="#C0392B" stroke-width="2"/><path d="M28 14 L28 28 M22 34 C22 40 25 44 28 46 C31 44 34 40 34 34 C34 28 28 28 28 28 C28 28 22 28 22 34Z" stroke="#F5E6C8" stroke-width="2" fill="none"/><circle cx="28" cy="20" r="3" fill="#F5E6C8"/><path d="M16 40 L40 40" stroke="#F5E6C8" stroke-width="1.5"/></svg>';
-    var backBtn = '<button class="book-back-btn" onclick="returnToBookLog()">← BACK TO LOG</button>';
-    var briefHTML = '<div class="book-brief-wrap">' +
-      "<div class=\"book-brief-header\">CAPTAIN'S BRIEF &mdash; @" + _bookPerson.login + '</div>' +
-      '<div class="book-brief-divider"></div>' +
-      '<div class="book-brief-text">' + text.replace(/\n/g, '<br/>') + '</div>' +
-      waxSeal + backBtn +
-    '</div>';
-    if (leftPage) leftPage.innerHTML = briefHTML;
-    if (rightPage) rightPage.innerHTML = '';
+    var response = (data && data.content) ? data.content : 'No intelligence received from the watch.';
+    renderBrief(person, response);
   })
   .catch(function() {
-    if (leftPage) leftPage.innerHTML = '<div class="book-brief-wrap"><div class="book-brief-text">Signal lost — could not reach the intelligence layer.</div><button class="book-back-btn" onclick="returnToBookLog()">← BACK TO LOG</button></div>';
+    if (leftPage) leftPage.innerHTML = '<div style="padding:28px 24px;font-family:Georgia,serif;font-style:italic;color:#8B6914;">Signal lost — could not reach the intelligence layer.<br><br><button onclick="returnToLog()" style="background:rgba(139,94,60,0.3);border:1px solid #8B5E3C;color:#3D1F0A;padding:7px 18px;border-radius:4px;font-family:Georgia,serif;font-size:13px;cursor:pointer;">← BACK TO LOG</button></div>';
     if (rightPage) rightPage.innerHTML = '';
   });
 }
 
-function returnToBookLog() {
-  _bookBriefMode = false;
-  updateBookContent(_bookCurrentSpread);
+function returnToLog() {
+  updateBookContent(_bookPerson, _bookCurrentSpread);
 }
 
-// Wire up book controls
+// Wire up overlay click-to-close
 document.addEventListener('DOMContentLoaded', function() {
   var overlay = document.getElementById('crew-book-overlay');
-  var closeBtn = document.getElementById('book-close');
-  var prevBtn = document.getElementById('book-prev');
-  var nextBtn = document.getElementById('book-next');
-  var bookmark = document.getElementById('book-bookmark');
-
   if (overlay) overlay.addEventListener('click', function(e) {
     if (e.target === overlay) closeCrewBook();
   });
-  if (closeBtn) closeBtn.addEventListener('click', closeCrewBook);
-  if (prevBtn) prevBtn.addEventListener('click', flipPageBackward);
-  if (nextBtn) nextBtn.addEventListener('click', flipPageForward);
-  if (bookmark) bookmark.addEventListener('click', showBookBrief);
 });
 
 
