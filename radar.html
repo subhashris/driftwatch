@@ -564,7 +564,7 @@
     color: var(--neon-cyan); letter-spacing: 0.15em; text-transform: uppercase;
     text-shadow: 0 0 10px var(--neon-cyan-glow);
   }
-  .chart-sub { font-size: 11px; color: var(--text3); }
+  .chart-sub { font-size: 11px; color: #A8C8D8; }
   .chart-legend { display: flex; gap: 14px; margin-left: auto; }
   .legend-item {
     display: flex;
@@ -578,14 +578,14 @@
     background: rgba(255,255,255,0.04);
     color: var(--text3);
   }
-  .legend-item.breaking { color: #FF6B6B; border-color: rgba(255,107,107,0.3); }
-  .legend-item.safe { color: #00FF88; border-color: rgba(0,255,136,0.3); }
-  .legend-item.precve { color: #00FFFF; border-color: rgba(0,255,255,0.3); }
+  .legend-item.breaking { color: #FF4444; border-color: #FF4444; background: rgba(255,68,68,0.15); }
+  .legend-item.safe { color: #00FF88; border-color: #00FF88; background: rgba(0,255,136,0.15); }
+  .legend-item.precve { color: #00FFFF; border-color: #00FFFF; background: rgba(0,255,255,0.15); }
   .legend-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; box-shadow: 0 0 6px currentColor; }
 
   .hazard-chart-wrap { position: relative; }
   .chart-y-label {
-    font-family: var(--mono); font-size: 9px; color: var(--text3);
+    font-family: var(--mono); font-size: 9px; color: #A8C8D8;
     letter-spacing: 0.1em; margin-bottom: 6px; text-align: center;
   }
 
@@ -666,7 +666,7 @@
     position: absolute;
     top: 12px; right: 16px;
     font-family: var(--mono); font-size: 9px;
-    color: rgba(255,68,68,0.5); letter-spacing: 0.15em;
+    color: #A8C8D8; letter-spacing: 0.15em;
   }
 
   .chart-axis-x {
@@ -674,7 +674,7 @@
     bottom: 8px; left: 16px; right: 16px;
     display: flex; justify-content: space-between;
     font-family: var(--mono); font-size: 9px;
-    color: var(--text3); pointer-events: none;
+    color: #A8C8D8; pointer-events: none;
   }
 
   .hazard-buoy {
@@ -1362,6 +1362,8 @@
     font-family: var(--mono);
     text-align: center;
   }
+  /* Command Bridge footer stats line — brighter muted blue (FIX 4) */
+  #footerNote { color: #A8C8D8; }
 
   /* WAVE DIVIDER */
   .wave-divider {
@@ -1514,6 +1516,315 @@
   }
   .radar-progress-pct { font-family: var(--mono); font-size: 11px; color: var(--text3); }
   .radar-repo { font-family: var(--mono); font-size: 11px; color: var(--text3); letter-spacing: 0.05em; }
+
+  /* ── Command Bridge redesign ── */
+  .cb-hero {
+    background: linear-gradient(135deg, rgba(255,68,68,0.06) 0%, rgba(232,197,90,0.04) 100%);
+    border: 1px solid rgba(232,197,90,0.18);
+    border-left: 3px solid var(--gold);
+    border-radius: 6px;
+    padding: 28px 32px;
+    margin-bottom: 22px;
+  }
+  .cb-hero-numwrap { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; }
+  .cb-hero-weeks {
+    font-family: var(--mono);
+    font-size: 84px;
+    font-weight: 700;
+    color: var(--gold);
+    line-height: 1;
+    text-shadow: 0 0 30px rgba(232,197,90,0.4), 0 0 60px rgba(232,197,90,0.18);
+  }
+  .cb-hero-weeks-unit { font-family: var(--mono); font-size: 26px; color: var(--text2); letter-spacing: 0.04em; }
+  .cb-hero-days-line {
+    font-family: var(--mono);
+    font-size: 14px;
+    color: var(--text3);
+    margin-top: 6px;
+    letter-spacing: 0.05em;
+  }
+  .cb-hero-days-num { color: var(--text2); }
+  .cb-hero-sub {
+    margin-top: 14px;
+    font-size: 15px;
+    color: var(--text2);
+    line-height: 1.7;
+  }
+  .cb-hero-repo { color: var(--neon-cyan); font-family: var(--mono); font-size: 13px; }
+  .cb-hero-pkg { color: var(--neon-red); font-family: var(--mono); font-size: 13px; font-weight: 700; }
+  .cb-hero-fix-date { color: var(--gold); font-family: var(--mono); font-size: 13px; font-weight: 600; }
+
+  /* Severity-weighted stat panels */
+  .cb-stats {
+    display: flex;
+    gap: 14px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+  }
+  .cb-stat {
+    position: relative;
+    background:
+      repeating-linear-gradient(
+        90deg,
+        rgba(120,80,30,0.03) 0px,
+        rgba(120,80,30,0.03) 1px,
+        transparent 1px,
+        transparent 5px
+      ),
+      repeating-linear-gradient(
+        180deg,
+        rgba(180,120,50,0.025) 0px,
+        rgba(180,120,50,0.025) 1px,
+        transparent 1px,
+        transparent 9px
+      ),
+      var(--bg-card);
+    border: 1px solid rgba(200,140,70,0.25);
+    border-radius: 6px;
+    padding: 18px 20px;
+    min-width: 160px;
+    overflow: hidden;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .cb-stat.s-red { flex-grow: 2; border-color: rgba(255,68,68,0.45); box-shadow: 0 0 22px rgba(255,68,68,0.18), inset 0 0 30px rgba(255,68,68,0.04); }
+  .cb-stat.s-orange { flex-grow: 1.5; border-color: rgba(255,140,0,0.45); box-shadow: 0 0 18px rgba(255,140,0,0.14); }
+  .cb-stat.s-green { flex-grow: 1; border-color: rgba(0,255,136,0.45); box-shadow: 0 0 16px rgba(0,255,136,0.12); }
+  .cb-stat-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    color: var(--text2);
+    margin-bottom: 10px;
+    text-transform: uppercase;
+  }
+  .cb-stat-value {
+    font-family: var(--mono);
+    font-size: 42px;
+    font-weight: 700;
+    line-height: 1;
+    color: var(--text);
+    text-shadow: 0 0 20px currentColor;
+  }
+  .cb-stat.s-red .cb-stat-value { color: var(--neon-red); }
+  .cb-stat.s-orange .cb-stat-value { color: var(--neon-orange); }
+  .cb-stat.s-green .cb-stat-value { color: var(--neon-green); }
+  .cb-stat-sub { font-size: 11px; color: #A8C8D8; margin-top: 6px; }
+
+  /* Hazard chart admiralty map overlay */
+  .cb-map-overlay {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .cb-map-overlay svg { width: 100%; height: 100%; }
+
+  /* Parchment scroll layout — aged sandal amber scrolls */
+  .cb-scrolls {
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+    margin-top: 26px;
+  }
+  .cb-scroll {
+    position: relative;
+    width: calc(45% - 16px);
+    min-height: 280px;
+    overflow: visible;
+  }
+  /* 3D cylinder top curl */
+  .cb-scroll-top-curl {
+    height: 42px;
+    width: 100%;
+    background: linear-gradient(
+      to bottom,
+      #2A1200 0%,
+      #6B3A08 18%,
+      #E8C860 42%,
+      #C49840 62%,
+      #B08030 78%,
+      #C8A048 100%
+    );
+    border-radius: 50% 50% 0 0 / 22px 22px 0 0;
+    box-shadow:
+      0 -2px 4px rgba(0,0,0,0.5),
+      inset 0 -3px 8px rgba(0,0,0,0.25);
+  }
+  /* 3D cylinder bottom curl */
+  .cb-scroll-bottom-curl {
+    height: 36px;
+    width: 100%;
+    background: linear-gradient(
+      to bottom,
+      #C8A048 0%,
+      #B08030 20%,
+      #C49840 38%,
+      #E8C860 55%,
+      #6B3A08 78%,
+      #2A1200 100%
+    );
+    border-radius: 0 0 50% 50% / 0 0 18px 18px;
+    box-shadow:
+      0 4px 8px rgba(0,0,0,0.5),
+      inset 0 3px 8px rgba(0,0,0,0.25);
+  }
+  .cb-scroll-body {
+    margin: 0 6px;
+    background:
+      repeating-linear-gradient(
+        0deg,
+        transparent, transparent 3px,
+        rgba(80,40,5,0.04) 3px, rgba(80,40,5,0.04) 4px
+      ),
+      repeating-linear-gradient(
+        88deg,
+        transparent, transparent 12px,
+        rgba(60,30,5,0.025) 12px, rgba(60,30,5,0.025) 13px
+      ),
+      radial-gradient(ellipse 55% 25% at 12% 18%, rgba(100,50,5,0.18) 0%, transparent 100%),
+      radial-gradient(ellipse 35% 20% at 82% 72%, rgba(80,40,5,0.15) 0%, transparent 100%),
+      radial-gradient(ellipse 25% 35% at 68% 12%, rgba(90,45,5,0.12) 0%, transparent 100%),
+      radial-gradient(ellipse at center, transparent 35%, rgba(50,25,0,0.32) 100%),
+      linear-gradient(
+        to bottom,
+        #C8A048 0%,
+        #DDB855 15%,
+        #E8C860 30%,
+        #DDB050 55%,
+        #E0B855 70%,
+        #D4A840 85%,
+        #C09030 100%
+      );
+    box-shadow:
+      inset 4px 0 10px rgba(30,15,0,0.28),
+      inset -4px 0 10px rgba(30,15,0,0.28),
+      inset 0 0 30px rgba(50,25,0,0.12);
+    padding: 20px 28px;
+    position: relative;
+    overflow: hidden;
+    min-height: 240px;
+  }
+  /* Torn bottom paper edge */
+  .cb-scroll-body::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 18px;
+    clip-path: polygon(
+      0% 40%, 3% 0%, 7% 55%, 11% 10%, 15% 50%,
+      19% 5%, 23% 45%, 27% 8%, 32% 52%, 36% 12%,
+      40% 48%, 44% 6%, 49% 44%, 53% 10%, 57% 50%,
+      61% 8%, 66% 46%, 70% 12%, 74% 48%, 78% 5%,
+      82% 50%, 86% 10%, 90% 45%, 94% 8%, 97% 40%,
+      100% 15%, 100% 100%, 0% 100%
+    );
+    background-color: #C8A048;
+    mix-blend-mode: multiply;
+    opacity: 0.9;
+    pointer-events: none;
+  }
+  .cb-scroll-content {
+    position: relative;
+    z-index: 1;
+  }
+  .cb-scroll-title {
+    font-family: var(--mono);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin: 0 0 12px 0;
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgba(80,40,5,0.3);
+  }
+  .cb-scroll-title.storm { color: #6B0000; }
+  .cb-scroll-title.smooth { color: #1A4400; }
+  .cb-scroll-row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 6px 0;
+    border-bottom: 1px dashed rgba(80,40,5,0.25);
+    font-size: 13px;
+  }
+  .cb-scroll-row:last-child { border-bottom: none; }
+  .cb-scroll-pkg {
+    font-family: var(--mono);
+    font-weight: 700;
+    color: #0F0600;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    min-width: 0;
+    flex: 1;
+  }
+  .cb-scroll-weeks {
+    font-family: var(--mono);
+    font-size: 12px;
+    font-style: italic;
+    color: #3D1800;
+    white-space: nowrap;
+  }
+  .cb-scroll-more {
+    margin-top: 10px;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: #5A3010;
+    font-style: italic;
+  }
+  .cb-scroll-empty {
+    text-align: center;
+    font-family: var(--mono);
+    font-size: 12px;
+    color: rgba(50,25,5,0.6);
+    font-style: italic;
+    padding: 24px 0;
+  }
+  /* Water stain blobs */
+  .cb-scroll-stain {
+    position: absolute;
+    border-radius: 40% 60% 55% 45% / 50% 45% 55% 50%;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.09;
+    background: radial-gradient(ellipse, rgba(60,30,5,0.8) 0%, transparent 70%);
+  }
+
+  /* Compass divider between scrolls */
+  .cb-divider {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 0 4px;
+    min-width: 90px;
+  }
+  @keyframes compassSpin {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+  }
+  .cb-divider-compass {
+    width: 62px;
+    height: 62px;
+    filter: drop-shadow(0 0 12px rgba(200,168,75,0.45));
+    animation: compassSpin 12s linear infinite;
+    transform-origin: center center;
+  }
+  .cb-divider-label {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    color: #A8C8D8;
+    text-transform: uppercase;
+  }
+
+  @media (max-width: 900px) {
+    .cb-scrolls { flex-direction: column; align-items: stretch; }
+    .cb-scroll { width: 100%; }
+    .cb-divider { flex-direction: row; min-width: 0; padding: 8px 0; }
+  }
 </style>
 <style>
   /* â”€â”€ PATCH LAG (3-act redesign, .pl- scope) â”€â”€ */
@@ -2949,11 +3260,11 @@
 
       <div class="chart-section">
         <div class="chart-header">
-          <span class="chart-title">âŠ• HAZARD CHART</span>
-          <span class="chart-sub">Hover for details Â· larger buoys = more CVEs</span>
+          <span class="chart-title">&#8853; HAZARD CHART</span>
+          <span class="chart-sub">Hover for details &middot; larger buoys = more CVEs</span>
           <div class="chart-legend">
             <span class="legend-item breaking">
-              <span class="legend-dot" style="background:#FF6B6B;box-shadow:0 0 4px #FF6B6B"></span>
+              <span class="legend-dot" style="background:#FF4444;box-shadow:0 0 4px #FF4444"></span>
               BREAKING
             </span>
             <span class="legend-item safe">
@@ -2968,9 +3279,42 @@
         </div>
 
         <div class="hazard-chart-wrap">
-          <div class="chart-y-label">â† FEW CVEs Â· MORE CVEs â†’</div>
+          <div class="chart-y-label">&larr; FEW CVEs &middot; MORE CVEs &rarr;</div>
 
           <div class="hazard-chart" id="hazard-chart">
+            <div class="cb-map-overlay" aria-hidden="true">
+              <svg viewBox="0 0 1000 400" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+                <g fill="none" stroke="rgba(0,180,180,0.06)" stroke-width="0.8">
+                  <!-- North America -->
+                  <path d="M80,90 Q120,70 170,80 Q220,75 250,110 Q260,150 240,180 Q200,200 180,230 Q150,250 120,230 Q90,200 80,160 Z"/>
+                  <path d="M100,110 Q140,100 200,115 Q230,145 215,180 Q180,200 140,195 Q110,170 100,140 Z"/>
+                  <path d="M120,130 Q160,125 195,140 Q200,170 175,185 Q145,180 125,160 Z"/>
+                  <path d="M140,150 Q170,148 185,165 Q175,180 155,175 Q145,165 140,150 Z"/>
+                  <!-- South America -->
+                  <path d="M220,230 Q250,225 270,260 Q280,310 260,350 Q235,375 215,360 Q205,320 210,275 Z"/>
+                  <path d="M230,250 Q255,250 265,285 Q265,330 245,350 Q225,340 225,300 Z"/>
+                  <path d="M238,275 Q255,275 258,305 Q252,330 240,330 Q232,305 238,275 Z"/>
+                  <!-- Europe -->
+                  <path d="M460,90 Q500,80 540,95 Q560,120 545,145 Q510,160 480,150 Q455,130 460,105 Z"/>
+                  <path d="M475,105 Q510,100 535,115 Q535,140 510,148 Q485,140 475,120 Z"/>
+                  <path d="M488,118 Q515,118 525,135 Q510,142 495,138 Q488,125 488,118 Z"/>
+                  <!-- Africa -->
+                  <path d="M480,165 Q525,155 560,175 Q580,225 565,275 Q540,320 510,330 Q485,310 475,260 Q470,210 480,180 Z"/>
+                  <path d="M495,185 Q530,180 555,195 Q565,235 550,275 Q525,305 505,295 Q490,260 490,215 Z"/>
+                  <path d="M505,210 Q530,210 545,230 Q545,265 525,285 Q510,275 505,240 Z"/>
+                  <path d="M515,235 Q530,238 535,258 Q525,275 518,265 Q515,250 515,235 Z"/>
+                  <!-- Asia -->
+                  <path d="M560,80 Q650,65 760,85 Q830,110 850,150 Q830,180 760,185 Q680,180 610,160 Q575,130 560,100 Z"/>
+                  <path d="M590,100 Q670,90 760,105 Q810,130 800,160 Q740,170 670,165 Q615,150 590,125 Z"/>
+                  <path d="M620,120 Q690,115 760,125 Q790,145 770,160 Q700,162 640,155 Z"/>
+                  <path d="M660,135 Q720,135 760,142 Q755,155 700,158 Z"/>
+                  <!-- Australia -->
+                  <path d="M790,265 Q840,255 880,275 Q890,305 870,325 Q820,335 790,320 Q780,295 790,265 Z"/>
+                  <path d="M805,278 Q845,275 875,290 Q875,315 845,322 Q810,315 805,295 Z"/>
+                  <path d="M820,290 Q855,290 868,305 Q855,315 830,313 Z"/>
+                </g>
+              </svg>
+            </div>
             <div class="chart-compass-watermark" style="pointer-events:none">
               <svg width="80" height="80" viewBox="0 0 80 80" opacity="0.06">
                 <circle cx="40" cy="40" r="38" fill="none" stroke="rgba(0,255,255,1)" stroke-width="1"/>
@@ -2988,18 +3332,18 @@
               </svg>
             </div>
             <div class="chart-coords" style="pointer-events:none">
-              <span class="coord coord-tl">0Â°N 0Â°W</span>
-              <span class="coord coord-tr">0Â°N 90Â°E</span>
-              <span class="coord coord-bl">60Â°S 0Â°W</span>
-              <span class="coord coord-br">60Â°S 90Â°E</span>
+              <span class="coord coord-tl">0&deg;N 0&deg;W</span>
+              <span class="coord coord-tr">0&deg;N 90&deg;E</span>
+              <span class="coord coord-bl">60&deg;S 0&deg;W</span>
+              <span class="coord coord-br">60&deg;S 90&deg;E</span>
             </div>
             <div class="chart-axis-x">
               <span>RECENT</span>
-              <span>â† PATCH LAG (days exposed) â†’</span>
+              <span>&larr; PATCH LAG (days exposed) &rarr;</span>
               <span>ANCIENT</span>
             </div>
             <div class="danger-zone" id="danger-zone">
-              <span class="danger-zone-label">âš  DANGER ZONE</span>
+              <span class="danger-zone-label">&#9888; DANGER ZONE</span>
             </div>
           </div>
 
@@ -3013,30 +3357,56 @@
         </div>
       </div>
 
-      <div class="action-columns" id="action-columns">
-        <div class="action-col" id="col-act-now">
-          <div class="action-col-header red">
-            <span class="col-icon">ðŸš¨</span>
-            <span class="col-title">ABANDON SHIP</span>
-            <span class="col-count" id="act-now-count">0</span>
+      <div class="cb-scrolls" id="cb-scrolls">
+        <div class="cb-scroll" id="cb-scroll-storm">
+          <div class="cb-scroll-top-curl"></div>
+          <div class="cb-scroll-body">
+            <div class="cb-scroll-stain" style="width:120px;height:80px;top:15%;left:8%;"></div>
+            <div class="cb-scroll-stain" style="width:90px;height:60px;top:55%;right:12%;"></div>
+            <div class="cb-scroll-stain" style="width:70px;height:50px;top:35%;left:55%;"></div>
+            <div class="cb-scroll-content">
+              <h3 class="cb-scroll-title storm">&#9888; Storm Warning</h3>
+              <div id="cb-storm-list"></div>
+            </div>
           </div>
-          <div class="action-col-body" id="act-now-body"></div>
+          <div class="cb-scroll-bottom-curl"></div>
         </div>
-        <div class="action-col" id="col-this-sprint">
-          <div class="action-col-header green">
-            <span class="col-icon">â›µ</span>
-            <span class="col-title">SMOOTH SAILING</span>
-            <span class="col-count" id="sprint-count">0</span>
-          </div>
-          <div class="action-col-body" id="sprint-body"></div>
+        <div class="cb-divider" aria-hidden="true">
+          <svg class="cb-divider-compass" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="cbCompassGold" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#F0D898"/>
+                <stop offset="50%" stop-color="#C8A84B"/>
+                <stop offset="100%" stop-color="#8B6914"/>
+              </linearGradient>
+            </defs>
+            <circle cx="30" cy="30" r="28" fill="none" stroke="url(#cbCompassGold)" stroke-width="1.2"/>
+            <circle cx="30" cy="30" r="20" fill="none" stroke="url(#cbCompassGold)" stroke-width="0.6" opacity="0.7"/>
+            <polygon points="30,2 27,30 30,26 33,30" fill="url(#cbCompassGold)"/>
+            <polygon points="30,58 27,30 30,34 33,30" fill="#8B6914" opacity="0.8"/>
+            <polygon points="58,30 30,27 34,30 30,33" fill="url(#cbCompassGold)" opacity="0.9"/>
+            <polygon points="2,30 30,27 26,30 30,33" fill="url(#cbCompassGold)" opacity="0.9"/>
+            <polygon points="49,11 31,29 33,29 31,31" fill="url(#cbCompassGold)" opacity="0.6"/>
+            <polygon points="11,49 29,31 27,31 29,29" fill="url(#cbCompassGold)" opacity="0.6"/>
+            <polygon points="49,49 31,31 31,29 29,31" fill="url(#cbCompassGold)" opacity="0.6"/>
+            <polygon points="11,11 29,29 29,31 31,29" fill="url(#cbCompassGold)" opacity="0.6"/>
+            <circle cx="30" cy="30" r="2.5" fill="url(#cbCompassGold)"/>
+            <text x="30" y="6" text-anchor="middle" fill="url(#cbCompassGold)" font-size="6" font-family="Space Mono" font-weight="700">N</text>
+          </svg>
+          <div class="cb-divider-label">Charted Waters</div>
         </div>
-        <div class="action-col" id="col-watch">
-          <div class="action-col-header cyan">
-            <span class="col-icon">âš¡</span>
-            <span class="col-title">STORM WARNING</span>
-            <span class="col-count" id="watch-count">0</span>
+        <div class="cb-scroll" id="cb-scroll-smooth">
+          <div class="cb-scroll-top-curl"></div>
+          <div class="cb-scroll-body">
+            <div class="cb-scroll-stain" style="width:120px;height:80px;top:15%;left:8%;"></div>
+            <div class="cb-scroll-stain" style="width:90px;height:60px;top:55%;right:12%;"></div>
+            <div class="cb-scroll-stain" style="width:70px;height:50px;top:35%;left:55%;"></div>
+            <div class="cb-scroll-content">
+              <h3 class="cb-scroll-title smooth">&#10003; Smooth Sailing</h3>
+              <div id="cb-smooth-list"></div>
+            </div>
           </div>
-          <div class="action-col-body" id="watch-body"></div>
+          <div class="cb-scroll-bottom-curl"></div>
         </div>
       </div>
     </section>
@@ -3253,6 +3623,9 @@ document.querySelectorAll('.nav-item').forEach(item => {
       const screenEl = document.getElementById('screen-' + target);
       if (screenEl) screenEl.classList.add('active');
       if (target === 'patchlag' && typeof renderThreatIntel === 'function') renderThreatIntel();
+      if (target === 'overview' && window.currentData && typeof renderOverview === 'function') {
+        renderOverview(window.currentData);
+      }
     }
     window.scrollTo({ top: 0, behavior: 'instant' });
   });
@@ -3366,8 +3739,8 @@ function renderAll() {
   renderCrew(d);
   renderQueries(d);
   updateBadges(d);
-  document.getElementById('overviewSub').textContent = `${d.owner}/${d.repo} â€” ${d.scan?.length || 0} vulnerable packages`;
-  document.getElementById('footerNote').textContent = `${d.scan?.length || 0} packages Â· ${d.sweep?.upgrade_actionability?.length || 0} upgrade paths Â· ${d.ownership?.length || 0} owners mapped Â· scan ${d.sweep?.scan_date || 'demo data'}`;
+  document.getElementById('overviewSub').textContent = `${d.owner}/${d.repo} — ${d.scan?.length || 0} vulnerable packages`;
+  document.getElementById('footerNote').textContent = `${d.scan?.length || 0} packages · ${d.sweep?.upgrade_actionability?.length || 0} upgrade paths · ${d.ownership?.length || 0} owners mapped · scan ${d.sweep?.scan_date || 'demo data'}`;
 }
 
 function updateBadges(d) {
@@ -3391,79 +3764,133 @@ function renderOverview(d) {
   const ua = sweep.upgrade_actionability || [];
   const worst = scan[0];
   const preCount = (sweep.pre_cve_findings || []).filter(f => f.has_security_deprecation).length;
-  const safeDedupe = new Set(ua.filter(u => u.actionability === 'SAFE').map(u => u.name));
-  const maxDays = scan.reduce((m, p) => Math.max(m, p.worst_days_exposed || 0), 0);
 
-  // Headline â€” dramatic count-up with fade-in text
+  // Hero — weeks primary, days secondary, dynamic comparison
+  const headlineEl = document.getElementById('headline');
   if (worst) {
-    document.getElementById('headline').innerHTML = `
-      <div class="headline-banner">
-        <div class="headline-number-wrap">
-          <span class="headline-number gold-metal" id="headline-days">0</span>
-          <span class="headline-unit">days</span>
+    const worstDays = worst.worst_days_exposed || 0;
+    const worstWeeks = Math.round(worstDays / 7);
+    // Earliest CVE published date for the worst package
+    let earliestPub = null;
+    (worst.cves || []).forEach(c => {
+      if (!c.published) return;
+      const dt = new Date(c.published);
+      if (!isNaN(dt) && (!earliestPub || dt < earliestPub)) earliestPub = dt;
+    });
+    const fixDateStr = earliestPub
+      ? earliestPub.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
+      : 'before this scan began';
+
+    headlineEl.innerHTML = `
+      <div class="cb-hero">
+        <div class="cb-hero-numwrap">
+          <span class="cb-hero-weeks gold-metal" id="cb-hero-weeks-num" data-target="${worstWeeks}">0</span>
+          <span class="cb-hero-weeks-unit">weeks</span>
         </div>
-        <div class="headline-text" id="headline-text" style="opacity:0">
-          That's how long <span class="headline-repo">${escape(d.owner)}/${escape(d.repo)}</span> has been exposed to
-          <span class="headline-pkg">${escape(worst.name)}</span>'s vulnerability â€”
-          <span class="headline-emphasis">with a fix available the entire time.</span>
+        <div class="cb-hero-days-line">
+          <span class="cb-hero-days-num" id="cb-hero-days-num" data-target="${worstDays}">0</span> days
+        </div>
+        <div class="cb-hero-sub">
+          That's how long <span class="cb-hero-repo">${escape(d.owner)}/${escape(d.repo)}</span> has been exposed to
+          <span class="cb-hero-pkg">${escape(worst.name)}</span>'s vulnerability &mdash;
+          with a fix available since <span class="cb-hero-fix-date">${escape(fixDateStr)}</span>.
         </div>
       </div>
     `;
-    const daysEl = document.getElementById('headline-days');
-    animateCountUp(daysEl, worst.worst_days_exposed || 0, 2000);
-    setTimeout(() => {
-      const t = document.getElementById('headline-text');
-      if (t) t.style.opacity = '1';
-    }, 2200);
+    animateCountUp(document.getElementById('cb-hero-weeks-num'), worstWeeks, 2000);
+    animateCountUp(document.getElementById('cb-hero-days-num'), worstDays, 2000);
   } else {
-    document.getElementById('headline').innerHTML = `
-      <div class="headline-banner">
-        <div class="headline-text" style="opacity:1">
-          <span class="headline-emphasis">No vulnerable packages detected â€” clean waters ahead.</span>
+    headlineEl.innerHTML = `
+      <div class="cb-hero">
+        <div class="cb-hero-sub">
+          <span style="color:var(--text);font-weight:500">No vulnerable packages detected — clean waters ahead.</span>
         </div>
       </div>
     `;
   }
 
-  // Stats â€” with empty-state for zero pre-CVE
-  const preCveCardInner = preCount > 0
-    ? `<div class="stat-value" data-target="${preCount}">0</div>
-       <div class="stat-sub">deprecations detected</div>`
-    : `<div class="stat-empty"><span class="check">âœ“</span><span>Clean Waters</span></div>
-       <div class="stat-sub">no pre-CVE signals</div>`;
-  const stats = [
-    { cls: 'red', label: 'VULNERABLE PACKAGES', val: scan.length, sub: 'across all ecosystems' },
-    { cls: 'amber', label: 'WORST PATCH LAG', val: maxDays, sub: 'days exposed' },
-    { cls: 'green', label: 'SAFE UPGRADES', val: safeDedupe.size, sub: 'do this sprint' },
-  ];
-  document.getElementById('statsRow').innerHTML = stats.slice(0,2).map(s => `
-    <div class="stat-card ${s.cls}">
-      <div class="stat-label">${s.label}</div>
-      <div class="stat-value" data-target="${s.val}">0</div>
-      <div class="stat-sub">${s.sub}</div>
+  // Severity-weighted 4-panel stats — deduplicate scan by name first
+  const _seenForTiles = new Set();
+  const _dedupedScan = scan.filter(p => { if (_seenForTiles.has(p.name)) return false; _seenForTiles.add(p.name); return true; });
+  const vulnCount = _dedupedScan.length;
+  const breakingCount = _dedupedScan.filter(p => {
+    const u = ua.find(x => x.name === p.name);
+    return u && u.actionability === 'BREAKING';
+  }).length;
+  const safeCount = _dedupedScan.filter(p => {
+    const u = ua.find(x => x.name === p.name);
+    return u && u.actionability === 'SAFE';
+  }).length;
+
+  const statsRow = document.getElementById('statsRow');
+  statsRow.className = 'cb-stats';
+  statsRow.innerHTML = `
+    <div class="cb-stat s-red">
+      <div class="cb-stat-label">Vulnerable Packages</div>
+      <div class="cb-stat-value" data-target="${vulnCount}">0</div>
+      <div class="cb-stat-sub">across all ecosystems</div>
     </div>
-  `).join('') + `
-    <div class="stat-card amber ${preCount > 0 ? 'pulsing' : ''}">
-      <div class="stat-label">PRE-CVE SIGNALS</div>
-      ${preCveCardInner}
+    <div class="cb-stat s-orange">
+      <div class="cb-stat-label">Pre-CVE Signals</div>
+      <div class="cb-stat-value" data-target="${preCount}">0</div>
     </div>
-  ` + `
-    <div class="stat-card green">
-      <div class="stat-label">${stats[2].label}</div>
-      <div class="stat-value" data-target="${stats[2].val}">0</div>
-      <div class="stat-sub">${stats[2].sub}</div>
+    <div class="cb-stat s-orange">
+      <div class="cb-stat-label">Critical Upgrades</div>
+      <div class="cb-stat-value" data-target="${breakingCount}">0</div>
+    </div>
+    <div class="cb-stat s-green">
+      <div class="cb-stat-label">Safe Upgrades</div>
+      <div class="cb-stat-value" data-target="${safeCount}">0</div>
     </div>
   `;
-  document.querySelectorAll('.stat-value').forEach(el => {
-    animateCountUp(el, parseInt(el.dataset.target, 10), 900);
+  statsRow.querySelectorAll('.cb-stat-value').forEach(el => {
+    animateCountUp(el, parseInt(el.dataset.target, 10), 1500);
   });
 
   // Expose sweep data globally so the chart builder can reach it
   window._sweepData = sweep;
 
-  // Build the hazard chart and three action columns
   buildHazardChart(scan, d.ownership || []);
-  buildActionColumns(scan, d.ownership || [], sweep);
+  buildParchmentScrolls(scan, sweep);
+}
+
+function buildParchmentScrolls(scanData, sweepData) {
+  // Pull directly from scan — deduplicate by name, join with ua.find (same logic as tiles)
+  const ua = sweepData?.upgrade_actionability || [];
+  const seen = new Set();
+  const breaking = [], safe = [];
+  (scanData || []).forEach(pkg => {
+    if (seen.has(pkg.name)) return;
+    seen.add(pkg.name);
+    const u = ua.find(x => x.name === pkg.name);
+    if (!u) return;
+    const entry = { name: pkg.name, days: pkg.worst_days_exposed || 0 };
+    if (u.actionability === 'BREAKING') breaking.push(entry);
+    else if (u.actionability === 'SAFE') safe.push(entry);
+  });
+  breaking.sort((a, b) => b.days - a.days);
+  safe.sort((a, b) => b.days - a.days);
+
+  const renderRow = (e) => {
+    const weeks = Math.round((e.days || 0) / 7);
+    return `<div class="cb-scroll-row">
+      <span class="cb-scroll-pkg" title="${escape(e.name)}">${escape(e.name)}</span>
+      <span class="cb-scroll-weeks">${weeks.toLocaleString()} weeks exposed</span>
+    </div>`;
+  };
+  const renderList = (arr) => {
+    if (!arr.length) return '<div class="cb-scroll-empty">&mdash; no entries &mdash;</div>';
+    const top = arr.slice(0, 6).map(renderRow).join('');
+    const more = arr.length > 6
+      ? `<div class="cb-scroll-more">+ ${arr.length - 6} more</div>`
+      : '';
+    return top + more;
+  };
+
+  const stormList = document.getElementById('cb-storm-list');
+  const smoothList = document.getElementById('cb-smooth-list');
+  if (stormList) stormList.innerHTML = renderList(breaking);
+  if (smoothList) smoothList.innerHTML = renderList(safe);
 }
 
 // â”€â”€ Hazard Chart (2D scatter of buoys) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
@@ -3511,12 +3938,19 @@ function buildHazardChart(scanData, ownershipData) {
     const preCVE = (sweep.pre_cve_findings || [])
       .find(f => f.name === pkg.name && f.has_security_deprecation);
 
-    let color, glowColor;
-    if (preCVE) { color = '#00FFFF'; glowColor = 'rgba(0,255,255,0.5)'; }
-    else if (actionability === 'SAFE') { color = '#00FF88'; glowColor = 'rgba(0,255,136,0.5)'; }
-    else if ((pkg.worst_days_exposed || 0) > 365) { color = '#FF4444'; glowColor = 'rgba(255,68,68,0.5)'; }
-    else if ((pkg.worst_days_exposed || 0) > 90) { color = '#FF8C00'; glowColor = 'rgba(255,140,0,0.5)'; }
-    else { color = '#4488FF'; glowColor = 'rgba(68,136,255,0.5)'; }
+    // Dot color must match the legend exactly (FIX 3):
+    //   BREAKING -> red, SAFE -> green, pre-CVE -> cyan.
+    //   Mixed (BREAKING + pre-CVE) -> red dot with a cyan secondary ring.
+    let color, glowColor, ringColor;
+    if (preCVE && actionability === 'BREAKING') {
+      color = '#FF4444'; glowColor = 'rgba(255,68,68,0.5)'; ringColor = '#00FFFF';
+    } else if (preCVE) {
+      color = '#00FFFF'; glowColor = 'rgba(0,255,255,0.5)'; ringColor = '#00FFFF';
+    } else if (actionability === 'SAFE') {
+      color = '#00FF88'; glowColor = 'rgba(0,255,136,0.5)'; ringColor = '#00FF88';
+    } else {
+      color = '#FF4444'; glowColor = 'rgba(255,68,68,0.5)'; ringColor = '#FF4444';
+    }
 
     const ownerRecord = (ownershipData || []).find(o => o.package === pkg.name);
     const owner = ownerRecord?.owners?.find(o => !/\[bot\]/i.test(o));
@@ -3541,7 +3975,7 @@ function buildHazardChart(scanData, ownershipData) {
         "></div>
       </div>
       <div style="position:absolute;inset:-4px;border-radius:50%;
-        border: 1px solid ${color}44; animation: buoyPulse ${2 + (i*0.3)%3}s ease-out infinite;"></div>
+        border: 1px solid ${ringColor}${ringColor === color ? '44' : 'cc'}; animation: buoyPulse ${2 + (i*0.3)%3}s ease-out infinite;"></div>
       <div class="buoy-label">${escape(pkg.name.split('/').pop().substring(0, 14))}</div>
     `;
 
@@ -3565,12 +3999,12 @@ function buildHazardChart(scanData, ownershipData) {
       document.getElementById('tt-pkg').innerHTML =
         rankLine + '<span style="color:var(--text)">' +
         escape(pkg.name + '@' + (pkg.version || '?')) + '</span>';
-      document.getElementById('tt-days').textContent = 'â§– ' + (pkg.worst_days_exposed || 0).toLocaleString() + ' days exposed';
-      document.getElementById('tt-owner').textContent = owner ? 'ðŸ‘¤ @' + owner : 'ðŸ‘¤ owner unknown';
+      document.getElementById('tt-days').textContent = (pkg.worst_days_exposed || 0).toLocaleString() + ' days exposed';
+      document.getElementById('tt-owner').textContent = owner ? '@' + owner : 'owner unknown';
       const fixedIn = upgrade?.fixed_version || pkg.cves?.[0]?.fixed_in || '?';
-      document.getElementById('tt-action').innerHTML = '<span style="color:' + color + '">' + actionability + '</span> Â· fix in ' + escape(fixedIn);
+      document.getElementById('tt-action').innerHTML = '<span style="color:' + color + '">' + actionability + '</span> &middot; fix in ' + escape(fixedIn);
       const cveCount = (pkg.cves || []).length;
-      document.getElementById('tt-cves').textContent = cveCount + ' CVE' + (cveCount === 1 ? '' : 's') + (preCVE ? ' Â· âš¡ PRE-CVE signal' : '');
+      document.getElementById('tt-cves').textContent = cveCount + ' CVE' + (cveCount === 1 ? '' : 's') + (preCVE ? ' · PRE-CVE signal' : '');
       const rect = chart.getBoundingClientRect();
       const ex = e.clientX - rect.left;
       const ey = e.clientY - rect.top;
