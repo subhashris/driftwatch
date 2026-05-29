@@ -1,9 +1,9 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>DriftWatch â€” Captain's Chart Room</title>
+<title>DriftWatch Ã¢â‚¬â€ Captain's Chart Room</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -38,7 +38,7 @@
     --neon-cyan-glow: rgba(0, 255, 255, 0.2);
     --neon-blue: #4488FF;
 
-    /* Legacy aliases â€” map old names to the new neon palette so existing rules pick up the theme */
+    /* Legacy aliases Ã¢â‚¬â€ map old names to the new neon palette so existing rules pick up the theme */
     --red: #FF4444;
     --red-dim: rgba(255, 68, 68, 0.15);
     --green: #00FF88;
@@ -85,7 +85,7 @@
     overflow-x: hidden;
   }
 
-  /* Gold metallic gradient â€” for large display text only */
+  /* Gold metallic gradient Ã¢â‚¬â€ for large display text only */
   .gold-metal {
     background: linear-gradient(
       160deg,
@@ -100,7 +100,7 @@
     background-clip: text;
   }
 
-  /* Bioluminescence â€” drifting particles in deep water */
+  /* Bioluminescence Ã¢â‚¬â€ drifting particles in deep water */
   .bioluminescence {
     position: fixed;
     inset: 0;
@@ -143,7 +143,7 @@
     100% { transform: translateY(-80px) translateX(20px); opacity: 0.4; }
   }
 
-  /* Ocean floor â€” full SVG waves at bottom of viewport, every screen */
+  /* Ocean floor Ã¢â‚¬â€ full SVG waves at bottom of viewport, every screen */
   .ocean-floor {
     position: fixed;
     bottom: 0;
@@ -195,7 +195,7 @@
     animation: waveMid 8s linear infinite;
   }
 
-  /* Ship watermark â€” sails on the Command Bridge */
+  /* Ship watermark Ã¢â‚¬â€ sails on the Command Bridge */
   .ship-watermark {
     position: absolute;
     right: 40px;
@@ -407,17 +407,12 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 100%;
     padding: 7px 8px;
     margin: 0 -8px;
-    background: transparent;
-    border: 0;
     border-radius: 4px;
     cursor: pointer;
     color: var(--text2);
-    font: inherit;
     font-size: 13px;
-    text-align: left;
     transition: background 0.15s, color 0.15s;
   }
   .nav-item:hover { background: var(--bg3); color: var(--text); }
@@ -558,7 +553,7 @@
   .stat-card.green .stat-value { color: var(--neon-green); }
   .stat-sub { font-size: 11px; color: var(--text3); margin-top: 4px; }
 
-  /* â”€â”€ HAZARD CHART â”€â”€ */
+  /* Ã¢â€â‚¬Ã¢â€â‚¬ HAZARD CHART Ã¢â€â‚¬Ã¢â€â‚¬ */
   .chart-section { margin-bottom: 28px; }
   .chart-header {
     display: flex; align-items: center; gap: 16px;
@@ -740,7 +735,7 @@
   .tooltip-action { font-size: 10px; margin-bottom: 3px; }
   .tooltip-cves { font-size: 10px; color: var(--text3); }
 
-  /* â”€â”€ ACTION COLUMNS â”€â”€ */
+  /* Ã¢â€â‚¬Ã¢â€â‚¬ ACTION COLUMNS Ã¢â€â‚¬Ã¢â€â‚¬ */
   .action-columns {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -1367,7 +1362,7 @@
     font-family: var(--mono);
     text-align: center;
   }
-  /* Command Bridge footer stats line — brighter muted blue (FIX 4) */
+  /* Command Bridge footer stats line â€” brighter muted blue (FIX 4) */
   #footerNote { color: #A8C8D8; }
 
   /* WAVE DIVIDER */
@@ -1522,7 +1517,7 @@
   .radar-progress-pct { font-family: var(--mono); font-size: 11px; color: var(--text3); }
   .radar-repo { font-family: var(--mono); font-size: 11px; color: var(--text3); letter-spacing: 0.05em; }
 
-  /* ── Command Bridge redesign ── */
+  /* â”€â”€ Command Bridge redesign â”€â”€ */
   .cb-hero {
     background: linear-gradient(135deg, rgba(255,68,68,0.06) 0%, rgba(232,197,90,0.04) 100%);
     border: 1px solid rgba(232,197,90,0.18);
@@ -1624,7 +1619,7 @@
   }
   .cb-map-overlay svg { width: 100%; height: 100%; }
 
-  /* Parchment scroll layout — aged sandal amber scrolls */
+  /* Parchment scroll layout â€” aged sandal amber scrolls */
   .cb-scrolls {
     display: flex;
     justify-content: space-between;
@@ -1832,7 +1827,7 @@
   }
 </style>
 <style>
-  /* â”€â”€ PATCH LAG (3-act redesign, .pl- scope) â”€â”€ */
+  /* Ã¢â€â‚¬Ã¢â€â‚¬ PATCH LAG (3-act redesign, .pl- scope) Ã¢â€â‚¬Ã¢â€â‚¬ */
   .pl-hero {
     background: linear-gradient(135deg, rgba(255,68,68,0.08) 0%, rgba(232,197,90,0.05) 100%);
     border: 1px solid rgba(232,197,90,0.18);
@@ -2114,7 +2109,7 @@
   }
 </style>
 <style>
-  /* â”€â”€ ASK THE WATCH (.atw- scope) â”€â”€ */
+  /* Ã¢â€â‚¬Ã¢â€â‚¬ ASK THE WATCH (.atw- scope) Ã¢â€â‚¬Ã¢â€â‚¬ */
   .atw-pills {
     display: flex;
     flex-wrap: wrap;
@@ -2227,7 +2222,7 @@
   }
 </style>
 <style>
-  /* â”€â”€ CREW ACCOUNTABILITY (.ca- scope) â”€â”€ */
+  /* Ã¢â€â‚¬Ã¢â€â‚¬ CREW ACCOUNTABILITY (.ca- scope) Ã¢â€â‚¬Ã¢â€â‚¬ */
   .ca-stats {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -2552,129 +2547,418 @@
     padding: 18px 0 4px;
   }
 
-  /* ── WANTED WALL LAYOUT ── */
-  /*
-   * Next sprint enhancements:
-   * - Add receipt-level links from incident rows to the exact dependency manifest commit.
-   * - Add timeline grouping for fix-published date vs. owner manifest-touch date.
-   */
+  /* -- CREW ACCOUNTABILITY LAYOUT -- */
   #screen-crew {
     overflow: visible;
   }
 
-  .wanted-wall {
+  .crew-layout {
     display: grid;
-    grid-template-columns: 65fr 35fr;
-    gap: 20px;
+    grid-template-columns: 60fr 40fr;
+    gap: 24px;
     align-items: start;
   }
 
-  .poster-wall {
+  .captain-card {
+    background: #0a1f35;
+    border: 2px solid #C8A84B;
+    border-radius: 8px;
+    padding: 32px 28px;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 0 20px rgba(200,168,75,0.15), 0 4px 24px rgba(0,0,0,0.4);
+  }
+
+  .captain-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 0 32px rgba(200,168,75,0.25), 0 8px 32px rgba(0,0,0,0.5);
+  }
+
+  .captain-rank-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    color: #C8A84B;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .captain-username {
+    font-family: var(--mono);
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 12px;
+    word-break: break-all;
+  }
+
+  .captain-days {
+    font-family: var(--mono);
+    font-size: 52px;
+    font-weight: 700;
+    color: #FF4444;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .captain-days-label {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--text2);
+    margin-bottom: 20px;
+  }
+
+  .captain-stats-row {
+    display: flex;
+    gap: 0;
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--text2);
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+  }
+
+  .captain-stat {
+    color: var(--text);
+    font-weight: 700;
+  }
+
+  .captain-stat-sep {
+    color: var(--text3);
+    margin: 0 8px;
+  }
+
+  .captain-subtitle {
+    font-family: var(--sans);
+    font-size: 13px;
+    color: var(--text3);
+    font-style: italic;
+  }
+
+  .officers-column {
     display: flex;
     flex-direction: column;
-    min-width: 0;
+    gap: 16px;
   }
 
-  /* ── POSTER SHARED STYLES ── */
-  .poster {
-    position: relative;
-    background:
-      repeating-linear-gradient(
-        0deg,
-        transparent,
-        transparent 24px,
-        rgba(0,255,255,0.015) 24px,
-        rgba(0,255,255,0.015) 25px
-      ),
-      linear-gradient(
-        135deg,
-        #071828 0%,
-        #0a2035 30%,
-        #081c2e 60%,
-        #0c2540 100%
-      );
-    border: 1px solid rgba(200,168,75,0.25);
-    border-radius: 4px;
-    overflow: visible;
+  .officer-card {
+    background: #0a1f35;
+    border: 1px solid rgba(200,168,75,0.4);
+    border-radius: 6px;
+    padding: 20px;
     cursor: pointer;
-    transition: border-color 0.2s, box-shadow 0.2s;
+    transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
   }
 
-  .poster:hover {
-    border-color: rgba(200,168,75,0.5);
-    box-shadow: 0 0 30px rgba(200,168,75,0.08), 0 8px 32px rgba(0,0,0,0.4);
+  .officer-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+    border-color: rgba(200,168,75,0.7);
   }
 
-  .poster::before {
-    content: '';
+  .officer-rank-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: #C8A84B;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .officer-username {
+    font-family: var(--mono);
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 6px;
+    word-break: break-all;
+  }
+
+  .officer-days {
+    font-family: var(--mono);
+    font-size: 28px;
+    font-weight: 700;
+    color: #FF8C00;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .officer-days-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text3);
+    margin-bottom: 8px;
+  }
+
+  .officer-stats {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text2);
+  }
+
+  /* Book overlay */
+  #crew-book-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.85);
+    z-index: 1000;
+    display: none;
+  }
+
+  #crew-book-overlay.open {
+    display: block;
+  }
+
+  #crew-book {
     position: absolute;
-    top: -6px;
-    left: 0;
-    right: 0;
-    height: 8px;
-    background: inherit;
-    clip-path: polygon(
-      0% 100%, 2% 20%, 4% 80%, 6% 10%, 8% 70%, 10% 30%,
-      12% 90%, 14% 20%, 16% 75%, 18% 15%, 20% 85%,
-      22% 25%, 24% 70%, 26% 10%, 28% 80%, 30% 20%,
-      32% 90%, 34% 30%, 36% 75%, 38% 15%, 40% 80%,
-      42% 20%, 44% 90%, 46% 25%, 48% 70%, 50% 15%,
-      52% 80%, 54% 20%, 56% 85%, 58% 25%, 60% 75%,
-      62% 10%, 64% 80%, 66% 30%, 68% 90%, 70% 20%,
-      72% 75%, 74% 15%, 76% 80%, 78% 25%, 80% 70%,
-      82% 10%, 84% 85%, 86% 20%, 88% 75%, 90% 30%,
-      92% 90%, 94% 20%, 96% 80%, 98% 25%, 100% 80%,
-      100% 100%
-    );
-    border-left: 1px solid rgba(200,168,75,0.25);
-    border-right: 1px solid rgba(200,168,75,0.25);
-    z-index: 1;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 900px;
+    height: 580px;
+    background: #8B5E3C;
+    border-radius: 4px 12px 12px 4px;
+    box-shadow: -8px 8px 40px rgba(0,0,0,0.8), inset -3px 0 8px rgba(0,0,0,0.4);
+    display: flex;
+    overflow: visible;
   }
 
-  .poster::after {
-    content: '';
+  #book-spine {
+    width: 24px;
+    flex-shrink: 0;
+    background: linear-gradient(90deg, #5C3A1E, #8B5E3C, #5C3A1E);
+    border-radius: 4px 0 0 4px;
+  }
+
+  .book-pages-area {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+    border-radius: 0 12px 12px 0;
+  }
+
+  .book-page {
+    width: 50%;
+    background: linear-gradient(135deg, #F5E6C8 0%, #EDD9A3 40%, #E8D08A 100%);
+    padding: 32px 28px;
+    color: #2C1810;
+    font-family: Georgia, serif;
+    overflow: hidden;
+    position: relative;
+    box-sizing: border-box;
+  }
+
+  #book-left-page {
+    box-shadow: inset -4px 0 12px rgba(0,0,0,0.15);
+  }
+
+  #book-right-page {
+    box-shadow: inset 4px 0 8px rgba(0,0,0,0.1);
+    transform-origin: left center;
+  }
+
+  #book-bookmark {
     position: absolute;
-    bottom: -6px;
-    left: 0;
-    right: 0;
-    height: 8px;
-    background: inherit;
-    clip-path: polygon(
-      0% 0%, 100% 0%, 98% 80%, 95% 20%, 92% 75%,
-      89% 15%, 86% 80%, 83% 25%, 80% 70%, 77% 10%,
-      74% 85%, 71% 20%, 68% 75%, 65% 30%, 62% 90%,
-      59% 20%, 56% 80%, 53% 25%, 50% 75%, 47% 10%,
-      44% 80%, 41% 30%, 38% 90%, 35% 15%, 32% 75%,
-      29% 25%, 26% 80%, 23% 20%, 20% 85%, 17% 25%,
-      14% 75%, 11% 15%, 8% 80%, 5% 20%, 2% 75%, 0% 20%
-    );
-    border-left: 1px solid rgba(200,168,75,0.25);
-    border-right: 1px solid rgba(200,168,75,0.25);
-    z-index: 1;
+    right: -36px;
+    top: 120px;
+    width: 36px;
+    height: 120px;
+    background: linear-gradient(180deg, #8B1A1A, #C0392B);
+    border-radius: 0 6px 6px 0;
+    writing-mode: vertical-rl;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 11px;
+    letter-spacing: 2px;
+    font-family: var(--mono);
+    cursor: pointer;
+    transition: filter 0.2s;
+    z-index: 10;
   }
 
-  /* ── HERO POSTER ── */
-  .hero-poster {
-    margin-bottom: 24px;
-    padding: 28px 32px 32px;
-    margin-top: 8px;
+  #book-bookmark:hover {
+    filter: brightness(1.3);
   }
 
-  .hero-poster-stamp {
+  #book-prev, #book-next {
     position: absolute;
-    top: 16px;
-    right: 20px;
-    transform: rotate(12deg);
-    opacity: 0.85;
+    bottom: -44px;
+    background: rgba(139,94,60,0.8);
+    border: 1px solid #C8A84B;
+    color: #F5E6C8;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: var(--mono);
+    font-size: 14px;
+    transition: background 0.2s;
   }
 
-  .poster-border-decoration {
-    position: absolute;
-    inset: 6px;
-    border: 1px solid rgba(200,168,75,0.12);
-    border-radius: 2px;
-    pointer-events: none;
+  #book-prev { left: 36px; }
+  #book-next { right: 0; }
+
+  #book-prev:hover, #book-next:hover {
+    background: rgba(139,94,60,1);
   }
+
+  #book-close {
+    position: fixed;
+    top: 24px;
+    right: 24px;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #8B1A1A;
+    border: 1px solid rgba(255,100,100,0.4);
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+    z-index: 1001;
+    line-height: 1;
+  }
+
+  #book-close:hover {
+    background: #C0392B;
+  }
+
+  .book-page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 11px;
+    color: #8B6914;
+    margin-bottom: 8px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #C8A84B;
+  }
+
+  .book-pkg-name {
+    font-size: 22px;
+    font-weight: bold;
+    color: #2C1810;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    line-height: 1.2;
+  }
+
+  .book-badge-breaking {
+    background: #8B1A1A;
+    color: white;
+    padding: 2px 8px;
+    font-size: 11px;
+    border-radius: 3px;
+    font-family: var(--mono);
+    font-weight: normal;
+    white-space: nowrap;
+  }
+
+  .book-badge-safe {
+    background: #1A5C2A;
+    color: white;
+    padding: 2px 8px;
+    font-size: 11px;
+    border-radius: 3px;
+    font-family: var(--mono);
+    font-weight: normal;
+    white-space: nowrap;
+  }
+
+  .book-days-num {
+    font-size: 36px;
+    color: #8B1A1A;
+    font-weight: bold;
+    line-height: 1.1;
+    margin: 8px 0 4px;
+  }
+
+  .book-detail-line {
+    font-size: 14px;
+    margin: 8px 0;
+    color: #3D1F0A;
+    line-height: 1.5;
+  }
+
+  .book-end-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    text-align: center;
+  }
+
+  .book-end-text {
+    font-size: 15px;
+    font-style: italic;
+    color: #8B6914;
+    margin-top: 16px;
+    line-height: 1.8;
+  }
+
+  .book-brief-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    padding: 0 8px;
+    text-align: center;
+  }
+
+  .book-brief-header {
+    font-size: 18px;
+    font-weight: bold;
+    color: #2C1810;
+    text-align: center;
+    margin-bottom: 6px;
+    font-family: Georgia, serif;
+  }
+
+  .book-brief-divider {
+    width: 80%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #C8A84B, transparent);
+    margin: 6px auto 14px;
+  }
+
+  .book-brief-text {
+    font-size: 15px;
+    font-style: italic;
+    color: #2C1810;
+    line-height: 1.8;
+    font-family: Georgia, serif;
+    max-height: 320px;
+    overflow-y: auto;
+  }
+
+  .book-back-btn {
+    margin-top: 16px;
+    background: rgba(139,94,60,0.3);
+    border: 1px solid #C8A84B;
+    color: #2C1810;
+    padding: 7px 18px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: Georgia, serif;
+    font-size: 13px;
+    transition: background 0.2s;
+  }
+
+  .book-back-btn:hover {
+    background: rgba(139,94,60,0.5);
+  }
+
+  .wanted-wall { display: none; }
 
   .corner-ornament {
     position: absolute;
@@ -2687,414 +2971,6 @@
   .corner-ornament.tr { top: 10px; right: 10px; border-width: 2px 2px 0 0; }
   .corner-ornament.bl { bottom: 10px; left: 10px; border-width: 0 0 2px 2px; }
   .corner-ornament.br { bottom: 10px; right: 10px; border-width: 0 2px 2px 0; }
-
-  .hero-poster-label {
-    font-family: var(--mono);
-    font-size: 10px;
-    letter-spacing: 0.4em;
-    color: rgba(200,168,75,0.5);
-    text-transform: uppercase;
-    text-align: center;
-    margin-bottom: 12px;
-  }
-
-  .hero-poster-divider {
-    height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(200,168,75,0.3), transparent);
-    margin: 10px 0;
-  }
-
-  .hero-poster-name {
-    font-family: var(--mono);
-    font-size: 40px;
-    font-weight: 700;
-    text-align: center;
-    line-height: 1.1;
-    background: linear-gradient(160deg, #8B6914 0%, #F0D898 35%, #C8A84B 55%, #F0D898 75%, #8B6914 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    margin: 12px 0;
-    word-break: break-all;
-  }
-
-  .hero-bounty-label {
-    font-family: var(--mono);
-    font-size: 9px;
-    letter-spacing: 0.3em;
-    color: var(--text3);
-    text-align: center;
-    text-transform: uppercase;
-    margin-top: 16px;
-  }
-
-  .hero-bounty-value {
-    font-family: var(--mono);
-    font-size: 52px;
-    font-weight: 700;
-    text-align: center;
-    color: var(--neon-red);
-    line-height: 1;
-    text-shadow: 0 0 20px rgba(255,68,68,0.5), 0 0 40px rgba(255,68,68,0.2);
-  }
-
-  .hero-bounty-unit {
-    font-family: var(--mono);
-    font-size: 14px;
-    text-align: center;
-    color: var(--text2);
-    margin-bottom: 4px;
-  }
-
-  .hero-since {
-    font-family: var(--mono);
-    font-size: 11px;
-    text-align: center;
-    color: var(--neon-orange);
-    margin-bottom: 16px;
-  }
-
-  .hero-stats-row {
-    display: flex;
-    justify-content: center;
-    gap: 24px;
-    margin: 16px 0;
-  }
-
-  .hero-stat-item {
-    text-align: center;
-  }
-
-  .hero-stat-num {
-    font-family: var(--mono);
-    font-size: 22px;
-    font-weight: 700;
-    line-height: 1;
-  }
-
-  .hero-stat-lbl {
-    font-family: var(--mono);
-    font-size: 9px;
-    letter-spacing: 0.1em;
-    color: var(--text3);
-    text-transform: uppercase;
-    margin-top: 3px;
-  }
-
-  .hero-crime {
-    font-family: var(--mono);
-    font-size: 11px;
-    color: var(--text2);
-    text-align: center;
-    font-style: italic;
-    margin: 12px 0 20px;
-    line-height: 1.6;
-    padding: 0 16px;
-  }
-
-  .exposure-burn-bar {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    height: 3px;
-    background: linear-gradient(90deg, var(--neon-red), var(--neon-orange), var(--gold));
-    border-radius: 0 0 3px 3px;
-    transition: width 1.5s ease;
-    box-shadow: 0 0 8px rgba(255,68,68,0.5);
-  }
-
-  .hero-brief-btn {
-    display: block;
-    width: calc(100% - 32px);
-    margin: 0 auto;
-    padding: 10px;
-    background: linear-gradient(135deg, rgba(200,168,75,0.15), rgba(200,168,75,0.08));
-    border: 1px solid rgba(200,168,75,0.4);
-    border-radius: 4px;
-    color: var(--gold);
-    font-family: var(--mono);
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.2em;
-    text-align: center;
-    cursor: pointer;
-    transition: background 0.2s, box-shadow 0.2s;
-    text-transform: uppercase;
-  }
-  .hero-brief-btn:hover {
-    background: linear-gradient(135deg, rgba(200,168,75,0.25), rgba(200,168,75,0.15));
-    box-shadow: 0 0 16px rgba(200,168,75,0.2);
-  }
-
-  /* ── CREW POSTER GRID ── */
-  .crew-poster-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
-  }
-
-  .poster.small-poster {
-    padding: 16px 14px 18px;
-    min-height: 0;
-  }
-
-  .small-poster-name {
-    font-family: var(--mono);
-    font-size: 15px;
-    font-weight: 700;
-    background: linear-gradient(160deg, #8B6914 0%, #F0D898 35%, #C8A84B 55%, #F0D898 75%, #8B6914 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    margin: 6px 0 4px;
-    word-break: break-all;
-  }
-
-  .small-poster-days {
-    font-family: var(--mono);
-    font-size: 20px;
-    font-weight: 700;
-    color: var(--neon-red);
-    line-height: 1;
-    text-shadow: 0 0 10px rgba(255,68,68,0.4);
-  }
-
-  .small-poster-since {
-    font-family: var(--mono);
-    font-size: 9px;
-    color: var(--neon-orange);
-    margin-top: 2px;
-  }
-
-  .small-poster-meta {
-    margin-top: 8px;
-    display: flex;
-    gap: 6px;
-    flex-wrap: wrap;
-    align-items: center;
-  }
-
-  .wax-seal {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    background: radial-gradient(circle at 35% 35%, #FF6B6B, #CC2222);
-    box-shadow: 0 2px 6px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.2);
-    font-family: var(--mono);
-    font-size: 10px;
-    font-weight: 700;
-    color: white;
-    text-shadow: 0 1px 2px rgba(0,0,0,0.5);
-    flex-shrink: 0;
-    position: relative;
-  }
-
-  .wax-seal::after {
-    content: '';
-    position: absolute;
-    bottom: -4px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 8px;
-    height: 6px;
-    background: radial-gradient(ellipse, #CC2222, #991111);
-    clip-path: polygon(20% 0%, 80% 0%, 100% 100%, 50% 80%, 0% 100%);
-  }
-
-  .gold-coin {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
-    background: radial-gradient(circle at 35% 30%, #F0D898, #C8A84B, #8B6914);
-    box-shadow: 0 2px 4px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.3);
-    font-family: var(--mono);
-    font-size: 9px;
-    font-weight: 700;
-    color: #4A3000;
-    flex-shrink: 0;
-    border: 1px solid #F0D898;
-  }
-
-  .all-clear-stamp {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) rotate(-15deg);
-    border: 3px solid #00FF88;
-    border-radius: 4px;
-    padding: 4px 10px;
-    font-family: var(--mono);
-    font-size: 16px;
-    font-weight: 700;
-    color: #00FF88;
-    text-transform: uppercase;
-    letter-spacing: 0.2em;
-    opacity: 0.7;
-    pointer-events: none;
-    text-shadow: 0 0 10px rgba(0,255,136,0.5);
-    box-shadow: inset 0 0 8px rgba(0,255,136,0.1);
-  }
-
-  .absolved-stamp {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) rotate(-12deg);
-    border: 2px solid #00FF88;
-    border-radius: 50%;
-    width: 80px;
-    height: 80px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: var(--mono);
-    font-size: 11px;
-    font-weight: 700;
-    color: #00FF88;
-    letter-spacing: 0.1em;
-    opacity: 0.6;
-    pointer-events: none;
-  }
-
-  /* ── INCIDENT LOG ── */
-  .incident-log-panel {
-    position: sticky;
-    top: 72px;
-    max-height: calc(100vh - 90px);
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    background: var(--bg2);
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    align-self: start;
-  }
-
-  .log-header {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 12px 16px;
-    border-bottom: 1px solid var(--border);
-    background: var(--bg3);
-    flex-shrink: 0;
-    color: var(--text2);
-  }
-
-  .log-title {
-    font-family: var(--mono);
-    font-size: 10px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--neon-cyan);
-    flex: 1;
-  }
-
-  .log-filter-hint {
-    font-family: var(--mono);
-    font-size: 9px;
-    color: var(--text3);
-    background: var(--bg);
-    padding: 2px 6px;
-    border-radius: 3px;
-    border: 1px solid var(--border);
-  }
-
-  .incident-feed {
-    overflow-y: auto;
-    flex: 1;
-    padding: 8px;
-    scrollbar-width: thin;
-    scrollbar-color: var(--border2) transparent;
-  }
-
-  .incident-entry {
-    padding: 10px 12px;
-    border-bottom: 1px solid var(--border);
-    border-radius: 4px;
-    margin-bottom: 4px;
-    background: var(--bg-card);
-    border-left: 2px solid transparent;
-    transition: border-color 0.15s, background 0.15s;
-    opacity: 0;
-    transform: translateX(20px);
-    animation: incidentSlideIn 0.4s ease forwards;
-  }
-
-  .incident-entry.breaking { border-left-color: var(--neon-red); }
-  .incident-entry.safe { border-left-color: var(--neon-green); }
-  .incident-entry.highlighted { background: rgba(200,168,75,0.05); border-color: rgba(200,168,75,0.2); }
-
-  @keyframes incidentSlideIn {
-    to { opacity: 1; transform: translateX(0); }
-  }
-
-  .incident-pkg {
-    font-family: var(--mono);
-    font-size: 12px;
-    font-weight: 700;
-    color: var(--text);
-  }
-
-  .incident-days {
-    font-family: var(--mono);
-    font-size: 11px;
-    margin-top: 3px;
-  }
-
-  .incident-since {
-    font-size: 10px;
-    color: var(--text2);
-    margin-top: 2px;
-    line-height: 1.5;
-  }
-
-  .incident-fix {
-    font-size: 10px;
-    color: var(--neon-orange);
-    margin-top: 1px;
-  }
-
-  .incident-owner {
-    font-family: var(--mono);
-    font-size: 10px;
-    color: var(--neon-cyan);
-    margin-top: 4px;
-  }
-
-  .coral-source-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    font-family: var(--mono);
-    font-size: 9px;
-    color: var(--text3);
-    background: var(--bg);
-    border: 1px solid var(--border);
-    border-radius: 3px;
-    padding: 2px 5px;
-    margin-top: 5px;
-  }
-
-  .coral-source-badge .coral-dot {
-    width: 5px;
-    height: 5px;
-    border-radius: 50%;
-    background: var(--neon-cyan);
-    box-shadow: 0 0 4px var(--neon-cyan);
-  }
-
-  @keyframes countUp {
-    from { opacity: 0.3; transform: translateY(4px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  .bounty-animate { animation: countUp 0.1s ease; }
 </style>
 </head>
 <body>
@@ -3125,7 +3001,7 @@
     <input id="repoInput" type="text" value="jellyfin/jellyfin-web" placeholder="owner/repo" autocomplete="off" />
     <button id="scanBtn" type="submit">Chart Course</button>
   </form>
-  <div class="status-pill"><span class="pulse-dot"></span><span id="liveStatus">LIVE DATA Â· loadingâ€¦</span></div>
+  <div class="status-pill"><span class="pulse-dot"></span><span id="liveStatus">LIVE DATA Ã‚Â· loadingÃ¢â‚¬Â¦</span></div>
 </header>
 <div class="wave-divider">
   <svg viewBox="0 0 1440 20" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
@@ -3161,18 +3037,21 @@
     </div>
     <div class="nav-section">
       <div class="nav-label">INTELLIGENCE</div>
-      <button class="nav-item active" id="nav-overview" type="button" data-screen="overview">
+      <div class="nav-item active" id="nav-overview" data-screen="overview">
         <span class="label">Command Bridge</span>
-      </button>
-      <button class="nav-item" id="nav-patchlag" type="button" data-screen="patchlag">
+        <span class="nav-badge" id="badge-overview">0</span>
+      </div>
+      <div class="nav-item" id="nav-patchlag" data-screen="patchlag">
         <span class="label">Threat Intel</span>
-      </button>
-      <button class="nav-item" id="nav-crew" type="button" data-screen="crew">
+        <span class="nav-badge" id="badge-patchlag">0</span>
+      </div>
+      <div class="nav-item" id="nav-crew" data-screen="crew">
         <span class="label">Crew Accountability</span>
-      </button>
-      <button class="nav-item" id="navAskWatch" type="button">
+        <span class="nav-badge" id="badge-crew">0</span>
+      </div>
+      <div class="nav-item" id="navAskWatch">
         <span class="label">Ask the Watch</span>
-      </button>
+      </div>
     </div>
     <div class="nav-section">
       <div class="nav-label">ABOUT</div>
@@ -3402,8 +3281,8 @@
     <section class="screen" id="screen-patchlag">
       <div class="screen-header">
         <p class="screen-title">THREAT INTELLIGENCE</p>
-        <h2 class="screen-sub">Tide Chart â€” how long fixes have been ignored</h2>
-        <p class="screen-tag">Not just what's vulnerable â€” who ignored the fix, and for how long.</p>
+        <h2 class="screen-sub">Tide Chart Ã¢â‚¬â€ how long fixes have been ignored</h2>
+        <p class="screen-tag">Not just what's vulnerable Ã¢â‚¬â€ who ignored the fix, and for how long.</p>
       </div>
       <div id="threatIntelRoot" class="ti2-screen"></div>
     </section>
@@ -3412,12 +3291,12 @@
     <section class="screen" id="screen-precve">
       <div class="screen-header">
         <p class="screen-title">PRE-CVE INTELLIGENCE</p>
-        <h2 class="screen-sub">âš¡ Storm Warnings â€” security deprecations before CVEs are filed</h2>
+        <h2 class="screen-sub">Ã¢Å¡Â¡ Storm Warnings Ã¢â‚¬â€ security deprecations before CVEs are filed</h2>
         <p class="screen-tag">Every scanner is silent. DriftWatch fires when upstream deprecates a version for security reasons.</p>
       </div>
       <div id="stormSection"></div>
       <div class="screen-header" style="margin-top:32px; margin-bottom:14px">
-        <p class="screen-title">UPSTREAM HEALTH SIGNALS â€” top exposed packages</p>
+        <p class="screen-title">UPSTREAM HEALTH SIGNALS Ã¢â‚¬â€ top exposed packages</p>
       </div>
       <div id="signalSection"></div>
       <p class="footer-note">Full upstream health computed via OpenSSF Scorecard for connected repos.</p>
@@ -3427,7 +3306,7 @@
     <section class="screen" id="screen-maintainer">
       <div class="screen-header">
         <p class="screen-title">MAINTAINER INTELLIGENCE</p>
-        <h2 class="screen-sub">Will upstream save you? â€” responsiveness profile per package</h2>
+        <h2 class="screen-sub">Will upstream save you? Ã¢â‚¬â€ responsiveness profile per package</h2>
       </div>
       <div class="maint-grid" id="maintGrid"></div>
     </section>
@@ -3439,11 +3318,11 @@
         <h2 class="screen-sub">Your Upgrade Work Plan</h2>
       </div>
       <div class="orders-section">
-        <h3 class="safe">âœ… SAFE â€” Do These This Sprint</h3>
+        <h3 class="safe">Ã¢Å“â€¦ SAFE Ã¢â‚¬â€ Do These This Sprint</h3>
         <div id="ordersSafe"></div>
       </div>
       <div class="orders-section">
-        <h3 class="breaking">ðŸ”´ BREAKING â€” Plan a Migration</h3>
+        <h3 class="breaking">Ã°Å¸â€Â´ BREAKING Ã¢â‚¬â€ Plan a Migration</h3>
         <div id="ordersBreaking"></div>
       </div>
     </section>
@@ -3453,10 +3332,25 @@
       <div class="screen-header">
         <p class="screen-title">CREW ACCOUNTABILITY</p>
         <h2 class="screen-sub">Who owns the negligence?</h2>
-        <p class="screen-tag">Cross-referenced from GitHub commit history Ã— code search â€” every day of exposure mapped to a human.</p>
+        <p class="screen-tag">Cross-referenced from GitHub commit history Ãƒâ€” code search Ã¢â‚¬â€ every day of exposure mapped to a human.</p>
       </div>
       <div id="crewList"></div>
     </section>
+
+    <!-- CREW BOOK OVERLAY -->
+    <div id="crew-book-overlay">
+      <div id="crew-book">
+        <div id="book-spine"></div>
+        <div class="book-pages-area">
+          <div id="book-left-page" class="book-page"></div>
+          <div id="book-right-page" class="book-page"></div>
+        </div>
+        <div id="book-bookmark">CAPTAIN'S BRIEF</div>
+        <button id="book-prev">&#9664;</button>
+        <button id="book-next">&#9654;</button>
+      </div>
+      <button id="book-close">&#10005;</button>
+    </div>
 
     <!-- QUERIES -->
     <section class="screen" id="screen-queries">
@@ -3479,28 +3373,28 @@
           <tr><th>Capability</th><th>Snyk / Endor</th><th>Socket</th><th>DriftWatch</th></tr>
         </thead>
         <tbody>
-          <tr><td>Vulnerability detection</td><td class="yes">âœ“</td><td class="yes">âœ“</td><td class="yes">âœ“</td></tr>
-          <tr><td>Reachability analysis</td><td class="yes">âœ“</td><td class="no">â€”</td><td class="no">â€”</td></tr>
-          <tr><td>Package behavior / runtime</td><td class="no">â€”</td><td class="yes">âœ“</td><td class="no">â€”</td></tr>
-          <tr><td>Patch lag intelligence</td><td class="no">â€”</td><td class="no">â€”</td><td class="uniq">âœ“ UNIQUE</td></tr>
-          <tr><td>Pre-CVE security deprecations</td><td class="no">â€”</td><td class="no">â€”</td><td class="uniq">âœ“ UNIQUE</td></tr>
-          <tr><td>Maintainer responsiveness profile</td><td class="no">â€”</td><td class="no">â€”</td><td class="uniq">âœ“ UNIQUE</td></tr>
-          <tr><td>Org-specific ownership mapping</td><td class="no">â€”</td><td class="no">â€”</td><td class="uniq">âœ“ UNIQUE</td></tr>
-          <tr><td>Upgrade actionability scoring</td><td class="no">â€”</td><td class="no">â€”</td><td class="uniq">âœ“ UNIQUE</td></tr>
+          <tr><td>Vulnerability detection</td><td class="yes">Ã¢Å“â€œ</td><td class="yes">Ã¢Å“â€œ</td><td class="yes">Ã¢Å“â€œ</td></tr>
+          <tr><td>Reachability analysis</td><td class="yes">Ã¢Å“â€œ</td><td class="no">Ã¢â‚¬â€</td><td class="no">Ã¢â‚¬â€</td></tr>
+          <tr><td>Package behavior / runtime</td><td class="no">Ã¢â‚¬â€</td><td class="yes">Ã¢Å“â€œ</td><td class="no">Ã¢â‚¬â€</td></tr>
+          <tr><td>Patch lag intelligence</td><td class="no">Ã¢â‚¬â€</td><td class="no">Ã¢â‚¬â€</td><td class="uniq">Ã¢Å“â€œ UNIQUE</td></tr>
+          <tr><td>Pre-CVE security deprecations</td><td class="no">Ã¢â‚¬â€</td><td class="no">Ã¢â‚¬â€</td><td class="uniq">Ã¢Å“â€œ UNIQUE</td></tr>
+          <tr><td>Maintainer responsiveness profile</td><td class="no">Ã¢â‚¬â€</td><td class="no">Ã¢â‚¬â€</td><td class="uniq">Ã¢Å“â€œ UNIQUE</td></tr>
+          <tr><td>Org-specific ownership mapping</td><td class="no">Ã¢â‚¬â€</td><td class="no">Ã¢â‚¬â€</td><td class="uniq">Ã¢Å“â€œ UNIQUE</td></tr>
+          <tr><td>Upgrade actionability scoring</td><td class="no">Ã¢â‚¬â€</td><td class="no">Ã¢â‚¬â€</td><td class="uniq">Ã¢Å“â€œ UNIQUE</td></tr>
         </tbody>
       </table>
       <div class="why-grid">
         <div class="why-card">
           <h4>THE PATCH LAG PROBLEM</h4>
-          <p>jellyfin-web has been exposed to a yargs-parser vulnerability for <strong>2,090 days</strong> â€” with a fix available the entire time. Every other scanner reported this. None told you it had been sitting there for nearly 6 years.</p>
+          <p>jellyfin-web has been exposed to a yargs-parser vulnerability for <strong>2,090 days</strong> Ã¢â‚¬â€ with a fix available the entire time. Every other scanner reported this. None told you it had been sitting there for nearly 6 years.</p>
         </div>
         <div class="why-card">
           <h4>THE OWNERSHIP PROBLEM</h4>
-          <p>When dompurify CVE drops, who do you Slack? DriftWatch maps GitHub code search Ã— commit history to your dependency list, so the ticket already names the engineer who imported it.</p>
+          <p>When dompurify CVE drops, who do you Slack? DriftWatch maps GitHub code search Ãƒâ€” commit history to your dependency list, so the ticket already names the engineer who imported it.</p>
         </div>
         <div class="why-card">
           <h4>THE PRE-CVE PROBLEM</h4>
-          <p>Maintainers deprecate versions with "fixed a security issue" notes <em>before</em> CVEs get filed. DriftWatch reads those deprecation messages from deps.dev â€” you get the warning days or weeks before any scanner.</p>
+          <p>Maintainers deprecate versions with "fixed a security issue" notes <em>before</em> CVEs get filed. DriftWatch reads those deprecation messages from deps.dev Ã¢â‚¬â€ you get the warning days or weeks before any scanner.</p>
         </div>
       </div>
     </section>
@@ -3509,8 +3403,8 @@
     <section class="screen" id="screenAskWatch">
       <div class="screen-header">
         <p class="screen-title">AGENT INTERFACE</p>
-        <h2 class="screen-sub">â—Ž Ask the Watch</h2>
-        <p class="screen-tag">Query your supply-chain intelligence in plain English â€” powered by Groq</p>
+        <h2 class="screen-sub">Ã¢â€”Å½ Ask the Watch</h2>
+        <p class="screen-tag">Query your supply-chain intelligence in plain English Ã¢â‚¬â€ powered by Groq</p>
       </div>
       <div class="atw-pills" id="watchPills">
         <button type="button" class="atw-pill">Who is most accountable for our risk?</button>
@@ -3521,12 +3415,12 @@
       </div>
       <div class="atw-chat" id="watchChatMessages"></div>
       <div class="atw-input-row">
-        <input type="text" id="watchInput" class="atw-input" placeholder="Chart a course â€” ask anything..." autocomplete="off" />
-        <button type="button" id="watchSendBtn" class="atw-send">SIGNAL â–¶</button>
+        <input type="text" id="watchInput" class="atw-input" placeholder="Chart a course Ã¢â‚¬â€ ask anything..." autocomplete="off" />
+        <button type="button" id="watchSendBtn" class="atw-send">SIGNAL Ã¢â€“Â¶</button>
       </div>
     </section>
 
-    <p class="footer-note" id="footerNote">Loadingâ€¦</p>
+    <p class="footer-note" id="footerNote">LoadingÃ¢â‚¬Â¦</p>
   </main>
 </div>
 
@@ -3580,7 +3474,7 @@
 
 <div class="progress-overlay" id="progressOverlay">
   <div class="progress-label">CHARTING THE WATERS</div>
-  <div class="progress-msg" id="progressMsg">Starting scanâ€¦</div>
+  <div class="progress-msg" id="progressMsg">Starting scanÃ¢â‚¬Â¦</div>
   <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
   <div class="progress-pct" id="progressPct">0%</div>
 </div>
@@ -3591,7 +3485,7 @@
 </div>
 
 <script>
-// â”€â”€ State â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// Ã¢â€â‚¬Ã¢â€â‚¬ State Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
 let state = {
   owner: 'jellyfin',
   repo: 'jellyfin-web',
@@ -3599,7 +3493,7 @@ let state = {
   jobId: null,
 };
 
-// â”€â”€ Navigation â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// Ã¢â€â‚¬Ã¢â€â‚¬ Navigation Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
 document.querySelectorAll('.nav-item').forEach(item => {
   item.addEventListener('click', () => {
     document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
@@ -3617,14 +3511,14 @@ document.querySelectorAll('.nav-item').forEach(item => {
     window.scrollTo({ top: 0, behavior: 'instant' });
   });
 });
-// New case: navAskWatch â†’ screenAskWatch (camelCase ids, not screen-X convention)
+// New case: navAskWatch Ã¢â€ â€™ screenAskWatch (camelCase ids, not screen-X convention)
 document.getElementById('navAskWatch')?.addEventListener('click', () => {
   const target = document.getElementById('screenAskWatch');
   if (target) target.classList.add('active');
   if (typeof window.initWatchOnNav === 'function') window.initWatchOnNav();
 });
 
-// â”€â”€ Helpers â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// Ã¢â€â‚¬Ã¢â€â‚¬ Helpers Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
 function bandForDays(d) {
   if (d > 365) return 'red';
   if (d > 90) return 'amber';
@@ -3690,7 +3584,7 @@ function urgencyVerdict(score) {
   return 'LOW';
 }
 
-// â”€â”€ Data fetch â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// Ã¢â€â‚¬Ã¢â€â‚¬ Data fetch Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
 async function fetchResults(owner, repo, demo = false) {
   const url = `/api/results/${owner}/${repo}${demo ? '?demo=true' : ''}`;
   const r = await fetch(url);
@@ -3700,20 +3594,20 @@ async function fetchResults(owner, repo, demo = false) {
 
 async function loadDemo() {
   hideToast();
-  setLiveStatus('LIVE DATA Â· loading demoâ€¦');
+  setLiveStatus('LIVE DATA Ã‚Â· loading demoÃ¢â‚¬Â¦');
   try {
     const data = await fetchResults('jellyfin', 'jellyfin-web', true);
     state.data = data;
     state.owner = data.owner;
     state.repo = data.repo;
     renderAll();
-    setLiveStatus(`LIVE DATA Â· demo Â· ${new Date().toLocaleTimeString()}`);
+    setLiveStatus(`LIVE DATA Ã‚Â· demo Ã‚Â· ${new Date().toLocaleTimeString()}`);
   } catch (e) {
     showToast('Failed to load demo: ' + e.message);
   }
 }
 
-// â”€â”€ Renderers â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// Ã¢â€â‚¬Ã¢â€â‚¬ Renderers Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
 function renderAll() {
   const d = state.data;
   if (!d) return;
@@ -3725,10 +3619,24 @@ function renderAll() {
   renderOrders(d);
   renderCrew(d);
   renderQueries(d);
-  document.getElementById('overviewSub').textContent = `${d.owner}/${d.repo} — ${d.scan?.length || 0} vulnerable packages`;
+  updateBadges(d);
+  document.getElementById('overviewSub').textContent = `${d.owner}/${d.repo} â€” ${d.scan?.length || 0} vulnerable packages`;
   document.getElementById('footerNote').textContent = `${d.scan?.length || 0} packages · ${d.sweep?.upgrade_actionability?.length || 0} upgrade paths · ${d.ownership?.length || 0} owners mapped · scan ${d.sweep?.scan_date || 'demo data'}`;
 }
 
+function updateBadges(d) {
+  const scan = d.scan || [];
+  const sweep = d.sweep || {};
+  const ua = sweep.upgrade_actionability || [];
+  const preCount = (sweep.pre_cve_findings || []).filter(f => f.has_security_deprecation).length;
+  const safeDedupe = new Set(ua.filter(u => u.actionability === 'SAFE').map(u => u.name));
+  const badgeOv = document.getElementById('badge-overview');
+  if (badgeOv) { badgeOv.textContent = scan.length; badgeOv.className = 'nav-badge ' + (scan.length > 0 ? 'red' : 'green'); }
+  const badgePl = document.getElementById('badge-patchlag');
+  if (badgePl) badgePl.textContent = scan.length;
+  const badgeCr = document.getElementById('badge-crew');
+  if (badgeCr) badgeCr.textContent = (d.ownership || []).length;
+}
 
 function renderOverview(d) {
   const scan = (d.scan || []).slice().sort((a, b) => (b.worst_days_exposed || 0) - (a.worst_days_exposed || 0));
@@ -3737,7 +3645,7 @@ function renderOverview(d) {
   const worst = scan[0];
   const preCount = (sweep.pre_cve_findings || []).filter(f => f.has_security_deprecation).length;
 
-  // Hero — weeks primary, days secondary, dynamic comparison
+  // Hero â€” weeks primary, days secondary, dynamic comparison
   const headlineEl = document.getElementById('headline');
   if (worst) {
     const worstDays = worst.worst_days_exposed || 0;
@@ -3775,13 +3683,13 @@ function renderOverview(d) {
     headlineEl.innerHTML = `
       <div class="cb-hero">
         <div class="cb-hero-sub">
-          <span style="color:var(--text);font-weight:500">No vulnerable packages detected — clean waters ahead.</span>
+          <span style="color:var(--text);font-weight:500">No vulnerable packages detected â€” clean waters ahead.</span>
         </div>
       </div>
     `;
   }
 
-  // Severity-weighted 4-panel stats — deduplicate scan by name first
+  // Severity-weighted 4-panel stats â€” deduplicate scan by name first
   const _seenForTiles = new Set();
   const _dedupedScan = scan.filter(p => { if (_seenForTiles.has(p.name)) return false; _seenForTiles.add(p.name); return true; });
   const vulnCount = _dedupedScan.length;
@@ -3827,7 +3735,7 @@ function renderOverview(d) {
 }
 
 function buildParchmentScrolls(scanData, sweepData) {
-  // Pull directly from scan — deduplicate by name, join with ua.find (same logic as tiles)
+  // Pull directly from scan â€” deduplicate by name, join with ua.find (same logic as tiles)
   const ua = sweepData?.upgrade_actionability || [];
   const seen = new Set();
   const breaking = [], safe = [];
@@ -3865,7 +3773,7 @@ function buildParchmentScrolls(scanData, sweepData) {
   if (smoothList) smoothList.innerHTML = renderList(safe);
 }
 
-// â”€â”€ Hazard Chart (2D scatter of buoys) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// Ã¢â€â‚¬Ã¢â€â‚¬ Hazard Chart (2D scatter of buoys) Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
 function buildHazardChart(scanData, ownershipData) {
   const chart = document.getElementById('hazard-chart');
   if (!chart) return;
@@ -3976,7 +3884,7 @@ function buildHazardChart(scanData, ownershipData) {
       const fixedIn = upgrade?.fixed_version || pkg.cves?.[0]?.fixed_in || '?';
       document.getElementById('tt-action').innerHTML = '<span style="color:' + color + '">' + actionability + '</span> &middot; fix in ' + escape(fixedIn);
       const cveCount = (pkg.cves || []).length;
-      document.getElementById('tt-cves').textContent = cveCount + ' CVE' + (cveCount === 1 ? '' : 's') + (preCVE ? ' · PRE-CVE signal' : '');
+      document.getElementById('tt-cves').textContent = cveCount + ' CVE' + (cveCount === 1 ? '' : 's') + (preCVE ? ' Â· PRE-CVE signal' : '');
       const rect = chart.getBoundingClientRect();
       const ex = e.clientX - rect.left;
       const ey = e.clientY - rect.top;
@@ -4076,7 +3984,7 @@ function drawSeverityChain(packages, chart) {
   });
 }
 
-// â”€â”€ Three Action Columns â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// Ã¢â€â‚¬Ã¢â€â‚¬ Three Action Columns Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
 function buildActionColumns(scanData, ownershipData, sweepData) {
   const upgradeMap = {};
   (sweepData?.upgrade_actionability || []).forEach(u => {
@@ -4110,16 +4018,16 @@ function buildActionColumns(scanData, ownershipData, sweepData) {
     const { pkg, upgrade, ownerName, preCVE } = item;
     const daysStr = (pkg.worst_days_exposed || 0).toLocaleString() + 'd';
     const fixVer = upgrade?.fixed_version || pkg.cves?.[0]?.fixed_in;
-    const fixStr = fixVer ? ` â†’ ${escape(fixVer)}` : '';
+    const fixStr = fixVer ? ` Ã¢â€ â€™ ${escape(fixVer)}` : '';
     return `
       <div class="action-item">
         <div class="action-item-pkg">${escape(pkg.name.split('/').pop())}</div>
         <div class="action-item-meta">
           <span style="color:${accent}">${daysStr}</span>
-          ${fixStr ? `<span style="color:var(--text3)"> Â· fix${fixStr}</span>` : ''}
-          ${preCVE ? '<span style="color:var(--neon-cyan)"> Â· âš¡ PRE-CVE</span>' : ''}
+          ${fixStr ? `<span style="color:var(--text3)"> Ã‚Â· fix${fixStr}</span>` : ''}
+          ${preCVE ? '<span style="color:var(--neon-cyan)"> Ã‚Â· Ã¢Å¡Â¡ PRE-CVE</span>' : ''}
         </div>
-        ${ownerName ? `<div class="action-item-owner">ðŸ‘¤ @${escape(ownerName)}</div>` : ''}
+        ${ownerName ? `<div class="action-item-owner">Ã°Å¸â€˜Â¤ @${escape(ownerName)}</div>` : ''}
       </div>`;
   }
 
@@ -4127,9 +4035,9 @@ function buildActionColumns(scanData, ownershipData, sweepData) {
   const actNowBody = document.getElementById('act-now-body');
   const sprintBody = document.getElementById('sprint-body');
   const watchBody = document.getElementById('watch-body');
-  if (actNowBody) actNowBody.innerHTML = actNow.length ? actNow.map(i => renderItem(i, 'var(--neon-red)')).join('') : empty('All hands safe â€” no critical threats');
+  if (actNowBody) actNowBody.innerHTML = actNow.length ? actNow.map(i => renderItem(i, 'var(--neon-red)')).join('') : empty('All hands safe Ã¢â‚¬â€ no critical threats');
   if (sprintBody) sprintBody.innerHTML = thisSprint.length ? thisSprint.map(i => renderItem(i, 'var(--neon-green)')).join('') : empty('No safe upgrades available');
-  if (watchBody) watchBody.innerHTML = watch.length ? watch.map(i => renderItem(i, 'var(--neon-cyan)')).join('') : empty('Clear skies â€” no pre-CVE signals detected');
+  if (watchBody) watchBody.innerHTML = watch.length ? watch.map(i => renderItem(i, 'var(--neon-cyan)')).join('') : empty('Clear skies Ã¢â‚¬â€ no pre-CVE signals detected');
 
   const acn = document.getElementById('act-now-count'); if (acn) acn.textContent = actNow.length;
   const spc = document.getElementById('sprint-count'); if (spc) spc.textContent = thisSprint.length;
@@ -4213,7 +4121,7 @@ function renderThreatIntelLegacy(data) {
         <line x1="8" y1="7" x2="8" y2="18" stroke="var(--gold)" stroke-width="1.2"/>
         <path d="M2,11 Q8,14 14,11" fill="none" stroke="var(--gold)" stroke-width="1.2"/>
       </svg>
-      <div>No intelligence loaded — chart a course first.</div>
+      <div>No intelligence loaded â€” chart a course first.</div>
     </div>`;
     return;
   }
@@ -4254,7 +4162,7 @@ function renderThreatIntelLegacy(data) {
     const topY = baseY - flagHeight;
     const color = pkg.actionability === 'BREAKING' ? '#FF4444' : pkg.actionability === 'SAFE' ? '#00FF88' : '#FF8C00';
     const pw = Math.min(18, slotWidth - 2);
-    const shortName = pkg.package.length > 8 ? pkg.package.slice(0, 7) + '…' : pkg.package;
+    const shortName = pkg.package.length > 8 ? pkg.package.slice(0, 7) + 'â€¦' : pkg.package;
     flagsSVG += `<line x1="${x}" y1="${baseY}" x2="${x}" y2="${topY}" stroke="rgba(200,168,75,0.6)" stroke-width="1.5"/>
       <polygon points="${x},${topY} ${x + pw},${topY + pw/2} ${x},${topY + pw}" fill="${color}" opacity="0.85"/>
       <circle cx="${x}" cy="${baseY}" r="2.5" fill="rgba(200,168,75,0.5)"/>
@@ -4276,8 +4184,8 @@ function renderThreatIntelLegacy(data) {
     const speed = speedFor(pkg.days_exposed);
     return `<div class="ti-weather-row">${weatherIcons[speed]}<div class="ti-weather-main"><div class="ti-weather-pkg">${escape(pkg.package)}</div><div class="ti-weather-speed" style="color:${speedColor[speed]}">${speed.replace('_', ' ')}</div></div><div class="ti-weather-verdict">${verdict[speed]}</div></div>`;
   }).join('');
-  const safeRows = scan.filter(p => p.actionability === 'SAFE').map(p => `<div class="ti-log-entry ti-log-safe"><span class="ti-log-badge ti-badge-safe">SAFE</span><span class="ti-log-pkg" title="${escape(p.package)}">${escape(p.package)}</span><span class="ti-log-arrow">→</span><span class="ti-log-fix">${escape(p.fix_version)}</span><span class="ti-log-days">${p.days_exposed}d</span></div>`).join('');
-  const breakingRows = scan.filter(p => p.actionability === 'BREAKING').sort((a, b) => b.days_exposed - a.days_exposed).map(p => `<div class="ti-log-entry ti-log-breaking"><span class="ti-log-badge ti-badge-breaking">⚠</span><span class="ti-log-pkg" title="${escape(p.package)}">${escape(p.package)}</span><span class="ti-log-arrow">→</span><span class="ti-log-fix">${escape(p.fix_version)}</span><span class="ti-log-days ti-days-red">${p.days_exposed}d</span></div>`).join('');
+  const safeRows = scan.filter(p => p.actionability === 'SAFE').map(p => `<div class="ti-log-entry ti-log-safe"><span class="ti-log-badge ti-badge-safe">SAFE</span><span class="ti-log-pkg" title="${escape(p.package)}">${escape(p.package)}</span><span class="ti-log-arrow">â†’</span><span class="ti-log-fix">${escape(p.fix_version)}</span><span class="ti-log-days">${p.days_exposed}d</span></div>`).join('');
+  const breakingRows = scan.filter(p => p.actionability === 'BREAKING').sort((a, b) => b.days_exposed - a.days_exposed).map(p => `<div class="ti-log-entry ti-log-breaking"><span class="ti-log-badge ti-badge-breaking">âš </span><span class="ti-log-pkg" title="${escape(p.package)}">${escape(p.package)}</span><span class="ti-log-arrow">â†’</span><span class="ti-log-fix">${escape(p.fix_version)}</span><span class="ti-log-days ti-days-red">${p.days_exposed}d</span></div>`).join('');
 
   root.innerHTML = `<div class="ti-panels">
     <section class="ti-panel"><div class="ti-panel-header"><svg viewBox="0 0 24 16" width="24" height="16" xmlns="http://www.w3.org/2000/svg"><rect x="0" y="6" width="14" height="5" rx="2" fill="none" stroke="var(--gold)" stroke-width="1.2"/><rect x="13" y="4" width="7" height="9" rx="1.5" fill="none" stroke="var(--gold)" stroke-width="1.2"/><line x1="20" y1="7" x2="24" y2="5" stroke="var(--gold)" stroke-width="1.2"/><line x1="20" y1="11" x2="24" y2="13" stroke="var(--gold)" stroke-width="1.2"/><line x1="6" y1="11" x2="5" y2="16" stroke="var(--gold)" stroke-width="1.2"/><line x1="10" y1="11" x2="10" y2="16" stroke="var(--gold)" stroke-width="1.2"/></svg><span class="ti-panel-label">CHARTED HAZARDS</span></div><div class="ti-panel-body ti-hazards-body"><div class="ti-flag-scroll">${flagsSVG}</div><svg class="ti-seafloor" viewBox="0 0 400 20" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><path d="M0,10 C40,5 80,15 120,10 C160,5 200,15 240,10 C280,5 320,15 360,10 C380,7 390,12 400,10" fill="none" stroke="rgba(0,150,200,0.2)" stroke-width="1.5"/><path d="M0,15 C50,10 100,18 150,13 C200,8 250,18 300,13 C350,8 380,16 400,14" fill="none" stroke="rgba(0,150,200,0.1)" stroke-width="1"/></svg><div class="ti-legend"><span class="ti-legend-item" style="color:#FF4444"><span class="ti-pennant"></span>BREAKING</span><span class="ti-legend-item" style="color:#00FF88"><span class="ti-pennant"></span>SAFE</span><span class="ti-legend-item" style="color:#FF8C00"><span class="ti-pennant"></span>MODERATE</span></div></div></section>
@@ -4383,7 +4291,7 @@ function renderTI2Deck(packages) {
   if (!screen) return;
 
   const options = packages.map((p, i) =>
-    `<option value="${i}">${escape(p.package)}  —  ${ti2Weeks(p.days_exposed)} weeks  ·  ${p.actionability}</option>`
+    `<option value="${i}">${escape(p.package)}  â€”  ${ti2Weeks(p.days_exposed)} weeks  Â·  ${p.actionability}</option>`
   ).join('');
 
   function badgeColorFor(act) {
@@ -4877,7 +4785,7 @@ function renderPatchLag(d) {
   const ownership = d.ownership || [];
   const sweep = d.sweep || {};
 
-  // Join scan Ã— ownership by package name (case-insensitive)
+  // Join scan Ãƒâ€” ownership by package name (case-insensitive)
   const ownerMap = {};
   ownership.forEach(o => {
     if (o && o.package) ownerMap[String(o.package).toLowerCase()] = o;
@@ -4888,13 +4796,13 @@ function renderPatchLag(d) {
     const cves = p.cves || [];
     const fix_version = own?.fixed_in
       || (cves[0] && cves[0].fixed_in)
-      || 'â€”';
+      || 'Ã¢â‚¬â€';
     const actionability = own?.actionability
       || actionabilityForPackage(p.name, sweep)
       || 'BREAKING';
     const owners = own ? filterBots(own.owners) : [];
     const ticket_text = own?.ticket_text
-      || `@${owners[0] || 'team'} â€” ${p.name} exposed ${days}d, ${actionability} fix â†’ upgrade to ${fix_version}`;
+      || `@${owners[0] || 'team'} Ã¢â‚¬â€ ${p.name} exposed ${days}d, ${actionability} fix Ã¢â€ â€™ upgrade to ${fix_version}`;
     return {
       package: p.name,
       version: p.version,
@@ -4907,7 +4815,7 @@ function renderPatchLag(d) {
     };
   });
 
-  // ACT 1 â€” Hero
+  // ACT 1 Ã¢â‚¬â€ Hero
   const totalCveDays = joinedData.reduce((s, r) => s + r.days_exposed * r.cves.length, 0);
   const safeCount = joinedData.filter(r => r.actionability === 'SAFE').length;
   const hero = document.getElementById('plHero');
@@ -4924,7 +4832,7 @@ function renderPatchLag(d) {
     `;
   }
 
-  // ACT 2 â€” Sort by urgency, render rows
+  // ACT 2 Ã¢â‚¬â€ Sort by urgency, render rows
   joinedData.forEach(r => {
     r._urgency = (r.days_exposed / 2090) * 60
                + (r.cves.length / 7) * 25
@@ -4952,7 +4860,7 @@ function renderPatchLag(d) {
     const main = document.createElement('div');
     main.className = 'pl-row-main';
 
-    // LEFT â€” package, version, owners
+    // LEFT Ã¢â‚¬â€ package, version, owners
     const left = document.createElement('div');
     left.className = 'pl-left';
     const pkgName = document.createElement('div');
@@ -4966,7 +4874,7 @@ function renderPatchLag(d) {
     if (r.owners.length === 0) {
       const none = document.createElement('div');
       none.className = 'pl-no-owner';
-      none.textContent = 'â€” unowned';
+      none.textContent = 'Ã¢â‚¬â€ unowned';
       left.appendChild(none);
     } else {
       const ownersWrap = document.createElement('div');
@@ -4980,7 +4888,7 @@ function renderPatchLag(d) {
       left.appendChild(ownersWrap);
     }
 
-    // CENTER â€” timeline track
+    // CENTER Ã¢â‚¬â€ timeline track
     const center = document.createElement('div');
     center.className = 'pl-center';
 
@@ -5037,7 +4945,7 @@ function renderPatchLag(d) {
     center.appendChild(trackWrap);
     center.appendChild(captionRow);
 
-    // RIGHT â€” quadrant + cve count
+    // RIGHT Ã¢â‚¬â€ quadrant + cve count
     const right = document.createElement('div');
     right.className = 'pl-right';
     const q = quadrant(r);
@@ -5054,7 +4962,7 @@ function renderPatchLag(d) {
     main.appendChild(center);
     main.appendChild(right);
 
-    // DETAIL â€” CVE list + ticket
+    // DETAIL Ã¢â‚¬â€ CVE list + ticket
     const detail = document.createElement('div');
     detail.className = 'pl-detail';
     const inner = document.createElement('div');
@@ -5069,7 +4977,7 @@ function renderPatchLag(d) {
     if (r.cves.length === 0) {
       const none = document.createElement('div');
       none.style.cssText = 'color:var(--text3);font-size:11px;font-family:var(--mono);';
-      none.textContent = 'â€” no CVEs in record';
+      none.textContent = 'Ã¢â‚¬â€ no CVEs in record';
       cveBlock.appendChild(none);
     }
     r.cves.forEach(c => {
@@ -5085,11 +4993,11 @@ function renderPatchLag(d) {
       sevBadge.textContent = sevCls.toUpperCase();
       const id = document.createElement('span');
       id.className = 'pl-cve-id';
-      id.textContent = c.id || 'â€”';
+      id.textContent = c.id || 'Ã¢â‚¬â€';
       const sum = document.createElement('span');
       sum.className = 'pl-cve-sum';
-      const sumText = c.summary || 'â€”';
-      sum.textContent = 'â€” ' + (sumText.length > 80 ? sumText.substring(0, 80) + 'â€¦' : sumText);
+      const sumText = c.summary || 'Ã¢â‚¬â€';
+      sum.textContent = 'Ã¢â‚¬â€ ' + (sumText.length > 80 ? sumText.substring(0, 80) + 'Ã¢â‚¬Â¦' : sumText);
       item.appendChild(sevBadge);
       item.appendChild(id);
       item.appendChild(sum);
@@ -5115,7 +5023,7 @@ function renderPatchLag(d) {
         btn.classList.remove('copied');
       };
       const onOk = () => {
-        btn.textContent = 'âœ“ COPIED';
+        btn.textContent = 'Ã¢Å“â€œ COPIED';
         btn.classList.add('copied');
         setTimeout(reset, 2000);
       };
@@ -5155,17 +5063,17 @@ function renderPreCve(d) {
       const dep = (f.security_deprecations && f.security_deprecations[0]) || {};
       return `
         <div class="storm-card">
-          <span class="badge precve">PRE-CVE Â· NO SCANNER ALERT YET</span>
+          <span class="badge precve">PRE-CVE Ã‚Â· NO SCANNER ALERT YET</span>
           <div class="pkg">${escape(f.name)} @ ${escape(f.installed_version || '?')}</div>
           <div class="reason">"${escape(dep.reason || 'Security-related deprecation in upstream registry')}"</div>
-          <div class="meta">Deprecated version: ${escape(dep.version || '?')} Â· ${dep.days_ago || '?'} days ago Â· ${escape(f.system || '')}</div>
+          <div class="meta">Deprecated version: ${escape(dep.version || '?')} Ã‚Â· ${dep.days_ago || '?'} days ago Ã‚Â· ${escape(f.system || '')}</div>
         </div>
       `;
-    }).join('') + '<div class="storm-tagline">No CVE filed yet â€” this is your early warning. Every scanner is silent. DriftWatch fires.</div>';
+    }).join('') + '<div class="storm-tagline">No CVE filed yet Ã¢â‚¬â€ this is your early warning. Every scanner is silent. DriftWatch fires.</div>';
   } else {
     document.getElementById('stormSection').innerHTML = `
       <div class="empty-state">
-        No security deprecations detected in this scan's packages â€” <span style="color:var(--green)">clean waters ahead</span>.<br>
+        No security deprecations detected in this scan's packages Ã¢â‚¬â€ <span style="color:var(--green)">clean waters ahead</span>.<br>
         <span style="font-size:11px; color:var(--text3); margin-top:8px; display:inline-block">Run a full sweep to detect pre-CVE signals across all dependencies.</span>
       </div>
     `;
@@ -5189,7 +5097,7 @@ function renderPreCve(d) {
     ];
     return `
       <div class="signal-card">
-        <div class="pkg">${escape(p.name)} <span style="color:var(--text2);font-weight:400">@ ${escape(p.version)} Â· ${days}d exposed</span></div>
+        <div class="pkg">${escape(p.name)} <span style="color:var(--text2);font-weight:400">@ ${escape(p.version)} Ã‚Â· ${days}d exposed</span></div>
         ${signals.map(([name, val]) => {
           const cls = val < 40 ? 'red' : val < 70 ? 'amber' : '';
           return `
@@ -5209,14 +5117,14 @@ function renderMaintainer(d) {
   document.getElementById('maintGrid').innerHTML = scan.map(p => {
     const days = p.worst_days_exposed || 0;
     let label, cls, decision;
-    if (days < 60) { label = 'FAST'; cls = 'fast'; decision = 'Upstream patches quickly â€” safe to wait for the official fix.'; }
-    else if (days < 200) { label = 'MODERATE'; cls = 'moderate'; decision = 'Set a 30-day deadline â€” monitor upstream actively.'; }
-    else if (days < 500) { label = 'SLOW'; cls = 'slow'; decision = 'Do not wait â€” plan mitigation now.'; }
-    else { label = 'VERY SLOW'; cls = 'veryslow'; decision = 'Upstream will not save you â€” mitigate immediately.'; }
+    if (days < 60) { label = 'FAST'; cls = 'fast'; decision = 'Upstream patches quickly Ã¢â‚¬â€ safe to wait for the official fix.'; }
+    else if (days < 200) { label = 'MODERATE'; cls = 'moderate'; decision = 'Set a 30-day deadline Ã¢â‚¬â€ monitor upstream actively.'; }
+    else if (days < 500) { label = 'SLOW'; cls = 'slow'; decision = 'Do not wait Ã¢â‚¬â€ plan mitigation now.'; }
+    else { label = 'VERY SLOW'; cls = 'veryslow'; decision = 'Upstream will not save you Ã¢â‚¬â€ mitigate immediately.'; }
     return `
       <div class="maint-card">
         <div class="pkg">${escape(p.name)}</div>
-        <div class="ver">@ ${escape(p.version)} Â· ${(p.cves || []).length} CVE${(p.cves || []).length === 1 ? '' : 's'}</div>
+        <div class="ver">@ ${escape(p.version)} Ã‚Â· ${(p.cves || []).length} CVE${(p.cves || []).length === 1 ? '' : 's'}</div>
         <div class="maint-resp ${cls}">${label} RESPONSIVENESS</div>
         <div class="maint-decision">${decision}</div>
         <div class="maint-exp">Inferred from ${days} days patch lag</div>
@@ -5245,7 +5153,7 @@ function renderOrders(d) {
     return `
       <div class="order-card ${cls}">
         <div class="order-head">
-          <div class="order-pkg">${escape(row.name)} <span style="color:var(--text2)">${escape(row.current_version)}</span> <span class="order-arrow">â†’</span> <span style="color:var(--green)">${escape(row.fixed_version)}</span></div>
+          <div class="order-pkg">${escape(row.name)} <span style="color:var(--text2)">${escape(row.current_version)}</span> <span class="order-arrow">Ã¢â€ â€™</span> <span style="color:var(--green)">${escape(row.fixed_version)}</span></div>
           <div class="order-days">${row.days_exposed}d exposed</div>
         </div>
         <div class="order-exp">${escape(row.explanation || '')}</div>
@@ -5263,7 +5171,7 @@ function renderOrders(d) {
 }
 
 function buildCrewMap(data) {
-  // ownerMap: package name (lowercase) â†’ { owners, ticket_text, actionability, fixed_in }
+  // ownerMap: package name (lowercase) Ã¢â€ â€™ { owners, ticket_text, actionability, fixed_in }
   const ownerMap = {};
   (data.ownership || []).forEach(o => {
     const key = String(o.package || '').toLowerCase();
@@ -5278,7 +5186,7 @@ function buildCrewMap(data) {
     };
   });
 
-  // Sweep upgrade map: pkg name â†’ most-severe row (by days_exposed)
+  // Sweep upgrade map: pkg name Ã¢â€ â€™ most-severe row (by days_exposed)
   const sweep = data.sweep || {};
   const upgradeMap = {};
   (sweep.upgrade_actionability || []).forEach(u => {
@@ -5287,7 +5195,7 @@ function buildCrewMap(data) {
     }
   });
 
-  // crewMap: owner login â†’ stats
+  // crewMap: owner login Ã¢â€ â€™ stats
   const crewMap = {};
   (data.scan || []).forEach(pkg => {
     const pkgName = pkg.name;
@@ -5324,7 +5232,7 @@ function buildCrewMap(data) {
         manifest_path: ownerData.manifest_path || 'package.json',
         manifest_touches: ownerData.manifest_touches || [],
         ticket_text: ownerData.ticket_text
-          || `@${login} â€” ${pkgName} exposed ${daysExposed}d, ${actionability} fix â†’ upgrade to ${fixVersion}`
+          || `@${login} Ã¢â‚¬â€ ${pkgName} exposed ${daysExposed}d, ${actionability} fix Ã¢â€ â€™ upgrade to ${fixVersion}`
       });
         crewMap[login].totalDays += daysExposed;
         if (actionability === 'SAFE') crewMap[login].safeIgnored++;
@@ -5336,7 +5244,7 @@ function buildCrewMap(data) {
   return Object.values(crewMap).sort((a, b) => b.totalDays - a.totalDays);
 }
 
-// ── SVG helpers (module scope) ──
+// â”€â”€ SVG helpers (module scope) â”€â”€
 function skullStampSVG(size) {
   size = size || 60;
   return `<svg width="${size}" height="${size}" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
@@ -5394,475 +5302,258 @@ function coinSVG() {
 }
 
 function renderCrew(d) {
-  const crewList = document.getElementById('crewList');
+  var crewList = document.getElementById('crewList');
   if (!crewList) return;
   crewList.innerHTML = '';
 
-  const crew = buildCrewMap(d);
+  var crew = buildCrewMap(d);
 
   if (crew.length === 0) {
     crewList.innerHTML = '<div style="padding:40px;text-align:center;font-family:var(--mono);color:var(--text3)">No crew data charted. Load a repository with ownership data.</div>';
     return;
   }
 
-  const maxDays = crew[0]?.totalDays || 1;
+  var captain = crew[0];
+  var officers = crew.slice(1, 4);
+  var captainWeeks = Math.round(captain.totalDays / 7);
 
-  function sinceDate(days) {
-    const dt = new Date(Date.now() - days * 86400000);
-    return dt.toLocaleDateString('en-GB', { month: 'short', year: 'numeric' });
+  var layout = document.createElement('div');
+  layout.className = 'crew-layout';
+
+  // Captain column
+  var captainCol = document.createElement('div');
+  var captainCard = document.createElement('div');
+  captainCard.className = 'captain-card';
+  captainCard.onclick = (function(p) { return function() { openCrewBook(p); }; })(captain);
+  captainCard.innerHTML =
+    '<div class="captain-rank-label">⚓ CAPTAIN</div>' +
+    '<div class="captain-username">@' + captain.login + '</div>' +
+    '<div class="captain-days">' + captain.totalDays.toLocaleString() + '</div>' +
+    '<div class="captain-days-label">days of exposure</div>' +
+    '<div class="captain-stats-row">' +
+      '<span class="captain-stat">' + captain.packages.length + ' PACKAGES</span>' +
+      '<span class="captain-stat-sep">·</span>' +
+      '<span class="captain-stat">' + captain.breakingCount + ' BREAKING</span>' +
+      '<span class="captain-stat-sep">·</span>' +
+      '<span class="captain-stat">' + captain.safeIgnored + ' EASY WINS</span>' +
+    '</div>' +
+    '<div class="captain-subtitle">Responsible for ' + captainWeeks + ' weeks of exposure</div>';
+  captainCol.appendChild(captainCard);
+  layout.appendChild(captainCol);
+
+  // Officers column
+  var officersCol = document.createElement('div');
+  officersCol.className = 'officers-column';
+  officers.forEach(function(member) {
+    var card = document.createElement('div');
+    card.className = 'officer-card';
+    card.onclick = (function(m) { return function() { openCrewBook(m); }; })(member);
+    card.innerHTML =
+      '<div class="officer-rank-label">🔱 OFFICER</div>' +
+      '<div class="officer-username">@' + member.login + '</div>' +
+      '<div class="officer-days">' + member.totalDays.toLocaleString() + '</div>' +
+      '<div class="officer-days-label">days of exposure</div>' +
+      '<div class="officer-stats">' + member.packages.length + ' pkgs · ' + member.breakingCount + ' breaking</div>';
+    officersCol.appendChild(card);
+  });
+  layout.appendChild(officersCol);
+  crewList.appendChild(layout);
+}
+
+// Book modal state
+var _bookPerson = null;
+var _bookCurrentSpread = 0;
+var _bookSpreads = [];
+var _bookBriefMode = false;
+
+function _sinceDate(days) {
+  var dt = new Date(Date.now() - days * 86400000);
+  return dt.toLocaleDateString('en-GB', { month: 'short', year: 'numeric' });
+}
+
+function buildSpreads(person) {
+  var pkgs = person.packages.slice().sort(function(a, b) {
+    return (b.days_exposed || 0) - (a.days_exposed || 0);
+  });
+  var spreads = [];
+  for (var i = 0; i < pkgs.length; i += 2) {
+    spreads.push({ left: pkgs[i], right: pkgs[i + 1] || null });
   }
+  return spreads;
+}
 
-  function worstExposure(member) {
-    const worstPkg = member.packages.reduce((a, b) =>
-      ((a.days_exposed || a.days || 0) > (b.days_exposed || b.days || 0)) ? a : b,
-      member.packages[0] || {}
-    );
-    return {
-      pkg: worstPkg,
-      days: worstPkg.days_exposed || worstPkg.days || 0
-    };
+function renderBookPage(pkg, person, pageNum, totalPages) {
+  if (!pkg) {
+    return '<div class="book-end-page">' +
+      '<svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">' +
+        '<circle cx="30" cy="30" r="28" stroke="#C8A84B" stroke-width="2"/>' +
+        '<path d="M30 12 L30 26 M24 32 C24 38 27 44 30 46 C33 44 36 38 36 32 C36 26 30 26 30 26 C30 26 24 26 24 32Z" stroke="#8B6914" stroke-width="2" fill="none"/>' +
+        '<circle cx="30" cy="20" r="3" fill="#C8A84B"/>' +
+        '<path d="M18 42 L42 42" stroke="#C8A84B" stroke-width="1.5"/>' +
+      '</svg>' +
+      '<div class="book-end-text">All charges logged.<br/>Fair winds ahead — if you act.</div>' +
+    '</div>';
   }
+  var badge = (pkg.actionability === 'SAFE')
+    ? '<span class="book-badge-safe">SAFE</span>'
+    : '<span class="book-badge-breaking">BREAKING</span>';
+  var fixVer = pkg.fix_version && pkg.fix_version !== '?' ? pkg.fix_version : '(see OSV)';
+  var since = _sinceDate(pkg.days_exposed || 0);
+  var days = (pkg.days_exposed || 0).toLocaleString();
+  return '<div class="book-page-header">' +
+      '<span>@' + person.login + '</span>' +
+      '<span>Page ' + pageNum + ' of ' + totalPages + '</span>' +
+    '</div>' +
+    '<div class="book-pkg-name">' + pkg.name + ' ' + badge + '</div>' +
+    '<div class="book-days-num">' + days + '</div>' +
+    '<div class="book-detail-line">⏱  ' + days + ' days exposed</div>' +
+    '<div class="book-detail-line">📅  Since ' + since + '</div>' +
+    '<div class="book-detail-line">🔧  Fix: v' + (pkg.version || '?') + ' → v' + fixVer + '</div>' +
+    '<div class="book-detail-line">👤  Owner: @' + person.login + '</div>';
+}
 
-  function crimeText(member) {
-    const since = sinceDate(worstExposure(member).days);
-    const noExcuse = member.safeIgnored > 0
-      ? ` ${member.safeIgnored} SAFE fix${member.safeIgnored > 1 ? 'es' : ''} deliberately ignored.`
-      : '';
-    return `Negligent dependency management since ${since}.${noExcuse} ${member.breakingCount} major upgrade${member.breakingCount !== 1 ? 's' : ''} deferred without explanation.`;
-  }
+function updateBookContent(spread) {
+  var leftPage = document.getElementById('book-left-page');
+  var rightPage = document.getElementById('book-right-page');
+  if (!leftPage || !rightPage || !_bookSpreads.length) return;
 
-  function slotCountUp(el, target, duration) {
-    duration = duration || 1200;
-    const start = performance.now();
-    const easeOut = t => 1 - Math.pow(1 - t, 3);
-    function tick(now) {
-      const p = Math.min((now - start) / duration, 1);
-      const val = Math.round(easeOut(p) * target);
-      el.textContent = val.toLocaleString();
-      el.classList.add('bounty-animate');
-      setTimeout(() => el.classList.remove('bounty-animate'), 100);
-      if (p < 1) requestAnimationFrame(tick);
-    }
-    requestAnimationFrame(tick);
-  }
+  var s = _bookSpreads[spread];
+  var totalPages = _bookSpreads.length * 2;
+  leftPage.innerHTML = renderBookPage(s.left, _bookPerson, spread * 2 + 1, totalPages);
+  rightPage.innerHTML = renderBookPage(s.right, _bookPerson, spread * 2 + 2, totalPages);
 
-  const wall = document.createElement('div');
-  wall.className = 'wanted-wall';
+  var prevBtn = document.getElementById('book-prev');
+  var nextBtn = document.getElementById('book-next');
+  if (prevBtn) prevBtn.style.display = spread === 0 ? 'none' : '';
+  if (nextBtn) nextBtn.style.display = spread === _bookSpreads.length - 1 ? 'none' : '';
+}
 
-  const posterWall = document.createElement('div');
-  posterWall.className = 'poster-wall';
+function openCrewBook(person) {
+  _bookPerson = person;
+  _bookBriefMode = false;
+  _bookSpreads = buildSpreads(person);
+  _bookCurrentSpread = 0;
 
-  // ── HERO POSTER ──
-  const hero = crew[0];
-  const heroWorst = worstExposure(hero);
-  const heroBurnWidth = Math.round((hero.totalDays / maxDays) * 100);
+  var overlay = document.getElementById('crew-book-overlay');
+  if (overlay) overlay.classList.add('open');
+  updateBookContent(0);
+}
 
-  const heroEl = document.createElement('div');
-  heroEl.className = 'poster hero-poster';
-  heroEl.dataset.login = hero.login;
+function closeCrewBook() {
+  var overlay = document.getElementById('crew-book-overlay');
+  if (overlay) overlay.classList.remove('open');
+  _bookBriefMode = false;
+}
 
-  heroEl.innerHTML = `
-    <div class="poster-border-decoration"></div>
-    <div class="corner-ornament tl"></div>
-    <div class="corner-ornament tr"></div>
-    <div class="corner-ornament bl"></div>
-    <div class="corner-ornament br"></div>
-
-    <div class="hero-poster-stamp">${skullStampSVG(64)}</div>
-
-    <div class="hero-poster-label">☠ &nbsp; M O S T &nbsp; W A N T E D &nbsp; ☠</div>
-    <div class="hero-poster-divider"></div>
-
-    <div class="hero-poster-name">@${hero.login}</div>
-
-    <div class="hero-poster-divider"></div>
-
-    <div class="hero-bounty-label">${treasureSVG(16)} &nbsp; B O U N T Y</div>
-    <div class="hero-bounty-value" id="hero-bounty-num">0</div>
-    <div class="hero-bounty-unit">days of exposure</div>
-    <div class="hero-since">${telescopeSVG()} Worst single exposure since ${sinceDate(heroWorst.days)}</div>
-
-    <div class="hero-stats-row">
-      <div class="hero-stat-item">
-        <div class="hero-stat-num" style="color:var(--neon-red)">${hero.packages.length}</div>
-        <div class="hero-stat-lbl">Packages</div>
-      </div>
-      <div class="hero-stat-item">
-        <div class="hero-stat-num" style="color:var(--neon-orange)">${hero.breakingCount}</div>
-        <div class="hero-stat-lbl">Breaking</div>
-      </div>
-      <div class="hero-stat-item">
-        <div class="hero-stat-num" style="color:var(--gold)">${hero.safeIgnored}</div>
-        <div class="hero-stat-lbl">Easy Wins Ignored</div>
-      </div>
-    </div>
-
-    <div class="hero-crime">"${crimeText(hero)}"</div>
-
-    <button class="hero-brief-btn" data-login="${hero.login}">
-      ⚓ &nbsp; GENERATE CAPTAIN'S BRIEF
-    </button>
-
-    <div class="exposure-burn-bar" style="width:0%" data-target="${heroBurnWidth}"></div>
-  `;
-
-  setTimeout(() => {
-    const bountyEl = heroEl.querySelector('#hero-bounty-num');
-    if (bountyEl) slotCountUp(bountyEl, hero.totalDays);
-    const burnBar = heroEl.querySelector('.exposure-burn-bar');
-    if (burnBar) burnBar.style.width = burnBar.dataset.target + '%';
+function flipPageForward() {
+  if (_bookCurrentSpread >= _bookSpreads.length - 1) return;
+  var rightPage = document.getElementById('book-right-page');
+  if (!rightPage) return;
+  rightPage.style.transition = 'transform 0.6s ease-in-out';
+  rightPage.style.transformOrigin = 'left center';
+  rightPage.style.transform = 'perspective(1200px) rotateY(-180deg)';
+  setTimeout(function() {
+    _bookCurrentSpread++;
+    updateBookContent(_bookCurrentSpread);
+    rightPage.style.transition = 'none';
+    rightPage.style.transform = '';
   }, 300);
-
-  heroEl.querySelector('.hero-brief-btn').addEventListener('click', (e) => {
-    e.stopPropagation();
-    if (typeof generateBrief === 'function') {
-      generateBrief(hero.login, d);
-    } else {
-      showCaptainsBrief(hero, d);
-    }
-  });
-
-  heroEl.addEventListener('click', () => filterIncidentLog(hero.login));
-
-  posterWall.appendChild(heroEl);
-
-  // ── CREW POSTER GRID ──
-  const grid = document.createElement('div');
-  grid.className = 'crew-poster-grid';
-
-  crew.slice(1).forEach((member, i) => {
-    const isCleared = member.totalDays === 0 || member.packages.length === 0;
-    const heightPx = isCleared ? 120 : Math.max(140, Math.round((member.totalDays / maxDays) * 280) + 100);
-    const burnWidth = Math.round((member.totalDays / maxDays) * 100);
-    const memberWorst = worstExposure(member);
-
-    const card = document.createElement('div');
-    card.className = 'poster small-poster';
-    card.style.height = heightPx + 'px';
-    card.dataset.login = member.login;
-
-    let stampHTML = '';
-    if (isCleared) {
-      stampHTML = `<div class="absolved-stamp">CLEARED</div>`;
-    }
-
-    card.innerHTML = `
-      <div class="corner-ornament tl"></div>
-      <div class="corner-ornament br"></div>
-
-      ${stampHTML}
-
-      <div class="hero-poster-label" style="font-size:8px;margin-bottom:4px">WANTED</div>
-      <div class="small-poster-name">@${member.login}</div>
-      <div class="small-poster-days" id="bounty-${i}">${isCleared ? '0' : '—'}</div>
-      <div class="small-poster-since">${telescopeSVG()} Worst single exposure since ${sinceDate(memberWorst.days)}</div>
-
-      <div class="small-poster-meta">
-        ${member.breakingCount > 0
-          ? `<div class="wax-seal" title="${member.breakingCount} BREAKING">${member.breakingCount}</div>`
-          : ''}
-        ${member.safeIgnored > 0
-          ? `<div class="gold-coin" title="${member.safeIgnored} easy wins ignored">${member.safeIgnored}</div>`
-          : ''}
-        <div style="font-family:var(--mono);font-size:9px;color:var(--text3);margin-top:4px">
-          ${member.packages.length} pkg${member.packages.length !== 1 ? 's' : ''}
-        </div>
-      </div>
-
-      <div class="exposure-burn-bar" style="width:0%;height:2px" data-target="${burnWidth}"></div>
-    `;
-
-    if (!isCleared) {
-      setTimeout(() => {
-        const el = card.querySelector(`#bounty-${i}`);
-        if (el) slotCountUp(el, member.totalDays, 900 + i * 100);
-        const bar = card.querySelector('.exposure-burn-bar');
-        if (bar) bar.style.width = bar.dataset.target + '%';
-      }, 400 + i * 120);
-    }
-
-    card.addEventListener('click', () => filterIncidentLog(member.login));
-    grid.appendChild(card);
-  });
-
-  posterWall.appendChild(grid);
-  wall.appendChild(posterWall);
-
-  // ── RIGHT: INCIDENT LOG ──
-  const logPanel = document.createElement('div');
-  logPanel.className = 'incident-log-panel';
-
-  logPanel.innerHTML = `
-    <div class="log-header">
-      <svg width="14" height="14" viewBox="0 0 14 14">
-        <rect x="2" y="1" width="10" height="12" rx="1" fill="none" stroke="currentColor" stroke-width="1.2"/>
-        <line x1="4" y1="4.5" x2="10" y2="4.5" stroke="currentColor" stroke-width="0.7"/>
-        <line x1="4" y1="6.5" x2="10" y2="6.5" stroke="currentColor" stroke-width="0.7"/>
-        <line x1="4" y1="8.5" x2="8" y2="8.5" stroke="currentColor" stroke-width="0.7"/>
-      </svg>
-      <span class="log-title">SHIP'S LOG — INCIDENT REPORTS</span>
-      <span class="log-filter-hint" id="log-filter-label">All crew</span>
-    </div>
-    <div class="incident-feed" id="incident-feed"></div>
-  `;
-
-  wall.appendChild(logPanel);
-  crewList.appendChild(wall);
-
-  buildIncidentFeed(crew, d, null);
-
-  function showCaptainsBrief(member, data) {
-    const existing = document.getElementById('captains-brief-modal');
-    if (existing) existing.remove();
-
-    const todayBrief = new Date().toLocaleDateString('en-GB', { day:'numeric', month:'long', year:'numeric' });
-    const briefContent = (member, today) => {
-      const worstPkg = member.packages.reduce((a, b) =>
-        ((a.days_exposed || a.days || 0) > (b.days_exposed || b.days || 0)) ? a : b,
-        member.packages[0] || {}
-      );
-      const safeList = member.packages
-        .filter(p => p.actionability === 'SAFE')
-        .slice(0, 3)
-        .map(p => `  • ${p.name} (${p.version || '?'} → ${p.fix_version || 'fix available'})`)
-        .join('\n');
-      const breakingList = member.packages
-        .filter(p => p.actionability === 'BREAKING')
-        .slice(0, 4)
-        .map(p => `  • ${p.name} (${p.days_exposed || p.days || 0}d · ${p.version || '?'} → ${p.fix_version || 'see OSV'})`)
-        .join('\n');
-      return `TO: Engineering Leadership
-FROM: DriftWatch Security Intelligence
-DATE: ${today}
-RE: Dependency Risk Summary — @${member.login}
-CLASSIFICATION: Internal · Security Sensitive
-
-EXECUTIVE SUMMARY
-
-@${member.login} is the primary maintainer for ${member.packages.length} dependencies currently carrying known security vulnerabilities. Combined exposure across owned packages totals ${member.totalDays.toLocaleString()} days.
-
-IMMEDIATE ACTIONS AVAILABLE (Low Engineering Effort)
-${safeList || '  None identified — all fixes require migration planning'}
-
-PLANNED REMEDIATION REQUIRED (Requires Sprint Planning)
-${breakingList || '  None'}
-
-RISK CONTEXT
-
-The longest single exposure is ${worstPkg.name || 'unknown'} at ${(worstPkg.days_exposed || worstPkg.days || 0).toLocaleString()} days. ${member.safeIgnored > 0 ? `${member.safeIgnored} fix${member.safeIgnored > 1 ? 'es require' : ' requires'} only a version bump — these can be resolved within the current sprint with minimal risk.` : 'All fixes require major version migration planning.'}
-
-INTELLIGENCE SOURCES
-
-This brief was generated by DriftWatch using cross-source SQL joins via Coral:
-GitHub SBOM × OSV Vulnerability DB × deps.dev × OpenSSF Scorecard × GitHub commit history
-
-All data reflects live repository state as of ${today}.`;
-    };
-
-    const enterpriseModal = document.createElement('div');
-    enterpriseModal.id = 'captains-brief-modal';
-    enterpriseModal.style.cssText = 'position:fixed;inset:0;z-index:9999;background:rgba(6,20,32,0.92);display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px)';
-    enterpriseModal.innerHTML = `
-      <div style="background:linear-gradient(135deg,#071828,#0a2035);border:1px solid rgba(200,168,75,0.4);border-radius:6px;padding:32px 36px;max-width:640px;width:90%;font-family:var(--mono);position:relative">
-        <div class="corner-ornament tl"></div>
-        <div class="corner-ornament tr"></div>
-        <div class="corner-ornament bl"></div>
-        <div class="corner-ornament br"></div>
-        <div style="font-size:11px;letter-spacing:0.3em;color:var(--text3);margin-bottom:4px">CAPTAIN'S BRIEF — CONFIDENTIAL</div>
-        <div style="height:1px;background:linear-gradient(90deg,transparent,rgba(200,168,75,0.3),transparent);margin:8px 0 20px"></div>
-        <div id="brief-text-content" style="font-size:12px;color:var(--text);line-height:1.8;white-space:pre-line">${briefContent(member, todayBrief)}</div>
-        <div style="height:1px;background:linear-gradient(90deg,transparent,rgba(200,168,75,0.2),transparent);margin:16px 0"></div>
-        <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:16px">
-          <button id="copy-brief-btn" onclick="copyBriefContent()" style="background:rgba(0,255,136,0.08);border:1px solid rgba(0,255,136,0.3);color:var(--neon-green);font-family:var(--mono);font-size:11px;padding:8px 20px;border-radius:4px;cursor:pointer;letter-spacing:0.1em">⎘ COPY BRIEF</button>
-          <button onclick="document.getElementById('captains-brief-modal').remove()" style="background:rgba(200,168,75,0.08);border:1px solid rgba(200,168,75,0.3);color:var(--gold);font-family:var(--mono);font-size:11px;padding:8px 20px;border-radius:4px;cursor:pointer;letter-spacing:0.1em">DISMISS ✕</button>
-        </div>
-      </div>
-    `;
-    enterpriseModal.addEventListener('click', e => {
-      if (e.target === enterpriseModal) enterpriseModal.remove();
-    });
-    document.body.appendChild(enterpriseModal);
-    return;
-
-    const modal = document.createElement('div');
-    modal.id = 'captains-brief-modal';
-    modal.style.cssText = `
-      position:fixed;inset:0;z-index:9999;
-      background:rgba(6,20,32,0.92);
-      display:flex;align-items:center;justify-content:center;
-      backdrop-filter:blur(4px);
-    `;
-
-    const today = new Date().toLocaleDateString('en-GB', { day:'numeric', month:'long', year:'numeric' });
-    const pkgList = member.packages.slice(0, 6)
-      .map(p => `  • ${p.name}@${p.version || '?'} — ${p.days_exposed || 0} days exposed`)
-      .join('\n');
-
-    modal.innerHTML = `
-      <div style="
-        background: linear-gradient(135deg, #071828, #0a2035);
-        border: 1px solid rgba(200,168,75,0.4);
-        border-radius: 6px;
-        padding: 32px 36px;
-        max-width: 520px;
-        width: 90%;
-        font-family: var(--mono);
-        position: relative;
-      ">
-        <div class="corner-ornament tl"></div>
-        <div class="corner-ornament tr"></div>
-        <div class="corner-ornament bl"></div>
-        <div class="corner-ornament br"></div>
-
-        <div style="font-size:11px;letter-spacing:0.3em;color:var(--text3);margin-bottom:4px">⚓ CAPTAIN'S BRIEF — CONFIDENTIAL</div>
-        <div style="height:1px;background:linear-gradient(90deg,transparent,rgba(200,168,75,0.3),transparent);margin:8px 0 20px"></div>
-
-        <div style="font-size:11px;color:var(--text2);line-height:1.8">
-          <div><strong style="color:var(--gold)">TO:</strong> Engineering Leadership</div>
-          <div><strong style="color:var(--gold)">FROM:</strong> DriftWatch Security Intelligence</div>
-          <div><strong style="color:var(--gold)">DATE:</strong> ${today}</div>
-          <div><strong style="color:var(--gold)">RE:</strong> Accountability — @${member.login}</div>
-        </div>
-
-        <div style="height:1px;background:linear-gradient(90deg,transparent,rgba(200,168,75,0.2),transparent);margin:16px 0"></div>
-
-        <div style="font-size:12px;color:var(--text);line-height:1.8;white-space:pre-line">@${member.login} is accountable for <span style="color:var(--neon-red);font-weight:700">${member.totalDays.toLocaleString()} combined days</span> of supply-chain exposure across <strong>${member.packages.length} packages</strong>.
-
-${member.safeIgnored > 0 ? `⚠ ${member.safeIgnored} SAFE upgrade${member.safeIgnored > 1 ? 's were' : ' was'} available but not applied — no technical blocker existed.
-
-` : ''}Packages under accountability:
-${pkgList}
-
-<span style="color:var(--text2);font-size:11px">Intelligence sourced via Coral SQL across GitHub SBOM × OSV × deps.dev × OpenSSF Scorecard</span></div>
-
-        <div style="height:1px;background:linear-gradient(90deg,transparent,rgba(200,168,75,0.2),transparent);margin:16px 0"></div>
-
-        <button onclick="document.getElementById('captains-brief-modal').remove()" style="
-          background:rgba(200,168,75,0.1);border:1px solid rgba(200,168,75,0.3);
-          color:var(--gold);font-family:var(--mono);font-size:11px;
-          padding:8px 20px;border-radius:4px;cursor:pointer;
-          letter-spacing:0.1em;float:right;
-        ">DISMISS ✕</button>
-      </div>
-    `;
-
-    modal.addEventListener('click', e => {
-      if (e.target === modal) modal.remove();
-    });
-    document.body.appendChild(modal);
-  }
-
-  window._showCaptainsBrief = showCaptainsBrief;
 }
 
-function copyBriefContent() {
-  const briefText = document.getElementById('brief-text-content')?.innerText;
-  if (!briefText) return;
-  navigator.clipboard.writeText(briefText).then(() => {
-    const btn = document.getElementById('copy-brief-btn');
-    if (btn) {
-      btn.textContent = '✓ COPIED';
-      btn.style.color = 'var(--neon-green)';
-      setTimeout(() => {
-        btn.textContent = '⎘ COPY BRIEF';
-      }, 2000);
-    }
+function flipPageBackward() {
+  if (_bookCurrentSpread <= 0) return;
+  var leftPage = document.getElementById('book-left-page');
+  if (!leftPage) return;
+  leftPage.style.transition = 'transform 0.6s ease-in-out';
+  leftPage.style.transformOrigin = 'right center';
+  leftPage.style.transform = 'perspective(1200px) rotateY(180deg)';
+  setTimeout(function() {
+    _bookCurrentSpread--;
+    updateBookContent(_bookCurrentSpread);
+    leftPage.style.transition = 'none';
+    leftPage.style.transform = '';
+  }, 300);
+}
+
+function showBookBrief() {
+  if (!_bookPerson) return;
+  var leftPage = document.getElementById('book-left-page');
+  var rightPage = document.getElementById('book-right-page');
+  _bookBriefMode = true;
+
+  var loadingHTML = '<div class="book-brief-wrap"><div style="font-size:18px;font-style:italic;color:#8B6914;text-align:center">⚓ Consulting the watch…</div></div>';
+  if (leftPage) leftPage.innerHTML = loadingHTML;
+  if (rightPage) rightPage.innerHTML = '';
+
+  var prevBtn = document.getElementById('book-prev');
+  var nextBtn = document.getElementById('book-next');
+  if (prevBtn) prevBtn.style.display = 'none';
+  if (nextBtn) nextBtn.style.display = 'none';
+
+  fetch('/api/chat', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      system: "You are DriftWatch, a supply chain security officer. Give a crisp 4-sentence captain's brief for this crew member's security debt. Be direct, naval in tone, no fluff.",
+      messages: [{ role: 'user', content: "Generate a captain's brief for " + _bookPerson.login + '. Their packages: ' + JSON.stringify(_bookPerson.packages) }]
+    })
+  })
+  .then(function(r) { return r.json(); })
+  .then(function(data) {
+    var text = (data && data.content) ? data.content : 'No intelligence received from the watch.';
+    var waxSeal = '<svg width="56" height="56" viewBox="0 0 56 56" class="book-wax-seal"><circle cx="28" cy="28" r="26" fill="#8B1A1A" stroke="#C0392B" stroke-width="2"/><path d="M28 14 L28 28 M22 34 C22 40 25 44 28 46 C31 44 34 40 34 34 C34 28 28 28 28 28 C28 28 22 28 22 34Z" stroke="#F5E6C8" stroke-width="2" fill="none"/><circle cx="28" cy="20" r="3" fill="#F5E6C8"/><path d="M16 40 L40 40" stroke="#F5E6C8" stroke-width="1.5"/></svg>';
+    var backBtn = '<button class="book-back-btn" onclick="returnToBookLog()">← BACK TO LOG</button>';
+    var briefHTML = '<div class="book-brief-wrap">' +
+      "<div class=\"book-brief-header\">CAPTAIN'S BRIEF &mdash; @" + _bookPerson.login + '</div>' +
+      '<div class="book-brief-divider"></div>' +
+      '<div class="book-brief-text">' + text.replace(/\n/g, '<br/>') + '</div>' +
+      waxSeal + backBtn +
+    '</div>';
+    if (leftPage) leftPage.innerHTML = briefHTML;
+    if (rightPage) rightPage.innerHTML = '';
+  })
+  .catch(function() {
+    if (leftPage) leftPage.innerHTML = '<div class="book-brief-wrap"><div class="book-brief-text">Signal lost — could not reach the intelligence layer.</div><button class="book-back-btn" onclick="returnToBookLog()">← BACK TO LOG</button></div>';
+    if (rightPage) rightPage.innerHTML = '';
   });
 }
 
-function buildIncidentFeed(crew, d, filterLogin) {
-  const feed = document.getElementById('incident-feed');
-  const filterLabel = document.getElementById('log-filter-label');
-  if (!feed) return;
-  if (filterLabel) filterLabel.textContent = filterLogin ? '@' + filterLogin : 'All crew';
-
-  feed.innerHTML = '';
-
-  const incidents = [];
-  crew.forEach(member => {
-    if (filterLogin && member.login !== filterLogin) return;
-    member.packages.forEach(pkg => {
-      incidents.push({ member, pkg });
-    });
-  });
-
-  incidents.sort((a, b) => (b.pkg.days_exposed || 0) - (a.pkg.days_exposed || 0));
-
-  if (incidents.length === 0) {
-    feed.innerHTML = '<div style="padding:20px;text-align:center;font-family:var(--mono);font-size:11px;color:var(--text3)">No incidents on record.</div>';
-    return;
-  }
-
-  incidents.forEach(({ member, pkg }, idx) => {
-    const isBreaking = pkg.actionability === 'BREAKING' || pkg.actionability == null;
-    const days = pkg.days_exposed || 0;
-    const since = new Date(Date.now() - days * 86400000)
-      .toLocaleDateString('en-GB', { month: 'short', year: 'numeric' });
-
-    const fixNote = pkg.fix_version && pkg.fix_version !== '?'
-      ? `Fix available: ${pkg.fix_version} — ignored`
-      : 'No fix listed';
-
-    const entry = document.createElement('div');
-    entry.className = `incident-entry ${isBreaking ? 'breaking' : 'safe'}${filterLogin ? ' highlighted' : ''}`;
-    entry.style.animationDelay = (idx * 40) + 'ms';
-
-    entry.innerHTML = `
-      <div class="incident-pkg">${pkg.name}<span style="color:var(--text3);font-size:10px"> @${pkg.version || '?'}</span></div>
-      <div class="incident-days">
-        <span style="color:${isBreaking ? 'var(--neon-red)' : 'var(--neon-green)'}">
-          ${days.toLocaleString()} days
-        </span>
-      </div>
-      <div class="incident-since">
-        ${telescopeSVG()} Since ${since} · ${pkg.actionability || 'UNKNOWN'}
-      </div>
-      <div class="incident-fix">${fixNote}</div>
-      <div class="incident-owner">@${member.login}</div>
-      <div class="coral-source-badge">
-        <span class="coral-dot"></span>
-        Coral × OSV × GitHub
-      </div>
-    `;
-
-    feed.appendChild(entry);
-  });
+function returnToBookLog() {
+  _bookBriefMode = false;
+  updateBookContent(_bookCurrentSpread);
 }
 
-function filterIncidentLog(login) {
-  const d = window.currentData;
-  if (!d) return;
-  const crew = buildCrewMap(d);
+// Wire up book controls
+document.addEventListener('DOMContentLoaded', function() {
+  var overlay = document.getElementById('crew-book-overlay');
+  var closeBtn = document.getElementById('book-close');
+  var prevBtn = document.getElementById('book-prev');
+  var nextBtn = document.getElementById('book-next');
+  var bookmark = document.getElementById('book-bookmark');
 
-  const currentFilter = document.getElementById('log-filter-label')?.textContent;
-  const newFilter = currentFilter === '@' + login ? null : login;
-
-  document.querySelectorAll('.poster').forEach(p => {
-    if (p.dataset.login === login && newFilter) {
-      p.style.borderColor = 'rgba(200,168,75,0.6)';
-      p.style.boxShadow = '0 0 24px rgba(200,168,75,0.12)';
-    } else {
-      p.style.borderColor = '';
-      p.style.boxShadow = '';
-    }
+  if (overlay) overlay.addEventListener('click', function(e) {
+    if (e.target === overlay) closeCrewBook();
   });
+  if (closeBtn) closeBtn.addEventListener('click', closeCrewBook);
+  if (prevBtn) prevBtn.addEventListener('click', flipPageBackward);
+  if (nextBtn) nextBtn.addEventListener('click', flipPageForward);
+  if (bookmark) bookmark.addEventListener('click', showBookBrief);
+});
 
-  buildIncidentFeed(crew, d, newFilter);
-}
 
 window.copyTicket = function(id, btn) {
   const text = document.getElementById(id).innerText;
   navigator.clipboard.writeText(text).then(() => {
     const orig = btn.textContent;
-    btn.textContent = 'âš“ Copied!';
+    btn.textContent = 'Ã¢Å¡â€œ Copied!';
     btn.classList.add('copied');
     setTimeout(() => {
       btn.textContent = orig;
       btn.classList.remove('copied');
     }, 2000);
   }).catch(() => {
-    btn.textContent = 'âœ— Copy failed';
-    setTimeout(() => { btn.textContent = 'âŽ˜ Copy to Clipboard'; }, 2000);
+    btn.textContent = 'Ã¢Å“â€” Copy failed';
+    setTimeout(() => { btn.textContent = 'Ã¢Å½Ëœ Copy to Clipboard'; }, 2000);
   });
 };
 
@@ -5878,7 +5569,7 @@ function renderQueries(d) {
 FROM (SELECT unnest(json_get_array(sbom__packages)) AS pkg
       FROM github.sbom
       WHERE owner='${d.owner}' AND repo='${d.repo}')`,
-      note: 'Unpacks the GitHub-generated SBOM (SPDX format) into one row per package. Native Coral table â€” no scraping, no rate-limit games.'
+      note: 'Unpacks the GitHub-generated SBOM (SPDX format) into one row per package. Native Coral table Ã¢â‚¬â€ no scraping, no rate-limit games.'
     },
     {
       name: 'Vulnerability Check',
@@ -5889,7 +5580,7 @@ FROM osv.query_by_version
 WHERE ecosystem='npm'
   AND package_name='braces'
   AND version='2.3.2'`,
-      note: 'OSV requires constant filters â€” cannot dynamic-join. scan.py loops per package in Python while Coral handles the cross-source query.'
+      note: 'OSV requires constant filters Ã¢â‚¬â€ cannot dynamic-join. scan.py loops per package in Python while Coral handles the cross-source query.'
     },
     {
       name: 'Pre-CVE Canary',
@@ -5921,7 +5612,7 @@ FROM github.search_commits(q => 'repo:${d.owner}/${d.repo} package.json');`,
        date_added, known_ransomware_campaign_use
 FROM kev.vulns
 WHERE cve_id IN (SELECT cve_id FROM scan_results)`,
-      note: 'CISA Known Exploited Vulnerabilities â€” if a CVE is on this list, it\'s being actively used in attacks. Custom Coral source contributed by this project.'
+      note: 'CISA Known Exploited Vulnerabilities Ã¢â‚¬â€ if a CVE is on this list, it\'s being actively used in attacks. Custom Coral source contributed by this project.'
     },
   ];
 
@@ -5950,7 +5641,7 @@ WHERE cve_id IN (SELECT cve_id FROM scan_results)`,
   `).join('');
 }
 
-// â”€â”€ Urgency ring â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// Ã¢â€â‚¬Ã¢â€â‚¬ Urgency ring Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
 function urgencyRing(score) {
   const radius = 20;
   const circumference = 2 * Math.PI * radius;
@@ -5978,7 +5669,7 @@ function urgencyRing(score) {
     </div>`;
 }
 
-// â”€â”€ Radar blip spawning â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// Ã¢â€â‚¬Ã¢â€â‚¬ Radar blip spawning Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
 let blipInterval = null;
 function spawnRadarBlip() {
   const container = document.getElementById('radar-blips');
@@ -6021,7 +5712,7 @@ function hideRadarOverlay() {
   stopRadarBlips();
 }
 
-// â”€â”€ Animations â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// Ã¢â€â‚¬Ã¢â€â‚¬ Animations Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
 function animateCountUp(el, target, duration) {
   const start = performance.now();
   const startVal = 0;
@@ -6034,7 +5725,7 @@ function animateCountUp(el, target, duration) {
   requestAnimationFrame(tick);
 }
 
-// â”€â”€ Scan flow â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// Ã¢â€â‚¬Ã¢â€â‚¬ Scan flow Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
 async function startScan(ev) {
   ev.preventDefault();
   const val = document.getElementById('repoInput').value.trim();
@@ -6048,7 +5739,7 @@ async function startScan(ev) {
 
   document.getElementById('scanBtn').disabled = true;
   showRadarOverlay(owner, repo);
-  updateRadarOverlay('Starting scanâ€¦', 1);
+  updateRadarOverlay('Starting scanÃ¢â‚¬Â¦', 1);
 
   try {
     const r = await fetch('/api/scan', {
@@ -6069,11 +5760,11 @@ async function startScan(ev) {
 }
 
 function nauticalMsg(pct) {
-  if (pct < 30) return 'Charting the waters â€” fetching SBOMâ€¦';
-  if (pct < 60) return 'Scanning the depths â€” checking OSV vulnerabilitiesâ€¦';
-  if (pct < 85) return 'Running canary sweep â€” checking deps.devâ€¦';
-  if (pct < 100) return 'Mapping the crew â€” tracing ownershipâ€¦';
-  return 'All hazards charted âš“';
+  if (pct < 30) return 'Charting the waters Ã¢â‚¬â€ fetching SBOMÃ¢â‚¬Â¦';
+  if (pct < 60) return 'Scanning the depths Ã¢â‚¬â€ checking OSV vulnerabilitiesÃ¢â‚¬Â¦';
+  if (pct < 85) return 'Running canary sweep Ã¢â‚¬â€ checking deps.devÃ¢â‚¬Â¦';
+  if (pct < 100) return 'Mapping the crew Ã¢â‚¬â€ tracing ownershipÃ¢â‚¬Â¦';
+  return 'All hazards charted Ã¢Å¡â€œ';
 }
 
 async function pollJob(jobId) {
@@ -6084,7 +5775,7 @@ async function pollJob(jobId) {
     updateRadarOverlay(j.message || nauticalMsg(j.progress), j.progress);
 
     if (j.status === 'complete') {
-      updateRadarOverlay('All hazards charted âš“', 100);
+      updateRadarOverlay('All hazards charted Ã¢Å¡â€œ', 100);
       setTimeout(async () => {
         hideRadarOverlay();
         document.getElementById('scanBtn').disabled = false;
@@ -6092,7 +5783,7 @@ async function pollJob(jobId) {
           const data = await fetchResults(state.owner, state.repo, false);
           state.data = data;
           renderAll();
-          setLiveStatus(`LIVE DATA Â· ${new Date().toLocaleTimeString()}`);
+          setLiveStatus(`LIVE DATA Ã‚Â· ${new Date().toLocaleTimeString()}`);
         } catch (e) {
           showToast('Scan complete but results fetch failed: ' + e.message);
         }
@@ -6111,7 +5802,7 @@ async function pollJob(jobId) {
   }
 }
 
-// â”€â”€ UI utilities â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// Ã¢â€â‚¬Ã¢â€â‚¬ UI utilities Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
 function showProgress(msg, pct) {
   document.getElementById('progressOverlay').classList.add('show');
   document.getElementById('progressMsg').textContent = msg;
@@ -6132,24 +5823,24 @@ function setLiveStatus(s) {
   document.getElementById('liveStatus').textContent = s;
 }
 
-// â”€â”€ Boot â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// Ã¢â€â‚¬Ã¢â€â‚¬ Boot Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
 (async function init() {
-  setLiveStatus('LIVE DATA Â· loadingâ€¦');
+  setLiveStatus('LIVE DATA Ã‚Â· loadingÃ¢â‚¬Â¦');
   try {
     const data = await fetchResults('jellyfin', 'jellyfin-web', true);
     state.data = data;
     state.owner = data.owner;
     state.repo = data.repo;
     renderAll();
-    setLiveStatus(`LIVE DATA Â· demo Â· ${new Date().toLocaleTimeString()}`);
+    setLiveStatus(`LIVE DATA Ã‚Â· demo Ã‚Â· ${new Date().toLocaleTimeString()}`);
   } catch (e) {
     showToast('Initial load failed: ' + e.message);
-    setLiveStatus('LIVE DATA Â· offline');
+    setLiveStatus('LIVE DATA Ã‚Â· offline');
   }
 })();
 </script>
 <script>
-// â”€â”€ Ask the Watch â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// Ã¢â€â‚¬Ã¢â€â‚¬ Ask the Watch Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
 (function() {
   let watchHistory = [];
   let watchInitialized = false;
@@ -6188,9 +5879,9 @@ function setLiveStatus(s) {
       });
     });
     const Y = ownerSet.size;
-    return 'â—Ž WATCH OFFICER ONLINE\n'
+    return 'Ã¢â€”Å½ WATCH OFFICER ONLINE\n'
          + 'Intelligence loaded: ' + d.owner + '/' + d.repo + '\n'
-         + N + ' vulnerable packages Â· ' + X + ' days worst exposure Â· ' + Y + ' crew members identified\n'
+         + N + ' vulnerable packages Ã‚Â· ' + X + ' days worst exposure Ã‚Â· ' + Y + ' crew members identified\n'
          + 'Ask me anything about your supply chain.';
   }
 
@@ -6199,7 +5890,7 @@ function setLiveStatus(s) {
     wrap.className = 'atw-bubble atw-bubble-' + (role === 'user' ? 'user' : 'assistant');
     const label = document.createElement('span');
     label.className = 'atw-bubble-label';
-    label.textContent = role === 'user' ? 'YOU Â·' : 'â—Ž WATCH Â·';
+    label.textContent = role === 'user' ? 'YOU Ã‚Â·' : 'Ã¢â€”Å½ WATCH Ã‚Â·';
     const body = document.createElement('div');
     body.className = 'atw-bubble-body';
     body.innerHTML = escapeHtml(text).replace(/\n/g, '<br>');
@@ -6223,10 +5914,10 @@ function setLiveStatus(s) {
     wrap.id = 'watchThinking';
     const label = document.createElement('span');
     label.className = 'atw-bubble-label';
-    label.textContent = 'â—Ž WATCH Â·';
+    label.textContent = 'Ã¢â€”Å½ WATCH Ã‚Â·';
     const dots = document.createElement('div');
     dots.className = 'atw-thinking-dots';
-    dots.innerHTML = '<span>â€¢</span><span>â€¢</span><span>â€¢</span>';
+    dots.innerHTML = '<span>Ã¢â‚¬Â¢</span><span>Ã¢â‚¬Â¢</span><span>Ã¢â‚¬Â¢</span>';
     wrap.appendChild(label);
     wrap.appendChild(dots);
     container.appendChild(wrap);
@@ -6256,7 +5947,7 @@ function setLiveStatus(s) {
     const sweep = d.sweep || {};
     const ownership = d.ownership || [];
 
-    // Package name â†’ owner logins
+    // Package name Ã¢â€ â€™ owner logins
     const ownerMap = {};
     ownership.forEach(o => {
       ownerMap[String(o.package || '').toLowerCase()] = (o.owners || []).filter(n => !/\[bot\]/i.test(n));
@@ -6279,7 +5970,7 @@ function setLiveStatus(s) {
       const action = (ug && ug.actionability) || 'BREAKING';
       const owners = ownerMap[String(p.name).toLowerCase()] || [];
       const ownerStr = owners.length ? owners.join(', ') : 'unowned';
-      return '- ' + p.name + ' v' + (p.version || '?') + ': ' + days + 'd exposed, ' + cveCount + ' CVEs, ' + action + ' fix â†’ ' + fix + ', owners: ' + ownerStr;
+      return '- ' + p.name + ' v' + (p.version || '?') + ': ' + days + 'd exposed, ' + cveCount + ' CVEs, ' + action + ' fix Ã¢â€ â€™ ' + fix + ', owners: ' + ownerStr;
     }).join('\n');
 
     const crewMap = {};
@@ -6295,11 +5986,11 @@ function setLiveStatus(s) {
     const preCveLines = preCve.length
       ? preCve.map(f => {
           const dep = (f.security_deprecations && f.security_deprecations[0]) || {};
-          return '- ' + f.name + ' v' + (f.installed_version || '?') + ': deprecated ' + (dep.days_ago != null ? dep.days_ago + 'd' : '?') + ' ago â€” "' + (dep.reason || '') + '"';
+          return '- ' + f.name + ' v' + (f.installed_version || '?') + ': deprecated ' + (dep.days_ago != null ? dep.days_ago + 'd' : '?') + ' ago Ã¢â‚¬â€ "' + (dep.reason || '') + '"';
         }).join('\n')
       : 'None detected';
 
-    return 'You are the Watch Officer of DriftWatch â€” a supply-chain security intelligence agent. You are speaking to a security engineer about the repository ' + owner + '/' + repo + '.\n\n'
+    return 'You are the Watch Officer of DriftWatch Ã¢â‚¬â€ a supply-chain security intelligence agent. You are speaking to a security engineer about the repository ' + owner + '/' + repo + '.\n\n'
          + 'Speak with the authority of a ship\'s navigator: precise, urgent, no filler. Use nautical metaphors sparingly and only when they land naturally. Always end your response with one concrete recommended action.\n\n'
          + 'You have full intelligence on this repository:\n\n'
          + 'VULNERABLE PACKAGES (' + scan.length + ' total):\n'
@@ -6319,7 +6010,7 @@ function setLiveStatus(s) {
     if (!text) return;
 
     if (!getData()) {
-      addBubble('assistant', 'Load a repository first â€” I need intelligence data before I can chart a course.');
+      addBubble('assistant', 'Load a repository first Ã¢â‚¬â€ I need intelligence data before I can chart a course.');
       return;
     }
 
@@ -6349,9 +6040,9 @@ function setLiveStatus(s) {
         const msg = typeof detail === 'string'
           ? detail
           : (detail.error && detail.error.message) || JSON.stringify(detail);
-        addBubble('assistant', 'âš  Signal lost â€” ' + msg);
+        addBubble('assistant', 'Ã¢Å¡Â  Signal lost Ã¢â‚¬â€ ' + msg);
       } else if (!data || !data.content) {
-        addBubble('assistant', 'âš  Signal lost â€” no answer came back from the intelligence layer.');
+        addBubble('assistant', 'Ã¢Å¡Â  Signal lost Ã¢â‚¬â€ no answer came back from the intelligence layer.');
       } else {
         const reply = data.content;
         watchHistory.push({ role: 'assistant', content: reply });
@@ -6359,7 +6050,7 @@ function setLiveStatus(s) {
       }
     } catch (e) {
       removeThinkingBubble();
-      addBubble('assistant', 'âš  Signal lost â€” could not reach the intelligence layer. Check your connection and try again.');
+      addBubble('assistant', 'Ã¢Å¡Â  Signal lost Ã¢â‚¬â€ could not reach the intelligence layer. Check your connection and try again.');
     } finally {
       input.disabled = false;
       btn.disabled = false;
@@ -6383,11 +6074,11 @@ function setLiveStatus(s) {
     renderGreeting();
   }
 
-  // Screen activation hook â€” called from the navAskWatch click listener above
+  // Screen activation hook Ã¢â‚¬â€ called from the navAskWatch click listener above
   window.initWatchOnNav = function() {
     const r = repoKey();
     if (r && r !== watchCurrentRepo) {
-      // New repo loaded since last visit â€” wipe state and re-greet
+      // New repo loaded since last visit Ã¢â‚¬â€ wipe state and re-greet
       watchCurrentRepo = r;
       watchHistory = [];
       watchInitialized = false;
@@ -6435,7 +6126,7 @@ function setLiveStatus(s) {
     var n = (window.currentData && Array.isArray(window.currentData.scan))
       ? window.currentData.scan.length
       : 'unknown';
-    bubble.textContent = 'Squawk! ' + n + ' hazards in these waters! âš“';
+    bubble.textContent = 'Squawk! ' + n + ' hazards in these waters! Ã¢Å¡â€œ';
     bubble.classList.add('visible');
     if (hideTimer) clearTimeout(hideTimer);
     hideTimer = setTimeout(function() {
