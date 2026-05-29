@@ -407,12 +407,17 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    width: 100%;
     padding: 7px 8px;
     margin: 0 -8px;
+    background: transparent;
+    border: 0;
     border-radius: 4px;
     cursor: pointer;
     color: var(--text2);
+    font: inherit;
     font-size: 13px;
+    text-align: left;
     transition: background 0.15s, color 0.15s;
   }
   .nav-item:hover { background: var(--bg3); color: var(--text); }
@@ -3156,36 +3161,18 @@
     </div>
     <div class="nav-section">
       <div class="nav-label">INTELLIGENCE</div>
-      <div class="nav-item active" data-screen="overview">
-        <span class="label">Overview</span>
-        <span class="nav-badge red" id="badge-overview">â€”</span>
-      </div>
-      <div class="nav-item" data-screen="patchlag">
+      <button class="nav-item active" id="nav-overview" type="button" data-screen="overview">
+        <span class="label">Command Bridge</span>
+      </button>
+      <button class="nav-item" id="nav-patchlag" type="button" data-screen="patchlag">
         <span class="label">Threat Intel</span>
-        <span class="nav-badge" id="badge-patchlag">â€”</span>
-      </div>
-      <div class="nav-item" data-screen="precve">
-        <span class="label">Pre-CVE Health</span>
-        <span class="nav-badge amber" id="badge-precve">â€”</span>
-      </div>
-      <div class="nav-item" data-screen="maintainer">
-        <span class="label">Maintainer Intel</span>
-        <span class="nav-badge" id="badge-maint">â€”</span>
-      </div>
-    </div>
-    <div class="nav-section">
-      <div class="nav-label">ACTION</div>
-      <div class="nav-item" data-screen="orders">
-        <span class="label">Upgrade Orders</span>
-        <span class="nav-badge green" id="badge-orders">â€”</span>
-      </div>
-      <div class="nav-item" data-screen="crew">
+      </button>
+      <button class="nav-item" id="nav-crew" type="button" data-screen="crew">
         <span class="label">Crew Accountability</span>
-        <span class="nav-badge" id="badge-crew">â€”</span>
-      </div>
-      <div class="nav-item" id="navAskWatch">
+      </button>
+      <button class="nav-item" id="navAskWatch" type="button">
         <span class="label">Ask the Watch</span>
-      </div>
+      </button>
     </div>
     <div class="nav-section">
       <div class="nav-label">ABOUT</div>
@@ -3738,25 +3725,10 @@ function renderAll() {
   renderOrders(d);
   renderCrew(d);
   renderQueries(d);
-  updateBadges(d);
   document.getElementById('overviewSub').textContent = `${d.owner}/${d.repo} — ${d.scan?.length || 0} vulnerable packages`;
   document.getElementById('footerNote').textContent = `${d.scan?.length || 0} packages · ${d.sweep?.upgrade_actionability?.length || 0} upgrade paths · ${d.ownership?.length || 0} owners mapped · scan ${d.sweep?.scan_date || 'demo data'}`;
 }
 
-function updateBadges(d) {
-  const scan = d.scan || [];
-  const sweep = d.sweep || {};
-  const ua = sweep.upgrade_actionability || [];
-  const preCount = (sweep.pre_cve_findings || []).filter(f => f.has_security_deprecation).length;
-  const safeDedupe = new Set(ua.filter(u => u.actionability === 'SAFE').map(u => u.name));
-  document.getElementById('badge-overview').textContent = scan.length;
-  document.getElementById('badge-overview').className = 'nav-badge ' + (scan.length > 0 ? 'red' : 'green');
-  document.getElementById('badge-patchlag').textContent = scan.length;
-  document.getElementById('badge-precve').textContent = preCount;
-  document.getElementById('badge-maint').textContent = scan.length;
-  document.getElementById('badge-orders').textContent = safeDedupe.size;
-  document.getElementById('badge-crew').textContent = (d.ownership || []).length;
-}
 
 function renderOverview(d) {
   const scan = (d.scan || []).slice().sort((a, b) => (b.worst_days_exposed || 0) - (a.worst_days_exposed || 0));
