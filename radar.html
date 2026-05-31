@@ -3859,7 +3859,7 @@
 </head>
 <body class="launch-active">
 <header class="topbar">
-  <div class="logo">
+  <a href="/" style="text-decoration:none" class="logo">
     <svg class="compass-rose" width="32" height="32" viewBox="0 0 32 32">
       <circle cx="16" cy="16" r="14" fill="none" stroke="rgba(232,197,90,0.4)" stroke-width="1"/>
       <circle cx="16" cy="16" r="10" fill="none" stroke="rgba(232,197,90,0.2)" stroke-width="0.5"/>
@@ -3880,29 +3880,9 @@
       <span class="logo-name gold-metal">DRIFTWATCH</span>
       <span class="logo-sub">SUPPLY CHAIN RADAR</span>
     </div>
-  </div>
+  </a>
   <form class="scan-form" id="scanForm" onsubmit="return startScan(event)">
     <input id="repoInput" type="text" value="jellyfin/jellyfin-web" placeholder="owner/repo" autocomplete="off" />
-    <div style="display:flex;gap:6px;margin-top:6px;flex-wrap:wrap;">
-      <button type="button" onclick="setDemoRepo('jellyfin','jellyfin-web')" 
-        style="font-size:10px;padding:3px 8px;background:#1a2a1a;
-        border:1px solid #2d5a2d;color:#7fff7f;border-radius:3px;
-        cursor:pointer;font-family:monospace;">
-        JS: jellyfin-web
-      </button>
-      <button type="button" onclick="setDemoRepo('apache','logging-log4j2')"
-        style="font-size:10px;padding:3px 8px;background:#2a1a1a;
-        border:1px solid #5a2d2d;color:#ff7f7f;border-radius:3px;
-        cursor:pointer;font-family:monospace;">
-        Java: log4j ⚠️
-      </button>
-      <button type="button" onclick="setDemoRepo('django','django')"
-        style="font-size:10px;padding:3px 8px;background:#1a1a2a;
-        border:1px solid #2d2d5a;color:#7f7fff;border-radius:3px;
-        cursor:pointer;font-family:monospace;">
-        Python: django
-      </button>
-    </div>
     <button id="scanBtn" type="submit">Chart Course</button>
   </form>
   <div class="status-pill"><span class="pulse-dot"></span><span id="liveStatus">LIVE DATA · loading…</span></div>
@@ -5090,6 +5070,8 @@ function buildHazardChart(scanData, ownershipData, sweepData) {
     const size = 16 + Math.min((pkg.cves || []).length * 5, 24);
 
     const upgrade = upgradeByName[pkg.name];
+    const epssPercentile = pkg.max_epss_percentile || 0;
+    const kevActive = pkg.kev_active || false;
     const actionability = upgrade?.actionability || 'BREAKING';
     const preCVE = (sweep.pre_cve_findings || [])
       .find(f => f.name === pkg.name && f.has_security_deprecation);
@@ -5196,9 +5178,13 @@ function buildHazardChart(scanData, ownershipData, sweepData) {
 
 function drawSeverityChain(packages, chart) {
   const scored = packages.map(pkg => {
+    const epssPercentile = pkg.max_epss_percentile || 0;
+    const kevBonus = pkg.kev_active ? 40 : 0;
     const score = Math.min(100, Math.round(
-      (pkg.worst_days_exposed / 2090 * 60) +
-      (pkg.cves.length / 7 * 25)
+      kevBonus +
+      (epssPercentile * 30) +
+      (Math.min(pkg.worst_days_exposed / 2090, 1) * 20) +
+      (pkg.cves.length / 7 * 10)
     ));
     return { ...pkg, _urgency: score };
   });
@@ -5464,7 +5450,11 @@ function renderThreatIntel(data) {
     if (key) upgradeMap[key] = u;
   });
 
-  const preCVENames = new Set(preCVE.map(p => (p.package || p.name || '').toLowerCase()));
+  const preCVENames = new Set(
+    preCVE
+      .filter(p => p.has_security_deprecation === true)
+      .map(p => (p.package || p.name || '').toLowerCase())
+  );
 
   function pkgNameOf(p) { return p.package || p.name || ''; }
   function fixedVersionOf(p, u) {
@@ -5485,9 +5475,24 @@ function renderThreatIntel(data) {
       fix_version: fixedVersionOf(p, u),
       cves: p.cves || [],
       pre_cve: preCVENames.has(name.toLowerCase()),
-      owners: ownerMap[name.toLowerCase()] || []
+      owners: ownerMap[name.toLowerCase()] || [],
+      max_epss_percentile: p.max_epss_percentile || 0,
+      max_epss: p.max_epss || 0,
+      kev_active: p.kev_active || false,
     };
-  }).sort((a, b) => (b.days_exposed || 0) - (a.days_exposed || 0));
+  }).sort((a, b) => {
+    const epssA = a.max_epss_percentile ||
+      (a.cves && a.cves[0] && a.cves[0].epss_percentile) || 0;
+    const epssB = b.max_epss_percentile ||
+      (b.cves && b.cves[0] && b.cves[0].epss_percentile) || 0;
+    const kevA = a.kev_active ? 40 : 0;
+    const kevB = b.kev_active ? 40 : 0;
+    const scoreA = kevA + (epssA * 30) +
+      (Math.min((a.days_exposed || 0) / 2090, 1) * 20);
+    const scoreB = kevB + (epssB * 30) +
+      (Math.min((b.days_exposed || 0) / 2090, 1) * 20);
+    return scoreB - scoreA;
+  });
 
   if (!packages.length) {
     showTI2EmptyState();
