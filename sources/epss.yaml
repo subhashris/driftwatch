@@ -1,0 +1,70 @@
+name: epss
+version: 0.1.0
+dsl_version: 3
+backend: http
+
+test_queries:
+  - SELECT cve_id, epss_score, percentile, score_date FROM epss.scores(cve => 'CVE-2021-44228') LIMIT 5
+
+base_url: "https://api.first.org"
+
+functions:
+  - name: scores
+    kind: table
+    description: >
+      Daily EPSS (Exploit Prediction Scoring System) scores from FIRST.org.
+      epss_score is the probability (0-1) that a CVE will be exploited in the
+      wild within the next 30 days. percentile is the rank among all ~230,000
+      scored CVEs. Updated daily. No auth required.
+      Pass a single CVE ID or comma-separated list: 'CVE-2021-44228,CVE-2022-22965'.
+    args:
+      - name: cve
+        required: true
+        bind:
+          arg: cve
+    request:
+      method: GET
+      path: /data/v1/epss
+      query:
+        - name: cve
+          from: arg
+          key: cve
+    response:
+      rows_path:
+        - data
+      row_strategy: direct
+    columns:
+      - name: cve_id
+        type: Utf8
+        description: CVE identifier, e.g. CVE-2021-44228
+        expr:
+          kind: path
+          path:
+            - cve
+      - name: epss_score
+        type: Utf8
+        description: >
+          Exploitation probability in next 30 days (0-1, returned as string).
+          Use CAST(epss_score AS DOUBLE) for numeric comparison.
+          Example: 0.97 = 97% probability of exploitation.
+        expr:
+          kind: path
+          path:
+            - epss
+      - name: percentile
+        type: Utf8
+        description: >
+          Rank among all scored CVEs (0-1, returned as string).
+          Use CAST(percentile AS DOUBLE) for numeric comparison.
+          Example: 0.99 = higher risk than 99% of all CVEs.
+        expr:
+          kind: path
+          path:
+            - percentile
+      - name: score_date
+        type: Utf8
+        description: Date the score was calculated, YYYY-MM-DD format.
+        expr:
+          kind: path
+          path:
+            - date

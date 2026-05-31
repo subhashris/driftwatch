@@ -18,7 +18,12 @@ import subprocess
 import json
 import argparse
 import time
+import sys
 from collections import defaultdict
+
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 
 
 def run_coral(query):

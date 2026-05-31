@@ -25,28 +25,17 @@ Usage:
   python sweep.py jellyfin jellyfin-web --days 60 --limit 200
 """
 
-import subprocess
 import json
 import argparse
-import time
+import sys
 import urllib.request
 from datetime import datetime, timezone, timedelta
 
+from coral_utils import PURL_TO_DEPSDEV, parse_sbom, run_coral, run_coral_parallel
 
-def run_coral(query):
-    result = subprocess.run(
-        ["coral", "sql", "--format", "json", query],
-        capture_output=True, text=True,
-    )
-    if result.returncode != 0:
-        return []
-    output = result.stdout.strip()
-    if not output:
-        return []
-    try:
-        return json.loads(output)
-    except json.JSONDecodeError:
-        return []
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 
 
 def days_ago(iso_date):
@@ -59,40 +48,22 @@ def days_ago(iso_date):
         return None
 
 
-def get_packages(owner, repo, limit=None):
-    """Fetch all packages from SBOM."""
-    query = (
-        "SELECT "
-        "json_get_str(pkg,'name') AS name, "
-        "json_get_str(pkg,'versionInfo') AS version, "
-        "json_get_str(json_get(pkg,'externalRefs',0),'referenceLocator') AS purl "
-        "FROM (SELECT unnest(json_get_array(sbom__packages)) AS pkg "
-        f"FROM github.sbom WHERE owner='{owner}' AND repo='{repo}')"
-    )
-    if limit:
-        query += f" LIMIT {limit}"
-    return run_coral(query)
-
-
 def ecosystem_from_purl(purl):
     """Map PURL type to deps.dev system name."""
     if not purl or not purl.startswith("pkg:"):
         return None
     purl_type = purl[4:].split("/", 1)[0].lower()
-    mapping = {
-        "npm": "NPM",
-        "pypi": "PYPI",
-        "maven": "MAVEN",
-        "cargo": "CARGO",
-        "golang": "GO",
-    }
-    return mapping.get(purl_type)
+    return PURL_TO_DEPSDEV.get(purl_type)
 
 
 def get_depsdev_versions(system, package_name):
     """Get all versions from deps.dev for a package."""
+    return run_coral(depsdev_versions_query(system, package_name))
+
+
+def depsdev_versions_query(system, package_name):
     safe_name = package_name.replace("'", "''")
-    return run_coral(
+    return (
         "SELECT version, published_at, is_deprecated, deprecated_reason "
         "FROM depsdev.package_versions "
         f"WHERE system='{system}' AND package_name='{safe_name}'"
@@ -105,15 +76,7 @@ def scan_ecosystem_to_depsdev(system):
     """Map scan.py ecosystem names to deps.dev system names."""
     if not system:
         return None
-    mapping = {
-        "npm": "NPM",
-        "pypi": "PYPI",
-        "maven": "MAVEN",
-        "cargo": "CARGO",
-        "golang": "GO",
-        "go": "GO",
-    }
-    return mapping.get(str(system).lower(), str(system).upper())
+    return PURL_TO_DEPSDEV.get(str(system).lower())
 
 
 SECURITY_KEYWORDS = [
@@ -212,6 +175,8 @@ def main():
                         help="Limit packages scanned (for testing)")
     parser.add_argument("--scan-json", type=str, default=None,
                         help="Path to existing scan_*.json for upgrade actionability")
+    parser.add_argument("--skip-pre-cve", action="store_true",
+                        help="Skip the full deps.dev deprecation sweep.")
     parser.add_argument("--delay", type=float, default=0.1)
     args = parser.parse_args()
 
@@ -222,9 +187,19 @@ def main():
     print(f"{'='*64}\n")
 
     # ── FETCH SBOM ───────────────────────────────────────────────────────────
-    print("Fetching SBOM packages...")
-    packages = get_packages(args.owner, args.repo, args.limit)
-    print(f"Found {len(packages)} packages to scan.\n")
+    packages = []
+    if args.skip_pre_cve and args.scan_json:
+        print("Skipping SBOM fetch for fast triage; using scan JSON for upgrade actionability.\n")
+    else:
+        print("Fetching SBOM packages...")
+        result = parse_sbom(args.owner, args.repo)
+        if isinstance(result, dict) and result.get("error") == "SBOM_UNAVAILABLE":
+            print(result["message"])
+            sys.exit(1)
+        packages = result
+        if args.limit:
+            packages = packages[:args.limit]
+        print(f"Found {len(packages)} packages to scan.\n")
 
     # ── FEATURE A: DEPRECATED VERSION SWEEP ─────────────────────────────────
     print(f"{'─'*64}")
@@ -234,8 +209,12 @@ def main():
 
     pre_cve_findings = []
     cutoff = datetime.now(timezone.utc) - timedelta(days=args.days)
+    if args.skip_pre_cve:
+        print("Skipped for fast dashboard scan.")
+    sweep_packages = [] if args.skip_pre_cve else packages
 
-    for i, pkg in enumerate(packages, 1):
+    depsdev_queries = []
+    for i, pkg in enumerate(sweep_packages, 1):
         name = pkg.get("name")
         version = pkg.get("version")
         purl = pkg.get("purl")
@@ -244,12 +223,21 @@ def main():
         if not system or not name or not version:
             continue
 
-        print(f"[{i}/{len(packages)}] {name}@{version} ...", end=" ", flush=True)
+        depsdev_queries.append(
+            (
+                depsdev_versions_query(system, name),
+                {"index": i, "name": name, "version": version, "system": system},
+            )
+        )
 
-        versions = get_depsdev_versions(system, name)
+    for metadata, versions in run_coral_parallel(depsdev_queries, max_workers=24):
+        name = metadata["name"]
+        version = metadata["version"]
+        system = metadata["system"]
+        total_packages = len(packages) or len(sweep_packages)
+        print(f"[{metadata['index']}/{total_packages}] {name}@{version} ...", end=" ", flush=True)
         if not versions:
             print("no data")
-            time.sleep(args.delay)
             continue
 
         # Check for recently deprecated versions
@@ -291,8 +279,6 @@ def main():
         else:
             print("clean")
 
-        time.sleep(args.delay)
-
     # ── FEATURE B: UPGRADE ACTIONABILITY ────────────────────────────────────
     upgrade_findings = []
     if args.scan_json:
@@ -314,7 +300,6 @@ def main():
                     cache_key = (system, name)
                     if cache_key not in version_cache:
                         version_cache[cache_key] = get_depsdev_versions(system, name)
-                        time.sleep(args.delay)
                     versions = version_cache[cache_key]
                 for cve in finding.get("cves", []):
                     fixed_in = cve.get("fixed_in")
