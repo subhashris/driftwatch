@@ -208,7 +208,7 @@ agent.py        → Groq LLM with coral_sql tool calling
 
 ```powershell
 # Clone
-git clone https://github.com/yourname/driftwatch
+git clone https://github.com/subhashris/driftwatch
 cd driftwatch
 
 # Install dependencies
