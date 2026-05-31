@@ -20,6 +20,7 @@ Usage (from PowerShell):
 import argparse
 import json
 import re
+import subprocess
 import sys
 from datetime import datetime, timezone
 
@@ -276,6 +277,114 @@ def write_scan_meta(owner, repo, *, total_packages, prioritized_count, scan_coun
     print(f"Saved scan metadata to {out_name}")
 
 
+def enrich_with_epss(findings, out_name):
+    """Fetch live EPSS and KEV data via Coral and
+    enrich the scan findings."""
+    import os
+
+    coral_path = os.path.join(
+        os.environ.get("USERPROFILE", ""),
+        ".local", "bin", "coral.exe"
+    )
+    coral_bin = coral_path if os.path.exists(coral_path) else "coral"
+
+    # Collect all CVE IDs
+    cve_ids = []
+    for finding in findings:
+        for cve in finding.get("cves", []):
+            cid = cve.get("id", "")
+            if cid.startswith("CVE-"):
+                cve_ids.append(cid)
+            for alias in cve.get("aliases", []):
+                if isinstance(alias, str) and alias.startswith("CVE-"):
+                    cve_ids.append(alias)
+    cve_ids = sorted(set(cve_ids))
+    if not cve_ids:
+        return findings
+
+    print(f"Enriching {len(cve_ids)} CVEs with live EPSS + KEV via Coral...")
+
+    # Fetch EPSS
+    cve_arg = ",".join(cve_ids)
+    epss_query = (
+        f"SELECT cve_id, epss_score, percentile "
+        f"FROM epss.scores(cve => '{cve_arg}')"
+    )
+    epss_result = subprocess.run(
+        [coral_bin, "sql", epss_query],
+        capture_output=True, text=True, timeout=60,
+        encoding="utf-8", errors="replace"
+    )
+    epss_map = {}
+    for line in epss_result.stdout.splitlines():
+        if "|" not in line or line.startswith("+"):
+            continue
+        cells = [c.strip() for c in line.split("|")[1:-1]]
+        if len(cells) == 3 and cells[0].startswith("CVE-"):
+            try:
+                epss_map[cells[0]] = {
+                    "epss_score": float(cells[1]),
+                    "epss_percentile": float(cells[2])
+                }
+            except ValueError:
+                pass
+
+    # Fetch KEV
+    kev_query = "SELECT cve_id FROM kev.vulns"
+    kev_result = subprocess.run(
+        [coral_bin, "sql", kev_query],
+        capture_output=True, text=True, timeout=30,
+        encoding="utf-8", errors="replace"
+    )
+    kev_set = set()
+    for line in kev_result.stdout.splitlines():
+        if "|" not in line or line.startswith("+"):
+            continue
+        cells = [c.strip() for c in line.split("|")[1:-1]]
+        if cells and cells[0].startswith("CVE-"):
+            kev_set.add(cells[0])
+
+    print(f"Got EPSS for {len(epss_map)} CVEs, "
+          f"KEV has {len(kev_set)} entries")
+
+    # Enrich findings
+    for finding in findings:
+        best_epss = 0.0
+        best_percentile = 0.0
+        kev_active = False
+        for cve in finding.get("cves", []):
+            ids_to_check = [cve.get("id", "")]
+            ids_to_check += cve.get("aliases", [])
+            for cid in ids_to_check:
+                if cid in epss_map:
+                    e = epss_map[cid]
+                    cve["epss_score"] = e["epss_score"]
+                    cve["epss_percentile"] = e["epss_percentile"]
+                    if e["epss_score"] > best_epss:
+                        best_epss = e["epss_score"]
+                        best_percentile = e["epss_percentile"]
+                if cid in kev_set:
+                    kev_active = True
+        finding["max_epss"] = best_epss
+        finding["max_epss_percentile"] = best_percentile
+        finding["kev_active"] = kev_active
+
+    # Re-sort by urgency
+    findings.sort(key=lambda f: (
+        -(10 if f["kev_active"] else 0)
+        - (f["max_epss_percentile"] * 60)
+        - (min(f["worst_days_exposed"] / 2090, 1) * 10)
+        - (len(f.get("cves", [])) * 2)
+    ))
+
+    # Save enriched results
+    with open(out_name, "w", encoding="utf-8") as fh:
+        json.dump(findings, fh, indent=2)
+    print(f"Saved enriched scan with EPSS + KEV to {out_name}")
+
+    return findings
+
+
 def main():
     parser = argparse.ArgumentParser(description="Scan a repo's SBOM for vulnerabilities + patch lag.")
     parser.add_argument("owner", help="GitHub owner, e.g. jellyfin")
@@ -343,6 +452,7 @@ def main():
     with open(out_name, "w", encoding="utf-8") as fh:
         json.dump(findings, fh, indent=2)
     print(f"\nSaved detailed results to {out_name}")
+    findings = enrich_with_epss(findings, out_name)
     write_scan_meta(
         args.owner,
         args.repo,

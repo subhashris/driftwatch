@@ -1261,8 +1261,8 @@
   .why-card p { margin: 0; color: var(--text); font-size: 13px; line-height: 1.6; }
 
   .compare-table { font-size: 12px; }
-  .compare-table .yes { color: var(--green); font-weight: 700; }
-  .compare-table .no { color: var(--text3); }
+  .compare-table .yes { color: var(--neon-green); font-weight: 700; }
+  .compare-table .no { color: var(--text3); opacity: 0.5; }
   .compare-table .uniq { color: var(--gold); font-weight: 700; }
 
   /* Progress overlay */
@@ -4537,14 +4537,14 @@
           <tr><th>Capability</th><th>Snyk / Endor</th><th>Socket</th><th>DriftWatch</th></tr>
         </thead>
         <tbody>
-          <tr><td>Vulnerability detection</td><td class="yes">?</td><td class="yes">?</td><td class="yes">?</td></tr>
-          <tr><td>Reachability analysis</td><td class="yes">?</td><td class="no">?</td><td class="no">?</td></tr>
-          <tr><td>Package behavior / runtime</td><td class="no">?</td><td class="yes">?</td><td class="no">?</td></tr>
-          <tr><td>Patch lag intelligence</td><td class="no">?</td><td class="no">?</td><td class="uniq">? UNIQUE</td></tr>
-          <tr><td>Pre-CVE security deprecations</td><td class="no">?</td><td class="no">?</td><td class="uniq">? UNIQUE</td></tr>
-          <tr><td>Maintainer responsiveness profile</td><td class="no">?</td><td class="no">?</td><td class="uniq">? UNIQUE</td></tr>
-          <tr><td>Org-specific ownership mapping</td><td class="no">?</td><td class="no">?</td><td class="uniq">? UNIQUE</td></tr>
-          <tr><td>Upgrade actionability scoring</td><td class="no">?</td><td class="no">?</td><td class="uniq">? UNIQUE</td></tr>
+          <tr><td>Vulnerability detection</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+          <tr><td>Reachability analysis</td><td class="yes">✓</td><td class="no">✗</td><td class="no">✗</td></tr>
+          <tr><td>Package behavior / runtime</td><td class="no">✗</td><td class="yes">✓</td><td class="no">✗</td></tr>
+          <tr><td>Patch lag intelligence</td><td class="no">✗</td><td class="no">✗</td><td class="uniq">✓ UNIQUE</td></tr>
+          <tr><td>Pre-CVE security deprecations</td><td class="no">✗</td><td class="no">✗</td><td class="uniq">✓ UNIQUE</td></tr>
+          <tr><td>Maintainer responsiveness profile</td><td class="no">✗</td><td class="no">✗</td><td class="uniq">✓ UNIQUE</td></tr>
+          <tr><td>Org-specific ownership mapping</td><td class="no">✗</td><td class="no">✗</td><td class="uniq">✓ UNIQUE</td></tr>
+          <tr><td>Upgrade actionability scoring</td><td class="no">✗</td><td class="no">✗</td><td class="uniq">✓ UNIQUE</td></tr>
         </tbody>
       </table>
       <div class="why-grid">
@@ -5049,7 +5049,7 @@ function buildHazardChart(scanData, ownershipData, sweepData) {
   });
   if (!packages.length) return;
 
-  const maxDays = Math.max(2090, ...packages.map(p => p.worst_days_exposed || 0));
+  const maxDays = Math.max(...packages.map(p => p.worst_days_exposed || 0));
   const maxCVEs = Math.max(1, ...packages.map(p => (p.cves || []).length));
 
   const sweep = sweepData || window._sweepData || {};
@@ -5177,13 +5177,14 @@ function buildHazardChart(scanData, ownershipData, sweepData) {
 }
 
 function drawSeverityChain(packages, chart) {
+  const maxDays = Math.max(...packages.map(p => p.worst_days_exposed || 0));
   const scored = packages.map(pkg => {
     const epssPercentile = pkg.max_epss_percentile || 0;
     const kevBonus = pkg.kev_active ? 40 : 0;
     const score = Math.min(100, Math.round(
       kevBonus +
       (epssPercentile * 30) +
-      (Math.min(pkg.worst_days_exposed / 2090, 1) * 20) +
+      (Math.min(pkg.worst_days_exposed / maxDays, 1) * 20) +
       (pkg.cves.length / 7 * 10)
     ));
     return { ...pkg, _urgency: score };
@@ -5872,18 +5873,24 @@ function openTI2ParchmentMap(pkg) {
   const speed = ti2Speed(days);
   const speedLabel = speed.replace('_', ' ');
 
-  const respScore    = days > 500 ? 25 : days > 200 ? 55 : 85;
-  const patchScore   = days > 500 ? 20 : days > 200 ? 45 : days > 30 ? 70 : 90;
-  const abandonScore = days > 365 ? 30 : days > 90  ? 60 : 85;
-  const issueScore   = days > 500 ? 35 : days > 200 ? 60 : 85;
-  const prScore      = days > 500 ? 40 : days > 200 ? 65 : 88;
+  const epssScore = Math.round((pkg.max_epss_percentile ||
+    (pkg.cves && pkg.cves[0] && pkg.cves[0].epss_percentile) || 0) * 100);
+  const allDays = (window.currentData?.scan || [])
+    .map(p => p.worst_days_exposed || p.days_exposed || 0);
+  const maxDays = allDays.length ? Math.max(...allDays) : 2090;
+  const daysScore = Math.round(Math.min((pkg.days_exposed || 0) / maxDays, 1) * 100);
+  const cveScore  = Math.round(Math.min((pkg.cves || []).length / 10, 1) * 100);
+  const kevScore  = (pkg.kev_active) ? 100 :
+    epssScore > 70 ? 60 : epssScore > 40 ? 30 : 10;
+  const fixScore  = pkg.actionability === 'SAFE' ? 90 :
+    pkg.actionability === 'MODERATE' ? 60 : 25;
 
   const signals = [
-    { label: 'Maintainer responsiveness', score: respScore },
-    { label: 'Patch lag severity',        score: patchScore },
-    { label: 'Abandonment signal',        score: abandonScore },
-    { label: 'Issue stagnation',          score: issueScore },
-    { label: 'PR stagnation',             score: prScore }
+    { label: 'Exploitation probability (EPSS)', score: epssScore },
+    { label: 'Patch lag severity',              score: daysScore },
+    { label: 'CVE density',                     score: cveScore },
+    { label: 'Active exploitation (KEV)',        score: kevScore },
+    { label: 'Fix complexity',                  score: fixScore }
   ];
 
   const signalRows = signals.map(s => `
@@ -6784,32 +6791,45 @@ function generateCrewBrief() {
   if (rightPage) rightPage.innerHTML = '';
 
   var person = _bookPerson;
-  fetch('/api/chat', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      owner: state.owner || 'parse-community',
-      repo: state.repo || 'parse-server',
-      system: 'You are a ship\'s captain writing a personal log entry addressed directly to a crew member about their security negligence.\nRules:\n- Address them by name (@' + person.login + ') in the first sentence\n- Name at least 3 specific packages by name with their exact days exposed\n- Call out BREAKING packages as unacceptable derelictions\n- Call out SAFE packages as inexcusable easy wins that were ignored\n- Give specific orders: exact package names and fix versions to ship\n- Naval tone: direct, authoritative, no corporate language\n- Write in exactly 2 paragraphs separated by a blank line\n- Paragraph 1: the damage — what they let happen and for how long\n- Paragraph 2: the orders — exactly what they must fix and in what priority\n- Under 130 words total. No bullet points. No generic advice.',
-      messages: [{
-        role: 'user',
-        content: 'Write the captain\'s log entry for @' + person.login + '.\nTheir packages (ordered by severity):\n' +
-          person.packages.map(function(p) {
-            return '- ' + p.name + ': ' + (p.days_exposed || 0) + ' days exposed, ' + (p.actionability || 'BREAKING') + ', fix: ' + (p.version || '?') + ' → ' + (p.fix_version || '?');
-          }).join('\n') +
-          '\nTotal exposure: ' + (person.totalDays || 0) + ' days. Breaking count: ' + (person.breakingCount || 0) + '. Safe fixes ignored: ' + (person.safeIgnored || 0) + '.'
-      }]
-    })
-  })
-  .then(function(r) { return r.json(); })
-  .then(function(data) {
-    var response = (data && data.content) ? data.content : 'No intelligence received from the watch.';
-    renderBrief(person, response);
-  })
-  .catch(function() {
-    if (leftPage) leftPage.innerHTML = '<div style="padding:28px 24px;font-family:Georgia,serif;font-style:italic;color:#8B6914;">Signal lost — could not reach the intelligence layer.<br><br><button onclick="returnToLog()" style="background:rgba(139,94,60,0.3);border:1px solid #8B5E3C;color:#3D1F0A;padding:7px 18px;border-radius:4px;font-family:Georgia,serif;font-size:13px;cursor:pointer;">← BACK TO LOG</button></div>';
-    if (rightPage) rightPage.innerHTML = '';
+
+  // Build brief directly from ownership data — no API call needed
+  var ownership = (window.currentData && window.currentData.ownership) ? window.currentData.ownership : [];
+  var login = person.login;
+
+  // Filter records owned by this person, sort by days exposed descending
+  var owned = ownership.filter(function(rec) {
+    return Array.isArray(rec.owners) && rec.owners.indexOf(login) !== -1;
+  }).sort(function(a, b) {
+    return (b.worst_days_exposed || 0) - (a.worst_days_exposed || 0);
   });
+
+  var top3 = owned.slice(0, 3);
+
+  var briefText;
+  if (top3.length === 0) {
+    briefText = 'No vulnerable packages assigned to @' + login + ' in the current scan.';
+  } else {
+    var safeCount = 0, breakingCount = 0;
+    var lines = '<strong>Your most critical exposures:</strong><br><br>';
+    top3.forEach(function(rec, i) {
+      var days = (rec.worst_days_exposed || 0).toLocaleString();
+      var action = rec.actionability || 'UNKNOWN';
+      var fix = rec.fixed_in || '?';
+      var pkg = (rec.package || '?') + '@' + (rec.version || '?');
+      if (action === 'SAFE') safeCount++; else breakingCount++;
+      lines += (i + 1) + '. <strong>' + pkg + '</strong><br>';
+      lines += '&nbsp;&nbsp;&nbsp;' + days + ' days · ' + action + ' upgrade → v' + fix + '<br><br>';
+    });
+
+    var actionLine = '';
+    if (safeCount > 0) actionLine += safeCount + ' safe upgrade' + (safeCount > 1 ? 's' : '') + ' can be done this sprint.';
+    if (safeCount > 0 && breakingCount > 0) actionLine += '<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+    if (breakingCount > 0) actionLine += breakingCount + ' breaking upgrade' + (breakingCount > 1 ? 's need' : ' needs') + ' migration planning.';
+
+    briefText = lines + '<strong>Action:</strong> ' + actionLine;
+  }
+
+  renderBrief(person, briefText);
 }
 
 function returnToLog() {
