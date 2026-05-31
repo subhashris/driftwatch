@@ -5006,7 +5006,7 @@ function renderOverview(d) {
   // Expose sweep data globally so the chart builder can reach it
   window._sweepData = sweep;
 
-  buildHazardChart(scan, d.ownership || []);
+  buildHazardChart(scan, d.ownership || [], sweep);
   buildParchmentScrolls(scan, sweep);
 }
 
@@ -5050,7 +5050,7 @@ function buildParchmentScrolls(scanData, sweepData) {
 }
 
 // -- Hazard Chart (2D scatter of buoys) 
-function buildHazardChart(scanData, ownershipData) {
+function buildHazardChart(scanData, ownershipData, sweepData) {
   const chart = document.getElementById('hazard-chart');
   if (!chart) return;
   chart.querySelectorAll('.hazard-buoy').forEach(b => b.remove());
@@ -5072,7 +5072,7 @@ function buildHazardChart(scanData, ownershipData) {
   const maxDays = Math.max(2090, ...packages.map(p => p.worst_days_exposed || 0));
   const maxCVEs = Math.max(1, ...packages.map(p => (p.cves || []).length));
 
-  const sweep = window._sweepData || {};
+  const sweep = sweepData || window._sweepData || {};
   const upgradeByName = {};
   (sweep.upgrade_actionability || []).forEach(u => {
     if (!upgradeByName[u.name] || (u.days_exposed || 0) > (upgradeByName[u.name].days_exposed || 0)) {
@@ -5133,6 +5133,7 @@ function buildHazardChart(scanData, ownershipData) {
       <div style="position:absolute;inset:-4px;border-radius:50%;
         border: 1px solid ${ringColor}${ringColor === color ? '44' : 'cc'}; animation: buoyPulse ${2 + (i*0.3)%3}s ease-out infinite;"></div>
       <div class="buoy-label">${escape(pkg.name.split('/').pop().substring(0, 14))}</div>
+      ${preCVE ? '<div style="font-size:8px;color:#00FFFF;text-align:center;margin-top:2px;letter-spacing:0.5px;text-shadow:0 0 4px #00FFFF">PRE-CVE</div>' : ''}
     `;
 
     buoy.addEventListener('mouseenter', (e) => {
@@ -5194,12 +5195,6 @@ function buildHazardChart(scanData, ownershipData) {
 }
 
 function drawSeverityChain(packages, chart) {
-  const existing = chart.querySelector('.severity-chain-svg');
-  if (existing) existing.remove();
-
-  const chartW = chart.offsetWidth || 800;
-  const chartH = chart.offsetHeight || 340;
-
   const scored = packages.map(pkg => {
     const score = Math.min(100, Math.round(
       (pkg.worst_days_exposed / 2090 * 60) +
@@ -5210,53 +5205,16 @@ function drawSeverityChain(packages, chart) {
   scored.sort((a, b) => b._urgency - a._urgency);
   const top10 = scored.slice(0, 10);
 
-  const buoyEls = chart.querySelectorAll('.hazard-buoy');
-  const buoyPositions = {};
-  buoyEls.forEach(el => {
-    const name = el.dataset.pkgName;
-    if (name) {
-      buoyPositions[name] = {
-        x: parseFloat(el.style.left),
-        y: parseFloat(el.style.top)
-      };
-    }
-  });
+  // Remove any existing SVG
+  const existing = chart.querySelector('.severity-chain-svg');
+  if (existing) existing.remove();
 
-  const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-  svg.setAttribute('class', 'severity-chain-svg');
-  svg.setAttribute('width', chartW);
-  svg.setAttribute('height', chartH);
-  svg.style.cssText = 'position:absolute;top:0;left:0;pointer-events:none;z-index:1;';
-
-  for (let i = 0; i < top10.length - 1; i++) {
-    const a = buoyPositions[top10[i].name];
-    const b = buoyPositions[top10[i + 1].name];
-    if (!a || !b) continue;
-
-    const opacity = 0.6 - (i * 0.04);
-    const color = i < 3 ? '#FF4444' : i < 6 ? '#FF8C00' : '#E8C55A';
-
-    const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-    line.setAttribute('x1', a.x);
-    line.setAttribute('y1', a.y);
-    line.setAttribute('x2', b.x);
-    line.setAttribute('y2', b.y);
-    line.setAttribute('stroke', color);
-    line.setAttribute('stroke-width', '1.5');
-    line.setAttribute('stroke-dasharray', '5 6');
-    line.setAttribute('stroke-opacity', opacity);
-    line.style.filter = `drop-shadow(0 0 3px ${color})`;
-
-    svg.appendChild(line);
-  }
-
-  chart.insertBefore(svg, chart.firstChild);
-
+  // Just set rank badges
   top10.forEach((pkg, rank) => {
-    const buoyEl = chart.querySelector(`.hazard-buoy[data-pkg-name="${pkg.name}"]`);
-    if (buoyEl) {
-      buoyEl.dataset.rank = rank + 1;
-    }
+    const buoyEl = chart.querySelector(
+      `.hazard-buoy[data-pkg-name="${pkg.name}"]`
+    );
+    if (buoyEl) buoyEl.dataset.rank = rank + 1;
   });
 }
 
@@ -6026,7 +5984,13 @@ function openTI2ParchmentMap(pkg) {
       </div>
 
       <div class="ti2p-verdict">
-        <span class="ti2p-verdict-lead">Upstream will not save you</span> &mdash; ${ti2VerdictReason(speed)}
+        <span class="ti2p-verdict-lead">
+          ${speed === 'VERY_SLOW' || speed === 'SLOW'
+            ? 'Upstream will not save you'
+            : speed === 'MODERATE'
+            ? 'Upstream is moving, but slowly'
+            : 'Upstream is responsive'}
+        </span> &mdash; ${ti2VerdictReason(speed)}
       </div>
 
       ${pkg.pre_cve ? `
