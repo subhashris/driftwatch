@@ -28,10 +28,13 @@ from functools import lru_cache
 from pathlib import Path
 from typing import Optional
 
+from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import FileResponse, JSONResponse
 from pydantic import BaseModel
 import httpx
+
+load_dotenv()
 
 from coral_utils import (
     PURL_TO_DEPSDEV,
@@ -939,6 +942,25 @@ def _format_finding(finding: dict) -> dict:
     }
 
 
+@app.post("/api/chat")
+async def chat_agent(req: InvestigateRequest):
+    """
+    Real LLM agent using Groq + live Coral SQL queries.
+    Replaces keyword routing with actual reasoning.
+    """
+    try:
+        from agent import run_watch_agent
+        result = await run_watch_agent(
+            req.owner.strip(),
+            req.repo.strip(),
+            req.question.strip(),
+        )
+        return result
+    except Exception as e:
+        traceback.print_exc()
+        return investigate(req)
+
+
 @app.post("/api/investigate")
 def investigate(req: InvestigateRequest):
     owner, repo = normalize_repo(req.owner.strip(), req.repo.strip())
@@ -1236,7 +1258,7 @@ def _sanitize_agent_content(content: Optional[str]) -> Optional[str]:
     return sanitized
 
 
-@app.post("/api/chat")
+@app.post("/api/chat_legacy")
 async def chat(req: dict):
     api_key, api_key_source = get_config_value("GROQ_API_KEY")
     if not api_key:

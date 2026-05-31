@@ -7426,7 +7426,7 @@ function setLiveStatus(s) {
       const repo = (parts[1] || state.repo || 'jellyfin-web').trim();
       state.owner = owner;
       state.repo = repo;
-      const response = await fetch("/api/investigate", {
+      const response = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
