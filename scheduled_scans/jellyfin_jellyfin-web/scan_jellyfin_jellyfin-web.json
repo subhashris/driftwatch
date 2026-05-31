@@ -1,27 +1,5 @@
 [
   {
-    "name": "yargs-parser",
-    "version": "10.1.0",
-    "ecosystem": "npm",
-    "priority_tier": 1,
-    "purl": "pkg:npm/yargs-parser@10.1.0",
-    "worst_days_exposed": 2093,
-    "cves": [
-      {
-        "id": "GHSA-p9pc-299p-vxgp",
-        "aliases": [
-          "CVE-2020-7608"
-        ],
-        "summary": "yargs-parser Vulnerable to Prototype Pollution",
-        "published": "2020-09-04T18:00:54Z",
-        "days_exposed": 2093,
-        "fixed_in": "5.0.1",
-        "kev": []
-      }
-    ],
-    "kev_hits": []
-  },
-  {
     "name": "trim",
     "version": "0.0.1",
     "ecosystem": "npm",
@@ -38,87 +16,15 @@
         "published": "2021-05-10T18:44:22Z",
         "days_exposed": 1845,
         "fixed_in": "0.0.3",
-        "kev": []
+        "kev": [],
+        "epss_score": 0.04015,
+        "epss_percentile": 0.8865
       }
     ],
-    "kev_hits": []
-  },
-  {
-    "name": "trim-newlines",
-    "version": "2.0.0",
-    "ecosystem": "npm",
-    "priority_tier": 3,
-    "purl": "pkg:npm/trim-newlines@2.0.0",
-    "worst_days_exposed": 1817,
-    "cves": [
-      {
-        "id": "GHSA-7p7h-4mm5-852v",
-        "aliases": [
-          "CVE-2021-33623"
-        ],
-        "summary": "Uncontrolled Resource Consumption in trim-newlines",
-        "published": "2021-06-07T22:10:39Z",
-        "days_exposed": 1817,
-        "fixed_in": "3.0.1",
-        "kev": []
-      }
-    ],
-    "kev_hits": []
-  },
-  {
-    "name": "postcss",
-    "version": "7.0.36",
-    "ecosystem": "npm",
-    "priority_tier": 3,
-    "purl": "pkg:npm/postcss@7.0.36",
-    "worst_days_exposed": 973,
-    "cves": [
-      {
-        "id": "GHSA-7fh5-64p2-3v2j",
-        "aliases": [
-          "CVE-2023-44270"
-        ],
-        "summary": "PostCSS line return parsing error",
-        "published": "2023-09-30T00:31:10Z",
-        "days_exposed": 973,
-        "fixed_in": "8.4.31",
-        "kev": []
-      },
-      {
-        "id": "GHSA-qx2v-qp2m-jg93",
-        "aliases": [
-          "CVE-2026-41305"
-        ],
-        "summary": "PostCSS has XSS via Unescaped </style> in its CSS Stringify Output",
-        "published": "2026-04-24T15:31:42Z",
-        "days_exposed": 36,
-        "fixed_in": "8.5.10",
-        "kev": []
-      }
-    ],
-    "kev_hits": []
-  },
-  {
-    "name": "es5-ext",
-    "version": "0.10.53",
-    "ecosystem": "npm",
-    "priority_tier": 2,
-    "purl": "pkg:npm/es5-ext@0.10.53",
-    "worst_days_exposed": 823,
-    "cves": [
-      {
-        "id": "GHSA-4gmj-3p3h-gm8h",
-        "aliases": [
-          "CVE-2024-27088"
-        ],
-        "summary": "es5-ext vulnerable to Regular Expression Denial of Service in `function#copy` and `function#toStringTokens`",
-        "published": "2024-02-26T20:01:28Z",
-        "days_exposed": 823,
-        "fixed_in": "0.10.63",
-        "kev": []
-      }
-    ],
-    "kev_hits": []
+    "kev_hits": [],
+    "max_epss": 0.04015,
+    "max_epss_percentile": 0.8865,
+    "kev_active": false
   },
   {
     "name": "pdfjs-dist",
@@ -137,54 +43,69 @@
         "published": "2024-05-07T10:25:08Z",
         "days_exposed": 753,
         "fixed_in": "4.2.67",
-        "kev": []
+        "kev": [],
+        "epss_score": 0.38342,
+        "epss_percentile": 0.97307
       }
     ],
-    "kev_hits": []
+    "kev_hits": [],
+    "max_epss": 0.38342,
+    "max_epss_percentile": 0.97307,
+    "kev_active": false
   },
   {
-    "name": "braces",
-    "version": "2.3.2",
+    "name": "trim-newlines",
+    "version": "2.0.0",
     "ecosystem": "npm",
     "priority_tier": 3,
-    "purl": "pkg:npm/braces@2.3.2",
-    "worst_days_exposed": 745,
+    "purl": "pkg:npm/trim-newlines@2.0.0",
+    "worst_days_exposed": 1817,
     "cves": [
       {
-        "id": "GHSA-grv7-fg5c-xmjg",
+        "id": "GHSA-7p7h-4mm5-852v",
         "aliases": [
-          "CVE-2024-4068"
+          "CVE-2021-33623"
         ],
-        "summary": "Uncontrolled resource consumption in braces",
-        "published": "2024-05-14T18:30:54Z",
-        "days_exposed": 745,
-        "fixed_in": "3.0.3",
-        "kev": []
+        "summary": "Uncontrolled Resource Consumption in trim-newlines",
+        "published": "2021-06-07T22:10:39Z",
+        "days_exposed": 1817,
+        "fixed_in": "3.0.1",
+        "kev": [],
+        "epss_score": 0.01642,
+        "epss_percentile": 0.82268
       }
     ],
-    "kev_hits": []
+    "kev_hits": [],
+    "max_epss": 0.01642,
+    "max_epss_percentile": 0.82268,
+    "kev_active": false
   },
   {
-    "name": "micromatch",
-    "version": "3.1.10",
+    "name": "es5-ext",
+    "version": "0.10.53",
     "ecosystem": "npm",
-    "priority_tier": 3,
-    "purl": "pkg:npm/micromatch@3.1.10",
-    "worst_days_exposed": 745,
+    "priority_tier": 2,
+    "purl": "pkg:npm/es5-ext@0.10.53",
+    "worst_days_exposed": 823,
     "cves": [
       {
-        "id": "GHSA-952p-6rrq-rcjv",
+        "id": "GHSA-4gmj-3p3h-gm8h",
         "aliases": [
-          "CVE-2024-4067"
+          "CVE-2024-27088"
         ],
-        "summary": "Regular Expression Denial of Service (ReDoS) in micromatch",
-        "published": "2024-05-14T18:30:54Z",
-        "days_exposed": 745,
-        "fixed_in": "4.0.8",
-        "kev": []
+        "summary": "es5-ext vulnerable to Regular Expression Denial of Service in `function#copy` and `function#toStringTokens`",
+        "published": "2024-02-26T20:01:28Z",
+        "days_exposed": 823,
+        "fixed_in": "0.10.63",
+        "kev": [],
+        "epss_score": 0.02005,
+        "epss_percentile": 0.83974
       }
     ],
-    "kev_hits": []
+    "kev_hits": [],
+    "max_epss": 0.02005,
+    "max_epss_percentile": 0.83974,
+    "kev_active": false
   },
   {
     "name": "dompurify",
@@ -230,7 +151,9 @@
         "published": "2026-04-22T17:32:54Z",
         "days_exposed": 37,
         "fixed_in": "3.4.0",
-        "kev": []
+        "kev": [],
+        "epss_score": 0.00059,
+        "epss_percentile": 0.18636
       },
       {
         "id": "GHSA-h7mw-gpvr-xq4m",
@@ -241,7 +164,9 @@
         "published": "2026-04-22T17:34:17Z",
         "days_exposed": 37,
         "fixed_in": "3.4.0",
-        "kev": []
+        "kev": [],
+        "epss_score": 0.00013,
+        "epss_percentile": 0.02038
       },
       {
         "id": "GHSA-h8r8-wccr-v5f2",
@@ -261,571 +186,136 @@
         "published": "2025-02-14T09:31:22Z",
         "days_exposed": 470,
         "fixed_in": "3.2.4",
-        "kev": []
+        "kev": [],
+        "epss_score": 0.00108,
+        "epss_percentile": 0.28704
       }
     ],
-    "kev_hits": []
+    "kev_hits": [],
+    "max_epss": 0.00108,
+    "max_epss_percentile": 0.28704,
+    "kev_active": false
   },
   {
-    "name": "brace-expansion",
-    "version": "1.1.11",
-    "ecosystem": "npm",
-    "priority_tier": 2,
-    "purl": "pkg:npm/brace-expansion@1.1.11",
-    "worst_days_exposed": 354,
-    "cves": [
-      {
-        "id": "GHSA-f886-m6hf-6m8v",
-        "aliases": [
-          "CVE-2026-33750"
-        ],
-        "summary": "brace-expansion: Zero-step sequence causes process hang and memory exhaustion",
-        "published": "2026-03-26T18:29:42Z",
-        "days_exposed": 64,
-        "fixed_in": "1.1.13",
-        "kev": []
-      },
-      {
-        "id": "GHSA-v6h2-p8h4-qcjw",
-        "aliases": [
-          "CVE-2025-5889"
-        ],
-        "summary": "brace-expansion Regular Expression Denial of Service vulnerability",
-        "published": "2025-06-09T21:30:51Z",
-        "days_exposed": 354,
-        "fixed_in": "1.1.12",
-        "kev": []
-      }
-    ],
-    "kev_hits": []
-  },
-  {
-    "name": "brace-expansion",
-    "version": "2.0.1",
+    "name": "postcss",
+    "version": "7.0.36",
     "ecosystem": "npm",
     "priority_tier": 3,
-    "purl": "pkg:npm/brace-expansion@2.0.1",
-    "worst_days_exposed": 354,
+    "purl": "pkg:npm/postcss@7.0.36",
+    "worst_days_exposed": 973,
     "cves": [
       {
-        "id": "GHSA-f886-m6hf-6m8v",
+        "id": "GHSA-7fh5-64p2-3v2j",
         "aliases": [
-          "CVE-2026-33750"
+          "CVE-2023-44270"
         ],
-        "summary": "brace-expansion: Zero-step sequence causes process hang and memory exhaustion",
-        "published": "2026-03-26T18:29:42Z",
-        "days_exposed": 64,
-        "fixed_in": "2.0.3",
-        "kev": []
+        "summary": "PostCSS line return parsing error",
+        "published": "2023-09-30T00:31:10Z",
+        "days_exposed": 973,
+        "fixed_in": "8.4.31",
+        "kev": [],
+        "epss_score": 0.00166,
+        "epss_percentile": 0.37354
       },
       {
-        "id": "GHSA-v6h2-p8h4-qcjw",
+        "id": "GHSA-qx2v-qp2m-jg93",
         "aliases": [
-          "CVE-2025-5889"
+          "CVE-2026-41305"
         ],
-        "summary": "brace-expansion Regular Expression Denial of Service vulnerability",
-        "published": "2025-06-09T21:30:51Z",
-        "days_exposed": 354,
-        "fixed_in": "2.0.2",
-        "kev": []
+        "summary": "PostCSS has XSS via Unescaped </style> in its CSS Stringify Output",
+        "published": "2026-04-24T15:31:42Z",
+        "days_exposed": 36,
+        "fixed_in": "8.5.10",
+        "kev": [],
+        "epss_score": 0.00011,
+        "epss_percentile": 0.01489
       }
     ],
-    "kev_hits": []
+    "kev_hits": [],
+    "max_epss": 0.00166,
+    "max_epss_percentile": 0.37354,
+    "kev_active": false
   },
   {
-    "name": "js-yaml",
-    "version": "3.14.1",
+    "name": "yargs-parser",
+    "version": "10.1.0",
     "ecosystem": "npm",
     "priority_tier": 1,
-    "purl": "pkg:npm/js-yaml@3.14.1",
-    "worst_days_exposed": 197,
+    "purl": "pkg:npm/yargs-parser@10.1.0",
+    "worst_days_exposed": 2093,
     "cves": [
       {
-        "id": "GHSA-mh29-5h37-fv8m",
+        "id": "GHSA-p9pc-299p-vxgp",
         "aliases": [
-          "CVE-2025-64718"
+          "CVE-2020-7608"
         ],
-        "summary": "js-yaml has prototype pollution in merge (<<)",
-        "published": "2025-11-14T14:29:48Z",
-        "days_exposed": 197,
-        "fixed_in": "3.14.2",
-        "kev": []
+        "summary": "yargs-parser Vulnerable to Prototype Pollution",
+        "published": "2020-09-04T18:00:54Z",
+        "days_exposed": 2093,
+        "fixed_in": "5.0.1",
+        "kev": [],
+        "epss_score": 0.00126,
+        "epss_percentile": 0.31568
       }
     ],
-    "kev_hits": []
+    "kev_hits": [],
+    "max_epss": 0.00126,
+    "max_epss_percentile": 0.31568,
+    "kev_active": false
   },
   {
-    "name": "js-yaml",
-    "version": "4.1.0",
-    "ecosystem": "npm",
-    "priority_tier": 1,
-    "purl": "pkg:npm/js-yaml@4.1.0",
-    "worst_days_exposed": 197,
-    "cves": [
-      {
-        "id": "GHSA-mh29-5h37-fv8m",
-        "aliases": [
-          "CVE-2025-64718"
-        ],
-        "summary": "js-yaml has prototype pollution in merge (<<)",
-        "published": "2025-11-14T14:29:48Z",
-        "days_exposed": 197,
-        "fixed_in": "4.1.1",
-        "kev": []
-      }
-    ],
-    "kev_hits": []
-  },
-  {
-    "name": "glob",
-    "version": "10.4.5",
+    "name": "braces",
+    "version": "2.3.2",
     "ecosystem": "npm",
     "priority_tier": 3,
-    "purl": "pkg:npm/glob@10.4.5",
-    "worst_days_exposed": 193,
+    "purl": "pkg:npm/braces@2.3.2",
+    "worst_days_exposed": 745,
     "cves": [
       {
-        "id": "GHSA-5j98-mcp5-4vw2",
+        "id": "GHSA-grv7-fg5c-xmjg",
         "aliases": [
-          "CVE-2025-64756"
+          "CVE-2024-4068"
         ],
-        "summary": "glob CLI: Command injection via -c/--cmd executes matches with shell:true",
-        "published": "2025-11-17T17:38:56Z",
-        "days_exposed": 193,
-        "fixed_in": "10.5.0",
-        "kev": []
+        "summary": "Uncontrolled resource consumption in braces",
+        "published": "2024-05-14T18:30:54Z",
+        "days_exposed": 745,
+        "fixed_in": "3.0.3",
+        "kev": [],
+        "epss_score": 0.00203,
+        "epss_percentile": 0.42243
       }
     ],
-    "kev_hits": []
+    "kev_hits": [],
+    "max_epss": 0.00203,
+    "max_epss_percentile": 0.42243,
+    "kev_active": false
   },
   {
-    "name": "qs",
-    "version": "6.13.0",
+    "name": "micromatch",
+    "version": "3.1.10",
     "ecosystem": "npm",
     "priority_tier": 3,
-    "purl": "pkg:npm/qs@6.13.0",
-    "worst_days_exposed": 150,
+    "purl": "pkg:npm/micromatch@3.1.10",
+    "worst_days_exposed": 745,
     "cves": [
       {
-        "id": "GHSA-6rw7-vpxm-498p",
+        "id": "GHSA-952p-6rrq-rcjv",
         "aliases": [
-          "CVE-2025-15284"
+          "CVE-2024-4067"
         ],
-        "summary": "qs's arrayLimit bypass in its bracket notation allows DoS via memory exhaustion",
-        "published": "2025-12-30T21:02:54Z",
-        "days_exposed": 150,
-        "fixed_in": "6.14.1",
-        "kev": []
-      },
-      {
-        "id": "GHSA-q8mj-m7cp-5q26",
-        "aliases": [
-          "CVE-2026-8723"
-        ],
-        "summary": "qs has a remotely triggerable DoS: qs.stringify crashes with TypeError on null/undefined entries in comma-format arrays when encodeValuesOnly is set",
-        "published": "2026-05-22T17:27:19Z",
-        "days_exposed": 7,
-        "fixed_in": "6.15.2",
-        "kev": []
-      },
-      {
-        "id": "GHSA-w7fw-mjwx-w883",
-        "aliases": [
-          "CVE-2026-2391"
-        ],
-        "summary": "qs's arrayLimit bypass in comma parsing allows denial of service",
-        "published": "2026-02-12T17:04:39Z",
-        "days_exposed": 106,
-        "fixed_in": "6.14.2",
-        "kev": []
+        "summary": "Regular Expression Denial of Service (ReDoS) in micromatch",
+        "published": "2024-05-14T18:30:54Z",
+        "days_exposed": 745,
+        "fixed_in": "4.0.8",
+        "kev": [],
+        "epss_score": 0.0013,
+        "epss_percentile": 0.32078
       }
     ],
-    "kev_hits": []
-  },
-  {
-    "name": "tar",
-    "version": "6.2.1",
-    "ecosystem": "npm",
-    "priority_tier": 1,
-    "purl": "pkg:npm/tar@6.2.1",
-    "worst_days_exposed": 133,
-    "cves": [
-      {
-        "id": "GHSA-34x7-hfp2-rc4v",
-        "aliases": [
-          "CVE-2026-24842"
-        ],
-        "summary": "node-tar Vulnerable to Arbitrary File Creation/Overwrite via Hardlink Path Traversal",
-        "published": "2026-01-28T16:35:31Z",
-        "days_exposed": 122,
-        "fixed_in": "7.5.7",
-        "kev": []
-      },
-      {
-        "id": "GHSA-83g3-92jg-28cx",
-        "aliases": [
-          "CVE-2026-26960"
-        ],
-        "summary": "Arbitrary File Read/Write via Hardlink Target Escape Through Symlink Chain in node-tar Extraction",
-        "published": "2026-02-18T00:57:13Z",
-        "days_exposed": 101,
-        "fixed_in": "7.5.8",
-        "kev": []
-      },
-      {
-        "id": "GHSA-8qq5-rm4j-mr97",
-        "aliases": [
-          "CVE-2026-23745"
-        ],
-        "summary": "node-tar is Vulnerable to Arbitrary File Overwrite and Symlink Poisoning via Insufficient Path Sanitization",
-        "published": "2026-01-16T21:16:20Z",
-        "days_exposed": 133,
-        "fixed_in": "7.5.3",
-        "kev": []
-      },
-      {
-        "id": "GHSA-9ppj-qmqm-q256",
-        "aliases": [
-          "CVE-2026-31802"
-        ],
-        "summary": "node-tar Symlink Path Traversal via Drive-Relative Linkpath",
-        "published": "2026-03-10T23:44:58Z",
-        "days_exposed": 80,
-        "fixed_in": "7.5.11",
-        "kev": []
-      },
-      {
-        "id": "GHSA-qffp-2rhf-9h96",
-        "aliases": [
-          "CVE-2026-29786"
-        ],
-        "summary": "tar has Hardlink Path Traversal via Drive-Relative Linkpath",
-        "published": "2026-03-05T00:52:32Z",
-        "days_exposed": 86,
-        "fixed_in": "7.5.10",
-        "kev": []
-      },
-      {
-        "id": "GHSA-r6q2-hw4h-h46w",
-        "aliases": [
-          "CVE-2026-23950"
-        ],
-        "summary": "Race Condition in node-tar Path Reservations via Unicode Ligature Collisions on macOS APFS",
-        "published": "2026-01-21T01:05:49Z",
-        "days_exposed": 129,
-        "fixed_in": "7.5.4",
-        "kev": []
-      }
-    ],
-    "kev_hits": []
-  },
-  {
-    "name": "ajv",
-    "version": "6.12.6",
-    "ecosystem": "npm",
-    "priority_tier": 3,
-    "purl": "pkg:npm/ajv@6.12.6",
-    "worst_days_exposed": 107,
-    "cves": [
-      {
-        "id": "GHSA-2g4f-4pwh-qvx6",
-        "aliases": [
-          "CVE-2025-69873"
-        ],
-        "summary": "ajv has ReDoS when using `$data` option",
-        "published": "2026-02-11T21:30:39Z",
-        "days_exposed": 107,
-        "fixed_in": "6.14.0",
-        "kev": []
-      }
-    ],
-    "kev_hits": []
-  },
-  {
-    "name": "ajv",
-    "version": "8.11.0",
-    "ecosystem": "npm",
-    "priority_tier": 3,
-    "purl": "pkg:npm/ajv@8.11.0",
-    "worst_days_exposed": 107,
-    "cves": [
-      {
-        "id": "GHSA-2g4f-4pwh-qvx6",
-        "aliases": [
-          "CVE-2025-69873"
-        ],
-        "summary": "ajv has ReDoS when using `$data` option",
-        "published": "2026-02-11T21:30:39Z",
-        "days_exposed": 107,
-        "fixed_in": "8.18.0",
-        "kev": []
-      }
-    ],
-    "kev_hits": []
-  },
-  {
-    "name": "minimatch",
-    "version": "3.1.2",
-    "ecosystem": "npm",
-    "priority_tier": 3,
-    "purl": "pkg:npm/minimatch@3.1.2",
-    "worst_days_exposed": 100,
-    "cves": [
-      {
-        "id": "GHSA-23c5-xmqv-rm74",
-        "aliases": [
-          "CVE-2026-27904"
-        ],
-        "summary": "minimatch ReDoS: nested *() extglobs generate catastrophically backtracking regular expressions",
-        "published": "2026-02-26T22:07:15Z",
-        "days_exposed": 92,
-        "fixed_in": "3.1.4",
-        "kev": []
-      },
-      {
-        "id": "GHSA-3ppc-4f35-3m26",
-        "aliases": [
-          "CVE-2026-26996"
-        ],
-        "summary": "minimatch has a ReDoS via repeated wildcards with non-matching literal in pattern",
-        "published": "2026-02-18T22:38:11Z",
-        "days_exposed": 100,
-        "fixed_in": "3.1.3",
-        "kev": []
-      },
-      {
-        "id": "GHSA-7r86-cg39-jmmj",
-        "aliases": [
-          "CVE-2026-27903"
-        ],
-        "summary": "minimatch has ReDoS: matchOne() combinatorial backtracking via multiple non-adjacent GLOBSTAR segments",
-        "published": "2026-02-26T22:10:18Z",
-        "days_exposed": 92,
-        "fixed_in": "3.1.3",
-        "kev": []
-      }
-    ],
-    "kev_hits": []
-  },
-  {
-    "name": "minimatch",
-    "version": "9.0.5",
-    "ecosystem": "npm",
-    "priority_tier": 3,
-    "purl": "pkg:npm/minimatch@9.0.5",
-    "worst_days_exposed": 100,
-    "cves": [
-      {
-        "id": "GHSA-23c5-xmqv-rm74",
-        "aliases": [
-          "CVE-2026-27904"
-        ],
-        "summary": "minimatch ReDoS: nested *() extglobs generate catastrophically backtracking regular expressions",
-        "published": "2026-02-26T22:07:15Z",
-        "days_exposed": 92,
-        "fixed_in": "9.0.7",
-        "kev": []
-      },
-      {
-        "id": "GHSA-3ppc-4f35-3m26",
-        "aliases": [
-          "CVE-2026-26996"
-        ],
-        "summary": "minimatch has a ReDoS via repeated wildcards with non-matching literal in pattern",
-        "published": "2026-02-18T22:38:11Z",
-        "days_exposed": 100,
-        "fixed_in": "9.0.6",
-        "kev": []
-      },
-      {
-        "id": "GHSA-7r86-cg39-jmmj",
-        "aliases": [
-          "CVE-2026-27903"
-        ],
-        "summary": "minimatch has ReDoS: matchOne() combinatorial backtracking via multiple non-adjacent GLOBSTAR segments",
-        "published": "2026-02-26T22:10:18Z",
-        "days_exposed": 92,
-        "fixed_in": "9.0.7",
-        "kev": []
-      }
-    ],
-    "kev_hits": []
-  },
-  {
-    "name": "minimatch",
-    "version": "10.1.2",
-    "ecosystem": "npm",
-    "priority_tier": 3,
-    "purl": "pkg:npm/minimatch@10.1.2",
-    "worst_days_exposed": 100,
-    "cves": [
-      {
-        "id": "GHSA-23c5-xmqv-rm74",
-        "aliases": [
-          "CVE-2026-27904"
-        ],
-        "summary": "minimatch ReDoS: nested *() extglobs generate catastrophically backtracking regular expressions",
-        "published": "2026-02-26T22:07:15Z",
-        "days_exposed": 92,
-        "fixed_in": "10.2.3",
-        "kev": []
-      },
-      {
-        "id": "GHSA-3ppc-4f35-3m26",
-        "aliases": [
-          "CVE-2026-26996"
-        ],
-        "summary": "minimatch has a ReDoS via repeated wildcards with non-matching literal in pattern",
-        "published": "2026-02-18T22:38:11Z",
-        "days_exposed": 100,
-        "fixed_in": "10.2.1",
-        "kev": []
-      },
-      {
-        "id": "GHSA-7r86-cg39-jmmj",
-        "aliases": [
-          "CVE-2026-27903"
-        ],
-        "summary": "minimatch has ReDoS: matchOne() combinatorial backtracking via multiple non-adjacent GLOBSTAR segments",
-        "published": "2026-02-26T22:10:18Z",
-        "days_exposed": 92,
-        "fixed_in": "10.2.3",
-        "kev": []
-      }
-    ],
-    "kev_hits": []
-  },
-  {
-    "name": "flatted",
-    "version": "2.0.2",
-    "ecosystem": "npm",
-    "priority_tier": 3,
-    "purl": "pkg:npm/flatted@2.0.2",
-    "worst_days_exposed": 78,
-    "cves": [
-      {
-        "id": "GHSA-25h7-pfq9-p65f",
-        "aliases": [
-          "CVE-2026-32141"
-        ],
-        "summary": "flatted vulnerable to unbounded recursion DoS in parse() revive phase",
-        "published": "2026-03-13T15:40:42Z",
-        "days_exposed": 78,
-        "fixed_in": "3.4.0",
-        "kev": []
-      },
-      {
-        "id": "GHSA-rf6f-7fwh-wjgh",
-        "aliases": [
-          "CVE-2026-33228"
-        ],
-        "summary": "Prototype Pollution via parse() in NodeJS flatted",
-        "published": "2026-03-19T17:43:54Z",
-        "days_exposed": 71,
-        "fixed_in": "3.4.2",
-        "kev": []
-      }
-    ],
-    "kev_hits": []
-  },
-  {
-    "name": "yaml",
-    "version": "1.10.2",
-    "ecosystem": "npm",
-    "priority_tier": 1,
-    "purl": "pkg:npm/yaml@1.10.2",
-    "worst_days_exposed": 65,
-    "cves": [
-      {
-        "id": "GHSA-48c2-rrv3-qjmp",
-        "aliases": [
-          "CVE-2026-33532"
-        ],
-        "summary": "yaml is vulnerable to Stack Overflow via deeply nested YAML collections",
-        "published": "2026-03-25T20:08:24Z",
-        "days_exposed": 65,
-        "fixed_in": "1.10.3",
-        "kev": []
-      }
-    ],
-    "kev_hits": []
-  },
-  {
-    "name": "brace-expansion",
-    "version": "5.0.4",
-    "ecosystem": "npm",
-    "priority_tier": 3,
-    "purl": "pkg:npm/brace-expansion@5.0.4",
-    "worst_days_exposed": 64,
-    "cves": [
-      {
-        "id": "GHSA-f886-m6hf-6m8v",
-        "aliases": [
-          "CVE-2026-33750"
-        ],
-        "summary": "brace-expansion: Zero-step sequence causes process hang and memory exhaustion",
-        "published": "2026-03-26T18:29:42Z",
-        "days_exposed": 64,
-        "fixed_in": "5.0.5",
-        "kev": []
-      },
-      {
-        "id": "GHSA-jxxr-4gwj-5jf2",
-        "aliases": [
-          "CVE-2026-45149"
-        ],
-        "summary": "brace-expansion: Large numeric range defeats documented `max` DoS protection",
-        "published": "2026-05-18T16:22:01Z",
-        "days_exposed": 12,
-        "fixed_in": "5.0.6",
-        "kev": []
-      }
-    ],
-    "kev_hits": []
-  },
-  {
-    "name": "serialize-javascript",
-    "version": "7.0.4",
-    "ecosystem": "npm",
-    "priority_tier": 1,
-    "purl": "pkg:npm/serialize-javascript@7.0.4",
-    "worst_days_exposed": 63,
-    "cves": [
-      {
-        "id": "GHSA-qj8w-gfj5-8c6v",
-        "aliases": [
-          "CVE-2026-34043"
-        ],
-        "summary": "Serialize JavaScript has CPU Exhaustion Denial of Service via crafted array-like objects",
-        "published": "2026-03-27T18:18:54Z",
-        "days_exposed": 63,
-        "fixed_in": "7.0.5",
-        "kev": []
-      }
-    ],
-    "kev_hits": []
-  },
-  {
-    "name": "path-to-regexp",
-    "version": "0.1.12",
-    "ecosystem": "npm",
-    "priority_tier": 2,
-    "purl": "pkg:npm/path-to-regexp@0.1.12",
-    "worst_days_exposed": 63,
-    "cves": [
-      {
-        "id": "GHSA-37ch-88jc-xwx2",
-        "aliases": [
-          "CVE-2026-4867"
-        ],
-        "summary": "path-to-regexp vulnerable to Regular Expression Denial of Service via multiple route parameters",
-        "published": "2026-03-27T20:04:53Z",
-        "days_exposed": 63,
-        "fixed_in": "0.1.13",
-        "kev": []
-      }
-    ],
-    "kev_hits": []
+    "kev_hits": [],
+    "max_epss": 0.0013,
+    "max_epss_percentile": 0.32078,
+    "kev_active": false
   },
   {
     "name": "@xmldom/xmldom",
@@ -844,7 +334,9 @@
         "published": "2026-04-22T20:23:57Z",
         "days_exposed": 37,
         "fixed_in": "0.8.13",
-        "kev": []
+        "kev": [],
+        "epss_score": 0.0004,
+        "epss_percentile": 0.12297
       },
       {
         "id": "GHSA-f6ww-3ggp-fr8h",
@@ -855,7 +347,9 @@
         "published": "2026-04-22T20:19:12Z",
         "days_exposed": 37,
         "fixed_in": "0.8.13",
-        "kev": []
+        "kev": [],
+        "epss_score": 0.0002,
+        "epss_percentile": 0.05898
       },
       {
         "id": "GHSA-j759-j44w-7fr8",
@@ -866,7 +360,9 @@
         "published": "2026-04-22T20:16:07Z",
         "days_exposed": 37,
         "fixed_in": "0.8.13",
-        "kev": []
+        "kev": [],
+        "epss_score": 0.00074,
+        "epss_percentile": 0.22489
       },
       {
         "id": "GHSA-wh4c-j3r5-mjhp",
@@ -877,7 +373,9 @@
         "published": "2026-04-01T00:19:06Z",
         "days_exposed": 59,
         "fixed_in": "0.8.12",
-        "kev": []
+        "kev": [],
+        "epss_score": 0.00019,
+        "epss_percentile": 0.05482
       },
       {
         "id": "GHSA-x6wf-f3px-wcqx",
@@ -888,98 +386,479 @@
         "published": "2026-04-22T20:17:58Z",
         "days_exposed": 37,
         "fixed_in": "0.8.13",
-        "kev": []
+        "kev": [],
+        "epss_score": 0.0002,
+        "epss_percentile": 0.05898
       }
     ],
-    "kev_hits": []
+    "kev_hits": [],
+    "max_epss": 0.00074,
+    "max_epss_percentile": 0.22489,
+    "kev_active": false
   },
   {
-    "name": "uuid",
-    "version": "8.3.2",
+    "name": "brace-expansion",
+    "version": "1.1.11",
     "ecosystem": "npm",
-    "priority_tier": 3,
-    "purl": "pkg:npm/uuid@8.3.2",
-    "worst_days_exposed": 37,
+    "priority_tier": 2,
+    "purl": "pkg:npm/brace-expansion@1.1.11",
+    "worst_days_exposed": 354,
     "cves": [
       {
-        "id": "GHSA-w5hq-g745-h8pq",
+        "id": "GHSA-f886-m6hf-6m8v",
         "aliases": [
-          "CVE-2026-41907"
+          "CVE-2026-33750"
         ],
-        "summary": "uuid: Missing buffer bounds check in v3/v5/v6 when buf is provided",
-        "published": "2026-04-22T20:53:24Z",
-        "days_exposed": 37,
-        "fixed_in": "11.1.1",
-        "kev": []
+        "summary": "brace-expansion: Zero-step sequence causes process hang and memory exhaustion",
+        "published": "2026-03-26T18:29:42Z",
+        "days_exposed": 64,
+        "fixed_in": "1.1.13",
+        "kev": [],
+        "epss_score": 0.00024,
+        "epss_percentile": 0.07193
+      },
+      {
+        "id": "GHSA-v6h2-p8h4-qcjw",
+        "aliases": [
+          "CVE-2025-5889"
+        ],
+        "summary": "brace-expansion Regular Expression Denial of Service vulnerability",
+        "published": "2025-06-09T21:30:51Z",
+        "days_exposed": 354,
+        "fixed_in": "1.1.12",
+        "kev": [],
+        "epss_score": 0.00092,
+        "epss_percentile": 0.25802
       }
     ],
-    "kev_hits": []
+    "kev_hits": [],
+    "max_epss": 0.00092,
+    "max_epss_percentile": 0.25802,
+    "kev_active": false
   },
   {
-    "name": "postcss",
-    "version": "8.5.8",
+    "name": "brace-expansion",
+    "version": "2.0.1",
     "ecosystem": "npm",
     "priority_tier": 3,
-    "purl": "pkg:npm/postcss@8.5.8",
-    "worst_days_exposed": 36,
+    "purl": "pkg:npm/brace-expansion@2.0.1",
+    "worst_days_exposed": 354,
     "cves": [
       {
-        "id": "GHSA-qx2v-qp2m-jg93",
+        "id": "GHSA-f886-m6hf-6m8v",
         "aliases": [
-          "CVE-2026-41305"
+          "CVE-2026-33750"
         ],
-        "summary": "PostCSS has XSS via Unescaped </style> in its CSS Stringify Output",
-        "published": "2026-04-24T15:31:42Z",
-        "days_exposed": 36,
-        "fixed_in": "8.5.10",
-        "kev": []
+        "summary": "brace-expansion: Zero-step sequence causes process hang and memory exhaustion",
+        "published": "2026-03-26T18:29:42Z",
+        "days_exposed": 64,
+        "fixed_in": "2.0.3",
+        "kev": [],
+        "epss_score": 0.00024,
+        "epss_percentile": 0.07193
+      },
+      {
+        "id": "GHSA-v6h2-p8h4-qcjw",
+        "aliases": [
+          "CVE-2025-5889"
+        ],
+        "summary": "brace-expansion Regular Expression Denial of Service vulnerability",
+        "published": "2025-06-09T21:30:51Z",
+        "days_exposed": 354,
+        "fixed_in": "2.0.2",
+        "kev": [],
+        "epss_score": 0.00092,
+        "epss_percentile": 0.25802
       }
     ],
-    "kev_hits": []
+    "kev_hits": [],
+    "max_epss": 0.00092,
+    "max_epss_percentile": 0.25802,
+    "kev_active": false
   },
   {
-    "name": "@babel/plugin-transform-modules-systemjs",
-    "version": "7.29.0",
+    "name": "tar",
+    "version": "6.2.1",
     "ecosystem": "npm",
     "priority_tier": 1,
-    "purl": "pkg:npm/%40babel/plugin-transform-modules-systemjs@7.29.0",
-    "worst_days_exposed": 21,
+    "purl": "pkg:npm/tar@6.2.1",
+    "worst_days_exposed": 133,
     "cves": [
       {
-        "id": "GHSA-fv7c-fp4j-7gwp",
+        "id": "GHSA-34x7-hfp2-rc4v",
         "aliases": [
-          "CVE-2026-44728"
+          "CVE-2026-24842"
         ],
-        "summary": "@babel/plugin-transform-modules-systemjs generates arbitrary code when compiling malicious input",
-        "published": "2026-05-08T20:34:07Z",
-        "days_exposed": 21,
-        "fixed_in": "7.29.4",
-        "kev": []
+        "summary": "node-tar Vulnerable to Arbitrary File Creation/Overwrite via Hardlink Path Traversal",
+        "published": "2026-01-28T16:35:31Z",
+        "days_exposed": 122,
+        "fixed_in": "7.5.7",
+        "kev": [],
+        "epss_score": 0.00027,
+        "epss_percentile": 0.08249
+      },
+      {
+        "id": "GHSA-83g3-92jg-28cx",
+        "aliases": [
+          "CVE-2026-26960"
+        ],
+        "summary": "Arbitrary File Read/Write via Hardlink Target Escape Through Symlink Chain in node-tar Extraction",
+        "published": "2026-02-18T00:57:13Z",
+        "days_exposed": 101,
+        "fixed_in": "7.5.8",
+        "kev": [],
+        "epss_score": 8e-05,
+        "epss_percentile": 0.00857
+      },
+      {
+        "id": "GHSA-8qq5-rm4j-mr97",
+        "aliases": [
+          "CVE-2026-23745"
+        ],
+        "summary": "node-tar is Vulnerable to Arbitrary File Overwrite and Symlink Poisoning via Insufficient Path Sanitization",
+        "published": "2026-01-16T21:16:20Z",
+        "days_exposed": 133,
+        "fixed_in": "7.5.3",
+        "kev": [],
+        "epss_score": 0.00011,
+        "epss_percentile": 0.0142
+      },
+      {
+        "id": "GHSA-9ppj-qmqm-q256",
+        "aliases": [
+          "CVE-2026-31802"
+        ],
+        "summary": "node-tar Symlink Path Traversal via Drive-Relative Linkpath",
+        "published": "2026-03-10T23:44:58Z",
+        "days_exposed": 80,
+        "fixed_in": "7.5.11",
+        "kev": [],
+        "epss_score": 9e-05,
+        "epss_percentile": 0.01046
+      },
+      {
+        "id": "GHSA-qffp-2rhf-9h96",
+        "aliases": [
+          "CVE-2026-29786"
+        ],
+        "summary": "tar has Hardlink Path Traversal via Drive-Relative Linkpath",
+        "published": "2026-03-05T00:52:32Z",
+        "days_exposed": 86,
+        "fixed_in": "7.5.10",
+        "kev": [],
+        "epss_score": 9e-05,
+        "epss_percentile": 0.00931
+      },
+      {
+        "id": "GHSA-r6q2-hw4h-h46w",
+        "aliases": [
+          "CVE-2026-23950"
+        ],
+        "summary": "Race Condition in node-tar Path Reservations via Unicode Ligature Collisions on macOS APFS",
+        "published": "2026-01-21T01:05:49Z",
+        "days_exposed": 129,
+        "fixed_in": "7.5.4",
+        "kev": [],
+        "epss_score": 9e-05,
+        "epss_percentile": 0.00984
       }
     ],
-    "kev_hits": []
+    "kev_hits": [],
+    "max_epss": 0.00027,
+    "max_epss_percentile": 0.08249,
+    "kev_active": false
   },
   {
-    "name": "ws",
-    "version": "8.19.0",
+    "name": "flatted",
+    "version": "2.0.2",
     "ecosystem": "npm",
     "priority_tier": 3,
-    "purl": "pkg:npm/ws@8.19.0",
-    "worst_days_exposed": 11,
+    "purl": "pkg:npm/flatted@2.0.2",
+    "worst_days_exposed": 78,
     "cves": [
       {
-        "id": "GHSA-58qx-3vcg-4xpx",
+        "id": "GHSA-25h7-pfq9-p65f",
         "aliases": [
-          "CVE-2026-45736"
+          "CVE-2026-32141"
         ],
-        "summary": "ws: Uninitialized memory disclosure",
-        "published": "2026-05-18T19:02:40Z",
-        "days_exposed": 11,
-        "fixed_in": "8.20.1",
-        "kev": []
+        "summary": "flatted vulnerable to unbounded recursion DoS in parse() revive phase",
+        "published": "2026-03-13T15:40:42Z",
+        "days_exposed": 78,
+        "fixed_in": "3.4.0",
+        "kev": [],
+        "epss_score": 0.00022,
+        "epss_percentile": 0.06472
+      },
+      {
+        "id": "GHSA-rf6f-7fwh-wjgh",
+        "aliases": [
+          "CVE-2026-33228"
+        ],
+        "summary": "Prototype Pollution via parse() in NodeJS flatted",
+        "published": "2026-03-19T17:43:54Z",
+        "days_exposed": 71,
+        "fixed_in": "3.4.2",
+        "kev": [],
+        "epss_score": 0.0007,
+        "epss_percentile": 0.21503
       }
     ],
-    "kev_hits": []
+    "kev_hits": [],
+    "max_epss": 0.0007,
+    "max_epss_percentile": 0.21503,
+    "kev_active": false
+  },
+  {
+    "name": "qs",
+    "version": "6.13.0",
+    "ecosystem": "npm",
+    "priority_tier": 3,
+    "purl": "pkg:npm/qs@6.13.0",
+    "worst_days_exposed": 150,
+    "cves": [
+      {
+        "id": "GHSA-6rw7-vpxm-498p",
+        "aliases": [
+          "CVE-2025-15284"
+        ],
+        "summary": "qs's arrayLimit bypass in its bracket notation allows DoS via memory exhaustion",
+        "published": "2025-12-30T21:02:54Z",
+        "days_exposed": 150,
+        "fixed_in": "6.14.1",
+        "kev": [],
+        "epss_score": 0.0004,
+        "epss_percentile": 0.12295
+      },
+      {
+        "id": "GHSA-q8mj-m7cp-5q26",
+        "aliases": [
+          "CVE-2026-8723"
+        ],
+        "summary": "qs has a remotely triggerable DoS: qs.stringify crashes with TypeError on null/undefined entries in comma-format arrays when encodeValuesOnly is set",
+        "published": "2026-05-22T17:27:19Z",
+        "days_exposed": 7,
+        "fixed_in": "6.15.2",
+        "kev": [],
+        "epss_score": 0.00044,
+        "epss_percentile": 0.13862
+      },
+      {
+        "id": "GHSA-w7fw-mjwx-w883",
+        "aliases": [
+          "CVE-2026-2391"
+        ],
+        "summary": "qs's arrayLimit bypass in comma parsing allows denial of service",
+        "published": "2026-02-12T17:04:39Z",
+        "days_exposed": 106,
+        "fixed_in": "6.14.2",
+        "kev": [],
+        "epss_score": 0.0005,
+        "epss_percentile": 0.15985
+      }
+    ],
+    "kev_hits": [],
+    "max_epss": 0.0005,
+    "max_epss_percentile": 0.15985,
+    "kev_active": false
+  },
+  {
+    "name": "minimatch",
+    "version": "3.1.2",
+    "ecosystem": "npm",
+    "priority_tier": 3,
+    "purl": "pkg:npm/minimatch@3.1.2",
+    "worst_days_exposed": 100,
+    "cves": [
+      {
+        "id": "GHSA-23c5-xmqv-rm74",
+        "aliases": [
+          "CVE-2026-27904"
+        ],
+        "summary": "minimatch ReDoS: nested *() extglobs generate catastrophically backtracking regular expressions",
+        "published": "2026-02-26T22:07:15Z",
+        "days_exposed": 92,
+        "fixed_in": "3.1.4",
+        "kev": [],
+        "epss_score": 0.00026,
+        "epss_percentile": 0.07878
+      },
+      {
+        "id": "GHSA-3ppc-4f35-3m26",
+        "aliases": [
+          "CVE-2026-26996"
+        ],
+        "summary": "minimatch has a ReDoS via repeated wildcards with non-matching literal in pattern",
+        "published": "2026-02-18T22:38:11Z",
+        "days_exposed": 100,
+        "fixed_in": "3.1.3",
+        "kev": [],
+        "epss_score": 0.00026,
+        "epss_percentile": 0.07844
+      },
+      {
+        "id": "GHSA-7r86-cg39-jmmj",
+        "aliases": [
+          "CVE-2026-27903"
+        ],
+        "summary": "minimatch has ReDoS: matchOne() combinatorial backtracking via multiple non-adjacent GLOBSTAR segments",
+        "published": "2026-02-26T22:10:18Z",
+        "days_exposed": 92,
+        "fixed_in": "3.1.3",
+        "kev": [],
+        "epss_score": 0.00036,
+        "epss_percentile": 0.10959
+      }
+    ],
+    "kev_hits": [],
+    "max_epss": 0.00036,
+    "max_epss_percentile": 0.10959,
+    "kev_active": false
+  },
+  {
+    "name": "minimatch",
+    "version": "9.0.5",
+    "ecosystem": "npm",
+    "priority_tier": 3,
+    "purl": "pkg:npm/minimatch@9.0.5",
+    "worst_days_exposed": 100,
+    "cves": [
+      {
+        "id": "GHSA-23c5-xmqv-rm74",
+        "aliases": [
+          "CVE-2026-27904"
+        ],
+        "summary": "minimatch ReDoS: nested *() extglobs generate catastrophically backtracking regular expressions",
+        "published": "2026-02-26T22:07:15Z",
+        "days_exposed": 92,
+        "fixed_in": "9.0.7",
+        "kev": [],
+        "epss_score": 0.00026,
+        "epss_percentile": 0.07878
+      },
+      {
+        "id": "GHSA-3ppc-4f35-3m26",
+        "aliases": [
+          "CVE-2026-26996"
+        ],
+        "summary": "minimatch has a ReDoS via repeated wildcards with non-matching literal in pattern",
+        "published": "2026-02-18T22:38:11Z",
+        "days_exposed": 100,
+        "fixed_in": "9.0.6",
+        "kev": [],
+        "epss_score": 0.00026,
+        "epss_percentile": 0.07844
+      },
+      {
+        "id": "GHSA-7r86-cg39-jmmj",
+        "aliases": [
+          "CVE-2026-27903"
+        ],
+        "summary": "minimatch has ReDoS: matchOne() combinatorial backtracking via multiple non-adjacent GLOBSTAR segments",
+        "published": "2026-02-26T22:10:18Z",
+        "days_exposed": 92,
+        "fixed_in": "9.0.7",
+        "kev": [],
+        "epss_score": 0.00036,
+        "epss_percentile": 0.10959
+      }
+    ],
+    "kev_hits": [],
+    "max_epss": 0.00036,
+    "max_epss_percentile": 0.10959,
+    "kev_active": false
+  },
+  {
+    "name": "minimatch",
+    "version": "10.1.2",
+    "ecosystem": "npm",
+    "priority_tier": 3,
+    "purl": "pkg:npm/minimatch@10.1.2",
+    "worst_days_exposed": 100,
+    "cves": [
+      {
+        "id": "GHSA-23c5-xmqv-rm74",
+        "aliases": [
+          "CVE-2026-27904"
+        ],
+        "summary": "minimatch ReDoS: nested *() extglobs generate catastrophically backtracking regular expressions",
+        "published": "2026-02-26T22:07:15Z",
+        "days_exposed": 92,
+        "fixed_in": "10.2.3",
+        "kev": [],
+        "epss_score": 0.00026,
+        "epss_percentile": 0.07878
+      },
+      {
+        "id": "GHSA-3ppc-4f35-3m26",
+        "aliases": [
+          "CVE-2026-26996"
+        ],
+        "summary": "minimatch has a ReDoS via repeated wildcards with non-matching literal in pattern",
+        "published": "2026-02-18T22:38:11Z",
+        "days_exposed": 100,
+        "fixed_in": "10.2.1",
+        "kev": [],
+        "epss_score": 0.00026,
+        "epss_percentile": 0.07844
+      },
+      {
+        "id": "GHSA-7r86-cg39-jmmj",
+        "aliases": [
+          "CVE-2026-27903"
+        ],
+        "summary": "minimatch has ReDoS: matchOne() combinatorial backtracking via multiple non-adjacent GLOBSTAR segments",
+        "published": "2026-02-26T22:10:18Z",
+        "days_exposed": 92,
+        "fixed_in": "10.2.3",
+        "kev": [],
+        "epss_score": 0.00036,
+        "epss_percentile": 0.10959
+      }
+    ],
+    "kev_hits": [],
+    "max_epss": 0.00036,
+    "max_epss_percentile": 0.10959,
+    "kev_active": false
+  },
+  {
+    "name": "brace-expansion",
+    "version": "5.0.4",
+    "ecosystem": "npm",
+    "priority_tier": 3,
+    "purl": "pkg:npm/brace-expansion@5.0.4",
+    "worst_days_exposed": 64,
+    "cves": [
+      {
+        "id": "GHSA-f886-m6hf-6m8v",
+        "aliases": [
+          "CVE-2026-33750"
+        ],
+        "summary": "brace-expansion: Zero-step sequence causes process hang and memory exhaustion",
+        "published": "2026-03-26T18:29:42Z",
+        "days_exposed": 64,
+        "fixed_in": "5.0.5",
+        "kev": [],
+        "epss_score": 0.00024,
+        "epss_percentile": 0.07193
+      },
+      {
+        "id": "GHSA-jxxr-4gwj-5jf2",
+        "aliases": [
+          "CVE-2026-45149"
+        ],
+        "summary": "brace-expansion: Large numeric range defeats documented `max` DoS protection",
+        "published": "2026-05-18T16:22:01Z",
+        "days_exposed": 12,
+        "fixed_in": "5.0.6",
+        "kev": [],
+        "epss_score": 0.00034,
+        "epss_percentile": 0.10505
+      }
+    ],
+    "kev_hits": [],
+    "max_epss": 0.00034,
+    "max_epss_percentile": 0.10505,
+    "kev_active": false
   },
   {
     "name": "qs",
@@ -998,9 +877,338 @@
         "published": "2026-05-22T17:27:19Z",
         "days_exposed": 7,
         "fixed_in": "6.15.2",
-        "kev": []
+        "kev": [],
+        "epss_score": 0.00044,
+        "epss_percentile": 0.13862
       }
     ],
-    "kev_hits": []
+    "kev_hits": [],
+    "max_epss": 0.00044,
+    "max_epss_percentile": 0.13862,
+    "kev_active": false
+  },
+  {
+    "name": "js-yaml",
+    "version": "3.14.1",
+    "ecosystem": "npm",
+    "priority_tier": 1,
+    "purl": "pkg:npm/js-yaml@3.14.1",
+    "worst_days_exposed": 197,
+    "cves": [
+      {
+        "id": "GHSA-mh29-5h37-fv8m",
+        "aliases": [
+          "CVE-2025-64718"
+        ],
+        "summary": "js-yaml has prototype pollution in merge (<<)",
+        "published": "2025-11-14T14:29:48Z",
+        "days_exposed": 197,
+        "fixed_in": "3.14.2",
+        "kev": [],
+        "epss_score": 0.00034,
+        "epss_percentile": 0.10503
+      }
+    ],
+    "kev_hits": [],
+    "max_epss": 0.00034,
+    "max_epss_percentile": 0.10503,
+    "kev_active": false
+  },
+  {
+    "name": "js-yaml",
+    "version": "4.1.0",
+    "ecosystem": "npm",
+    "priority_tier": 1,
+    "purl": "pkg:npm/js-yaml@4.1.0",
+    "worst_days_exposed": 197,
+    "cves": [
+      {
+        "id": "GHSA-mh29-5h37-fv8m",
+        "aliases": [
+          "CVE-2025-64718"
+        ],
+        "summary": "js-yaml has prototype pollution in merge (<<)",
+        "published": "2025-11-14T14:29:48Z",
+        "days_exposed": 197,
+        "fixed_in": "4.1.1",
+        "kev": [],
+        "epss_score": 0.00034,
+        "epss_percentile": 0.10503
+      }
+    ],
+    "kev_hits": [],
+    "max_epss": 0.00034,
+    "max_epss_percentile": 0.10503,
+    "kev_active": false
+  },
+  {
+    "name": "glob",
+    "version": "10.4.5",
+    "ecosystem": "npm",
+    "priority_tier": 3,
+    "purl": "pkg:npm/glob@10.4.5",
+    "worst_days_exposed": 193,
+    "cves": [
+      {
+        "id": "GHSA-5j98-mcp5-4vw2",
+        "aliases": [
+          "CVE-2025-64756"
+        ],
+        "summary": "glob CLI: Command injection via -c/--cmd executes matches with shell:true",
+        "published": "2025-11-17T17:38:56Z",
+        "days_exposed": 193,
+        "fixed_in": "10.5.0",
+        "kev": [],
+        "epss_score": 0.00025,
+        "epss_percentile": 0.07688
+      }
+    ],
+    "kev_hits": [],
+    "max_epss": 0.00025,
+    "max_epss_percentile": 0.07688,
+    "kev_active": false
+  },
+  {
+    "name": "yaml",
+    "version": "1.10.2",
+    "ecosystem": "npm",
+    "priority_tier": 1,
+    "purl": "pkg:npm/yaml@1.10.2",
+    "worst_days_exposed": 65,
+    "cves": [
+      {
+        "id": "GHSA-48c2-rrv3-qjmp",
+        "aliases": [
+          "CVE-2026-33532"
+        ],
+        "summary": "yaml is vulnerable to Stack Overflow via deeply nested YAML collections",
+        "published": "2026-03-25T20:08:24Z",
+        "days_exposed": 65,
+        "fixed_in": "1.10.3",
+        "kev": [],
+        "epss_score": 0.00022,
+        "epss_percentile": 0.06425
+      }
+    ],
+    "kev_hits": [],
+    "max_epss": 0.00022,
+    "max_epss_percentile": 0.06425,
+    "kev_active": false
+  },
+  {
+    "name": "@babel/plugin-transform-modules-systemjs",
+    "version": "7.29.0",
+    "ecosystem": "npm",
+    "priority_tier": 1,
+    "purl": "pkg:npm/%40babel/plugin-transform-modules-systemjs@7.29.0",
+    "worst_days_exposed": 21,
+    "cves": [
+      {
+        "id": "GHSA-fv7c-fp4j-7gwp",
+        "aliases": [
+          "CVE-2026-44728"
+        ],
+        "summary": "@babel/plugin-transform-modules-systemjs generates arbitrary code when compiling malicious input",
+        "published": "2026-05-08T20:34:07Z",
+        "days_exposed": 21,
+        "fixed_in": "7.29.4",
+        "kev": [],
+        "epss_score": 0.0002,
+        "epss_percentile": 0.05963
+      }
+    ],
+    "kev_hits": [],
+    "max_epss": 0.0002,
+    "max_epss_percentile": 0.05963,
+    "kev_active": false
+  },
+  {
+    "name": "serialize-javascript",
+    "version": "7.0.4",
+    "ecosystem": "npm",
+    "priority_tier": 1,
+    "purl": "pkg:npm/serialize-javascript@7.0.4",
+    "worst_days_exposed": 63,
+    "cves": [
+      {
+        "id": "GHSA-qj8w-gfj5-8c6v",
+        "aliases": [
+          "CVE-2026-34043"
+        ],
+        "summary": "Serialize JavaScript has CPU Exhaustion Denial of Service via crafted array-like objects",
+        "published": "2026-03-27T18:18:54Z",
+        "days_exposed": 63,
+        "fixed_in": "7.0.5",
+        "kev": [],
+        "epss_score": 0.00018,
+        "epss_percentile": 0.05236
+      }
+    ],
+    "kev_hits": [],
+    "max_epss": 0.00018,
+    "max_epss_percentile": 0.05236,
+    "kev_active": false
+  },
+  {
+    "name": "path-to-regexp",
+    "version": "0.1.12",
+    "ecosystem": "npm",
+    "priority_tier": 2,
+    "purl": "pkg:npm/path-to-regexp@0.1.12",
+    "worst_days_exposed": 63,
+    "cves": [
+      {
+        "id": "GHSA-37ch-88jc-xwx2",
+        "aliases": [
+          "CVE-2026-4867"
+        ],
+        "summary": "path-to-regexp vulnerable to Regular Expression Denial of Service via multiple route parameters",
+        "published": "2026-03-27T20:04:53Z",
+        "days_exposed": 63,
+        "fixed_in": "0.1.13",
+        "kev": [],
+        "epss_score": 0.00017,
+        "epss_percentile": 0.04727
+      }
+    ],
+    "kev_hits": [],
+    "max_epss": 0.00017,
+    "max_epss_percentile": 0.04727,
+    "kev_active": false
+  },
+  {
+    "name": "ajv",
+    "version": "6.12.6",
+    "ecosystem": "npm",
+    "priority_tier": 3,
+    "purl": "pkg:npm/ajv@6.12.6",
+    "worst_days_exposed": 107,
+    "cves": [
+      {
+        "id": "GHSA-2g4f-4pwh-qvx6",
+        "aliases": [
+          "CVE-2025-69873"
+        ],
+        "summary": "ajv has ReDoS when using `$data` option",
+        "published": "2026-02-11T21:30:39Z",
+        "days_exposed": 107,
+        "fixed_in": "6.14.0",
+        "kev": [],
+        "epss_score": 0.00015,
+        "epss_percentile": 0.03221
+      }
+    ],
+    "kev_hits": [],
+    "max_epss": 0.00015,
+    "max_epss_percentile": 0.03221,
+    "kev_active": false
+  },
+  {
+    "name": "ajv",
+    "version": "8.11.0",
+    "ecosystem": "npm",
+    "priority_tier": 3,
+    "purl": "pkg:npm/ajv@8.11.0",
+    "worst_days_exposed": 107,
+    "cves": [
+      {
+        "id": "GHSA-2g4f-4pwh-qvx6",
+        "aliases": [
+          "CVE-2025-69873"
+        ],
+        "summary": "ajv has ReDoS when using `$data` option",
+        "published": "2026-02-11T21:30:39Z",
+        "days_exposed": 107,
+        "fixed_in": "8.18.0",
+        "kev": [],
+        "epss_score": 0.00015,
+        "epss_percentile": 0.03221
+      }
+    ],
+    "kev_hits": [],
+    "max_epss": 0.00015,
+    "max_epss_percentile": 0.03221,
+    "kev_active": false
+  },
+  {
+    "name": "uuid",
+    "version": "8.3.2",
+    "ecosystem": "npm",
+    "priority_tier": 3,
+    "purl": "pkg:npm/uuid@8.3.2",
+    "worst_days_exposed": 37,
+    "cves": [
+      {
+        "id": "GHSA-w5hq-g745-h8pq",
+        "aliases": [
+          "CVE-2026-41907"
+        ],
+        "summary": "uuid: Missing buffer bounds check in v3/v5/v6 when buf is provided",
+        "published": "2026-04-22T20:53:24Z",
+        "days_exposed": 37,
+        "fixed_in": "11.1.1",
+        "kev": [],
+        "epss_score": 0.00014,
+        "epss_percentile": 0.02837
+      }
+    ],
+    "kev_hits": [],
+    "max_epss": 0.00014,
+    "max_epss_percentile": 0.02837,
+    "kev_active": false
+  },
+  {
+    "name": "ws",
+    "version": "8.19.0",
+    "ecosystem": "npm",
+    "priority_tier": 3,
+    "purl": "pkg:npm/ws@8.19.0",
+    "worst_days_exposed": 11,
+    "cves": [
+      {
+        "id": "GHSA-58qx-3vcg-4xpx",
+        "aliases": [
+          "CVE-2026-45736"
+        ],
+        "summary": "ws: Uninitialized memory disclosure",
+        "published": "2026-05-18T19:02:40Z",
+        "days_exposed": 11,
+        "fixed_in": "8.20.1",
+        "kev": [],
+        "epss_score": 0.00012,
+        "epss_percentile": 0.01875
+      }
+    ],
+    "kev_hits": [],
+    "max_epss": 0.00012,
+    "max_epss_percentile": 0.01875,
+    "kev_active": false
+  },
+  {
+    "name": "postcss",
+    "version": "8.5.8",
+    "ecosystem": "npm",
+    "priority_tier": 3,
+    "purl": "pkg:npm/postcss@8.5.8",
+    "worst_days_exposed": 36,
+    "cves": [
+      {
+        "id": "GHSA-qx2v-qp2m-jg93",
+        "aliases": [
+          "CVE-2026-41305"
+        ],
+        "summary": "PostCSS has XSS via Unescaped </style> in its CSS Stringify Output",
+        "published": "2026-04-24T15:31:42Z",
+        "days_exposed": 36,
+        "fixed_in": "8.5.10",
+        "kev": [],
+        "epss_score": 0.00011,
+        "epss_percentile": 0.01489
+      }
+    ],
+    "kev_hits": [],
+    "max_epss": 0.00011,
+    "max_epss_percentile": 0.01489,
+    "kev_active": false
   }
 ]
