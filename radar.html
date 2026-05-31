@@ -3019,180 +3019,845 @@
 
   .wanted-wall { display: none; }
 
-  .launch {
-    min-height: calc(100vh - 88px);
-    padding: 64px max(24px, 8vw) 44px;
-    background:
-      linear-gradient(135deg, rgba(2, 18, 32, 0.96), rgba(3, 37, 48, 0.92)),
-      repeating-linear-gradient(90deg, rgba(0, 229, 255, 0.04) 0 1px, transparent 1px 80px);
-    border-bottom: 1px solid rgba(0, 229, 255, 0.16);
+  /* ═══════════════════════════════════════
+     LAUNCH SCREEN — cinematic ocean scene
+     ═══════════════════════════════════════ */
+  body.launch-active {
+    overflow: hidden;
+  }
+  body.launch-active .topbar,
+  body.launch-active .wave-divider,
+  body.launch-active .app {
+    display: none;
   }
 
-  .launch.hidden { display: none; }
-
-  .launch-grid {
-    display: grid;
-    grid-template-columns: minmax(280px, 0.9fr) minmax(360px, 1.1fr);
-    gap: 42px;
-    align-items: center;
-  }
-
-  .launch-kicker {
-    font-family: var(--mono);
-    color: var(--gold);
-    letter-spacing: 0.24em;
-    font-size: 12px;
-    margin-bottom: 18px;
-  }
-
-  .launch h1 {
-    margin: 0 0 18px;
-    font-size: clamp(34px, 5vw, 72px);
-    line-height: 0.95;
-    letter-spacing: 0;
-    color: var(--text);
-  }
-
-  .launch-copy {
-    max-width: 680px;
-    color: var(--muted);
-    font-size: 18px;
-    line-height: 1.55;
-  }
-
-  .launch-actions {
-    display: grid;
-    gap: 14px;
-    margin-top: 32px;
-    max-width: 760px;
-  }
-
-  .launch-repo {
-    display: grid;
-    grid-template-columns: 1fr auto auto;
-    gap: 10px;
-  }
-
-  .launch-repo input {
-    min-width: 0;
-    height: 50px;
-    border-radius: 6px;
-    border: 1px solid rgba(56, 189, 248, 0.3);
-    background: rgba(2, 12, 25, 0.82);
-    color: var(--text);
-    padding: 0 16px;
-    font-family: var(--mono);
-    font-size: 16px;
-  }
-
-  .launch-btn {
-    height: 50px;
-    border: 0;
-    border-radius: 6px;
-    padding: 0 18px;
-    font-weight: 800;
-    cursor: pointer;
-    font-family: inherit;
-  }
-
-  .launch-btn.fast {
-    background: var(--gold);
-    color: #111827;
-  }
-
-  .launch-btn.deep {
-    background: rgba(8, 145, 178, 0.18);
-    color: var(--cyan);
-    border: 1px solid rgba(0, 229, 255, 0.45);
-  }
-
-  .launch-proof {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 10px;
-    margin-top: 26px;
-    max-width: 760px;
-  }
-
-  .launch-proof span {
-    border: 1px solid rgba(56, 189, 248, 0.18);
-    background: rgba(8, 26, 43, 0.72);
-    border-radius: 6px;
-    padding: 12px;
-    color: var(--muted);
-    font-family: var(--mono);
-    font-size: 12px;
-  }
-
-  .launch-radar {
-    min-height: 420px;
-    position: relative;
-    border: 1px solid rgba(232, 197, 90, 0.26);
-    border-radius: 8px;
+  #launchScreen {
+    position: fixed;
+    inset: 0;
+    z-index: 50;
     overflow: hidden;
     background:
-      radial-gradient(circle at 50% 50%, rgba(0,229,255,0.16), transparent 34%),
-      linear-gradient(145deg, rgba(8, 26, 43, 0.88), rgba(2, 12, 25, 0.7));
+      radial-gradient(ellipse at 50% 0%, rgba(0,60,100,0.32) 0%, transparent 55%),
+      radial-gradient(ellipse at 14% 72%, rgba(253,230,138,0.09) 0%, transparent 26%),
+      #040d1a;
+    transition: opacity 0.4s ease;
   }
 
-  .launch-radar::before {
-    content: "";
+  .ls-constellations {
     position: absolute;
-    inset: 36px;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+    opacity: 0.56;
+    filter: drop-shadow(0 0 8px rgba(125,211,252,0.18));
+  }
+  .ls-constellations line,
+  .ls-constellations path {
+    stroke: rgba(125,211,252,0.34);
+    stroke-width: 1;
+    fill: none;
+  }
+  .ls-constellations circle {
+    fill: rgba(226,232,240,0.78);
+  }
+
+  .ls-telescope-beam {
+    position: absolute;
+    left: 37vw;
+    top: 38vh;
+    width: 44vw;
+    height: 24vh;
+    z-index: 2;
+    pointer-events: none;
+    opacity: 0.30;
+    background: linear-gradient(90deg, rgba(203,213,225,0.24), rgba(125,211,252,0.13) 48%, transparent 100%);
+    clip-path: polygon(0 46%, 100% 7%, 100% 93%, 0 56%);
+    filter: blur(10px);
+    animation: lsBeamScan 9s ease-in-out infinite alternate;
+  }
+
+  .ls-vignette {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 50% 50%, transparent 40%, rgba(0,0,0,0.25) 70%, rgba(0,0,0,0.55) 100%);
+    pointer-events: none;
+    z-index: 20;
+  }
+
+  #shootingStar {
+    position: absolute;
+    top: 15%;
+    left: 20%;
+    width: 120px;
+    height: 2px;
+    background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.9) 50%, rgba(103,232,249,1.0) 100%);
+    border-radius: 2px;
+    transform: rotate(-30deg);
+    opacity: 0;
+    z-index: 5;
+    filter: drop-shadow(0 0 4px rgba(103,232,249,0.9));
+    animation: shootingStar 14s ease-in-out infinite;
+    animation-delay: 5s;
+    pointer-events: none;
+  }
+
+  .ls-drift-field {
+    position: absolute;
+    left: 42vw;
+    top: 31vh;
+    width: 35vw;
+    height: 24vh;
+    z-index: 3;
+    pointer-events: none;
+    opacity: 0.68;
+    filter: drop-shadow(0 0 10px rgba(45,212,191,0.20));
+  }
+  .ls-drift-field path {
+    fill: none;
+    stroke: rgba(125,211,252,0.20);
+    stroke-width: 1.2;
+    stroke-dasharray: 5 9;
+    animation: lsTraceFlow 10s linear infinite;
+  }
+  .ls-drift-field circle {
+    fill: rgba(45,212,191,0.78);
+    stroke: rgba(226,232,240,0.55);
+    stroke-width: 0.8;
+  }
+
+  .ls-depth-glow {
+    position: absolute;
+    left: 24vw;
+    right: 10vw;
+    bottom: 7vh;
+    height: 30vh;
+    z-index: 2;
+    pointer-events: none;
+    background:
+      radial-gradient(ellipse at 38% 50%, rgba(45,212,191,0.30), rgba(14,116,144,0.12) 38%, transparent 70%),
+      radial-gradient(ellipse at 72% 66%, rgba(125,211,252,0.16), transparent 56%);
+    filter: blur(18px);
+    opacity: 0.74;
+    animation: lsDepthPulse 6.5s ease-in-out infinite alternate;
+  }
+
+  .ls-mist {
+    position: absolute;
+    left: -8vw;
+    right: -8vw;
+    bottom: 27vh;
+    height: 68px;
+    z-index: 8;
+    pointer-events: none;
+    background:
+      linear-gradient(90deg, transparent 0%, rgba(226,232,240,0.10) 24%, rgba(240,249,255,0.16) 50%, rgba(226,232,240,0.08) 72%, transparent 100%);
+    filter: blur(14px);
+    opacity: 0.66;
+    animation: lsMistDrift 18s ease-in-out infinite alternate;
+  }
+
+  #launchScreen.hidden {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  /* Stars (box-shadow cluster technique) */
+  .ls-stars {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+  }
+  .ls-stars::before {
+    content: '';
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    top: 0; left: 0;
+    background: transparent;
     border-radius: 50%;
-    border: 1px solid rgba(0, 229, 255, 0.28);
     box-shadow:
-      0 0 0 52px rgba(0, 229, 255, 0.05),
-      0 0 0 104px rgba(0, 229, 255, 0.035),
-      0 0 60px rgba(0, 229, 255, 0.18);
+      45px 32px 0 rgba(226,232,240,0.95),
+      127px 87px 0 rgba(226,232,240,0.80),
+      203px 56px 0 rgba(226,232,240,0.90),
+      312px 145px 0 rgba(226,232,240,0.70),
+      401px 23px 0 rgba(226,232,240,0.85),
+      487px 112px 0 rgba(226,232,240,0.75),
+      554px 67px 0 rgba(226,232,240,0.90),
+      623px 189px 0 rgba(226,232,240,0.65),
+      712px 43px 0 rgba(226,232,240,0.80),
+      789px 134px 0 rgba(226,232,240,0.70),
+      856px 78px 0 rgba(226,232,240,0.85),
+      934px 212px 0 rgba(226,232,240,0.60),
+      1023px 56px 0 rgba(226,232,240,0.90),
+      1098px 167px 0 rgba(226,232,240,0.75),
+      1156px 89px 0 rgba(226,232,240,0.80),
+      1234px 34px 0 rgba(226,232,240,0.70),
+      1312px 178px 0 rgba(226,232,240,0.65),
+      1389px 67px 0 rgba(226,232,240,0.85),
+      1467px 123px 0 rgba(226,232,240,0.75),
+      1534px 45px 0 rgba(226,232,240,0.90),
+      1612px 189px 0 rgba(226,232,240,0.70),
+      1689px 78px 0 rgba(226,232,240,0.80),
+      1756px 134px 0 rgba(226,232,240,0.65),
+      1834px 56px 0 rgba(226,232,240,0.85),
+      78px 234px 0 rgba(226,232,240,0.70),
+      167px 312px 0 rgba(226,232,240,0.60),
+      256px 267px 0 rgba(226,232,240,0.75),
+      345px 389px 0 rgba(226,232,240,0.55),
+      456px 298px 0 rgba(226,232,240,0.65),
+      534px 412px 0 rgba(226,232,240,0.55),
+      623px 334px 0 rgba(226,232,240,0.70),
+      712px 456px 0 rgba(226,232,240,0.50),
+      801px 367px 0 rgba(226,232,240,0.60),
+      978px 278px 0 rgba(226,232,240,0.65),
+      1067px 401px 0 rgba(226,232,240,0.55),
+      1145px 334px 0 rgba(226,232,240,0.60),
+      1223px 456px 0 rgba(226,232,240,0.50),
+      1312px 289px 0 rgba(226,232,240,0.65),
+      1400px 412px 0 rgba(226,232,240,0.55),
+      1489px 367px 0 rgba(226,232,240,0.60),
+      1567px 245px 0 rgba(226,232,240,0.70),
+      1645px 478px 0 rgba(226,232,240,0.50),
+      1723px 312px 0 rgba(226,232,240,0.60),
+      1801px 423px 0 rgba(226,232,240,0.55),
+      1879px 189px 0 rgba(226,232,240,0.65),
+      /* Lower half — rows 500-900px */
+      55px 520px 0 rgba(226,232,240,0.55),
+      178px 568px 0 rgba(226,232,240,0.45),
+      310px 490px 0 rgba(226,232,240,0.60),
+      462px 610px 0 rgba(226,232,240,0.50),
+      588px 532px 0 rgba(226,232,240,0.55),
+      724px 580px 0 rgba(226,232,240,0.45),
+      866px 510px 0 rgba(226,232,240,0.60),
+      998px 648px 0 rgba(226,232,240,0.50),
+      1134px 524px 0 rgba(226,232,240,0.55),
+      1268px 596px 0 rgba(226,232,240,0.45),
+      1412px 538px 0 rgba(226,232,240,0.60),
+      1548px 622px 0 rgba(226,232,240,0.50),
+      1678px 502px 0 rgba(226,232,240,0.55),
+      1812px 574px 0 rgba(226,232,240,0.45),
+      /* Bottom region — rows 700-900px */
+      92px 712px 0 rgba(226,232,240,0.40),
+      234px 768px 0 rgba(226,232,240,0.35),
+      398px 734px 0 rgba(226,232,240,0.40),
+      556px 802px 0 rgba(226,232,240,0.35),
+      712px 748px 0 rgba(226,232,240,0.40),
+      868px 816px 0 rgba(226,232,240,0.35),
+      1024px 772px 0 rgba(226,232,240,0.40),
+      1180px 838px 0 rgba(226,232,240,0.35),
+      1336px 784px 0 rgba(226,232,240,0.40),
+      1492px 852px 0 rgba(226,232,240,0.35),
+      1648px 716px 0 rgba(226,232,240,0.40),
+      1804px 788px 0 rgba(226,232,240,0.35),
+      /* Right-side fill */
+      1920px 45px 0 rgba(226,232,240,0.70),
+      1960px 220px 0 rgba(226,232,240,0.55),
+      1940px 390px 0 rgba(226,232,240,0.45),
+      1980px 560px 0 rgba(226,232,240,0.40),
+      1920px 730px 0 rgba(226,232,240,0.35);
+    animation: lsTwinkle 8s ease-in-out infinite alternate;
+  }
+  .ls-stars::after {
+    content: '';
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    top: 0; left: 0;
+    background: transparent;
+    border-radius: 50%;
+    /* blue-tinted + 5 cyan glow stars */
+    box-shadow:
+      89px 178px 0 rgba(125,211,252,0.80),
+      234px 134px 0 rgba(125,211,252,0.65),
+      378px 245px 0 rgba(125,211,252,0.75),
+      512px 167px 0 rgba(125,211,252,0.60),
+      667px 289px 0 rgba(125,211,252,0.70),
+      789px 201px 0 rgba(125,211,252,0.65),
+      923px 312px 0 rgba(125,211,252,0.55),
+      1045px 178px 0 rgba(125,211,252,0.70),
+      1189px 256px 0 rgba(125,211,252,0.65),
+      1312px 134px 0 rgba(125,211,252,0.75),
+      1467px 289px 0 rgba(125,211,252,0.60),
+      1589px 201px 0 rgba(125,211,252,0.70),
+      1712px 345px 0 rgba(125,211,252,0.55),
+      1845px 167px 0 rgba(125,211,252,0.65),
+      289px 89px 0 1px rgba(0,255,255,0.90),
+      689px 156px 0 1px rgba(0,255,255,0.85),
+      1089px 78px 0 1px rgba(0,255,255,0.90),
+      1489px 134px 0 1px rgba(0,255,255,0.85),
+      1789px 45px 0 1px rgba(0,255,255,0.80),
+      /* Lower half coverage — blue layer */
+      145px 490px 0 rgba(125,211,252,0.50),
+      378px 560px 0 rgba(125,211,252,0.45),
+      612px 518px 0 rgba(125,211,252,0.55),
+      845px 598px 0 rgba(125,211,252,0.45),
+      1078px 512px 0 rgba(125,211,252,0.50),
+      1311px 578px 0 rgba(125,211,252,0.45),
+      1544px 532px 0 rgba(125,211,252,0.50),
+      1777px 612px 0 rgba(125,211,252,0.40),
+      245px 720px 0 rgba(125,211,252,0.35),
+      545px 768px 0 rgba(125,211,252,0.30),
+      845px 812px 0 rgba(125,211,252,0.35),
+      1145px 740px 0 rgba(125,211,252,0.30),
+      1445px 790px 0 rgba(125,211,252,0.35),
+      1745px 750px 0 rgba(125,211,252,0.30),
+      /* Cyan glow stars lower screen */
+      490px 498px 0 1px rgba(0,255,255,0.75),
+      990px 542px 0 1px rgba(0,255,255,0.70),
+      1490px 508px 0 1px rgba(0,255,255,0.75),
+      740px 748px 0 1px rgba(0,255,255,0.65),
+      1240px 792px 0 1px rgba(0,255,255,0.60);
+    filter: blur(0.4px);
+    animation: lsTwinkle 12s ease-in-out infinite alternate-reverse;
+  }
+  .ls-stars-lg {
+    position: absolute;
+    width: 2px; height: 2px;
+    top: 0; left: 0;
+    background: transparent;
+    border-radius: 50%;
+    pointer-events: none;
+    box-shadow:
+      156px 67px 0 rgba(226,232,240,0.95),
+      456px 34px 0 rgba(226,232,240,0.90),
+      734px 89px 0 rgba(226,232,240,0.95),
+      978px 45px 0 rgba(226,232,240,0.85),
+      1245px 78px 0 rgba(226,232,240,0.90),
+      1512px 56px 0 rgba(226,232,240,0.85),
+      1756px 34px 0 rgba(226,232,240,0.95),
+      287px 156px 0 rgba(226,232,240,0.80),
+      612px 234px 0 rgba(226,232,240,0.85),
+      912px 178px 0 rgba(226,232,240,0.80);
+    animation: lsTwinkle 10s ease-in-out infinite;
+  }
+  .ls-stars-glow {
+    position: absolute;
+    width: 2px; height: 2px;
+    top: 0; left: 0;
+    background: transparent;
+    border-radius: 50%;
+    pointer-events: none;
+    box-shadow:
+      289px 89px 0 3px rgba(0,255,255,0.70),
+      689px 156px 0 3px rgba(0,255,255,0.65),
+      1089px 78px 0 3px rgba(0,255,255,0.70),
+      1489px 134px 0 3px rgba(0,255,255,0.65),
+      1789px 45px 0 3px rgba(0,255,255,0.60);
+    filter: blur(2.5px);
+    animation: lsTwinkle 6s ease-in-out infinite alternate;
   }
 
-  .launch-radar::after {
+  /* Clouds */
+  .ls-cloud {
+    position: absolute;
+    pointer-events: none;
+    z-index: 2;
+  }
+  .ls-cloud svg { display: block; width: 100%; height: auto; }
+  .ls-cloud-a {
+    left: 4%;
+    top: 8%;
+    width: min(340px, 22vw);
+    opacity: 0.18;
+    animation: lsCloudDrift 60s ease-in-out infinite alternate;
+  }
+  .ls-cloud-b {
+    left: 28%;
+    top: 6%;
+    width: min(270px, 18vw);
+    opacity: 0.12;
+    animation: lsCloudDrift 80s ease-in-out infinite alternate-reverse;
+    animation-delay: -20s;
+  }
+  .ls-cloud-c {
+    left: 55%;
+    top: 12%;
+    width: min(210px, 14vw);
+    opacity: 0.10;
+    animation: lsCloudDrift 70s ease-in-out infinite alternate;
+    animation-delay: -38s;
+  }
+  .ls-cloud-d {
+    right: 6%;
+    top: 18%;
+    width: min(270px, 18vw);
+    opacity: 0.13;
+    animation: lsCloudDrift 75s ease-in-out infinite alternate-reverse;
+    animation-delay: -12s;
+  }
+  .ls-cloud-e {
+    right: 22%;
+    top: 5%;
+    width: min(180px, 12vw);
+    opacity: 0.09;
+    animation: lsCloudDrift 65s ease-in-out infinite alternate;
+    animation-delay: -48s;
+  }
+
+
+  /* Ship */
+  .ls-ship-wrap {
+    position: absolute;
+    left: 1vw;
+    bottom: calc(28vh - 55px);
+    z-index: 4;
+    width: min(560px, 48vw);
+    animation: lsShipBob 5s ease-in-out infinite;
+    filter: drop-shadow(0 20px 40px rgba(0,0,0,0.60));
+    transform-origin: center bottom;
+  }
+  .ls-ship-wrap svg { display: block; width: 100%; height: auto; }
+  .ls-ship-wrap::after {
     content: "";
     position: absolute;
-    width: 50%;
-    height: 50%;
-    left: 50%;
-    top: 50%;
-    transform-origin: 0 0;
-    background: linear-gradient(35deg, rgba(232,197,90,0.42), transparent 58%);
-    animation: sweep 4s linear infinite;
+    bottom: 0;
+    left: 5%;
+    width: 90%;
+    height: 3px;
+    background: #2DD4BF;
+    filter: blur(3px);
+    box-shadow: 0 0 12px rgba(45,212,191,0.8), 0 0 24px rgba(45,212,191,0.4);
+    opacity: 0.7;
+    border-radius: 2px;
+    pointer-events: none;
   }
 
-  .launch-blip {
+  .ls-hull-glow {
     position: absolute;
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    background: var(--cyan);
-    box-shadow: 0 0 18px var(--cyan);
+    left: 16vw;
+    bottom: calc(28vh + 20px);
+    width: 200px;
+    height: 80px;
+    background: radial-gradient(ellipse, rgba(180,100,20,0.12) 0%, transparent 70%);
+    filter: blur(20px);
+    z-index: 3;
+    pointer-events: none;
+    animation: hullGlow 4s ease-in-out infinite alternate;
   }
 
-  .launch-blip.b1 { left: 30%; top: 34%; }
-  .launch-blip.b2 { left: 62%; top: 58%; background: var(--red); box-shadow: 0 0 18px var(--red); }
-  .launch-blip.b3 { left: 48%; top: 72%; background: var(--green); box-shadow: 0 0 18px var(--green); }
+  /* Hull shadow — grows when ship is down */
+  .ls-hull-shadow {
+    position: absolute;
+    left: 2vw;
+    bottom: calc(28vh - 58px);
+    width: min(560px, 48vw);
+    height: 20px;
+    z-index: 3;
+    pointer-events: none;
+  }
+  .ls-hull-shadow::after {
+    content: '';
+    display: block;
+    margin: 0 10%;
+    width: 80%;
+    height: 100%;
+    background: radial-gradient(ellipse, rgba(0,200,180,0.2), transparent);
+    animation: lsHullShadow 5s ease-in-out infinite;
+  }
+  @keyframes lsHullShadow {
+    0%   { transform: translateY(0) scaleY(1); opacity: 0.4; }
+    25%  { transform: translateY(-6px) scaleY(0.7); opacity: 0.2; }
+    50%  { transform: translateY(-9px) scaleY(0.5); opacity: 0.15; }
+    75%  { transform: translateY(-4px) scaleY(0.8); opacity: 0.25; }
+    100% { transform: translateY(0) scaleY(1); opacity: 0.4; }
+  }
+
+  /* Teal waterline glow where hull meets ocean */
+  .ls-waterline {
+    position: absolute;
+    left: 2vw;
+    bottom: calc(28vh - 51px);
+    width: min(560px, 48vw);
+    height: 4px;
+    z-index: 6;
+    background: linear-gradient(90deg,
+      transparent 3%,
+      rgba(20,184,166,0.55) 18%,
+      rgba(45,212,191,0.80) 50%,
+      rgba(20,184,166,0.55) 82%,
+      transparent 97%);
+    filter: blur(2px);
+    pointer-events: none;
+  }
+
+  /* Waves */
+  .ls-waves {
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    height: 28vh;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 3;
+  }
+
+  /* Front wave — extracted from container so it renders above hull bottom */
+  .ls-wave-front-solo {
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    width: 112%;
+    height: 28vh;
+    display: block;
+    pointer-events: none;
+    z-index: 6;
+    opacity: 0.9;
+    animation: lsWaveFrontMove 6.5s ease-in-out infinite;
+  }
+  .ls-wave {
+    position: absolute;
+    left: 0; bottom: 0;
+    width: 112%;
+    height: 100%;
+    display: block;
+  }
+  .ls-wave-back {
+    z-index: 4;
+    opacity: 0.6;
+    animation: lsWaveBackMove 13s ease-in-out infinite;
+  }
+  .ls-wave-mid {
+    z-index: 5;
+    opacity: 0.75;
+    animation: lsWaveMidMove 9s ease-in-out infinite reverse;
+  }
+  .ls-wave-front {
+    z-index: 6;
+    opacity: 0.9;
+    animation: lsWaveFrontMove 6.5s ease-in-out infinite;
+  }
+  /* Foam highlights at wave crests */
+  .ls-wave-foam {
+    position: absolute;
+    left: 0;
+    bottom: calc(28vh - 3px);
+    width: 100%;
+    height: 3px;
+    z-index: 7;
+    background: repeating-linear-gradient(
+      90deg,
+      transparent 0px, transparent 18px,
+      rgba(255,255,255,0.13) 18px, rgba(255,255,255,0.13) 22px
+    );
+    pointer-events: none;
+  }
+
+  /* Wordmark (top-center) */
+  .ls-wordmark {
+    position: absolute;
+    top: 32px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    text-align: center;
+    pointer-events: none;
+    white-space: nowrap;
+  }
+  .ls-wordmark-glow-wrap {
+    position: relative;
+    display: inline-block;
+  }
+  .ls-wordmark-glow-bg {
+    position: absolute;
+    inset: 0;
+    font-family: var(--mono);
+    font-size: clamp(36px, 4.5vw, 64px);
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    color: #C8A84B;
+    filter: blur(18px);
+    opacity: 0.6;
+    z-index: -1;
+    pointer-events: none;
+    white-space: nowrap;
+  }
+  .ls-wordmark-title {
+    font-family: var(--mono);
+    font-size: clamp(36px, 4.5vw, 64px);
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    background: linear-gradient(160deg, #8B6914 0%, #F0D898 35%, #C8A84B 50%, #F0D898 65%, #8B6914 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    display: block;
+    position: relative;
+    z-index: 1;
+  }
+  .ls-wordmark-sub {
+    display: none;
+  }
+  /* Center tagline — absolute, below wordmark, never overlaps right copy */
+  .ls-center-tagline {
+    position: absolute;
+    top: 110px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60%;
+    max-width: 500px;
+    text-align: center;
+    font-family: var(--sans);
+    font-size: clamp(16px, 1.8vw, 24px);
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    color: #E0F7FF;
+    text-shadow: 0 0 20px rgba(0,255,255,0.45);
+    white-space: nowrap;
+    z-index: 10;
+    pointer-events: none;
+  }
+
+  /* Copy & CTA (center-right) */
+  .ls-copy {
+    position: absolute;
+    right: 4%;
+    top: 50%;
+    transform: translateY(-50%);
+    width: min(480px, 38vw);
+    z-index: 10;
+  }
+  .ls-copy-card {
+    background: rgba(255,255,255,0.03);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 20px;
+    padding: 36px 32px;
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.08),
+      0 24px 60px rgba(0,0,0,0.3);
+  }
+  .ls-eyebrow {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #00FFFF;
+    border: 1px solid rgba(0,255,255,0.28);
+    border-radius: 999px;
+    padding: 5px 14px;
+    margin-bottom: 20px;
+    background: rgba(0,255,255,0.05);
+  }
+  .ls-tagline {
+    font-family: var(--sans);
+    font-size: clamp(28px, 3.5vw, 52px);
+    font-weight: 700;
+    line-height: 1.1;
+    color: #F8FAFC;
+    margin: 0 0 18px;
+    text-shadow: 0 0 40px rgba(186,230,253,0.18), 0 2px 4px rgba(0,0,0,0.55);
+  }
+  .ls-sub {
+    font-size: clamp(17px, 1.6vw, 22px);
+    font-weight: 700;
+    color: #E2E8F0;
+    line-height: 1.65;
+    text-shadow:
+      0 1px 0 rgba(0,0,0,0.8),
+      0 0 20px rgba(56,189,248,0.3),
+      0 0 40px rgba(56,189,248,0.15);
+    margin: 0 0 28px;
+  }
+  .ls-body {
+    display: none;
+  }
+  .ls-input-wrap {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 10px;
+    padding: 8px;
+    border: 1px solid rgba(45,212,191,0.22);
+    border-radius: 12px;
+    background: rgba(4,13,26,0.80);
+    box-shadow: 0 0 0 1px rgba(15,23,42,0.80), 0 20px 60px rgba(0,0,0,0.36);
+  }
+  .ls-input-wrap input {
+    min-width: 0;
+    height: 52px;
+    border-radius: 8px;
+    border: 1px solid rgba(45,212,191,0.25);
+    background: rgba(2,8,20,0.7);
+    color: #94A3B8;
+    padding: 0 16px;
+    font-family: var(--mono);
+    font-size: 14px;
+    outline: none;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.5);
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .ls-input-wrap input:focus {
+    border-color: #2DD4BF;
+    box-shadow:
+      0 0 0 2px rgba(45,212,191,0.2),
+      0 0 20px rgba(45,212,191,0.15),
+      inset 0 1px 3px rgba(0,0,0,0.5);
+  }
+  .ls-sail-btn {
+    height: 52px;
+    border: 0;
+    border-radius: 8px;
+    padding: 0 26px;
+    font-family: var(--sans);
+    font-weight: 800;
+    font-size: 16px;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    background: linear-gradient(135deg, #FACC15 0%, #F59E0B 100%);
+    color: #0a0f1e;
+    box-shadow:
+      0 0 20px rgba(250,204,21,0.5),
+      0 0 40px rgba(250,204,21,0.25),
+      0 4px 16px rgba(0,0,0,0.4);
+    transition: all 0.2s ease;
+    white-space: nowrap;
+  }
+  .ls-sail-btn:hover {
+    transform: translateY(-2px) scale(1.04);
+    box-shadow:
+      0 0 30px rgba(250,204,21,0.7),
+      0 0 60px rgba(250,204,21,0.35),
+      0 8px 24px rgba(0,0,0,0.4);
+  }
+
+  /* Launch screen keyframes */
+  @keyframes lsTwinkle {
+    0%   { opacity: 0.40; }
+    50%  { opacity: 1.00; }
+    100% { opacity: 0.62; }
+  }
+  @keyframes lsShipBob {
+    0%   { transform: translateY(0px) rotate(-1.2deg); }
+    25%  { transform: translateY(-14px) rotate(0.4deg); }
+    50%  { transform: translateY(-18px) rotate(1.4deg); }
+    75%  { transform: translateY(-10px) rotate(-0.2deg); }
+    100% { transform: translateY(0px) rotate(-1.2deg); }
+  }
+  @keyframes lsWaveBob {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-4px); }
+  }
+  @keyframes lsWaveBackMove {
+    0%,100% { transform: translate(-4%, 0); }
+    50% { transform: translate(0, -7px); }
+  }
+  @keyframes lsWaveMidMove {
+    0%,100% { transform: translate(0, 0); }
+    50% { transform: translate(-6%, -10px); }
+  }
+  @keyframes lsWaveFrontMove {
+    0%,100% { transform: translate(-2%, 0); }
+    50% { transform: translate(-8%, -8px); }
+  }
+  @keyframes lsWaveScroll {
+    from { transform: translateX(0);   }
+    to   { transform: translateX(-50%); }
+  }
+  @keyframes lsCloudDrift {
+    from { transform: translateX(-6%); }
+    to   { transform: translateX( 6%); }
+  }
+  @keyframes lsBeamScan {
+    from { transform: rotate(-2deg) translateY(-5px); opacity: 0.16; }
+    to   { transform: rotate(2deg) translateY(8px); opacity: 0.30; }
+  }
+  @keyframes shootingStar {
+    0%,85%,100% {
+      opacity: 0;
+      transform: translateX(0) translateY(0) rotate(-30deg);
+    }
+    87% { opacity: 1; }
+    95% {
+      opacity: 0;
+      transform: translateX(280px) translateY(100px) rotate(-30deg);
+    }
+  }
+  @keyframes lsTraceFlow {
+    from { stroke-dashoffset: 0; }
+    to { stroke-dashoffset: -70; }
+  }
+  @keyframes lsDepthPulse {
+    from { transform: scaleX(0.94); opacity: 0.55; }
+    to   { transform: scaleX(1.04); opacity: 0.82; }
+  }
+  @keyframes lsMistDrift {
+    from { transform: translateX(-5%); }
+    to   { transform: translateX(7%); }
+  }
+  @keyframes hullGlow {
+    from { opacity: 0.5; }
+    to   { opacity: 0.9; }
+  }
+
+
+  /* Pirate sway */
+  .ls-pirate-figure {
+    animation: pirateSway 5s ease-in-out infinite;
+    transform-origin: 14px 48px;
+  }
+  @keyframes pirateSway {
+    0%,100% { transform: rotate(-2deg); }
+    50%     { transform: rotate(2deg); }
+  }
+
+  /* Typography enhancements */
+  .ls-center-tagline {
+    color: #F0F9FF !important;
+    text-shadow:
+      0 0 10px rgba(103,232,249,1.0),
+      0 0 20px rgba(103,232,249,0.7),
+      0 0 40px rgba(103,232,249,0.4),
+      0 0 80px rgba(56,189,248,0.2) !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.02em !important;
+  }
 
   @media (max-width: 900px) {
-    .launch-grid { grid-template-columns: 1fr; }
-    .launch-repo { grid-template-columns: 1fr; }
-    .launch-proof { grid-template-columns: 1fr; }
-    .launch-radar { min-height: 280px; }
+    .ls-copy {
+      right: 5%;
+      width: min(90vw, 420px);
+      top: auto;
+      bottom: calc(32vh + 24px);
+      transform: none;
+    }
+    .ls-sub { font-size: 15px; }
+    .ls-ship-wrap { width: min(380px, 68vw); }
+.ls-input-wrap { grid-template-columns: 1fr; }
+    .ls-wordmark-title { font-size: clamp(28px, 6vw, 48px); }
+    .ls-center-tagline { font-size: clamp(13px, 3vw, 18px); white-space: normal; width: 80%; }
+    .ls-wordmark-glow-bg { font-size: clamp(28px, 6vw, 48px); }
+    .ls-drift-field { display: none; }
   }
 
-  .corner-ornament {
+  .ls-foam-dots {
     position: absolute;
-    width: 16px;
-    height: 16px;
-    border-color: rgba(200,168,75,0.3);
-    border-style: solid;
+    bottom: calc(28vh * 0.78);
+    left: 0;
+    width: 100%;
+    height: 8px;
+    pointer-events: none;
+    z-index: 7;
   }
-  .corner-ornament.tl { top: 10px; left: 10px; border-width: 2px 0 0 2px; }
-  .corner-ornament.tr { top: 10px; right: 10px; border-width: 2px 2px 0 0; }
-  .corner-ornament.bl { bottom: 10px; left: 10px; border-width: 0 0 2px 2px; }
-  .corner-ornament.br { bottom: 10px; right: 10px; border-width: 0 2px 2px 0; }
+  .foam-dot {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.7);
+    filter: blur(1px);
+    animation: foamPop 3s ease-in-out infinite;
+  }
+  .foam-dot:nth-child(2) { animation-delay: 0.6s; }
+  .foam-dot:nth-child(3) { animation-delay: 1.2s; }
+  .foam-dot:nth-child(4) { animation-delay: 0.4s; }
+  .foam-dot:nth-child(5) { animation-delay: 1.8s; }
+  @keyframes foamPop {
+    0%,100% { transform: scale(1); opacity: 0.7; }
+    50%     { transform: scale(2.5); opacity: 0.0; }
+  }
 </style>
 </head>
-<body>
+<body class="launch-active">
 <header class="topbar">
   <div class="logo">
     <svg class="compass-rose" width="32" height="32" viewBox="0 0 32 32">
@@ -3251,34 +3916,282 @@
   </svg>
 </div>
 
-<section class="launch" id="launchScreen">
-  <div class="launch-grid">
-    <div>
-      <div class="launch-kicker">LIVE SUPPLY CHAIN TRIAGE</div>
-      <h1>Find the dependency an attacker would touch first.</h1>
-      <p class="launch-copy">
-        DriftWatch starts with a live Coral SBOM pull, scans an attacker-weighted shortlist,
-        then opens the investigation room while deeper evidence keeps filling in.
-      </p>
-      <div class="launch-actions">
-        <div class="launch-repo">
-          <input id="homeRepoInput" type="text" value="jellyfin/jellyfin-web" placeholder="owner/repo" autocomplete="off" />
-          <button class="launch-btn fast" type="button" onclick="startMode('fast')">Fast Triage</button>
-          <button class="launch-btn deep" type="button" onclick="startMode('deep')">Deep Sweep</button>
-        </div>
-      </div>
-      <div class="launch-proof">
-        <span>Fast: top 50 prioritized packages</span>
-        <span>Batched OSV via Coral UNION queries</span>
-        <span>Deep: full sweep plus enrichment</span>
-      </div>
-    </div>
-    <div class="launch-radar" aria-hidden="true">
-      <span class="launch-blip b1"></span>
-      <span class="launch-blip b2"></span>
-      <span class="launch-blip b3"></span>
+<section id="launchScreen">
+  <div class="ls-vignette" aria-hidden="true"></div>
+
+  <!-- Stars layer -->
+  <div class="ls-stars" aria-hidden="true">
+    <div class="ls-stars-lg"></div>
+    <div class="ls-stars-glow"></div>
+  </div>
+
+  <div id="shootingStar" aria-hidden="true"></div>
+
+  <svg class="ls-constellations" viewBox="0 0 1440 900" preserveAspectRatio="none" aria-hidden="true">
+    <g opacity="0.72">
+      <circle cx="475" cy="168" r="2"/>
+      <circle cx="530" cy="128" r="1.7"/>
+      <circle cx="610" cy="158" r="2.2"/>
+      <circle cx="650" cy="216" r="1.6"/>
+      <line x1="475" y1="168" x2="530" y2="128"/>
+      <line x1="530" y1="128" x2="610" y2="158"/>
+      <line x1="610" y1="158" x2="650" y2="216"/>
+    </g>
+    <g opacity="0.52">
+      <circle cx="790" cy="264" r="1.8"/>
+      <circle cx="852" cy="230" r="1.5"/>
+      <circle cx="924" cy="252" r="2"/>
+      <circle cx="980" cy="310" r="1.6"/>
+      <path d="M790 264 L852 230 L924 252 L980 310"/>
+    </g>
+    <g opacity="0.42">
+      <circle cx="1045" cy="128" r="1.5"/>
+      <circle cx="1108" cy="178" r="1.9"/>
+      <circle cx="1182" cy="140" r="1.6"/>
+      <path d="M1045 128 L1108 178 L1182 140"/>
+    </g>
+  </svg>
+
+  <div class="ls-telescope-beam" aria-hidden="true"></div>
+
+  <svg class="ls-drift-field" viewBox="0 0 520 240" aria-hidden="true">
+    <path d="M12 146 C92 96 158 170 236 118 C302 74 382 88 508 42"/>
+    <path d="M34 186 C116 154 184 206 278 162 C350 128 414 134 492 106" opacity="0.74"/>
+    <circle cx="92" cy="102" r="3.4"/>
+    <circle cx="252" cy="123" r="3.6"/>
+    <circle cx="394" cy="74" r="3.2"/>
+    <circle cx="468" cy="112" r="2.8" opacity="0.62"/>
+  </svg>
+
+  <!-- Clouds -->
+  <div class="ls-cloud ls-cloud-a" aria-hidden="true">
+    <svg viewBox="0 0 340 80" xmlns="http://www.w3.org/2000/svg">
+      <ellipse cx="82" cy="52" rx="78" ry="30" fill="rgba(226,232,240,1)"/>
+      <ellipse cx="148" cy="40" rx="96" ry="38" fill="rgba(226,232,240,1)"/>
+      <ellipse cx="230" cy="54" rx="84" ry="28" fill="rgba(226,232,240,1)"/>
+      <ellipse cx="168" cy="62" rx="128" ry="22" fill="rgba(226,232,240,1)"/>
+    </svg>
+  </div>
+  <div class="ls-cloud ls-cloud-b" aria-hidden="true">
+    <svg viewBox="0 0 270 70" xmlns="http://www.w3.org/2000/svg">
+      <ellipse cx="72" cy="46" rx="66" ry="25" fill="rgba(226,232,240,1)"/>
+      <ellipse cx="135" cy="36" rx="84" ry="32" fill="rgba(226,232,240,1)"/>
+      <ellipse cx="198" cy="49" rx="66" ry="24" fill="rgba(226,232,240,1)"/>
+    </svg>
+  </div>
+  <div class="ls-cloud ls-cloud-c" aria-hidden="true">
+    <svg viewBox="0 0 210 62" xmlns="http://www.w3.org/2000/svg">
+      <ellipse cx="56" cy="42" rx="52" ry="20" fill="rgba(226,232,240,1)"/>
+      <ellipse cx="105" cy="31" rx="74" ry="29" fill="rgba(226,232,240,1)"/>
+      <ellipse cx="156" cy="44" rx="52" ry="20" fill="rgba(226,232,240,1)"/>
+    </svg>
+  </div>
+  <div class="ls-cloud ls-cloud-d" aria-hidden="true">
+    <svg viewBox="0 0 270 70" xmlns="http://www.w3.org/2000/svg">
+      <ellipse cx="72" cy="46" rx="66" ry="25" fill="rgba(226,232,240,1)"/>
+      <ellipse cx="135" cy="36" rx="84" ry="32" fill="rgba(226,232,240,1)"/>
+      <ellipse cx="198" cy="49" rx="66" ry="24" fill="rgba(226,232,240,1)"/>
+    </svg>
+  </div>
+  <div class="ls-cloud ls-cloud-e" aria-hidden="true">
+    <svg viewBox="0 0 180 54" xmlns="http://www.w3.org/2000/svg">
+      <ellipse cx="48" cy="38" rx="44" ry="17" fill="rgba(226,232,240,1)"/>
+      <ellipse cx="90" cy="28" rx="62" ry="24" fill="rgba(226,232,240,1)"/>
+      <ellipse cx="136" cy="40" rx="44" ry="16" fill="rgba(226,232,240,1)"/>
+    </svg>
+  </div>
+
+
+  <div class="ls-depth-glow" aria-hidden="true"></div>
+
+  <!-- Hull shadow (beneath ship, moves inverse to bob) -->
+  <div class="ls-hull-shadow" aria-hidden="true"></div>
+  <div class="ls-hull-glow" aria-hidden="true"></div>
+
+  <!-- Ship (center-left, hull base merges into wave layer) -->
+  <div class="ls-ship-wrap" aria-hidden="true">
+    <svg viewBox="0 0 560 340" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Tall ship at sea">
+      <defs>
+        <!-- Port light glow -->
+        <filter id="ls-pg" x="-200%" y="-200%" width="500%" height="500%">
+          <feGaussianBlur stdDeviation="3" result="b"/>
+          <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <filter id="portGlow" x="-100%" y="-100%" width="300%" height="300%">
+          <feGaussianBlur stdDeviation="3" result="blur"/>
+          <feMerge>
+            <feMergeNode in="blur"/>
+            <feMergeNode in="SourceGraphic"/>
+          </feMerge>
+        </filter>
+        <!-- Waterline glow -->
+        <filter id="ls-wg" x="-2%" y="-800%" width="104%" height="1700%">
+          <feGaussianBlur stdDeviation="2.5" result="b"/>
+          <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+
+      <!-- Hull body (dark mahogany) -->
+      <path d="M 55,238 C 42,258 38,285 40,315 L 520,315 C 522,285 518,258 505,238 Z" fill="#3F2A1D"/>
+      <!-- Keel underbelly -->
+      <path d="M 40,315 C 42,327 58,336 80,338 L 480,338 C 502,336 518,327 520,315 Z" fill="#2A1810"/>
+      <!-- Hull top rail -->
+      <path d="M 55,238 C 155,224 405,224 505,238" fill="none" stroke="#8B5E34" stroke-width="7" stroke-linecap="round"/>
+      <!-- Hull mid highlight stripe -->
+      <path d="M 64,253 C 163,240 397,240 496,253" fill="none" stroke="#6B4A2F" stroke-width="2.5" opacity="0.62"/>
+      <!-- Stern castle (raised aft deck) -->
+      <path d="M 450,216 L 506,218 L 505,238 L 450,238 Z" fill="#2A1810"/>
+      <path d="M 452,218 L 504,220 L 503,236 L 452,236 Z" fill="#352018"/>
+
+      <!-- Cannon ports -->
+      <rect x="92"  y="258" width="20" height="14" rx="2" fill="#100806" opacity="0.88"/>
+      <rect x="150" y="260" width="20" height="14" rx="2" fill="#100806" opacity="0.88"/>
+      <rect x="210" y="262" width="20" height="14" rx="2" fill="#100806" opacity="0.88"/>
+      <rect x="328" y="262" width="20" height="14" rx="2" fill="#100806" opacity="0.88"/>
+      <rect x="386" y="260" width="20" height="14" rx="2" fill="#100806" opacity="0.88"/>
+      <rect x="442" y="258" width="20" height="14" rx="2" fill="#100806" opacity="0.88"/>
+
+      <!-- Gold port lights (amber glow) -->
+      <circle cx="116" cy="284" r="5.5" fill="#D6A83B" filter="url(#portGlow)"/>
+      <circle cx="196" cy="288" r="5.5" fill="#D6A83B" filter="url(#portGlow)"/>
+      <circle cx="276" cy="290" r="5.5" fill="#D6A83B" filter="url(#portGlow)"/>
+      <circle cx="356" cy="290" r="5.5" fill="#D6A83B" filter="url(#portGlow)"/>
+      <circle cx="430" cy="285" r="5.5" fill="#D6A83B" filter="url(#portGlow)"/>
+      <!-- Stern lanterns -->
+      <circle cx="474" cy="227" r="5" fill="#D6A83B" opacity="0.82" filter="url(#portGlow)"/>
+      <circle cx="491" cy="227" r="5" fill="#D6A83B" opacity="0.82" filter="url(#portGlow)"/>
+
+      <!-- Bowsprit (angled forward from bow) -->
+      <line x1="57"  y1="228" x2="-10" y2="170" stroke="#8B5E34" stroke-width="5.5" stroke-linecap="round"/>
+
+      <!-- Masts -->
+      <line x1="300" y1="236" x2="300" y2="18"  stroke="#8B5E34" stroke-width="7"   stroke-linecap="round"/>
+      <line x1="188" y1="236" x2="188" y2="58"  stroke="#8B5E34" stroke-width="6"   stroke-linecap="round"/>
+
+      <!-- Yards (horizontal spars) -->
+      <line x1="228" y1="152" x2="382" y2="142" stroke="#7A5230" stroke-width="4"   stroke-linecap="round"/>
+      <line x1="256" y1="66"  x2="358" y2="58"  stroke="#7A5230" stroke-width="3"   stroke-linecap="round"/>
+      <line x1="144" y1="116" x2="236" y2="108" stroke="#7A5230" stroke-width="3.5" stroke-linecap="round"/>
+
+      <!-- Sails — dark charcoal, ghost-ship feel -->
+      <!-- Main sail -->
+      <path d="M 302,26 C 372,72 420,148 418,236 L 302,236 Z" fill="#1E293B" opacity="0.86"/>
+      <!-- Fore sail -->
+      <path d="M 190,66 C 244,106 280,168 280,236 L 190,236 Z" fill="#1E293B" opacity="0.80"/>
+      <!-- Jib (bowsprit to fore mast) -->
+      <path d="M -8,173 C 50,148 112,128 190,66 L 58,230 Z" fill="#1E293B" opacity="0.66"/>
+      <!-- Main topsail -->
+      <path d="M 300,20 C 344,48 362,86 354,120 L 300,120 Z" fill="#263548" opacity="0.78"/>
+      <!-- Fore topsail -->
+      <path d="M 188,60 C 220,78 234,108 228,130 L 188,130 Z" fill="#263548" opacity="0.72"/>
+
+      <!-- Rigging (thin, semi-transparent) -->
+      <line x1="300" y1="18"  x2="508" y2="236" stroke="#94A3B8" stroke-width="1.2" opacity="0.40"/>
+      <line x1="300" y1="18"  x2="58"  y2="228" stroke="#94A3B8" stroke-width="1.2" opacity="0.40"/>
+      <line x1="188" y1="58"  x2="58"  y2="228" stroke="#94A3B8" stroke-width="1.1" opacity="0.36"/>
+      <line x1="188" y1="58"  x2="300" y2="236" stroke="#94A3B8" stroke-width="0.9" opacity="0.26"/>
+      <line x1="300" y1="80"  x2="440" y2="236" stroke="#94A3B8" stroke-width="0.8" opacity="0.26"/>
+      <line x1="300" y1="80"  x2="155" y2="236" stroke="#94A3B8" stroke-width="0.8" opacity="0.26"/>
+      <line x1="-8"  y1="173" x2="188" y2="58"  stroke="#94A3B8" stroke-width="0.9" opacity="0.30"/>
+      <!-- Ratlines -->
+      <line x1="277" y1="108" x2="325" y2="105" stroke="#94A3B8" stroke-width="0.7" opacity="0.20"/>
+      <line x1="273" y1="130" x2="329" y2="127" stroke="#94A3B8" stroke-width="0.7" opacity="0.20"/>
+      <line x1="269" y1="154" x2="335" y2="150" stroke="#94A3B8" stroke-width="0.7" opacity="0.20"/>
+      <line x1="265" y1="178" x2="339" y2="174" stroke="#94A3B8" stroke-width="0.7" opacity="0.20"/>
+      <line x1="261" y1="202" x2="345" y2="198" stroke="#94A3B8" stroke-width="0.7" opacity="0.20"/>
+
+      <!-- Crow's nest -->
+      <rect x="288" y="74" width="24" height="14" rx="2" fill="#2A1810"/>
+      <line x1="288" y1="74" x2="312" y2="74" stroke="#8B5E34" stroke-width="1.5"/>
+
+      <!-- Jolly-Roger flag (top of main mast) -->
+      <rect x="300" y="18" width="34" height="22" rx="1" fill="#0F172A" opacity="0.92"/>
+      <circle cx="317" cy="26" r="5.5" fill="rgba(226,232,240,0.78)"/>
+      <line x1="312" y1="33" x2="310" y2="38" stroke="rgba(226,232,240,0.78)" stroke-width="1.8" stroke-linecap="round"/>
+      <line x1="322" y1="33" x2="324" y2="38" stroke="rgba(226,232,240,0.78)" stroke-width="1.8" stroke-linecap="round"/>
+
+      <!-- Teal waterline glow (hull meets ocean) -->
+      <line x1="40" y1="315" x2="520" y2="315" stroke="#14B8A6" stroke-width="2.5" opacity="0.58" filter="url(#ls-wg)"/>
+
+      <!-- Pirate figure on deck (bow area, looking right) -->
+      <g transform="translate(455, 188)">
+        <g class="ls-pirate-figure">
+          <!-- body -->
+          <rect x="8" y="22" width="12" height="18" rx="2" fill="#1E293B" stroke="#475569" stroke-width="0.5"/>
+          <!-- head -->
+          <circle cx="14" cy="16" r="8" fill="#FBBF24"/>
+          <!-- pirate hat -->
+          <path d="M5,14 L14,4 L23,14 Z" fill="#0F172A"/>
+          <rect x="4" y="13" width="20" height="3" rx="1" fill="#1E293B"/>
+          <!-- skull on hat -->
+          <circle cx="14" cy="10" r="2" fill="white" opacity="0.7"/>
+          <!-- telescope extended to the right -->
+          <g transform="rotate(-15, 18, 22)">
+            <rect x="18" y="20" width="22" height="4" rx="1" fill="#92400E"/>
+            <rect x="36" y="17" width="8" height="6" rx="1" fill="#78350F"/>
+          </g>
+          <!-- arm holding telescope -->
+          <path d="M18,26 L28,22" stroke="#FBBF24" stroke-width="3" stroke-linecap="round"/>
+          <!-- legs -->
+          <rect x="9" y="38" width="5" height="10" rx="2" fill="#1E293B"/>
+          <rect x="15" y="38" width="5" height="10" rx="2" fill="#1E293B"/>
+          <!-- boots -->
+          <rect x="8" y="46" width="7" height="4" rx="1" fill="#292524"/>
+          <rect x="14" y="46" width="7" height="4" rx="1" fill="#292524"/>
+        </g>
+      </g>
+    </svg>
+  </div>
+
+  <!-- Waterline glow overlay (reinforces hull-into-ocean merge) -->
+  <div class="ls-waterline" aria-hidden="true"></div>
+
+  <div class="ls-mist" aria-hidden="true"></div>
+
+  <!-- Ocean waves (full-width, bottom 28vh) — back+mid in container, front wave separate -->
+  <div class="ls-waves" aria-hidden="true">
+    <svg class="ls-wave ls-wave-back" viewBox="0 0 1440 320" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,140 C240,80 480,200 720,120 C960,40 1200,160 1440,100 L1440,320 L0,320 Z" fill="#083344"/>
+    </svg>
+    <svg class="ls-wave ls-wave-mid" viewBox="0 0 1440 320" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,170 C240,110 480,230 720,150 C960,70 1200,190 1440,130 L1440,320 L0,320 Z" fill="#0E7490"/>
+    </svg>
+  </div>
+  <!-- Front wave extracted — renders above ship hull bottom (z-index:5 > ship z-index:4) -->
+  <svg class="ls-wave-front-solo" viewBox="0 0 1440 320" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <path d="M0,200 C240,140 480,260 720,180 C960,100 1200,220 1440,160 L1440,320 L0,320 Z" fill="#0891B2"/>
+  </svg>
+  <div class="ls-wave-foam" aria-hidden="true"></div>
+  <div class="ls-foam-dots" aria-hidden="true">
+    <span class="foam-dot" style="left:8%"></span>
+    <span class="foam-dot" style="left:22%"></span>
+    <span class="foam-dot" style="left:41%"></span>
+    <span class="foam-dot" style="left:63%"></span>
+    <span class="foam-dot" style="left:81%"></span>
+  </div>
+
+  <!-- Wordmark (top-center) -->
+  <div class="ls-wordmark">
+    <div class="ls-wordmark-glow-wrap">
+      <div class="ls-wordmark-glow-bg" aria-hidden="true">DRIFTWATCH</div>
+      <span class="ls-wordmark-title">DRIFTWATCH</span>
     </div>
   </div>
+  <!-- Center tagline — absolute zone, never overlaps copy or ship -->
+  <span class="ls-center-tagline">Still waters hide dying dependencies.</span>
+
+  <!-- Copy & CTA (center-right) -->
+  <div class="ls-copy">
+    <div class="ls-copy-card">
+      <p class="ls-sub">Detect pre-CVE collapse, silent maintainer abandonment, and supply-chain drift — before it becomes a headline.</p>
+      <div class="ls-input-wrap">
+        <input id="homeRepoInput" type="text" value="jellyfin/jellyfin-web"
+               placeholder="owner/repo  e.g. jellyfin/jellyfin-web" autocomplete="off" />
+        <button class="ls-sail-btn" type="button" onclick="setSail()">Set Sail</button>
+      </div>
+    </div>
+  </div>
+
 </section>
 
 <div class="app">
@@ -3306,6 +4219,9 @@
     </div>
     <div class="nav-section">
       <div class="nav-label">INTELLIGENCE</div>
+      <div class="nav-item active" id="navAskWatch">
+        <span class="label">Ask the Watch</span>
+      </div>
       <div class="nav-item" id="nav-overview" data-screen="overview">
         <span class="label">Command Bridge</span>
         <span class="nav-badge" id="badge-overview">0</span>
@@ -3317,9 +4233,6 @@
       <div class="nav-item" id="nav-crew" data-screen="crew">
         <span class="label">Crew Accountability</span>
         <span class="nav-badge" id="badge-crew">0</span>
-      </div>
-      <div class="nav-item active" id="navAskWatch">
-        <span class="label">Ask the Watch</span>
       </div>
     </div>
     <div class="nav-section">
@@ -3790,6 +4703,7 @@ function syncRepoInputs(value) {
 function hideLaunch() {
   const launch = document.getElementById('launchScreen');
   if (launch) launch.classList.add('hidden');
+  document.body.classList.remove('launch-active');
 }
 
 function startMode(mode) {
@@ -3799,6 +4713,40 @@ function startMode(mode) {
   syncRepoInputs(value);
   state.scanMode = mode === 'deep' ? 'deep' : 'fast';
   return startScan({ preventDefault() {} });
+}
+
+async function setSail() {
+  hideToast();
+  const homeInput = document.getElementById('homeRepoInput');
+  const topInput = document.getElementById('repoInput');
+  const value = (homeInput?.value || topInput?.value || 'jellyfin/jellyfin-web').trim();
+  const [owner, repo] = value.split('/');
+  if (!owner || !repo) {
+    showToast('Enter a repo as owner/repo before setting sail.');
+    return;
+  }
+
+  syncRepoInputs(`${owner}/${repo}`);
+  state.owner = owner;
+  state.repo = repo;
+  hideLaunch();
+  showScreen('askwatch', document.getElementById('navAskWatch'));
+  setLiveStatus('LIVE CORAL · loading latest scan snapshot…');
+
+  try {
+    const data = await fetchResults(owner, repo, false);
+    state.data = data;
+    state.owner = data.owner || owner;
+    state.repo = data.repo || repo;
+    syncRepoInputs(`${state.owner}/${state.repo}`);
+    renderAll();
+    showScreen('askwatch', document.getElementById('navAskWatch'));
+    setLiveStatus(`LIVE CORAL · latest scan · ${new Date().toLocaleTimeString()}`);
+  } catch (e) {
+    window.currentData = { owner, repo, scan: [], sweep: {}, ownership: [] };
+    setLiveStatus('LIVE CORAL · no latest scan loaded');
+    showToast('No latest scan results found for this repo yet. Use Chart Course once, then Set Sail will open the latest snapshot.');
+  }
 }
 
 // -- Navigation 
@@ -6125,7 +7073,7 @@ async function startScan(ev) {
 
   document.getElementById('scanBtn').disabled = true;
   showRadarOverlay(owner, repo);
-  updateRadarOverlay(state.scanMode === 'deep' ? 'Starting deep sweep…' : 'Starting fast triage…', 1);
+  updateRadarOverlay('Charting latest Coral course…', 1);
 
   try {
     const r = await fetch('/api/scan', {
@@ -6177,7 +7125,7 @@ async function pollJob(jobId) {
           state.data = data;
           renderAll();
           showScreen('askwatch', document.getElementById('navAskWatch'));
-          setLiveStatus(`${state.scanMode === 'deep' ? 'DEEP SWEEP' : 'FAST TRIAGE'} · ${new Date().toLocaleTimeString()}`);
+          setLiveStatus(`LIVE CORAL · latest scan · ${new Date().toLocaleTimeString()}`);
         } catch (e) {
           showToast(displayScanError('Scan complete but results fetch failed: ' + e.message));
         }

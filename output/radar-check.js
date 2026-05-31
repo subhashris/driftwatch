@@ -5,18 +5,77 @@ let state = {
   repo: 'jellyfin-web',
   data: null,
   jobId: null,
+  scanMode: 'fast',
 };
 
 function setDemoRepo(owner, repo) {
   const input = document.getElementById('repoInput');
+  const homeInput = document.getElementById('homeRepoInput');
   if (input) {
     input.value = owner + '/' + repo;
     input.focus();
   }
+  if (homeInput) homeInput.value = owner + '/' + repo;
   state.owner = owner;
   state.repo = repo;
   window.currentData = { owner, repo, scan: [], sweep: {}, ownership: [] };
   if (typeof window.initWatchOnNav === 'function') window.initWatchOnNav();
+}
+
+function syncRepoInputs(value) {
+  const top = document.getElementById('repoInput');
+  const home = document.getElementById('homeRepoInput');
+  if (top) top.value = value;
+  if (home) home.value = value;
+}
+
+function hideLaunch() {
+  const launch = document.getElementById('launchScreen');
+  if (launch) launch.classList.add('hidden');
+  document.body.classList.remove('launch-active');
+}
+
+function startMode(mode) {
+  const homeInput = document.getElementById('homeRepoInput');
+  const topInput = document.getElementById('repoInput');
+  const value = (homeInput?.value || topInput?.value || '').trim();
+  syncRepoInputs(value);
+  state.scanMode = mode === 'deep' ? 'deep' : 'fast';
+  return startScan({ preventDefault() {} });
+}
+
+async function setSail() {
+  hideToast();
+  const homeInput = document.getElementById('homeRepoInput');
+  const topInput = document.getElementById('repoInput');
+  const value = (homeInput?.value || topInput?.value || 'jellyfin/jellyfin-web').trim();
+  const [owner, repo] = value.split('/');
+  if (!owner || !repo) {
+    showToast('Enter a repo as owner/repo before setting sail.');
+    return;
+  }
+
+  syncRepoInputs(`${owner}/${repo}`);
+  state.owner = owner;
+  state.repo = repo;
+  hideLaunch();
+  showScreen('askwatch', document.getElementById('navAskWatch'));
+  setLiveStatus('LIVE CORAL · loading latest scan snapshot…');
+
+  try {
+    const data = await fetchResults(owner, repo, false);
+    state.data = data;
+    state.owner = data.owner || owner;
+    state.repo = data.repo || repo;
+    syncRepoInputs(`${state.owner}/${state.repo}`);
+    renderAll();
+    showScreen('askwatch', document.getElementById('navAskWatch'));
+    setLiveStatus(`LIVE CORAL · latest scan · ${new Date().toLocaleTimeString()}`);
+  } catch (e) {
+    window.currentData = { owner, repo, scan: [], sweep: {}, ownership: [] };
+    setLiveStatus('LIVE CORAL · no latest scan loaded');
+    showToast('No latest scan results found for this repo yet. Use Chart Course once, then Set Sail will open the latest snapshot.');
+  }
 }
 
 // -- Navigation 
@@ -112,22 +171,33 @@ function urgencyVerdict(score) {
 async function fetchResults(owner, repo, demo = false) {
   const url = `/api/results/${owner}/${repo}${demo ? '?demo=true' : ''}`;
   const r = await fetch(url);
-  if (!r.ok) throw new Error(`HTTP ${r.status}: ${r.statusText}`);
+  if (!r.ok) {
+    let detail = '';
+    try {
+      const body = await r.json();
+      detail = typeof body.detail === 'string'
+        ? body.detail
+        : (body.detail?.message || JSON.stringify(body.detail));
+    } catch (e) {
+      detail = r.statusText;
+    }
+    throw new Error(`HTTP ${r.status}: ${detail || r.statusText}`);
+  }
   return await r.json();
 }
 
 async function loadDemo() {
   hideToast();
-  setLiveStatus('LIVE DATA · loading demo…');
+  setLiveStatus('SAMPLE DATA · loading bundled sample…');
   try {
-    const data = await fetchResults(state.owner, state.repo, false);
+    const data = await fetchResults('jellyfin', 'jellyfin-web', true);
     state.data = data;
     state.owner = data.owner;
     state.repo = data.repo;
     renderAll();
-    setLiveStatus(`LIVE CORAL · scan snapshot · ${new Date().toLocaleTimeString()}`);
+    setLiveStatus(`SAMPLE DATA · bundled Coral snapshot · ${new Date().toLocaleTimeString()}`);
   } catch (e) {
-    showToast('Failed to load demo: ' + e.message);
+    showToast('Failed to load sample: ' + e.message);
   }
 }
 
@@ -144,8 +214,19 @@ function renderAll() {
   renderCrew(d);
   renderQueries(d);
   updateBadges(d);
-  document.getElementById('overviewSub').textContent = `${d.owner}/${d.repo} — ${d.scan?.length || 0} vulnerable packages`;
-  document.getElementById('footerNote').textContent = `${d.scan?.length || 0} packages · ${d.sweep?.upgrade_actionability?.length || 0} upgrade paths · ${d.ownership?.length || 0} owners mapped · scan ${d.sweep?.scan_date || 'demo data'}`;
+  const meta = d.scan_meta || {};
+  const scanned = meta.packages_scanned;
+  const total = meta.sbom_packages_total;
+  const mode = meta.mode || 'scan';
+  const scanScope = scanned && total
+    ? `${scanned} of ${total} SBOM packages scanned`
+    : `${d.scan?.length || 0} vulnerable packages`;
+  document.getElementById('overviewSub').textContent = `${d.owner}/${d.repo} — ${mode} · ${scanScope}`;
+  const sourceKind = d.sources?.scan_kind || 'scan snapshot';
+  const completedStages = Object.entries(meta.stages || {})
+    .map(([stage, status]) => `${stage}:${status}`)
+    .join(', ');
+  document.getElementById('footerNote').textContent = `${d.scan?.length || 0} vulnerable packages · ${d.sweep?.upgrade_actionability?.length || 0} upgrade paths · ${d.ownership?.length || 0} owners mapped · ${sourceKind} · ${completedStages || 'stages unavailable'} · ${meta.scan_completed_at || d.sweep?.scan_date || 'no timestamp'}`;
 }
 
 function updateBadges(d) {
@@ -2316,16 +2397,18 @@ async function startScan(ev) {
   const [owner, repo] = val.split('/').map(s => s.trim());
   state.owner = owner;
   state.repo = repo;
+  syncRepoInputs(owner + '/' + repo);
+  hideLaunch();
 
   document.getElementById('scanBtn').disabled = true;
   showRadarOverlay(owner, repo);
-  updateRadarOverlay('Starting scan…', 1);
+  updateRadarOverlay('Charting latest Coral course…', 1);
 
   try {
     const r = await fetch('/api/scan', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ owner, repo }),
+      body: JSON.stringify({ owner, repo, mode: state.scanMode }),
     });
     if (!r.ok) throw new Error(`Scan kickoff failed: HTTP ${r.status}`);
     const scanStarted = await r.json();
@@ -2333,9 +2416,9 @@ async function startScan(ev) {
     if (scanStarted.owner && scanStarted.repo) {
       state.owner = scanStarted.owner;
       state.repo = scanStarted.repo;
-      const input = document.getElementById('repoInput');
-      if (input) input.value = state.owner + '/' + state.repo;
+      syncRepoInputs(state.owner + '/' + state.repo);
     }
+    state.scanMode = scanStarted.mode || state.scanMode;
     state.jobId = job_id;
     pollJob(job_id);
   } catch (e) {
@@ -2370,7 +2453,8 @@ async function pollJob(jobId) {
           const data = await fetchResults(state.owner, state.repo, false);
           state.data = data;
           renderAll();
-          setLiveStatus(`LIVE DATA · ${new Date().toLocaleTimeString()}`);
+          showScreen('askwatch', document.getElementById('navAskWatch'));
+          setLiveStatus(`LIVE CORAL · latest scan · ${new Date().toLocaleTimeString()}`);
         } catch (e) {
           showToast(displayScanError('Scan complete but results fetch failed: ' + e.message));
         }

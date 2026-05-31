@@ -1,0 +1,415 @@
+[
+  {
+    "package": "yargs-parser",
+    "version": "10.1.0",
+    "worst_days_exposed": 2093,
+    "fixed_in": "5.0.1",
+    "actionability": "SAFE",
+    "files": [],
+    "owners": [
+      "heyhippari",
+      "ferferga"
+    ],
+    "manifest_path": "package.json",
+    "manifest_touches": [],
+    "ticket_text": "[SECURITY] Vulnerable dependency: yargs-parser@10.1.0\nExposed: 2093 days with fix available in 5.0.1\nAction: Safe to upgrade: bump yargs-parser from 10.1.0 to 5.0.1. Low risk, do it this sprint.\nFiles: see package.json\nRecommended owner(s): heyhippari, ferferga"
+  },
+  {
+    "package": "trim",
+    "version": "0.0.1",
+    "worst_days_exposed": 1845,
+    "fixed_in": "0.0.3",
+    "actionability": "SAFE",
+    "files": [
+      "src/utils/string.ts",
+      "src/apps/wizard/controllers/user/index.js",
+      "src/apps/dashboard/features/networking/utils.ts"
+    ],
+    "owners": [
+      "thornbill",
+      "LukePulverenti",
+      "heyhippari"
+    ],
+    "manifest_path": "package.json",
+    "manifest_touches": [],
+    "ticket_text": "[SECURITY] Vulnerable dependency: trim@0.0.1\nExposed: 1845 days with fix available in 0.0.3\nAction: Safe to upgrade: bump trim from 0.0.1 to 0.0.3. Low risk, do it this sprint.\nFiles: src/utils/string.ts, src/apps/wizard/controllers/user/index.js\nRecommended owner(s): thornbill, LukePulverenti, heyhippari"
+  },
+  {
+    "package": "trim-newlines",
+    "version": "2.0.0",
+    "worst_days_exposed": 1817,
+    "fixed_in": "3.0.1",
+    "actionability": "BREAKING",
+    "files": [],
+    "owners": [
+      "heyhippari",
+      "ferferga"
+    ],
+    "manifest_path": "package.json",
+    "manifest_touches": [],
+    "ticket_text": "[SECURITY] Vulnerable dependency: trim-newlines@2.0.0\nExposed: 1817 days with fix available in 3.0.1\nAction: Major version upgrade required: trim-newlines 2.0.0 \u2192 3.0.1. Plan migration \u2014 breaking API changes likely.\nFiles: see package.json\nRecommended owner(s): heyhippari, ferferga"
+  },
+  {
+    "package": "postcss",
+    "version": "7.0.36",
+    "worst_days_exposed": 973,
+    "fixed_in": "8.4.31",
+    "actionability": "BREAKING",
+    "files": [
+      "postcss.config.js",
+      "webpack.common.js",
+      "package.json"
+    ],
+    "owners": [
+      "thornbill",
+      "renovate[bot]",
+      "heyhippari"
+    ],
+    "manifest_path": "package.json",
+    "manifest_touches": [],
+    "ticket_text": "[SECURITY] Vulnerable dependency: postcss@7.0.36\nExposed: 973 days with fix available in 8.4.31\nAction: Major version upgrade required: postcss 7.0.36 \u2192 8.4.31. Plan migration \u2014 breaking API changes likely.\nFiles: postcss.config.js, webpack.common.js\nRecommended owner(s): thornbill, renovate[bot], heyhippari"
+  },
+  {
+    "package": "es5-ext",
+    "version": "0.10.53",
+    "worst_days_exposed": 823,
+    "fixed_in": "0.10.63",
+    "actionability": "SAFE",
+    "files": [],
+    "owners": [
+      "dependabot[bot]",
+      "thornbill",
+      "heyhippari"
+    ],
+    "manifest_path": "package.json",
+    "manifest_touches": [],
+    "ticket_text": "[SECURITY] Vulnerable dependency: es5-ext@0.10.53\nExposed: 823 days with fix available in 0.10.63\nAction: Safe to upgrade: bump es5-ext from 0.10.53 to 0.10.63. Low risk, do it this sprint.\nFiles: see package.json\nRecommended owner(s): dependabot[bot], thornbill, heyhippari"
+  },
+  {
+    "package": "pdfjs-dist",
+    "version": "3.11.174",
+    "worst_days_exposed": 753,
+    "fixed_in": "4.2.67",
+    "actionability": "BREAKING",
+    "files": [
+      "webpack.common.js",
+      "src/plugins/pdfPlayer/plugin.js",
+      "package.json"
+    ],
+    "owners": [
+      "thornbill",
+      "dependabot[bot]",
+      "renovate[bot]"
+    ],
+    "manifest_path": "package.json",
+    "manifest_touches": [],
+    "ticket_text": "[SECURITY] Vulnerable dependency: pdfjs-dist@3.11.174\nExposed: 753 days with fix available in 4.2.67\nAction: Major version upgrade required: pdfjs-dist 3.11.174 \u2192 4.2.67. Plan migration \u2014 breaking API changes likely.\nFiles: webpack.common.js, src/plugins/pdfPlayer/plugin.js\nRecommended owner(s): thornbill, dependabot[bot], renovate[bot]"
+  },
+  {
+    "package": "braces",
+    "version": "2.3.2",
+    "worst_days_exposed": 745,
+    "fixed_in": "3.0.3",
+    "actionability": "BREAKING",
+    "files": [],
+    "owners": [
+      "thornbill",
+      "heyhippari",
+      "Froghut"
+    ],
+    "manifest_path": "package.json",
+    "manifest_touches": [],
+    "ticket_text": "[SECURITY] Vulnerable dependency: braces@2.3.2\nExposed: 745 days with fix available in 3.0.3\nAction: Major version upgrade required: braces 2.3.2 \u2192 3.0.3. Plan migration \u2014 breaking API changes likely.\nFiles: see package.json\nRecommended owner(s): thornbill, heyhippari, Froghut"
+  },
+  {
+    "package": "micromatch",
+    "version": "3.1.10",
+    "worst_days_exposed": 745,
+    "fixed_in": "4.0.8",
+    "actionability": "BREAKING",
+    "files": [],
+    "owners": [
+      "dependabot[bot]",
+      "heyhippari",
+      "ferferga"
+    ],
+    "manifest_path": "package.json",
+    "manifest_touches": [],
+    "ticket_text": "[SECURITY] Vulnerable dependency: micromatch@3.1.10\nExposed: 745 days with fix available in 4.0.8\nAction: Major version upgrade required: micromatch 3.1.10 \u2192 4.0.8. Plan migration \u2014 breaking API changes likely.\nFiles: see package.json\nRecommended owner(s): dependabot[bot], heyhippari, ferferga"
+  },
+  {
+    "package": "dompurify",
+    "version": "2.5.9",
+    "worst_days_exposed": 470,
+    "fixed_in": "3.2.4",
+    "actionability": "BREAKING",
+    "files": [
+      "src/components/MarkdownBox.tsx",
+      "src/components/dialog/dialog.js",
+      "package.json"
+    ],
+    "owners": [
+      "renovate[bot]",
+      "thornbill",
+      "dependabot[bot]"
+    ],
+    "manifest_path": "package.json",
+    "manifest_touches": [],
+    "ticket_text": "[SECURITY] Vulnerable dependency: dompurify@2.5.9\nExposed: 470 days with fix available in 3.2.4\nAction: Major version upgrade required: dompurify 2.5.9 \u2192 3.2.4. Plan migration \u2014 breaking API changes likely.\nFiles: src/components/MarkdownBox.tsx, src/components/dialog/dialog.js\nRecommended owner(s): renovate[bot], thornbill, dependabot[bot]"
+  },
+  {
+    "package": "brace-expansion",
+    "version": "1.1.11",
+    "worst_days_exposed": 354,
+    "fixed_in": "1.1.12",
+    "actionability": "SAFE",
+    "files": [],
+    "owners": [
+      "heyhippari",
+      "ferferga"
+    ],
+    "manifest_path": "package.json",
+    "manifest_touches": [],
+    "ticket_text": "[SECURITY] Vulnerable dependency: brace-expansion@1.1.11\nExposed: 354 days with fix available in 1.1.12\nAction: Safe to upgrade: bump brace-expansion from 1.1.11 to 1.1.12. Low risk, do it this sprint.\nFiles: see package.json\nRecommended owner(s): heyhippari, ferferga"
+  },
+  {
+    "package": "js-yaml",
+    "version": "3.14.1",
+    "worst_days_exposed": 197,
+    "fixed_in": "3.14.2",
+    "actionability": "SAFE",
+    "files": [],
+    "owners": [
+      "heyhippari",
+      "ferferga"
+    ],
+    "manifest_path": "package.json",
+    "manifest_touches": [],
+    "ticket_text": "[SECURITY] Vulnerable dependency: js-yaml@3.14.1\nExposed: 197 days with fix available in 3.14.2\nAction: Safe to upgrade: bump js-yaml from 3.14.1 to 3.14.2. Low risk, do it this sprint.\nFiles: see package.json\nRecommended owner(s): heyhippari, ferferga"
+  },
+  {
+    "package": "glob",
+    "version": "10.4.5",
+    "worst_days_exposed": 193,
+    "fixed_in": "10.5.0",
+    "actionability": "SAFE",
+    "files": [
+      "src/global.d.ts",
+      "webpack.common.js",
+      "package.json"
+    ],
+    "owners": [
+      "dkanada",
+      "heyhippari",
+      "joshuaboniface"
+    ],
+    "manifest_path": "package.json",
+    "manifest_touches": [],
+    "ticket_text": "[SECURITY] Vulnerable dependency: glob@10.4.5\nExposed: 193 days with fix available in 10.5.0\nAction: Safe to upgrade: bump glob from 10.4.5 to 10.5.0. Low risk, do it this sprint.\nFiles: src/global.d.ts, webpack.common.js\nRecommended owner(s): dkanada, heyhippari, joshuaboniface"
+  },
+  {
+    "package": "qs",
+    "version": "6.13.0",
+    "worst_days_exposed": 150,
+    "fixed_in": "6.14.1",
+    "actionability": "SAFE",
+    "files": [
+      "src/apps/dashboard/routes/playback/trickplay.tsx",
+      "src/apps/dashboard/features/playback/constants/codecs.ts",
+      "src/apps/dashboard/routes/playback/transcoding.tsx"
+    ],
+    "owners": [
+      "heyhippari",
+      "ferferga"
+    ],
+    "manifest_path": "package.json",
+    "manifest_touches": [],
+    "ticket_text": "[SECURITY] Vulnerable dependency: qs@6.13.0\nExposed: 150 days with fix available in 6.14.1\nAction: Safe to upgrade: bump qs from 6.13.0 to 6.14.1. Low risk, do it this sprint.\nFiles: src/apps/dashboard/routes/playback/trickplay.tsx, src/apps/dashboard/features/playback/constants/codecs.ts\nRecommended owner(s): heyhippari, ferferga"
+  },
+  {
+    "package": "tar",
+    "version": "6.2.1",
+    "worst_days_exposed": 133,
+    "fixed_in": "7.5.3",
+    "actionability": "BREAKING",
+    "files": [
+      "src/components/UserAvatar.tsx",
+      "package.json",
+      "CONTRIBUTING.md"
+    ],
+    "owners": [
+      "dependabot[bot]",
+      "thornbill",
+      "dkanada"
+    ],
+    "manifest_path": "package.json",
+    "manifest_touches": [],
+    "ticket_text": "[SECURITY] Vulnerable dependency: tar@6.2.1\nExposed: 133 days with fix available in 7.5.3\nAction: Major version upgrade required: tar 6.2.1 \u2192 7.5.3. Plan migration \u2014 breaking API changes likely.\nFiles: src/components/UserAvatar.tsx, package.json\nRecommended owner(s): dependabot[bot], thornbill, dkanada"
+  },
+  {
+    "package": "ajv",
+    "version": "6.12.6",
+    "worst_days_exposed": 107,
+    "fixed_in": "6.14.0",
+    "actionability": "SAFE",
+    "files": [
+      "src/strings/sk.json",
+      "src/strings/sl-si.json",
+      "src/strings/bs.json"
+    ],
+    "owners": [
+      "heyhippari",
+      "ferferga"
+    ],
+    "manifest_path": "package.json",
+    "manifest_touches": [],
+    "ticket_text": "[SECURITY] Vulnerable dependency: ajv@6.12.6\nExposed: 107 days with fix available in 6.14.0\nAction: Safe to upgrade: bump ajv from 6.12.6 to 6.14.0. Low risk, do it this sprint.\nFiles: src/strings/sk.json, src/strings/sl-si.json\nRecommended owner(s): heyhippari, ferferga"
+  },
+  {
+    "package": "minimatch",
+    "version": "3.1.2",
+    "worst_days_exposed": 100,
+    "fixed_in": "3.1.3",
+    "actionability": "SAFE",
+    "files": [],
+    "owners": [
+      "heyhippari",
+      "ferferga"
+    ],
+    "manifest_path": "package.json",
+    "manifest_touches": [],
+    "ticket_text": "[SECURITY] Vulnerable dependency: minimatch@3.1.2\nExposed: 100 days with fix available in 3.1.3\nAction: Safe to upgrade: bump minimatch from 3.1.2 to 3.1.3. Low risk, do it this sprint.\nFiles: see package.json\nRecommended owner(s): heyhippari, ferferga"
+  },
+  {
+    "package": "flatted",
+    "version": "2.0.2",
+    "worst_days_exposed": 78,
+    "fixed_in": "3.4.0",
+    "actionability": "BREAKING",
+    "files": [],
+    "owners": [
+      "thornbill",
+      "LukePulverenti",
+      "heyhippari"
+    ],
+    "manifest_path": "package.json",
+    "manifest_touches": [],
+    "ticket_text": "[SECURITY] Vulnerable dependency: flatted@2.0.2\nExposed: 78 days with fix available in 3.4.0\nAction: Major version upgrade required: flatted 2.0.2 \u2192 3.4.0. Plan migration \u2014 breaking API changes likely.\nFiles: see package.json\nRecommended owner(s): thornbill, LukePulverenti, heyhippari"
+  },
+  {
+    "package": "yaml",
+    "version": "1.10.2",
+    "worst_days_exposed": 65,
+    "fixed_in": "1.10.3",
+    "actionability": "SAFE",
+    "files": [
+      ".editorconfig"
+    ],
+    "owners": [
+      "thornbill",
+      "heyhippari",
+      "joshuaboniface"
+    ],
+    "manifest_path": "package.json",
+    "manifest_touches": [],
+    "ticket_text": "[SECURITY] Vulnerable dependency: yaml@1.10.2\nExposed: 65 days with fix available in 1.10.3\nAction: Safe to upgrade: bump yaml from 1.10.2 to 1.10.3. Low risk, do it this sprint.\nFiles: .editorconfig\nRecommended owner(s): thornbill, heyhippari, joshuaboniface"
+  },
+  {
+    "package": "serialize-javascript",
+    "version": "7.0.4",
+    "worst_days_exposed": 63,
+    "fixed_in": "7.0.5",
+    "actionability": "SAFE",
+    "files": [],
+    "owners": [
+      "heyhippari",
+      "ferferga"
+    ],
+    "manifest_path": "package.json",
+    "manifest_touches": [],
+    "ticket_text": "[SECURITY] Vulnerable dependency: serialize-javascript@7.0.4\nExposed: 63 days with fix available in 7.0.5\nAction: Safe to upgrade: bump serialize-javascript from 7.0.4 to 7.0.5. Low risk, do it this sprint.\nFiles: see package.json\nRecommended owner(s): heyhippari, ferferga"
+  },
+  {
+    "package": "path-to-regexp",
+    "version": "0.1.12",
+    "worst_days_exposed": 63,
+    "fixed_in": "0.1.13",
+    "actionability": "SAFE",
+    "files": [],
+    "owners": [
+      "heyhippari",
+      "ferferga"
+    ],
+    "manifest_path": "package.json",
+    "manifest_touches": [],
+    "ticket_text": "[SECURITY] Vulnerable dependency: path-to-regexp@0.1.12\nExposed: 63 days with fix available in 0.1.13\nAction: Safe to upgrade: bump path-to-regexp from 0.1.12 to 0.1.13. Low risk, do it this sprint.\nFiles: see package.json\nRecommended owner(s): heyhippari, ferferga"
+  },
+  {
+    "package": "@xmldom/xmldom",
+    "version": "0.7.9",
+    "worst_days_exposed": 59,
+    "fixed_in": "0.8.12",
+    "actionability": "SAFE",
+    "files": [
+      "webpack.common.js"
+    ],
+    "owners": [
+      "dependabot[bot]",
+      "thornbill",
+      "heyhippari"
+    ],
+    "manifest_path": "package.json",
+    "manifest_touches": [],
+    "ticket_text": "[SECURITY] Vulnerable dependency: @xmldom/xmldom@0.7.9\nExposed: 59 days with fix available in 0.8.12\nAction: Safe to upgrade: bump @xmldom/xmldom from 0.7.9 to 0.8.12. Low risk, do it this sprint.\nFiles: webpack.common.js\nRecommended owner(s): dependabot[bot], thornbill, heyhippari"
+  },
+  {
+    "package": "uuid",
+    "version": "8.3.2",
+    "worst_days_exposed": 37,
+    "fixed_in": "11.1.1",
+    "actionability": "BREAKING",
+    "files": [],
+    "owners": [
+      "heyhippari",
+      "ferferga"
+    ],
+    "manifest_path": "package.json",
+    "manifest_touches": [],
+    "ticket_text": "[SECURITY] Vulnerable dependency: uuid@8.3.2\nExposed: 37 days with fix available in 11.1.1\nAction: Major version upgrade required: uuid 8.3.2 \u2192 11.1.1. Plan migration \u2014 breaking API changes likely.\nFiles: see package.json\nRecommended owner(s): heyhippari, ferferga"
+  },
+  {
+    "package": "@babel/plugin-transform-modules-systemjs",
+    "version": "7.29.0",
+    "worst_days_exposed": 21,
+    "fixed_in": "7.29.4",
+    "actionability": "SAFE",
+    "files": [],
+    "owners": [
+      "heyhippari",
+      "ferferga"
+    ],
+    "manifest_path": "package.json",
+    "manifest_touches": [],
+    "ticket_text": "[SECURITY] Vulnerable dependency: @babel/plugin-transform-modules-systemjs@7.29.0\nExposed: 21 days with fix available in 7.29.4\nAction: Safe to upgrade: bump @babel/plugin-transform-modules-systemjs from 7.29.0 to 7.29.4. Low risk, do it this sprint.\nFiles: see package.json\nRecommended owner(s): heyhippari, ferferga"
+  },
+  {
+    "package": "ws",
+    "version": "8.19.0",
+    "worst_days_exposed": 11,
+    "fixed_in": "8.20.1",
+    "actionability": "SAFE",
+    "files": [
+      "src/hooks/api/useUserViews.ts",
+      "src/controllers/shows/tvshows.js",
+      "src/apps/experimental/routes/shows/index.tsx"
+    ],
+    "owners": [
+      "dependabot[bot]",
+      "thornbill",
+      "heyhippari"
+    ],
+    "manifest_path": "package.json",
+    "manifest_touches": [],
+    "ticket_text": "[SECURITY] Vulnerable dependency: ws@8.19.0\nExposed: 11 days with fix available in 8.20.1\nAction: Safe to upgrade: bump ws from 8.19.0 to 8.20.1. Low risk, do it this sprint.\nFiles: src/hooks/api/useUserViews.ts, src/controllers/shows/tvshows.js\nRecommended owner(s): dependabot[bot], thornbill, heyhippari"
+  }
+]

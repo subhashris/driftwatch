@@ -1,0 +1,27 @@
+{
+  "repo": "jellyfin/jellyfin-web",
+  "mode": "deep_sweep",
+  "scan_completed_at": "2026-05-30T16:44:18.510151+00:00",
+  "sbom_packages_total": 1624,
+  "prioritized_packages_total": 1492,
+  "packages_scanned": 1492,
+  "skipped_packages": 132,
+  "vulnerable_packages": 32,
+  "max_packages": null,
+  "batch_size": 15,
+  "workers": 3,
+  "scan_strategy": "batched_union_osv",
+  "stages": {
+    "sbom": "complete",
+    "osv": "complete",
+    "kev": "complete",
+    "epss": "on_demand_agent",
+    "ownership": "complete",
+    "pre_cve": "deep_sweep_only",
+    "scan": "complete",
+    "sweep": "complete"
+  },
+  "latest_attempt_status": "complete",
+  "vulnerable_findings": 32,
+  "failed_stages": {}
+}
